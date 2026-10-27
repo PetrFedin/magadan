@@ -1,5 +1,6 @@
 """Offline fixture tests; these do not certify the unavailable real V7.9 archive."""
 import hashlib
+import os
 import json
 from pathlib import Path
 import stat
@@ -157,6 +158,22 @@ class RecoveryTests(unittest.TestCase):
         self.pack(files)
         with self.assertRaisesRegex(ImportBlocked, "HIGH_CONFIDENCE_SECRET_DETECTED"):
             recover(self.zip_path, self.root / "staged")
+
+    def test_high_confidence_token_inside_large_binary_is_detected(self):
+        # Former security gap: source files over 5 MiB bypassed secret scan.
+        data = fixture_files()
+        data['artifacts_v79/large_binary.bin'] = (os.urandom(5 * 1024 * 1024)
+            + b"--test-marker--ghp_" + b'A' * 36)
+        self.pack(data)
+        with self.assertRaisesRegex(ImportBlocked, 'HIGH_CONFIDENCE_SECRET_DETECTED'):
+            recover(self.zip_path, self.root / 'staged')
+
+    def test_manifest_records_whether_independent_archive_digest_was_given(self):
+        self.pack(fixture_files())
+        expected = hashlib.sha256(self.zip_path.read_bytes()).hexdigest()
+        recover(self.zip_path, self.root / 'staged', expected)
+        manifest = json.loads((self.root / 'staged' / 'SOURCE_RECOVERY_MANIFEST.json').read_text())
+        self.assertTrue(manifest['independent_archive_sha256_parameter_supplied'])
 
     def test_full_git_bundle_offline(self):
         src = self.root / "repo"; src.mkdir()

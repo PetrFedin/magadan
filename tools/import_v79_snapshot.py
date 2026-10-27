@@ -108,11 +108,12 @@ def inspect_tree(root: Path) -> list[dict]:
         total += size
         if size > MAX_FILE_BYTES or total > MAX_TOTAL_BYTES or len(records) >= MAX_FILES:
             raise ImportBlocked("SOURCE_TREE_SIZE_LIMIT")
-        if size < 5 * 1024 * 1024:
-            content = p.read_bytes()
-            check_secrets(content)
-            if content.startswith(b"version https://git-lfs.github.com/spec/v1\n"):
-                raise ImportBlocked("GIT_LFS_POINTER_NOT_SOURCE_CODE")
+        # Scan EVERY bounded source file, including large assets: the previous
+        # <5 MiB shortcut left a simple high-confidence secret bypass.
+        content = p.read_bytes()
+        check_secrets(content)
+        if content.startswith(b"version https://git-lfs.github.com/spec/v1\n"):
+            raise ImportBlocked("GIT_LFS_POINTER_NOT_SOURCE_CODE")
         records.append({"path": rel, "bytes": size, "sha256": sha256_file(p)})
     files = {entry["path"] for entry in records}
     missing = sorted(set(REQUIRED) - files)
@@ -216,6 +217,7 @@ def recover(source: Path, destination: Path, expected_sha256: str | None = None)
             "classification": "SOURCE_IMPORT_STAGED_NOT_ACCEPTED",
             "archive_name": source.name,
             "archive_sha256": digest,
+            "independent_archive_sha256_parameter_supplied": expected_sha256 is not None,
             "file_count": len(records),
             "files": records,
             "engineering_tests_passed": False,

@@ -3,8 +3,6 @@ name: Magadan V7.9 Recovery Admission
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [feature/v79-source-recovery]
   workflow_dispatch:
 
 permissions:
@@ -44,9 +42,18 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
-      - name: Require original source tree and SHA256 recovery manifest
+      - name: Require original source tree, manifest and independent SHA-256
+        env:
+          HYDRO_TRUSTED_V79_ARCHIVE_SHA256: ${{ vars.HYDRO_TRUSTED_V79_ARCHIVE_SHA256 }}
         run: |
-          python -m tools.check_source_admission --root .
+          if [ -z "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" ]; then
+            echo '::error::Missing independently verified archive checksum in repository Actions variables.'
+            echo 'Source admission cannot pass without the original V7.9 archive and a separately confirmed checksum.'
+            exit 2
+          fi
+          python -m tools.check_source_admission --root . \
+            --require-external-pin \
+            --trusted-archive-sha256 "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256"
 
   application-regression:
     name: Actual HydroKontur Python/JS regression (after source admission)
@@ -66,8 +73,9 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r server/requirements.txt
           PYTHONPATH=server python -m pytest -q \
-            server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
+            server/tests server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
             server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 server/tests_v79 \
+            --ignore=server/tests/test_browser.py \
             --ignore=server/tests_v71/test_postgres_native.py \
             --ignore=server/tests_v78/test_postgres_native_v78.py
       - name: Test JavaScript application
