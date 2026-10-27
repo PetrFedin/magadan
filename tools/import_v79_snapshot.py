@@ -10,6 +10,7 @@ import argparse
 import hashlib
 import json
 import os
+import unicodedata
 from pathlib import Path, PurePosixPath
 import re
 import shutil
@@ -23,6 +24,9 @@ MAX_FILES = 2000
 MAX_FILE_BYTES = 20 * 1024 * 1024
 MAX_TOTAL_BYTES = 160 * 1024 * 1024
 MAX_RATIO = 800
+MAX_ARCHIVE_BYTES = 100 * 1024 * 1024
+MAX_PATH_BYTES = 512
+DOS_DEVICE = re.compile(r"^(?:CON|PRN|AUX|NUL|COM[1-9]|LPT[1-9])(?:\.|$)", re.IGNORECASE)
 REQUIRED = (
     "server/hydro_api/main.py",
     "server/hydro_api/storage.py",
@@ -69,6 +73,12 @@ def safe_path(name: str) -> PurePosixPath:
         raise ImportBlocked("ARCHIVE_PATH_ESCAPE")
     if any(p in REJECT_DIRS for p in path.parts):
         raise ImportBlocked("UNSAFE_TRACKED_DIRECTORY")
+    if len(name.encode("utf-8", errors="surrogatepass")) > MAX_PATH_BYTES:
+        raise ImportBlocked("ARCHIVE_PATH_TOO_LONG")
+    if any(("\x00" <= c < "\x20") or c == "\x7f" for c in name):
+        raise ImportBlocked("ARCHIVE_PATH_CONTROL_CHARACTER")
+    if any(part.endswith((".", " ")) or ":" in part or DOS_DEVICE.match(part) for part in path.parts):
+        raise ImportBlocked("CROSS_PLATFORM_INVALID_FILENAME")
     if path.name == ".env" or (path.name.startswith(".env.") and path.name != ".env.example"):
         raise ImportBlocked("POTENTIAL_SECRET_FILE")
     return path
@@ -90,7 +100,7 @@ def inspect_tree(root: Path) -> list[dict]:
             continue
         rel = p.relative_to(root).as_posix()
         safe_path(rel)
-        folded = rel.casefold()
+        folded = unicodedata.normalize("NFC", rel).casefold()
         if folded in visited:
             raise ImportBlocked("CASE_INSENSITIVE_DUPLICATE_PATH")
         visited.add(folded)
@@ -99,7 +109,10 @@ def inspect_tree(root: Path) -> list[dict]:
         if size > MAX_FILE_BYTES or total > MAX_TOTAL_BYTES or len(records) >= MAX_FILES:
             raise ImportBlocked("SOURCE_TREE_SIZE_LIMIT")
         if size < 5 * 1024 * 1024:
-            check_secrets(p.read_bytes())
+            content = p.read_bytes()
+            check_secrets(content)
+            if content.startswith(b"version https://git-lfs.github.com/spec/v1\n"):
+                raise ImportBlocked("GIT_LFS_POINTER_NOT_SOURCE_CODE")
         records.append({"path": rel, "bytes": size, "sha256": sha256_file(p)})
     files = {entry["path"] for entry in records}
     missing = sorted(set(REQUIRED) - files)
@@ -113,6 +126,8 @@ def inspect_tree(root: Path) -> list[dict]:
 
 
 def extract_zip(source: Path, temp: Path):
+    if source.stat().st_size > MAX_ARCHIVE_BYTES:
+        raise ImportBlocked("ARCHIVE_CONTAINER_TOO_LARGE")
     with zipfile.ZipFile(source) as archive:
         entries = [x for x in archive.infolist() if not x.is_dir()]
         if len(entries) > MAX_FILES:
@@ -131,9 +146,10 @@ def extract_zip(source: Path, temp: Path):
                 raise ImportBlocked("UNSAFE_ARCHIVE_FILE_TYPE")
             rel = PurePosixPath(*path.parts[1:]) if strip else path
             safe_path(str(rel))
-            if str(rel).casefold() in seen:
+            canonical = unicodedata.normalize("NFC", str(rel)).casefold()
+            if canonical in seen:
                 raise ImportBlocked("DUPLICATE_ARCHIVE_PATH")
-            seen.add(str(rel).casefold())
+            seen.add(canonical)
             total += info.file_size
             if info.file_size > MAX_FILE_BYTES or total > MAX_TOTAL_BYTES:
                 raise ImportBlocked("SOURCE_TREE_SIZE_LIMIT")
@@ -142,7 +158,15 @@ def extract_zip(source: Path, temp: Path):
             dst = temp / str(rel)
             dst.parent.mkdir(parents=True, exist_ok=True)
             with archive.open(info) as src, dst.open("wb") as out:
-                copied = shutil.copyfileobj(src, out, length=1024 * 1024)
+                copied = 0
+                while True:
+                    chunk = src.read(min(1024 * 1024, info.file_size - copied + 1))
+                    if not chunk:
+                        break
+                    copied += len(chunk)
+                    if copied > info.file_size or copied > MAX_FILE_BYTES:
+                        raise ImportBlocked("EXTRACT_SIZE_MISMATCH")
+                    out.write(chunk)
             if dst.stat().st_size != info.file_size:
                 raise ImportBlocked("EXTRACT_SIZE_MISMATCH")
 
@@ -150,15 +174,27 @@ def extract_zip(source: Path, temp: Path):
 def extract_bundle(source: Path, temp: Path):
     if source.stat().st_size > MAX_TOTAL_BYTES:
         raise ImportBlocked("BUNDLE_TOO_LARGE")
-    subprocess.run(["git", "clone", "--quiet", "--no-local", "--", str(source), str(temp)],
-                   check=True, timeout=90, capture_output=True)
+    if source.stat().st_size > MAX_ARCHIVE_BYTES:
+        raise ImportBlocked("ARCHIVE_CONTAINER_TOO_LARGE")
+    # Disable ambient Git config and smudge filters for untrusted backup content.
+    safe_env = os.environ.copy()
+    safe_env.update({"GIT_CONFIG_NOSYSTEM": "1", "GIT_CONFIG_GLOBAL": os.devnull,
+                     "GIT_LFS_SKIP_SMUDGE": "1", "GIT_TERMINAL_PROMPT": "0"})
+    with tempfile.TemporaryDirectory(prefix="git-bundle-verify-", dir=temp.parent) as git_check:
+        subprocess.run(["git", "init", "--quiet", "--bare", git_check],
+                       check=True, timeout=15, capture_output=True, env=safe_env)
+        subprocess.run(["git", "-C", git_check, "bundle", "verify", str(source)],
+                       check=True, timeout=30, capture_output=True, env=safe_env)
+    subprocess.run(["git", "-c", "core.hooksPath=" + os.devnull,
+                    "clone", "--quiet", "--no-local", "--", str(source), str(temp)],
+                   check=True, timeout=90, capture_output=True, env=safe_env)
     git_dir = temp / ".git"
     if not git_dir.is_dir():
         raise ImportBlocked("BUNDLE_CLONE_MISSING_GIT_METADATA")
     shutil.rmtree(git_dir)
 
 
-def recover(source: Path, destination: Path) -> dict:
+def recover(source: Path, destination: Path, expected_sha256: str | None = None) -> dict:
     if not source.is_file() or source.suffix.lower() not in {".zip", ".bundle"}:
         raise ImportBlocked("EXPECTED_EXISTING_ZIP_OR_GIT_BUNDLE")
     if destination.exists():
@@ -166,6 +202,8 @@ def recover(source: Path, destination: Path) -> dict:
     if not destination.parent.is_dir():
         raise ImportBlocked("TARGET_PARENT_MISSING")
     digest = sha256_file(source)
+    if expected_sha256 and digest.casefold() != expected_sha256.casefold():
+        raise ImportBlocked("ARCHIVE_HASH_NOT_MATCHING_INDEPENDENT_REFERENCE")
     with tempfile.TemporaryDirectory(prefix="magadan-v79-", dir=destination.parent) as tmp:
         stage = Path(tmp) / "source"
         if source.suffix.lower() == ".zip":
@@ -195,9 +233,13 @@ def main() -> int:
     parser.add_argument("source", type=Path, help="Existing V7.9 .zip or .bundle")
     parser.add_argument("--destination", required=True, type=Path,
                         help="New, non-existing staging directory, never repository root")
+    parser.add_argument("--expected-sha256", metavar="HEX", default=None,
+                        help="Optional independently confirmed SHA-256 of original archive")
     args = parser.parse_args()
+    if args.expected_sha256 and not re.fullmatch(r"[0-9a-fA-F]{64}", args.expected_sha256):
+        parser.error("--expected-sha256 must contain exactly 64 hex digits")
     try:
-        print(json.dumps(recover(args.source.resolve(), args.destination.resolve()),
+        print(json.dumps(recover(args.source.resolve(), args.destination.resolve(), args.expected_sha256),
                          ensure_ascii=False, indent=2))
         return 0
     except (ImportBlocked, zipfile.BadZipFile, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
