@@ -224,10 +224,16 @@ def recover(source: Path, destination: Path, expected_sha256: str | None = None)
             "native_postgresql_accepted": False,
             "production_ready": False,
         }
-        (stage / "SOURCE_RECOVERY_MANIFEST.json").write_text(
+        mf_path = stage / "SOURCE_RECOVERY_MANIFEST.json"
+        mf_path.write_text(
             json.dumps(report, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+        # The digest is returned OUTSIDE the manifest to avoid circular hashes.
+        # It must be verified through a separate trusted release record; merely
+        # computing this value locally does NOT constitute independent approval.
+        manifest_sha256 = sha256_file(mf_path)
         os.replace(stage, destination)
-    return {k: v for k, v in report.items() if k != "files"}
+    return {**{k: v for k, v in report.items() if k != "files"},
+            "manifest_sha256": manifest_sha256}
 
 
 def main() -> int:

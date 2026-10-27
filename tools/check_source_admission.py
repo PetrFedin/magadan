@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import hmac
 import json
 from pathlib import Path
 import re
@@ -33,7 +34,9 @@ def sha256(path: Path) -> str:
 
 
 def check(root: Path, trusted_archive_sha256: str | None = None,
-          require_external_pin: bool = False) -> dict:
+          require_external_pin: bool = False,
+          trusted_manifest_sha256: str | None = None,
+          require_manifest_pin: bool = False) -> dict:
     """Verify known archive bytes and protected source roots, not application quality.
 
     A self-reported SHA-256 manifest is insufficient to establish independent
@@ -48,8 +51,19 @@ def check(root: Path, trusted_archive_sha256: str | None = None,
     if numbers != list(MIGRATIONS):
         raise AdmissionBlocked('MIGRATION_SEQUENCE_MISMATCH: ' + ','.join(numbers))
     mf = root / 'SOURCE_RECOVERY_MANIFEST.json'
-    if not mf.is_file():
+    if mf.is_symlink() or not mf.is_file():
         raise AdmissionBlocked('PROVENANCE_MANIFEST_MISSING: original source archive has not been staged')
+    # P0: an externally pinned *archive* hash cannot cryptographically bind a
+    # freely editable manifest to that archive. Pin the manifest's exact bytes
+    # separately to detect forged source plus forged manifest-row hashes.
+    manifest_digest = sha256(mf)
+    if trusted_manifest_sha256 is not None:
+        if not isinstance(trusted_manifest_sha256, str) or not re.fullmatch(r'[0-9a-fA-F]{64}', trusted_manifest_sha256):
+            raise AdmissionBlocked('INVALID_EXTERNAL_MANIFEST_SHA256_PIN')
+        if not hmac.compare_digest(manifest_digest, trusted_manifest_sha256.lower()):
+            raise AdmissionBlocked('EXTERNAL_MANIFEST_SHA256_PIN_MISMATCH')
+    elif require_manifest_pin:
+        raise AdmissionBlocked('EXTERNAL_MANIFEST_SHA256_PIN_REQUIRED')
     try:
         info = json.loads(mf.read_text(encoding='utf-8'))
     except (OSError, ValueError) as exc:
@@ -119,6 +133,8 @@ def check(root: Path, trusted_archive_sha256: str | None = None,
         'file_count_verified': len(entries),
         'original_archive_sha256_claim': digest,
         'external_source_hash_pinned': trusted_archive_sha256 is not None,
+        'external_manifest_hash_pinned': trusted_manifest_sha256 is not None,
+        'source_manifest_sha256': manifest_digest,
         'source_tests_executed': False,
         'github_ci_verified': False,
         'postgresql17_rls_native_accepted': False,
@@ -135,11 +151,17 @@ def main() -> int:
     p.add_argument('--trusted-archive-sha256', default=None,
                    help='SHA-256 received from a source independent of the archive itself')
     p.add_argument('--require-external-pin', action='store_true',
-                   help='Fail if trusted external SHA-256 is not provided')
+                   help='Fail if trusted external archive SHA-256 is not provided')
+    p.add_argument('--trusted-manifest-sha256', default=None,
+                   help='SHA-256 of the exact source manifest from a separate trusted release record')
+    p.add_argument('--require-manifest-pin', action='store_true',
+                   help='Fail if externally pinned source manifest digest is absent')
     args = p.parse_args()
     try:
         print(json.dumps(check(args.root, args.trusted_archive_sha256,
-                               args.require_external_pin), indent=2, ensure_ascii=False))
+                               args.require_external_pin,
+                               args.trusted_manifest_sha256,
+                               args.require_manifest_pin), indent=2, ensure_ascii=False))
         return 0
     except (AdmissionBlocked, OSError) as exc:
         print('SOURCE_ADMISSION_BLOCKED: ' + str(exc), file=sys.stderr)

@@ -45,15 +45,18 @@ jobs:
       - name: Require original source tree, manifest and independent SHA-256
         env:
           HYDRO_TRUSTED_V79_ARCHIVE_SHA256: ${{ vars.HYDRO_TRUSTED_V79_ARCHIVE_SHA256 }}
+          HYDRO_TRUSTED_V79_MANIFEST_SHA256: ${{ vars.HYDRO_TRUSTED_V79_MANIFEST_SHA256 }}
         run: |
-          if [ -z "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" ]; then
-            echo '::error::Missing independently verified archive checksum in repository Actions variables.'
-            echo 'Source admission cannot pass without the original V7.9 archive and a separately confirmed checksum.'
+          if [ -z "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" ] || [ -z "$HYDRO_TRUSTED_V79_MANIFEST_SHA256" ]; then
+            echo '::error::Original archive AND source manifest require separately reviewed SHA-256 pins.'
+            echo 'Never claim provenance based only on self-declared manifest or archive hash.'
             exit 2
           fi
           python -m tools.check_source_admission --root . \
             --require-external-pin \
-            --trusted-archive-sha256 "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256"
+            --trusted-archive-sha256 "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" \
+            --require-manifest-pin \
+            --trusted-manifest-sha256 "$HYDRO_TRUSTED_V79_MANIFEST_SHA256"
 
   application-regression:
     name: Actual HydroKontur Python/JS regression (after source admission)

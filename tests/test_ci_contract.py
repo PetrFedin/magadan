@@ -10,6 +10,8 @@ class RecoveryCIContract(unittest.TestCase):
         self.assertIn('source-tree-admission:', script)
         self.assertIn('--require-external-pin', script)
         self.assertIn('HYDRO_TRUSTED_V79_ARCHIVE_SHA256', script)
+        self.assertIn('HYDRO_TRUSTED_V79_MANIFEST_SHA256', script)
+        self.assertIn('--require-manifest-pin', script)
         self.assertIn('needs: [source-tree-admission]', script)
         self.assertIn('server/tests_v79', script)
         self.assertNotIn('  push:\n', script)
