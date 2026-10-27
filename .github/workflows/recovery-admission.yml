@@ -1,0 +1,80 @@
+name: Magadan V7.9 Recovery Admission
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [feature/v79-source-recovery]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: magadan-recovery-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  recovery-tool-tests:
+    name: Recovery tool / offline fixtures
+    runs-on: ubuntu-latest
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Compile and test recovery tool
+        run: |
+          python -m compileall -q tools
+          python -m unittest discover -s tests -p 'test_*.py' -v
+          git diff --check
+      - name: Explicit scope disclaimer
+        run: |
+          echo 'This job tests the recovery tooling on synthetic fixtures only.'
+          echo 'A green result does not prove that HydroKontur app sources were imported.'
+
+  source-tree-admission:
+    name: SOURCE_ADMISSION_BLOCKED until real V7.9 sources exist
+    needs: [recovery-tool-tests]
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Require original source tree and SHA256 recovery manifest
+        run: |
+          python -m tools.check_source_admission --root .
+
+  application-regression:
+    name: Actual HydroKontur Python/JS regression (after source admission)
+    needs: [source-tree-admission]
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test Python application (synthetic lab only)
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r server/requirements.txt
+          PYTHONPATH=server python -m pytest -q \
+            server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
+            server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 server/tests_v79 \
+            --ignore=server/tests_v71/test_postgres_native.py \
+            --ignore=server/tests_v78/test_postgres_native_v78.py
+      - name: Test JavaScript application
+        working-directory: v6-client
+        run: |
+          npm ci
+          npm test
+      - name: This is NOT native/security/industrial acceptance
+        run: |
+          echo 'PostgreSQL 17 native RLS / corporate MFA / external WORM / field engineering are separate mandatory gates.'
