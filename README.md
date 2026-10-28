@@ -31,7 +31,7 @@
 
 - [Backend и API](server/hydro_api/) · [версионные тесты](server/) · [миграции](server/migrations/) · [веб-интерфейс](server/ui/)
 - [JavaScript-клиент](v6-client/) · [скрипты воспроизведения](scripts/) · [API OpenAPI](docs/)
-- [Релиз V8.0](README_V8.md) · [архитектура V8](docs/V8_MASTER_ARCHITECTURE_RU.md) · [математика и M&V](docs/V8_MV_QUALITY_RU.md)
+- [Релиз V8.0](README_V8.md) · [архитектура V8](docs/V8_MASTER_ARCHITECTURE_RU.md) · [M&V и инженерная модель](docs/V8_MASTER_ARCHITECTURE_RU.md)
 - [Сценарии магаданских пилотов](docs/V8_MAGADAN_PILOT_AND_INVESTMENT_RU.md) · [критерии доказательств](docs/V8_GATE_EVIDENCE_REGISTER_RU.md) · [дорожная карта](docs/V8_EXECUTION_ROADMAP_RU.md)
 - [Импорт и цепочка доказательств](docs/IMPORT_EVIDENCE_V8_2026-10-28.md) · [действительный статус допуска](docs/IMPORT_STATUS.md)
 
