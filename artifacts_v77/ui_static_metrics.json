@@ -1,0 +1,20 @@
+[
+  {
+    "viewport": 1440,
+    "body": 1440,
+    "section": 1200,
+    "sectionClient": 1200
+  },
+  {
+    "viewport": 768,
+    "body": 768,
+    "section": 718,
+    "sectionClient": 718
+  },
+  {
+    "viewport": 375,
+    "body": 375,
+    "section": 343,
+    "sectionClient": 343
+  }
+]

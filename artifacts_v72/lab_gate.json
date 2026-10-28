@@ -1,0 +1,11 @@
+{
+  "gate": "lab",
+  "passed": true,
+  "requirements": {
+    "python_test_report": true,
+    "node_test_report": true,
+    "static_layout": true,
+    "synthetic_classification": true
+  },
+  "missing": []
+}

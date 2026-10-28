@@ -1,0 +1,56 @@
+{
+  "release": "HYDROKONTUR_360_MAGADAN_V7.9",
+  "release_date": "2026-10-25",
+  "status": "LAB_PASS_PRODUCTION_HOLD",
+  "app": "FastAPI, synthetic laboratory data, SQLite, no industrial SCADA integration",
+  "tests_completed": {
+    "python_group_a": 132,
+    "python_group_b": 40,
+    "python_group_c": 58,
+    "python_legacy": 35,
+    "python_unique_total": 265,
+    "javascript_legacy": 63,
+    "end_to_end_http_lab": true,
+    "postgres_native_rls": false,
+    "real_corporate_oidc_mfa": false,
+    "external_worm": false,
+    "independent_powerflow": false,
+    "browser_e2e": false,
+    "magadan_real_asset_data": false
+  },
+  "syntax_static": {
+    "javascript_node_check": true,
+    "html_unique_ids": 162,
+    "js_reference_ids": 121,
+    "missing_js_bindings": []
+  },
+  "openapi": {
+    "paths": 66,
+    "operations": 80
+  },
+  "new_synthetic_case": {
+    "benefit_registry_concurrent_duplicate_blocked": true,
+    "synthetic_mv_difference_kwh": 13.191738,
+    "actual_savings_confirmed": false,
+    "hmac_local_audit_verified": true
+  },
+  "engineering_future_backlog_count": 51,
+  "critical_known_gaps": [
+    "historical financial reports not automatically in unified benefit ledger",
+    "multiple asset identities can represent same physical meter boundary",
+    "not tested with PostgreSQL RLS, no real IdP, no WORM",
+    "synthetic M&V is not a causal or certified saving",
+    "no authorized field pilot or independent solver",
+    "Chromium blocks local file navigation, so visuals/E2E not accepted"
+  ],
+  "evidence_paths": [
+    "artifacts_v79/pytest_group_a.txt",
+    "artifacts_v79/pytest_group_b.txt",
+    "artifacts_v79/pytest_group_c_final.txt",
+    "artifacts_v79/pytest_legacy.txt",
+    "artifacts_v79/node_legacy.txt",
+    "artifacts_v79/postgres_native_attempt.txt",
+    "artifacts_v79/browser_visual_attempt.txt",
+    "artifacts_v79/showcase_trace_v79.json"
+  ]
+}

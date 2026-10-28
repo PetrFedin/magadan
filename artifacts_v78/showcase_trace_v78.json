@@ -1,0 +1,756 @@
+{
+  "version": "V7.8",
+  "classification": "SYNTHETIC_LAB_ONLY",
+  "baseline_case": {
+    "model_kind": "radial_ac_v73",
+    "reference_name": "SYNTHETIC_MAGADAN_REFERENCE_ONLY",
+    "source_voltage_kv_ll": 20.0,
+    "min_voltage_pu": 0.9,
+    "nodes": [
+      {
+        "node_id": "n1",
+        "parent_id": "SOURCE",
+        "r_ohm_per_phase": 0.25,
+        "x_ohm_per_phase": 0.3,
+        "load_p_mw": 2.0,
+        "load_q_mvar": 0.6,
+        "ampacity_a": 1000.0
+      },
+      {
+        "node_id": "n2",
+        "parent_id": "n1",
+        "r_ohm_per_phase": 0.17,
+        "x_ohm_per_phase": 0.22,
+        "load_p_mw": 1.5,
+        "load_q_mvar": 0.55,
+        "ampacity_a": 1000.0
+      },
+      {
+        "node_id": "n3",
+        "parent_id": "n1",
+        "r_ohm_per_phase": 0.12,
+        "x_ohm_per_phase": 0.15,
+        "load_p_mw": 1.0,
+        "load_q_mvar": 0.3,
+        "ampacity_a": 1000.0
+      }
+    ],
+    "windows": [
+      {
+        "name": "normal",
+        "scale": 1.0,
+        "hours": 120.0
+      },
+      {
+        "name": "winter_peak",
+        "scale": 1.2,
+        "hours": 24.0
+      }
+    ]
+  },
+  "alternative_case": {
+    "model_kind": "radial_ac_v73",
+    "reference_name": "SYNTHETIC_MAGADAN_REFERENCE_ONLY",
+    "source_voltage_kv_ll": 20.0,
+    "min_voltage_pu": 0.9,
+    "nodes": [
+      {
+        "node_id": "n1",
+        "parent_id": "SOURCE",
+        "r_ohm_per_phase": 0.13,
+        "x_ohm_per_phase": 0.3,
+        "load_p_mw": 2.0,
+        "load_q_mvar": 0.6,
+        "ampacity_a": 1000.0
+      },
+      {
+        "node_id": "n2",
+        "parent_id": "n1",
+        "r_ohm_per_phase": 0.17,
+        "x_ohm_per_phase": 0.22,
+        "load_p_mw": 1.5,
+        "load_q_mvar": 0.55,
+        "ampacity_a": 1000.0
+      },
+      {
+        "node_id": "n3",
+        "parent_id": "n1",
+        "r_ohm_per_phase": 0.12,
+        "x_ohm_per_phase": 0.15,
+        "load_p_mw": 1.0,
+        "load_q_mvar": 0.3,
+        "ampacity_a": 1000.0
+      }
+    ],
+    "windows": [
+      {
+        "name": "normal",
+        "scale": 1.0,
+        "hours": 120.0
+      },
+      {
+        "name": "winter_peak",
+        "scale": 1.2,
+        "hours": 24.0
+      }
+    ]
+  },
+  "baseline_grid_result": {
+    "status": "LAB_ENGINEERING_LIMITS_MET",
+    "total_line_energy_loss_mwh": 2.399290916,
+    "modelled_hours": 144.0,
+    "maximum_line_loss_p_mw": 0.022384287,
+    "minimum_receiving_voltage_pu": 0.994155256,
+    "constraint_violations": [],
+    "windows": [
+      {
+        "line_loss_p_mw": 0.015517233611538478,
+        "line_loss_q_mvar": 0.018740273843240923,
+        "min_voltage_pu": 0.9951345326042327,
+        "max_kcl_discrepancy_v": 2.528492457505252e-10,
+        "power_balance_residual_mw": 1.1224703484913334e-11,
+        "power_balance_residual_mvar": 1.3557262718677521e-11,
+        "sweep_iterations": 5,
+        "thermal_violations": [],
+        "voltage_violations": [],
+        "nodes": [
+          {
+            "node_id": "n1",
+            "parent_id": "SOURCE",
+            "voltage_pu": 0.996079306,
+            "current_a": 137.073867,
+            "line_loss_p_mw": 0.014091934,
+            "line_loss_q_mvar": 0.01691032
+          },
+          {
+            "node_id": "n2",
+            "parent_id": "n1",
+            "voltage_pu": 0.995134533,
+            "current_a": 46.345808,
+            "line_loss_p_mw": 0.001095446,
+            "line_loss_q_mvar": 0.001417636
+          },
+          {
+            "node_id": "n3",
+            "parent_id": "n1",
+            "voltage_pu": 0.995664969,
+            "current_a": 30.269789,
+            "line_loss_p_mw": 0.000329854,
+            "line_loss_q_mvar": 0.000412317
+          }
+        ],
+        "window": "normal",
+        "scale": 1.0,
+        "hours": 120.0
+      },
+      {
+        "line_loss_p_mw": 0.022384286788560456,
+        "line_loss_q_mvar": 0.02703369310730182,
+        "min_voltage_pu": 0.9941552557083032,
+        "max_kcl_discrepancy_v": 7.676173075506799e-10,
+        "power_balance_residual_mw": 3.3757656638044866e-11,
+        "power_balance_residual_mvar": 4.077002813573927e-11,
+        "sweep_iterations": 5,
+        "thermal_violations": [],
+        "voltage_violations": [],
+        "nodes": [
+          {
+            "node_id": "n1",
+            "parent_id": "SOURCE",
+            "voltage_pu": 0.995290143,
+            "current_a": 164.632569,
+            "line_loss_p_mw": 0.020327912,
+            "line_loss_q_mvar": 0.024393495
+          },
+          {
+            "node_id": "n2",
+            "parent_id": "n1",
+            "voltage_pu": 0.994155256,
+            "current_a": 55.669752,
+            "line_loss_p_mw": 0.001580552,
+            "line_loss_q_mvar": 0.00204542
+          },
+          {
+            "node_id": "n3",
+            "parent_id": "n1",
+            "voltage_pu": 0.994792493,
+            "current_a": 36.355605,
+            "line_loss_p_mw": 0.000475823,
+            "line_loss_q_mvar": 0.000594778
+          }
+        ],
+        "window": "winter_peak",
+        "scale": 1.2,
+        "hours": 24.0
+      }
+    ],
+    "limitation": "Synthetic balanced radial constant-PQ network only; no neutral, unbalanced phases, shunts, transformers, protection, N-1, regulatory calibration or field signoff",
+    "independent_validation": "Separate nodal KCL numerical root; not external engineering validation",
+    "industrial_decision_eligible": false
+  },
+  "alternative_grid_result": {
+    "status": "LAB_ENGINEERING_LIMITS_MET",
+    "total_line_energy_loss_mwh": 1.349564646,
+    "modelled_hours": 144.0,
+    "maximum_line_loss_p_mw": 0.012585543,
+    "minimum_receiving_voltage_pu": 0.995788768,
+    "constraint_violations": [],
+    "windows": [
+      {
+        "line_loss_p_mw": 0.008729263406019233,
+        "line_loss_q_mvar": 0.018689231128441446,
+        "min_voltage_pu": 0.9964938903538741,
+        "max_kcl_discrepancy_v": 9.826592433716185e-11,
+        "power_balance_residual_mw": 3.3253290894208477e-12,
+        "power_balance_residual_mvar": 7.1137183113023636e-12,
+        "sweep_iterations": 5,
+        "thermal_violations": [],
+        "voltage_violations": [],
+        "nodes": [
+          {
+            "node_id": "n1",
+            "parent_id": "SOURCE",
+            "voltage_pu": 0.997437374,
+            "current_a": 136.887081,
+            "line_loss_p_mw": 0.007307848,
+            "line_loss_q_mvar": 0.016864266
+          },
+          {
+            "node_id": "n2",
+            "parent_id": "n1",
+            "voltage_pu": 0.99649389,
+            "current_a": 46.282585,
+            "line_loss_p_mw": 0.00109246,
+            "line_loss_q_mvar": 0.001413771
+          },
+          {
+            "node_id": "n3",
+            "parent_id": "n1",
+            "voltage_pu": 0.997023602,
+            "current_a": 30.228541,
+            "line_loss_p_mw": 0.000328955,
+            "line_loss_q_mvar": 0.000411194
+          }
+        ],
+        "window": "normal",
+        "scale": 1.0,
+        "hours": 120.0
+      },
+      {
+        "line_loss_p_mw": 0.012585543233917515,
+        "line_loss_q_mvar": 0.026945179210508388,
+        "min_voltage_pu": 0.9957887678606037,
+        "max_kcl_discrepancy_v": 2.947883753915147e-10,
+        "power_balance_residual_mw": 9.982335541280918e-12,
+        "power_balance_residual_mvar": 2.134536043740809e-11,
+        "sweep_iterations": 5,
+        "thermal_violations": [],
+        "voltage_violations": [],
+        "nodes": [
+          {
+            "node_id": "n1",
+            "parent_id": "SOURCE",
+            "voltage_pu": 0.996921793,
+            "current_a": 164.362855,
+            "line_loss_p_mw": 0.010535908,
+            "line_loss_q_mvar": 0.024313633
+          },
+          {
+            "node_id": "n2",
+            "parent_id": "n1",
+            "voltage_pu": 0.995788768,
+            "current_a": 55.57843,
+            "line_loss_p_mw": 0.001575371,
+            "line_loss_q_mvar": 0.002038715
+          },
+          {
+            "node_id": "n3",
+            "parent_id": "n1",
+            "voltage_pu": 0.996424958,
+            "current_a": 36.296043,
+            "line_loss_p_mw": 0.000474265,
+            "line_loss_q_mvar": 0.000592831
+          }
+        ],
+        "window": "winter_peak",
+        "scale": 1.2,
+        "hours": 24.0
+      }
+    ],
+    "limitation": "Synthetic balanced radial constant-PQ network only; no neutral, unbalanced phases, shunts, transformers, protection, N-1, regulatory calibration or field signoff",
+    "independent_validation": "Separate nodal KCL numerical root; not external engineering validation",
+    "industrial_decision_eligible": false
+  },
+  "exclusive_wbs": {
+    "currency": "RUB",
+    "tax_basis": "EXCL_VAT_SYNTHETIC",
+    "title": "Synthetic single feeder improvement",
+    "annual_caps_rub": {
+      "2027": "400000",
+      "2028": "1700000",
+      "2029": "600000"
+    },
+    "lines": [
+      {
+        "code": "survey",
+        "title": "Synthetic field survey",
+        "category": "survey",
+        "year": 2027,
+        "quantity": "1",
+        "unit": "lot",
+        "unit_price_rub": "300000",
+        "price_source_ref": "SYNTHETIC-V78-SURVEY",
+        "predecessors": []
+      },
+      {
+        "code": "equipment",
+        "title": "Synthetic apparatus",
+        "category": "equipment",
+        "year": 2028,
+        "quantity": "1",
+        "unit": "lot",
+        "unit_price_rub": "1500000",
+        "price_source_ref": "SYNTHETIC-V78-EQUIPMENT",
+        "predecessors": [
+          "survey"
+        ]
+      },
+      {
+        "code": "commission",
+        "title": "Synthetic commissioning",
+        "category": "commissioning",
+        "year": 2029,
+        "quantity": "1",
+        "unit": "lot",
+        "unit_price_rub": "500000",
+        "price_source_ref": "SYNTHETIC-V78-COMMISSION",
+        "predecessors": [
+          "equipment"
+        ]
+      }
+    ],
+    "contingency_percent": "0"
+  },
+  "financial_input": {
+    "scope": "SYNTHETIC_SINGLE_INTERVENTION_NO_TARIFF",
+    "benefit_key": "SYNTHETIC_V78_MEASURE_01",
+    "discount_anchor_year": 2026,
+    "nominal_discount_rate": "0.12",
+    "discount_source_ref": "SYNTHETIC-NOMINAL-DISCOUNT-V78",
+    "first_full_service_year": 2030,
+    "price_scenario_factors": {
+      "low": "0.7",
+      "base": "1",
+      "high": "1.3"
+    },
+    "annual_assumptions": [
+      {
+        "year": 2030,
+        "cycles": 50,
+        "avoided_supply_cost_rub_per_kwh": {
+          "normal": "3",
+          "winter_peak": "8"
+        },
+        "retained_physical_savings_fraction": "1",
+        "additional_opex_rub": "100000",
+        "cost_assumption_ref": "SYNTHETIC-AVOIDED-COST-2030"
+      },
+      {
+        "year": 2031,
+        "cycles": 50,
+        "avoided_supply_cost_rub_per_kwh": {
+          "normal": "4",
+          "winter_peak": "9"
+        },
+        "retained_physical_savings_fraction": "0.95",
+        "additional_opex_rub": "120000",
+        "cost_assumption_ref": "SYNTHETIC-AVOIDED-COST-2031"
+      }
+    ],
+    "economic_rationale": "The proposed synthetic feeder has altered resistance while loads remain identical. Benefits are priced independently by load window and year; no field verification exists.",
+    "basis": "NOMINAL_RUB_WITH_NOMINAL_DISCOUNT_NO_VAT_OR_TAX"
+  },
+  "result": {
+    "status": "LAB_NON_AUTHORITATIVE_RESEARCH",
+    "scope": "SYNTHETIC_SINGLE_MEASURE_ONLY",
+    "benefit_key": "SYNTHETIC_V78_MEASURE_01",
+    "financial_basis": "NOMINAL_RUB_WITH_NOMINAL_DISCOUNT_NO_VAT_OR_TAX",
+    "discount_rate": "0.12",
+    "anchor_date": "31-DEC-2026",
+    "year_end_convention": true,
+    "first_full_service_year": 2030,
+    "annual_physical_economics": [
+      {
+        "year": 2027,
+        "modeled_hours": "0",
+        "calendar_hours": 8760,
+        "coverage_status": "NO_BENEFITS_DURING_CONSTRUCTION",
+        "signed_saved_energy_kwh": "0.000000",
+        "gross_avoided_cost_rub": "0.00",
+        "opex_delta_rub": "0.00",
+        "wbs_capex_rub": "300000.00",
+        "window_calculations": []
+      },
+      {
+        "year": 2028,
+        "modeled_hours": "0",
+        "calendar_hours": 8784,
+        "coverage_status": "NO_BENEFITS_DURING_CONSTRUCTION",
+        "signed_saved_energy_kwh": "0.000000",
+        "gross_avoided_cost_rub": "0.00",
+        "opex_delta_rub": "0.00",
+        "wbs_capex_rub": "1500000.00",
+        "window_calculations": []
+      },
+      {
+        "year": 2029,
+        "modeled_hours": "0",
+        "calendar_hours": 8760,
+        "coverage_status": "NO_BENEFITS_DURING_CONSTRUCTION",
+        "signed_saved_energy_kwh": "0.000000",
+        "gross_avoided_cost_rub": "0.00",
+        "opex_delta_rub": "0.00",
+        "wbs_capex_rub": "500000.00",
+        "window_calculations": []
+      },
+      {
+        "year": 2030,
+        "modeled_hours": "7200.0",
+        "calendar_hours": 8760,
+        "coverage_status": "PARTIAL_YEAR_NO_EXTRAPOLATION",
+        "signed_saved_energy_kwh": "52486.313499",
+        "gross_avoided_cost_rub": "216251.40",
+        "opex_delta_rub": "100000.00",
+        "wbs_capex_rub": "0.00",
+        "window_calculations": [
+          {
+            "name": "normal",
+            "hours_in_cycle": "120.0",
+            "assumed_cycles": 50,
+            "modelled_hours": "6000.0",
+            "base_loss_mwh_per_cycle": "1.862068033",
+            "alternative_loss_mwh_per_cycle": "1.047511609",
+            "avoided_kwh_after_retention": "40727.821233",
+            "price_rub_per_kwh": "3",
+            "gross_value_rub": "122183.46",
+            "modeled_delivered_active_power_mw": "4.500000",
+            "base_technical_loss_pct_of_input": "0.343642",
+            "alternative_technical_loss_pct_of_input": "0.193608",
+            "base_min_voltage_pu": "0.9951345326042327",
+            "alternative_min_voltage_pu": "0.9964938903538741",
+            "alternative_thermal_violations": [],
+            "alternative_voltage_violations": []
+          },
+          {
+            "name": "winter_peak",
+            "hours_in_cycle": "24.0",
+            "assumed_cycles": 50,
+            "modelled_hours": "1200.0",
+            "base_loss_mwh_per_cycle": "0.537222883",
+            "alternative_loss_mwh_per_cycle": "0.302053038",
+            "avoided_kwh_after_retention": "11758.492266",
+            "price_rub_per_kwh": "8",
+            "gross_value_rub": "94067.94",
+            "modeled_delivered_active_power_mw": "5.400000",
+            "base_technical_loss_pct_of_input": "0.412813",
+            "alternative_technical_loss_pct_of_input": "0.232524",
+            "base_min_voltage_pu": "0.9941552557083032",
+            "alternative_min_voltage_pu": "0.9957887678606037",
+            "alternative_thermal_violations": [],
+            "alternative_voltage_violations": []
+          }
+        ]
+      },
+      {
+        "year": 2031,
+        "modeled_hours": "7200.0",
+        "calendar_hours": 8760,
+        "coverage_status": "PARTIAL_YEAR_NO_EXTRAPOLATION",
+        "signed_saved_energy_kwh": "49861.997824",
+        "gross_avoided_cost_rub": "255300.83",
+        "opex_delta_rub": "120000.00",
+        "wbs_capex_rub": "0.00",
+        "window_calculations": [
+          {
+            "name": "normal",
+            "hours_in_cycle": "120.0",
+            "assumed_cycles": 50,
+            "modelled_hours": "6000.0",
+            "base_loss_mwh_per_cycle": "1.862068033",
+            "alternative_loss_mwh_per_cycle": "1.047511609",
+            "avoided_kwh_after_retention": "38691.430171",
+            "price_rub_per_kwh": "4",
+            "gross_value_rub": "154765.72",
+            "modeled_delivered_active_power_mw": "4.500000",
+            "base_technical_loss_pct_of_input": "0.343642",
+            "alternative_technical_loss_pct_of_input": "0.193608",
+            "base_min_voltage_pu": "0.9951345326042327",
+            "alternative_min_voltage_pu": "0.9964938903538741",
+            "alternative_thermal_violations": [],
+            "alternative_voltage_violations": []
+          },
+          {
+            "name": "winter_peak",
+            "hours_in_cycle": "24.0",
+            "assumed_cycles": 50,
+            "modelled_hours": "1200.0",
+            "base_loss_mwh_per_cycle": "0.537222883",
+            "alternative_loss_mwh_per_cycle": "0.302053038",
+            "avoided_kwh_after_retention": "11170.567652",
+            "price_rub_per_kwh": "9",
+            "gross_value_rub": "100535.11",
+            "modeled_delivered_active_power_mw": "5.400000",
+            "base_technical_loss_pct_of_input": "0.412813",
+            "alternative_technical_loss_pct_of_input": "0.232524",
+            "base_min_voltage_pu": "0.9941552557083032",
+            "alternative_min_voltage_pu": "0.9957887678606037",
+            "alternative_thermal_violations": [],
+            "alternative_voltage_violations": []
+          }
+        ]
+      }
+    ],
+    "scenario_results": {
+      "low": {
+        "scenario_factor": "0.7",
+        "npv_rub": "-1753573.76",
+        "pv_gross_rub": "197607.35",
+        "pv_opex_rub": "131643.03",
+        "pv_capex_rub": "1819538.08",
+        "discounted_payback_year": null,
+        "break_even_extra_gross_multiplier": "9.874031",
+        "yearly_cashflows": [
+          {
+            "year": 2027,
+            "t_year_end": 1,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "300000.00",
+            "net_rub": "-300000.00",
+            "pv_rub": "-267857.14",
+            "cumulative_pv_rub": "-267857.14"
+          },
+          {
+            "year": 2028,
+            "t_year_end": 2,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "1500000.00",
+            "net_rub": "-1500000.00",
+            "pv_rub": "-1195790.82",
+            "cumulative_pv_rub": "-1463647.96"
+          },
+          {
+            "year": 2029,
+            "t_year_end": 3,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "500000.00",
+            "net_rub": "-500000.00",
+            "pv_rub": "-355890.12",
+            "cumulative_pv_rub": "-1819538.08"
+          },
+          {
+            "year": 2030,
+            "t_year_end": 4,
+            "gross_rub": "151375.98",
+            "opex_delta_rub": "100000.00",
+            "capex_from_wbs_rub": "0.00",
+            "net_rub": "51375.98",
+            "pv_rub": "32650.36",
+            "cumulative_pv_rub": "-1786887.72"
+          },
+          {
+            "year": 2031,
+            "t_year_end": 5,
+            "gross_rub": "178710.58",
+            "opex_delta_rub": "120000.00",
+            "capex_from_wbs_rub": "0.00",
+            "net_rub": "58710.58",
+            "pv_rub": "33313.96",
+            "cumulative_pv_rub": "-1753573.76"
+          }
+        ],
+        "positive_npv": false
+      },
+      "base": {
+        "scenario_factor": "1",
+        "npv_rub": "-1668884.89",
+        "pv_gross_rub": "282296.22",
+        "pv_opex_rub": "131643.03",
+        "pv_capex_rub": "1819538.08",
+        "discounted_payback_year": null,
+        "break_even_extra_gross_multiplier": "6.911822",
+        "yearly_cashflows": [
+          {
+            "year": 2027,
+            "t_year_end": 1,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "300000.00",
+            "net_rub": "-300000.00",
+            "pv_rub": "-267857.14",
+            "cumulative_pv_rub": "-267857.14"
+          },
+          {
+            "year": 2028,
+            "t_year_end": 2,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "1500000.00",
+            "net_rub": "-1500000.00",
+            "pv_rub": "-1195790.82",
+            "cumulative_pv_rub": "-1463647.96"
+          },
+          {
+            "year": 2029,
+            "t_year_end": 3,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "500000.00",
+            "net_rub": "-500000.00",
+            "pv_rub": "-355890.12",
+            "cumulative_pv_rub": "-1819538.08"
+          },
+          {
+            "year": 2030,
+            "t_year_end": 4,
+            "gross_rub": "216251.40",
+            "opex_delta_rub": "100000.00",
+            "capex_from_wbs_rub": "0.00",
+            "net_rub": "116251.40",
+            "pv_rub": "73879.87",
+            "cumulative_pv_rub": "-1745658.22"
+          },
+          {
+            "year": 2031,
+            "t_year_end": 5,
+            "gross_rub": "255300.83",
+            "opex_delta_rub": "120000.00",
+            "capex_from_wbs_rub": "0.00",
+            "net_rub": "135300.83",
+            "pv_rub": "76773.32",
+            "cumulative_pv_rub": "-1668884.89"
+          }
+        ],
+        "positive_npv": false
+      },
+      "high": {
+        "scenario_factor": "1.3",
+        "npv_rub": "-1584196.03",
+        "pv_gross_rub": "366985.09",
+        "pv_opex_rub": "131643.03",
+        "pv_capex_rub": "1819538.08",
+        "discounted_payback_year": null,
+        "break_even_extra_gross_multiplier": "5.316786",
+        "yearly_cashflows": [
+          {
+            "year": 2027,
+            "t_year_end": 1,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "300000.00",
+            "net_rub": "-300000.00",
+            "pv_rub": "-267857.14",
+            "cumulative_pv_rub": "-267857.14"
+          },
+          {
+            "year": 2028,
+            "t_year_end": 2,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "1500000.00",
+            "net_rub": "-1500000.00",
+            "pv_rub": "-1195790.82",
+            "cumulative_pv_rub": "-1463647.96"
+          },
+          {
+            "year": 2029,
+            "t_year_end": 3,
+            "gross_rub": "0.00",
+            "opex_delta_rub": "0.00",
+            "capex_from_wbs_rub": "500000.00",
+            "net_rub": "-500000.00",
+            "pv_rub": "-355890.12",
+            "cumulative_pv_rub": "-1819538.08"
+          },
+          {
+            "year": 2030,
+            "t_year_end": 4,
+            "gross_rub": "281126.82",
+            "opex_delta_rub": "100000.00",
+            "capex_from_wbs_rub": "0.00",
+            "net_rub": "181126.82",
+            "pv_rub": "115109.37",
+            "cumulative_pv_rub": "-1704428.71"
+          },
+          {
+            "year": 2031,
+            "t_year_end": 5,
+            "gross_rub": "331891.08",
+            "opex_delta_rub": "120000.00",
+            "capex_from_wbs_rub": "0.00",
+            "net_rub": "211891.08",
+            "pv_rub": "120232.69",
+            "cumulative_pv_rub": "-1584196.03"
+          }
+        ],
+        "positive_npv": false
+      }
+    },
+    "wbs_total_capex_rub": "2300000.00",
+    "wbs_status": "SYNTHETIC_WBS_WITHIN_ASSUMED_CAPS",
+    "wbs_missing_stages": [
+      "design"
+    ],
+    "partial_coverage_years": [
+      2030,
+      2031
+    ],
+    "baseline_constraints_breached": false,
+    "obligation_or_safety_must_be_separately_assessed": false,
+    "economic_gain_is_not_mandatory_project_priority": true,
+    "irr_status": "NOT_REPORTED_MAY_HAVE_MULTIPLE_ROOTS",
+    "tax_and_tariff_model": "EXCLUDED_NOT_VERIFIED",
+    "source_is_not_third_party_attested": true,
+    "independent_engineering_accepted": false,
+    "industrial_approval_eligible": false,
+    "limitations": [
+      "Synthetic radial balanced PQ feeder with fixed topology and artificial loads only",
+      "Only specified annual load windows are monetized; partial-year cases not extrapolated",
+      "No actual tariff: window prices are synthetic avoided-cost assumptions",
+      "Savings retention factors are assumptions, NOT probabilities or measured degradation",
+      "No VAT, income tax, financing, depreciation, regulatory approval or field M&V",
+      "WBS applies to exactly one measure; avoid double-counting programme-level CAPEX",
+      "Year-end nominal cashflows discounted to 31 December of the discount anchor year",
+      "Independent engineering and financial validation required before any decision"
+    ]
+  },
+  "arithmetic_crosscheck": {
+    "low": {
+      "own_recalculated_npv_rub": "-1753573.76",
+      "difference_before_rounding_rub": "0.00080220132422502528708276313440827",
+      "within_5_kopeck_tolerance": true
+    },
+    "base": {
+      "own_recalculated_npv_rub": "-1668884.89",
+      "difference_before_rounding_rub": "0.00220749085667430237401082882132446",
+      "within_5_kopeck_tolerance": true
+    },
+    "high": {
+      "own_recalculated_npv_rub": "-1584196.03",
+      "difference_before_rounding_rub": "0.00478281696242636996489557922294281",
+      "within_5_kopeck_tolerance": true
+    }
+  },
+  "not_verified": [
+    "actual tariffs",
+    "real Magadan measurements",
+    "project construction quantities",
+    "independent powerflow solver",
+    "PostgreSQL RLS",
+    "independent engineering certification"
+  ],
+  "industrial_approval_eligible": false,
+  "trace_sha256_without_self_hash": "405c41108db0531e6041b180c720e3a2889b522a62295d872beea8dfc9c5b77a"
+}

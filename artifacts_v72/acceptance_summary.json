@@ -1,0 +1,55 @@
+{
+  "release": "0.7.2-laboratory",
+  "as_of": "2026-10-23",
+  "synthetic_modules": 6,
+  "server_python_tests": 119,
+  "legacy_node_tests": 63,
+  "python_suite_exit": 0,
+  "node_suite_exit": 0,
+  "frontend_syntax_exit": 0,
+  "native_postgres_executed": false,
+  "native_postgres_status": "BLOCKED_MISSING_DEDICATED_SERVER",
+  "postgres_sql_migration": "060_studies_v72.sql - UNAPPLIED",
+  "corporate_oidc_connected": false,
+  "external_compliance_worm_verified": false,
+  "magadan_field_data_present": false,
+  "field_engineering_accepted": false,
+  "industrial_production_ready": false,
+  "browser_live_http_e2e": "BLOCKED_BY_ADMINISTRATOR",
+  "static_layout": {
+    "scope": "STATIC_LAYOUT_ONLY",
+    "app_http_e2e_pass": false,
+    "widths": {
+      "1440": {
+        "overflow": false,
+        "six_domain_panel_visible": true,
+        "page_errors": []
+      },
+      "768": {
+        "overflow": false,
+        "six_domain_panel_visible": true,
+        "page_errors": []
+      },
+      "375": {
+        "overflow": false,
+        "six_domain_panel_visible": true,
+        "page_errors": []
+      }
+    },
+    "status": "STATIC_LAYOUT_PASS"
+  },
+  "python_runtime": "3.13.5",
+  "dependencies": {
+    "fastapi": "0.128.2",
+    "pydantic": "2.13.5",
+    "SQLAlchemy": "2.0.50",
+    "argon2-cffi": "25.1.0",
+    "PyJWT": "2.13.0",
+    "scipy": "1.17.0",
+    "numpy": "2.3.5",
+    "pytest": "9.0.2",
+    "httpx": "0.28.1",
+    "uvicorn": "0.48.0",
+    "cryptography": "46.0.4"
+  }
+}

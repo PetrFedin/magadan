@@ -1,0 +1,49 @@
+﻿field,type,unit,description,classification,proposed_source,missing_policy
+organization_id,text,-,Organization authority,restricted,owner_registry,fail_closed
+asset_id,text,-,Persistent asset identifier,restricted,EAM_master,fail_closed
+owner_org_id,text,-,Legal data owner,restricted,contract,fail_closed
+asset_type,enum,-,Asset type hierarchy,internal,asset_register,fail_closed
+effective_from,timestamp,ISO 8601,Start of topology version,internal,owner_record,fail_closed
+timestamp_observed,timestamp,ISO 8601 UTC,Observation time,restricted,sensor,fail_closed
+timestamp_available,timestamp,ISO 8601 UTC,When observation could be used,restricted,source_catalog,fail_closed
+forecast_issue_at,timestamp,ISO 8601 UTC,Forecast issue moment,internal,model_registry,fail_closed
+forecast_target_at,timestamp,ISO 8601 UTC,Forecast target moment,internal,model_registry,fail_closed
+source_id,text,-,Immutable source reference,restricted,catalog,fail_closed
+measurement_unit,text,UCUM or approved unit codes,Explicit dimension,internal,dictionary,fail_closed
+quality_flag,enum,validated/review/rejected,Observation readiness,internal,validation,fail_closed
+water_inflow,number,m3/s,Hydrological inflow,restricted,hydropost,missing_not_zero
+storage_volume,number,m3,Reservoir storage,restricted,plant_owner,missing_not_zero
+water_level,number,m,Water surface elevation reference required,restricted,plant_owner,missing_not_zero
+release_flow,number,m3/s,Approved release or modeled option,restricted,plant_owner,missing_not_zero
+head,number,m,Net hydraulic head,restricted,plant_owner,missing_not_zero
+efficiency,number,fraction,Engineering validated map value,restricted,plant_owner,missing_not_zero
+available_power,number,MW,Plant/unit available power,restricted,plant_owner,missing_not_zero
+equipment_condition,number,original physical unit,Unit dependent sensor property,restricted,condition_monitoring,missing_not_zero
+repair_event_id,text,-,Confirmed repair record,restricted,CMMS,fail_closed
+repair_event_class,enum,maintenance/defect/failure,Classified event,restricted,CMMS,fail_closed
+node_id,text,-,Electrical network node,restricted,DMS/GIS,fail_closed
+electricity_in,number,MWh,Measured electrical input,restricted,metering,missing_not_zero
+electricity_out,number,MWh,Measured beneficial delivered,restricted,metering,missing_not_zero
+electricity_own_use,number,MWh,Documented own use,restricted,metering,missing_not_zero
+line_impedance,number,ohm,Line impedance per defined geometry,restricted,asset_register,missing_not_zero
+electric_load,number,MW,Demand of system/location,restricted,metering,missing_not_zero
+heat_massflow,number,kg/s,Heating mass flow,restricted,meters,missing_not_zero
+heat_supply_temp,number,degC,Supply temperature,restricted,meters,missing_not_zero
+heat_return_temp,number,degC,Return temperature,restricted,meters,missing_not_zero
+heat_pressure,number,Pa,Pressure with defined reference,restricted,meters,missing_not_zero
+pipe_length,number,m,Measured pipe length,restricted,as_built,missing_not_zero
+pipe_inner_diameter,number,m,Internal hydraulic diameter,restricted,as_built,missing_not_zero
+project_id,text,-,Investment project UID,restricted,PMO,fail_closed
+wbs_code,text,-,Work breakdown structure code,restricted,estimate,fail_closed
+quantity,number,declared unit,Confirmed quantity,restricted,BOQ,missing_not_zero
+unit_rate,number,RUB/unit,Price and version with source,restricted,estimate,missing_not_zero
+capex_mln_rub,number,RUB million,Project capex in declared period,restricted,approved_budget,missing_not_zero
+opex_mln_rub_year,number,RUB million/year,Additional annual costs,restricted,budget,missing_not_zero
+benefit_id,text,-,Unique causal effect identifier per org,restricted,effect_register,fail_closed
+discount_rate,number,fraction/year,Approved finance parameter,restricted,finance_policy,fail_closed
+model_version,text,-,Model artifact version,internal,model_registry,fail_closed
+dataset_snapshot_id,text,-,Immutable data snapshot version,restricted,data_registry,fail_closed
+constraint_set_id,text,-,Signed hard-constraint set version,restricted,engineering_policy,fail_closed
+evidence_ref,text,URI + hash/receipt,Immutable source document reference,restricted,evidence_store,fail_closed
+decision_status,enum,stage,Governed state-machine state,restricted,workflow,fail_closed
+outcome_verified,boolean,-,Independent proof status,restricted,auditor,fail_closed

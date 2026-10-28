@@ -1,0 +1,5 @@
+Static HTML path verified: True
+VISUAL_ACCEPTANCE_BLOCKED: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at file:///mnt/data/hydro_v79_work/hydrokontur-v79/artifacts_v79/preview_v79_static.html
+Call log:
+  - navigating to "file:///mnt/data/hydro_v79_work/hydrokontur-v79/artifacts_v79/preview_v79_static.html", waiting until "domcontentloaded"
+

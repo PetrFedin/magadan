@@ -1,0 +1,860 @@
+{
+  "competitors": [
+    [
+      "Россия",
+      "Политерм ZuluThermo",
+      "HeatNet Economics",
+      "Поверочные/наладочные расчёты, калибровка, поиск утечек и аномалий, теплопотери, надёжность, резерв, термограммы",
+      "Интеграция валидированной модели в расчёт экономических альтернатив и послепроектное доказательство",
+      "https://www.politerm.com/products/thermo/zuluthermo/",
+      "Официальная страница",
+      "Нет практического теста продукта"
+    ],
+    [
+      "Россия",
+      "RastrWin3",
+      "GridLoss Planner",
+      "Расчёт потокораспределения, напряжений, активных и реактивных потерь, режимная оптимизация",
+      "Инженерная сверка через одобренный расчётный инструмент; связь с инвестиционными мероприятиями",
+      "https://www.rastrwin.ru/download/Files/HELP_RastrWin3_29_08_12.pdf",
+      "Руководство продукта",
+      "Версия руководства нуждается в проверке актуальности"
+    ],
+    [
+      "Россия",
+      "1С:ТОИР КОРП",
+      "TurbineReliability",
+      "Паспорта, ремонты по состоянию, ремонтные нормативы, история, мобильная работа, фото/видео, версии",
+      "Промышленная диагностика с экономическим обоснованием; интегрировать события/наряды, не копировать EAM",
+      "https://solutions.1c.ru/catalog/eam2/features",
+      "Официальное описание",
+      "Не тестировали интеграцию"
+    ],
+    [
+      "Россия",
+      "Форсайт. Бюджетирование и консолидация",
+      "HydroCAPEX",
+      "Внедрено в РусГидро; финансовое планирование, отчётность, инвестиционные проекты, долгосрочные прогнозы",
+      "Ограничить HydroCAPEX инженерными доказательствами и возвратом факта, не создавать конкурирующую ERP",
+      "https://www.fsight.ru/news/rusgidro-zavershilo-perevod-finansovoj-otchetnosti-i-biznes-planirovaniya-na-rossijskuyu-platformu-forsajt-byudzhetirovanie-i-konsolidacziya/",
+      "Сообщение вендора от 17.02.2026",
+      "Неизвестна конфигурация конкретных интерфейсов"
+    ],
+    [
+      "Россия",
+      "1С:ERP. Управление холдингом",
+      "HydroCAPEX",
+      "Инвестиционная идея — проект — завершение, декомпозиция этапов и ресурсов",
+      "Доказательства технической потребности и сравнительных альтернатив, интеграция в инвестиционную систему",
+      "https://v8.1c.ru/cpm-erp/upravlenie-investitsionnymi-proektami-cpm-erp/",
+      "Официальное описание",
+      "Отраслевой охват конфигурации не проверен"
+    ],
+    [
+      "Россия",
+      "1С:Заказчик-застройщик. Модуль для 1С:ERP",
+      "HydroCAPEX",
+      "NPV, IRR, бюджетные сценарии, план-факт проекта, окупаемость",
+      "Передача инженерных расчётов и проверенных оснований в строительный инвестиционный поток",
+      "https://solutions.1c.ru/catalog/zzerp/features",
+      "Официальное описание",
+      "Не проверены лицензии внедрения"
+    ],
+    [
+      "Россия",
+      "ГРАНД-Смета",
+      "HydroCAPEX",
+      "Сметные расчёты с нормативными базами, версии актуальной сметной платформы",
+      "Сметы как подписанный источник, версии WBS, без переписывания нормативной базы",
+      "https://www.grandsmeta.ru/",
+      "Официальный сайт",
+      "Не подтверждён конкретный формат прямого импорта"
+    ],
+    [
+      "Россия",
+      "Renga",
+      "HydroCAPEX",
+      "3D-модели зданий, чертежи, спецификации, инженерные системы, IFC, API",
+      "Привязка модели к решению/смете/сроку; не конкурировать по BIM-геометрии",
+      "https://help.rengabim.com/ru/Content/interface.htm",
+      "Официальная справка",
+      "Не проверен формат проектных объектов энергетики"
+    ],
+    [
+      "Россия",
+      "Pilot-BIM АСКОН",
+      "HydroCAPEX",
+      "Среда BIM-данных, клиент/сервер, SDK, замечания к моделям и документам",
+      "Связь версий согласованных документов с бюджетными и инженерными решениями",
+      "https://support.ascon.ru/news/3618/",
+      "Новости АСКОН об SDK и замечаниях",
+      "Ограниченный открытый функциональный обзор"
+    ],
+    [
+      "Мир",
+      "Deltares Delft-FEWS",
+      "HydroForecast",
+      "Объединение прогнозов, временных рядов, внешних моделей, веб-сервисы и сценарии",
+      "Не повторять полную платформу прогнозирования; добавить стоимость информации и проверку решений",
+      "https://www.deltares.nl/en/software-and-data/products/delft-fews-platform",
+      "Официальная страница",
+      "Функциональность интеграций требует стенда"
+    ],
+    [
+      "Мир",
+      "USACE HEC-ResSim",
+      "CascadeEconomics",
+      "Симуляция резервуаров и каскадов, правила, зоны, водохозяйственные ограничения, гидроэнергетика",
+      "Нормативный rulebook + инженерная проверка + экономическое решение при тех же ограничениях",
+      "https://www.hec.usace.army.mil/software/hec-ressim/features.aspx",
+      "Официальная документация USACE",
+      "Не интегрирован и не проверен на Колыме"
+    ],
+    [
+      "Мир",
+      "IBM Maximo Application Suite",
+      "TurbineReliability",
+      "Жизненный цикл активов, обслуживание, прогнозная аналитика, выездная работа offline, QR/RFID",
+      "Отраслевая аналитика диагностики и доказательная экономика; интеграция EAM-нарядов",
+      "https://www.ibm.com/products/maximo/asset-management",
+      "Официальная страница",
+      "Доступность лицензий и российских поставок не подтверждена"
+    ],
+    [
+      "Мир",
+      "GE Vernova APM",
+      "TurbineReliability",
+      "RCM, надёжность и доступность, GAA, predictive diagnostics SmartSignal",
+      "Калибровка отказов и связь с региональной логистикой и финансовыми решениями",
+      "https://www.gevernova.com/software/products/asset-performance-management/asset-reliability",
+      "Официальная страница",
+      "Нет доступа к промышленным моделям"
+    ],
+    [
+      "Мир",
+      "AVEVA PI System",
+      "Общая архитектура",
+      "Операционная история временных рядов, контекст активов, события, визуализация и интерфейсы",
+      "Не строить новый промышленный historian; разрешённые адаптеры/lineage",
+      "https://www.aveva.com/en/products/aveva-pi-system.c9/",
+      "Официальная страница",
+      "Не проверена конкретная конфигурация РусГидро"
+    ],
+    [
+      "Мир",
+      "DIgSILENT PowerFactory",
+      "GridLoss Planner",
+      "AC/DC load flow, КЗ, N-1, sensitivity, сценарии, отчёты, версии модели",
+      "Режимные расчёты через подходящий движок; экономика и инвестиционные предложения поверх",
+      "https://www.digsilent.de/en/functions.html",
+      "Официальные функции",
+      "Не подтверждена применимость к пилоту без исходных моделей"
+    ],
+    [
+      "Мир",
+      "Siemens PSS/E",
+      "GridLoss Planner",
+      "Режимные исследования, аварийные сценарии, OPF, динамика, Python API",
+      "API-ready расчётные адаптеры, оценка целесообразности мероприятий",
+      "https://www.siemens.com/en-us/products/pss-software/psse/",
+      "Официальная страница",
+      "Условия поставки и поддержки требуют уточнения"
+    ],
+    [
+      "Мир",
+      "Oracle Primavera Unifier",
+      "HydroCAPEX",
+      "Бюджеты, изменения, договоры, многоконтурное финансирование, согласования, cash flow",
+      "Увязать инженерный source evidence и ex-post benefit с учётными системами, не дублировать Unifier",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/",
+      "Официальная страница",
+      "Состав функций зависит от модулей/конфигурации"
+    ],
+    [
+      "Мир",
+      "Bentley SYNCHRO 4D",
+      "HydroCAPEX",
+      "Строительная 4D-модель, стройграфик, what-if, BIM-коллизии, отчётность",
+      "Зависимости инженерных рисков, северной логистики и стоимости задержек",
+      "https://www.bentley.com/products/synchro-4d",
+      "Официальная страница",
+      "Не включено в лабораторный прототип"
+    ]
+  ],
+  "backlog": [
+    [
+      "DATA-001",
+      "Платформа",
+      "Разделение организаций на уровне сервера",
+      "1С / IBM Maximo",
+      "Tenant+RBAC на сервере и DB RLS",
+      "P0",
+      "Запрос организации А к активу Б получает 403 и аудит",
+      "Лаб: UI + проверки домена; сервер отсутствует",
+      "https://solutions.1c.ru/catalog/eam2/features"
+    ],
+    [
+      "DATA-002",
+      "Платформа",
+      "Устойчивые ID активов, оборудования, проектов",
+      "1С ТОИР / AVEVA",
+      "Asset Graph + связи с версиями",
+      "P0",
+      "Карточка решения ведёт к активу и измерениям",
+      "Лаб: объект → инициатива",
+      "https://www.aveva.com/en/products/aveva-pi-system.c9/"
+    ],
+    [
+      "DATA-003",
+      "Платформа",
+      "Происхождение, период и качество каждого ряда",
+      "Delft FEWS / AVEVA PI",
+      "Source lineage + Data Health Center",
+      "P0",
+      "Файл без источника или единиц не принимается",
+      "Лаб: поле evidenceRef, схемы нет",
+      "https://www.deltares.nl/en/software-and-data/products/delft-fews-platform"
+    ],
+    [
+      "DATA-004",
+      "Платформа",
+      "Единицы измерения и конвертация",
+      "Инженерные системы",
+      "Проверки единиц в каждой модели",
+      "P0",
+      "Разные единицы не смешиваются; ошибка видна",
+      "Лаб: фиксированные единицы",
+      "https://www.digsilent.de/en/functions.html"
+    ],
+    [
+      "DATA-005",
+      "Платформа",
+      "Версионность моделей и источников",
+      "Pilot BIM / PI",
+      "Снимки расчёта/параметров без тихой перезаписи",
+      "P0",
+      "Старые расчёты воспроизводимы",
+      "Лаб: отсутствует",
+      "https://support.ascon.ru/news/3618/"
+    ],
+    [
+      "DATA-006",
+      "Платформа",
+      "Конструктор импорта данных CSV/API",
+      "PI / Delft-FEWS",
+      "Валидация схем, версий, ошибок",
+      "P1",
+      "Массовый импорт с ошибками и отчётом качества",
+      "Лаб: отсутствует",
+      "https://fewsdocs.deltares.nl/"
+    ],
+    [
+      "DATA-007",
+      "Платформа",
+      "Безопасная read-only OT-интеграция",
+      "AVEVA PI",
+      "Только разрешённые выгрузки, сегментация",
+      "P0",
+      "Нет записи команд в АСУ ТП, проверка сетевых правил",
+      "Лаб: OT-связей нет",
+      "https://www.aveva.com/en/products/aveva-pi-system.c9/"
+    ],
+    [
+      "DATA-008",
+      "Платформа",
+      "Offline-пакет инженера",
+      "IBM Maximo / 1С ТОИР",
+      "Контролируемая локальная очередь с разрешённой синхронизацией",
+      "P2",
+      "Подписание офлайн-записи и разрешение конфликтов",
+      "Лаб: отсутствует",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "DATA-009",
+      "Платформа",
+      "Журнал доказательств и корректировок",
+      "Unifier / 1С",
+      "Append-only audit + source version diff",
+      "P0",
+      "Изменение события обнаруживается",
+      "Лаб: SHA256 или контрольный демохеш, 29 тестов",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "DATA-010",
+      "Платформа",
+      "Событийная шина и outbox",
+      "Enterprise интеграции",
+      "Idempotency, event schema и retries",
+      "P1",
+      "Повторный webhook не удваивает действие",
+      "Лаб: отсутствует",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "DATA-011",
+      "Платформа",
+      "Реальные роли и SSO",
+      "Enterprise ПО",
+      "SSO+MFA+policies+audit",
+      "P0",
+      "Права не меняются через переключатель в браузере",
+      "Лаб: переключатель только для демо",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "DATA-012",
+      "Платформа",
+      "Наблюдаемость и SLO",
+      "Enterprise ПО",
+      "Ошибки сервисов, очередь моделей, задержка данных",
+      "P1",
+      "SLO, трассировка и деградация сервиса",
+      "Лаб: отсутствует",
+      "https://www.aveva.com/en/products/aveva-pi-system.c9/"
+    ],
+    [
+      "HYD-001",
+      "HydroForecast",
+      "Модели прогноза + baseline",
+      "Delft FEWS",
+      "Гидрология и статистика на одинаковом backtest",
+      "P0",
+      "MAE/CRPS на отложенных годах не хуже baseline",
+      "Лаб: MAE на 4 синтетических точках",
+      "https://www.deltares.nl/en/software-and-data/products/delft-fews-platform"
+    ],
+    [
+      "HYD-002",
+      "HydroForecast",
+      "Калибровка прогнозных интервалов",
+      "Delft FEWS",
+      "Probabilistic reliability и quantiles",
+      "P1",
+      "Покрытие интервалов в заданных пределах",
+      "Лаб: нет",
+      "https://fewsdocs.deltares.nl/"
+    ],
+    [
+      "HYD-003",
+      "HydroForecast",
+      "Снег/мерзлота/метеосценарии",
+      "Wflow / HydroMT",
+      "Региональная модель Колымского водосбора",
+      "P1",
+      "Верифицированный водный баланс на периоде",
+      "Лаб: нет",
+      "https://www.deltares.nl/en/software-and-data/products/delft-fews-platform"
+    ],
+    [
+      "HYD-004",
+      "HydroForecast",
+      "Ансамбль и происхождение метеопрогноза",
+      "Delft FEWS",
+      "Члены ансамбля, окно, версия",
+      "P1",
+      "Каждый вывод содержит данные и время выпуска",
+      "Лаб: нет",
+      "https://www.deltares.nl/en/software-and-data/products/delft-fews-platform"
+    ],
+    [
+      "HYD-005",
+      "HydroForecast",
+      "Оценка экономической ценности прогноза",
+      "Решение заказчика",
+      "Контрфактическая value-of-information",
+      "P2",
+      "Модель выигрывает от baseline на holdout",
+      "Лаб: проектная гипотеза",
+      "https://www.deltares.nl/en/software-and-data/products/delft-fews-platform"
+    ],
+    [
+      "CAS-001",
+      "CascadeEconomics",
+      "Водный баланс каскада",
+      "HEC-ResSim",
+      "Модели двух станций с подтверждёнными характеристиками",
+      "P0",
+      "Баланс массы по всем временным шагам",
+      "Лаб: одномоментный баланс без реальной схемы",
+      "https://www.hec.usace.army.mil/software/hec-ressim/features.aspx"
+    ],
+    [
+      "CAS-002",
+      "CascadeEconomics",
+      "Реестр обязательных ограничений",
+      "HEC-ResSim",
+      "Версионированные water rules + precedence",
+      "P0",
+      "Недопустимые альтернативы не проходят к экономике",
+      "Лаб: учебные границы запаса",
+      "https://www.hec.usace.army.mil/software/hec-ressim/features.aspx"
+    ],
+    [
+      "CAS-003",
+      "CascadeEconomics",
+      "Сценарная гидрогенерация",
+      "HEC-ResSim",
+      "График производственных возможных значений",
+      "P1",
+      "Калибровка на исторических режимных расчётах",
+      "Лаб: формула P=ρgQHη",
+      "https://www.hec.usace.army.mil/software/hec-ressim/features.aspx"
+    ],
+    [
+      "CAS-004",
+      "CascadeEconomics",
+      "Анализ ремонта агрегатов и водности",
+      "HEC-ResSim",
+      "Многомерный stochastic scenario engine",
+      "P2",
+      "Решение устойчиво в оговорённой области",
+      "Лаб: нет",
+      "https://www.hec.usace.army.mil/software/hec-ressim/features.aspx"
+    ],
+    [
+      "TUR-001",
+      "TurbineReliability",
+      "Реестр агрегатов и истории ремонтов",
+      "1С ТОИР / Maximo",
+      "Не дублировать EAM, синхронизировать паспорта",
+      "P0",
+      "Один assetId во всех системах",
+      "Лаб: 2 именованных энергообъекта",
+      "https://solutions.1c.ru/catalog/eam2/features"
+    ],
+    [
+      "TUR-002",
+      "TurbineReliability",
+      "Режимно-обусловленная аномалия",
+      "GE APM / Maximo",
+      "Condition anomaly без ложной вероятности отказа",
+      "P0",
+      "Аномалии на проверенной выборке, false alarm rate",
+      "Лаб: Z-score с предупреждением",
+      "https://www.gevernova.com/software/products/asset-performance-management/asset-reliability"
+    ],
+    [
+      "TUR-003",
+      "TurbineReliability",
+      "Taxonomy дефектов и подтверждений",
+      "IBM Maximo / 1С ТОИР",
+      "Версии классификаторов + метки эксперта",
+      "P1",
+      "События согласованы и пригодны для валидации",
+      "Лаб: нет",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "TUR-004",
+      "TurbineReliability",
+      "Рекомендация → наряд ТОиР",
+      "IBM Maximo / 1С ТОИР",
+      "Outbox + подтверждение факта ремонта",
+      "P1",
+      "Наряд из EAM связан с исходным дефектом",
+      "Лаб: статусы без EAM",
+      "https://solutions.1c.ru/catalog/eam2/features"
+    ],
+    [
+      "TUR-005",
+      "TurbineReliability",
+      "Ремонт с учётом северной логистики",
+      "Дополнительная специализация",
+      "Lead-time, склад, доставка, бригада",
+      "P2",
+      "Сценарии стоимости имеют источники цен",
+      "Лаб: спецификация",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "GRID-001",
+      "GridLoss Planner",
+      "Баланс ввода/отпуска/собственных нужд",
+      "RastrWin / PowerFactory",
+      "Модель измеренных границ + проверки",
+      "P0",
+      "Некорректный баланс блокируется",
+      "Лаб: баланс и запрет отрицательного остатка",
+      "https://www.rastrwin.ru/download/Files/HELP_RastrWin3_29_08_12.pdf"
+    ],
+    [
+      "GRID-002",
+      "GridLoss Planner",
+      "Эталонный электрический solver",
+      "PowerFactory / RastrWin",
+      "AC PF, реактивная мощность, типология",
+      "P0",
+      "Сверка с официальной инженерной моделью",
+      "Лаб: нет солвера",
+      "https://www.digsilent.de/en/load-flow-analysis.html"
+    ],
+    [
+      "GRID-003",
+      "GridLoss Planner",
+      "Контингенции N-1",
+      "PowerFactory / PSS/E",
+      "Анализ сценариев с допустимостью",
+      "P1",
+      "N-1 кейсы с заданным эталоном",
+      "Лаб: нет",
+      "https://www.digsilent.de/index.php/en/contingency-analysis.html"
+    ],
+    [
+      "GRID-004",
+      "GridLoss Planner",
+      "Технические vs измеренные потери",
+      "RastrWin",
+      "Объяснимый остаток без обвинений",
+      "P0",
+      "Необъяснённый остаток не маркируется как хищение",
+      "Лаб: реализована защита интерпретации",
+      "https://www.rastrwin.ru/download/Files/HELP_RastrWin3_29_08_12.pdf"
+    ],
+    [
+      "GRID-005",
+      "GridLoss Planner",
+      "Экономическая карта модернизации",
+      "1C инвестиционные модули",
+      "От схемы к CAPEX с сравнимыми ограничениями",
+      "P1",
+      "NPV с подтверждёнными данными по участку",
+      "Лаб: одна учебная карточка",
+      "https://solutions.1c.ru/catalog/zzerp/features"
+    ],
+    [
+      "GRID-006",
+      "GridLoss Planner",
+      "Электропотребление и региональные стресс-тесты",
+      "PSS/E",
+      "Водность + нагрузка + N-1 для изолированной ЭС",
+      "P2",
+      "Проверяемые режимные стресс-тесты без SCADA-команд",
+      "Лаб: нет",
+      "https://www.siemens.com/en-us/products/pss-software/psse/"
+    ],
+    [
+      "HEAT-001",
+      "HeatNet Economics",
+      "Теплогидравлический solver",
+      "ZuluThermo",
+      "Интеграция/верификация стороннего solver",
+      "P0",
+      "Отклонение от эталона в согласованном допуске",
+      "Лаб: только Q=mcΔT",
+      "https://www.politerm.com/products/thermo/zuluthermo/"
+    ],
+    [
+      "HEAT-002",
+      "HeatNet Economics",
+      "Калибровка модели сети",
+      "ZuluThermo",
+      "Проверка исходных параметров и контрольных точек",
+      "P1",
+      "Ошибка измерений и модели документирована",
+      "Лаб: нет",
+      "https://www.politerm.com/zuluthermo/webhelp/calibration_run.html"
+    ],
+    [
+      "HEAT-003",
+      "HeatNet Economics",
+      "Термограммы и поиск утечек",
+      "ZuluThermo",
+      "Импорт заключений/геопривязка",
+      "P1",
+      "Событие в модели связано с подтверждённым дефектом",
+      "Лаб: нет",
+      "https://www.politerm.com/products/thermo/zuluthermo/"
+    ],
+    [
+      "HEAT-004",
+      "HeatNet Economics",
+      "Расчёт надёжности теплосети",
+      "ZuluThermo",
+      "Социальный приоритет + стоимость альтернатив",
+      "P2",
+      "Обязательные мероприятия не исключаются из-за NPV",
+      "Лаб: спецификация",
+      "https://www.politerm.com/products/thermo/zuluthermo/"
+    ],
+    [
+      "HEAT-005",
+      "HeatNet Economics",
+      "Тепловые потери и нормализация погоды",
+      "ZuluThermo",
+      "Погодная корректировка до/после",
+      "P1",
+      "Контрольный период с нормализацией данных",
+      "Лаб: нет",
+      "https://www.politerm.com/products/thermo/zuluthermo/"
+    ],
+    [
+      "FIN-001",
+      "HydroCAPEX",
+      "NPV и сценарные денежные потоки",
+      "1С / Oracle",
+      "Реальное, номинальное, налоговое и тарифное измерения",
+      "P0",
+      "Сверка с утверждённой финансовой моделью",
+      "Лаб: упрощённый NPV",
+      "https://solutions.1c.ru/catalog/zzerp/features"
+    ],
+    [
+      "FIN-002",
+      "HydroCAPEX",
+      "Привязка к корпоративному бюджету",
+      "Форсайт/1С",
+      "Read-only/controlled ERP handoff, без второй бухгалтерии",
+      "P0",
+      "Двустороннее сопоставление ID/версия",
+      "Лаб: нет интеграции",
+      "https://www.fsight.ru/news/rusgidro-zavershilo-perevod-finansovoj-otchetnosti-i-biznes-planirovaniya-na-rossijskuyu-platformu-forsajt-byudzhetirovanie-i-konsolidacziya/"
+    ],
+    [
+      "FIN-003",
+      "HydroCAPEX",
+      "Многоступенчатое согласование",
+      "Oracle / 1C",
+      "Инженер → финансы → утверждение → исполнение → факт",
+      "P0",
+      "Нельзя утвердить без инженерного протокола",
+      "Лаб: workflow, 7 переходов",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "FIN-004",
+      "HydroCAPEX",
+      "Запрет двойного учёта эффекта",
+      "Авторская проектная гипотеза",
+      "Benefit register idempotent + конфликт значений",
+      "P0",
+      "Дубли исключаются; конфликт блокируется",
+      "Лаб: реализовано, тесты",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "FIN-005",
+      "HydroCAPEX",
+      "Проверка достигнутого результата",
+      "Asset management",
+      "Post Investment Proof + baseline+weather normalization",
+      "P1",
+      "Метод контроля и первичные факты задокументированы",
+      "Лаб: ссылка на акт без фактических метрик",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "FIN-006",
+      "HydroCAPEX",
+      "Договоры/изменения/обязательства",
+      "Oracle Primavera Unifier",
+      "Заимствование логики через адаптер, без дублирования полного Unifier",
+      "P1",
+      "Изменения не уничтожают прошлые суммы и подписи",
+      "Лаб: нет",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "FIN-007",
+      "HydroCAPEX",
+      "Версии смет и сметное обоснование",
+      "ГРАНД-Смета",
+      "Ссылки на WBS и проверенные нормативные расчёты",
+      "P1",
+      "Смета подтверждается источником и версией",
+      "Лаб: нет",
+      "https://www.grandsmeta.ru/"
+    ],
+    [
+      "FIN-008",
+      "HydroCAPEX",
+      "BIM/IFC + 4D-строительство",
+      "Renga / SYNCHRO",
+      "Связь BIM объекта, WBS, графика, CAPEX",
+      "P2",
+      "Согласованные геометрии и сроки",
+      "Лаб: нет",
+      "https://www.bentley.com/products/synchro-4d"
+    ],
+    [
+      "FIN-009",
+      "HydroCAPEX",
+      "Северная логистика и геокриология",
+      "Региональная инженерная задача",
+      "Сценарии доставки/заморозки/сезонного окна",
+      "P2",
+      "Стоимость и сроки имеют верифицированные источники",
+      "Лаб: проектная гипотеза",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "FIN-010",
+      "HydroCAPEX",
+      "Обязательные мероприятия вне NPV-рейтинга",
+      "Compliance",
+      "Hard constraints для обязательных и safety работ",
+      "P0",
+      "Обязательная работа не удаляется при отрицательном NPV",
+      "Лаб: спецификация",
+      "https://v8.1c.ru/cpm-erp/upravlenie-investitsionnymi-proektami-cpm-erp/"
+    ],
+    [
+      "FIN-011",
+      "HydroCAPEX",
+      "Независимое экономическое подтверждение",
+      "Oracle / 1C",
+      "Отделить утверждённую стоимость и исполняемый факт",
+      "P1",
+      "Ни один акт не меняет бюджет без процедуры",
+      "Лаб: частично: роли и переходы",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "UX-001",
+      "Интерфейс",
+      "Одна карточка решения от сигнала до факта",
+      "IBM Maximo / Oracle",
+      "Direct drilldown, timeline, объяснение, одно действие",
+      "P0",
+      "Пользователь проходит все роли до подтверждения",
+      "Лаб: реализовано, E2E",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "UX-002",
+      "Интерфейс",
+      "Мобильные сценарии и доступность",
+      "IBM Maximo",
+      "375px, keyboard flow, контраст, офлайн-заметки",
+      "P1",
+      "Без горизонтального переполнения на 375px",
+      "Лаб: экран протестирован на 375px",
+      "https://www.ibm.com/products/maximo/asset-management"
+    ],
+    [
+      "UX-003",
+      "Интерфейс",
+      "Сравнение альтернатив side-by-side",
+      "Oracle Unifier / PowerFactory",
+      "3 сценария в одном окне с диапазоном неопределённости",
+      "P1",
+      "Нельзя сравнить разный baseline без предупреждения",
+      "Лаб: нет",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ],
+    [
+      "UX-004",
+      "Интерфейс",
+      "Экспорт защитного досье",
+      "Renga/Pilot-BIM",
+      "DOCX/PDF/XLSX с версиями данных",
+      "P1",
+      "Пакет самодостаточен и имеет подписи",
+      "Лаб: JSON export",
+      "https://help.rengabim.com/ru/Content/interface.htm"
+    ],
+    [
+      "UX-005",
+      "Интерфейс",
+      "Инженерное объяснение ограничений",
+      "HEC-ResSim / PowerFactory",
+      "Почему сценарий недопустим",
+      "P1",
+      "Причина содержит source rule и timestamp",
+      "Лаб: простой reason для воды",
+      "https://www.hec.usace.army.mil/software/hec-ressim/features.aspx"
+    ],
+    [
+      "UX-006",
+      "Интерфейс",
+      "Удобство сравнения подтверждений с фактом",
+      "Oracle / GE",
+      "Evidence diff + timeline",
+      "P2",
+      "Аудитор отслеживает полный путь за 3 перехода",
+      "Лаб: карточка + журнал",
+      "https://www.oracle.com/construction-engineering/primavera-unifier-project-controls-asset-management/"
+    ]
+  ],
+  "qa": [
+    [
+      "Доступные материалы",
+      "V4 DOCX/PDF + XLSX из 18 листов",
+      "Подтверждено локальным просмотром",
+      "Исходники промышленного приложения отсутствуют"
+    ],
+    [
+      "GitHub",
+      "Доступные репозитории проверены; hydro/magadan не найдены",
+      "Подтверждено подключением",
+      "Требуется ссылка, если отдельный закрытый репозиторий существует"
+    ],
+    [
+      "Финансовая книга V4",
+      "18 листов, 221 формула, явные ошибки Excel не обнаружены",
+      "Статический аудит",
+      "Полная независимая актуарная проверка всех допущений не выполнена"
+    ],
+    [
+      "Код",
+      "6 предметных учебных расчётов",
+      "Реализовано в V5 lab",
+      "Не является отраслевым solver"
+    ],
+    [
+      "Unit tests",
+      "29 из 29 пройдены",
+      "PASS",
+      "Проверены только локальные контрактные функции"
+    ],
+    [
+      "Browser modules",
+      "6 из 6 открыты и рассчитаны",
+      "PASS",
+      "Реализован в изолированном HTML предпросмотре"
+    ],
+    [
+      "Decision lifecycle",
+      "7 переходов и независимые роли",
+      "PASS",
+      "Роль демонстрационная, не серверная"
+    ],
+    [
+      "Audit chain",
+      "8 событий и проверка хешей",
+      "PASS",
+      "Серверной неизменяемости нет"
+    ],
+    [
+      "Negative grid balance",
+      "Расчёт отклоняется",
+      "PASS",
+      "Не электротехническая верификация"
+    ],
+    [
+      "Mobile",
+      "375px, scrollWidth=375",
+      "PASS",
+      "Не заменяет полную device QA"
+    ],
+    [
+      "Connectivity",
+      "В браузере нет интеграций с АСУ ТП",
+      "PASS",
+      "Production HOLD"
+    ],
+    [
+      "Сторонние библиотеки",
+      "Составлен shortlist без внедрения",
+      "ДОПУЩЕНИЕ",
+      "Проверить лицензии каждого компонента"
+    ],
+    [
+      "Production readiness",
+      "Backend, DB, SSO, защищённый журнал, ETL отсутствуют",
+      "BLOCKED",
+      "Требуется промышленная реализация и независимый аудит"
+    ]
+  ]
+}

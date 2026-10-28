@@ -1,0 +1,53 @@
+{
+  "release": "V7.1 RC1",
+  "evidence_date": "2026-10-22",
+  "production_ready": false,
+  "corporate_idp_connected": false,
+  "real_worm_acceptance": false,
+  "native_postgres_acceptance": "BLOCKED_NOT_EXECUTED",
+  "native_test_functions_authored": 20,
+  "python": {
+    "passed": 90,
+    "failed": 0,
+    "groups": [
+      {
+        "name": "local_server_a",
+        "testcases": 10,
+        "passed": 10,
+        "failed": 0,
+        "skipped": 0,
+        "process_exit": 0
+      },
+      {
+        "name": "local_server_b",
+        "testcases": 22,
+        "passed": 22,
+        "failed": 0,
+        "skipped": 0,
+        "process_exit": 0
+      },
+      {
+        "name": "local_components",
+        "testcases": 58,
+        "passed": 58,
+        "failed": 0,
+        "skipped": 0,
+        "process_exit": 0
+      }
+    ]
+  },
+  "legacy_node": {
+    "passed": 63,
+    "failed": 0,
+    "process_exit": 0
+  },
+  "browser": {
+    "status": "BLOCKED_BY_ADMINISTRATOR",
+    "skipped": 1
+  },
+  "http_operations": 29,
+  "sql_migrations_authored": 6,
+  "magadan_field_data_authorized": false,
+  "independent_engineer_signoff": false,
+  "upstream_archive_sha256": "b670a1b9f0812c8f36cb72e6adeced175d177b60bc553e8e61ffa8775f34e711"
+}

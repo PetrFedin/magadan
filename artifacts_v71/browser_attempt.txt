@@ -1,0 +1,5 @@
+s                                                                        [100%]
+=========================== short test summary info ============================
+SKIPPED [1] server/tests/test_browser.py:32: Browser network blocked by administrator in this container; real UI E2E not certified
+1 skipped in 1.96s
+PROCESS_EXIT=0

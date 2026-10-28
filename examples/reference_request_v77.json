@@ -1,0 +1,61 @@
+{
+  "format": "hydrokontur-reference-request-v77",
+  "scope": "SYNTHETIC_UNATTESTED_REFERENCE_ONLY",
+  "study_id": "00000000-synthetic-only-example",
+  "org_id": "example-organization",
+  "asset_id": "synthetic-feeder",
+  "reference_case": {
+    "model_kind": "radial_ac_v73",
+    "reference_name": "SYNTHETIC_MAGADAN_REFERENCE_ONLY",
+    "source_voltage_kv_ll": 20,
+    "min_voltage_pu": 0.9,
+    "nodes": [
+      {
+        "node_id": "n1",
+        "parent_id": "SOURCE",
+        "r_ohm_per_phase": 0.25,
+        "x_ohm_per_phase": 0.3,
+        "load_p_mw": 2,
+        "load_q_mvar": 0.6,
+        "ampacity_a": 1000
+      },
+      {
+        "node_id": "n2",
+        "parent_id": "n1",
+        "r_ohm_per_phase": 0.17,
+        "x_ohm_per_phase": 0.22,
+        "load_p_mw": 1.5,
+        "load_q_mvar": 0.55,
+        "ampacity_a": 1000
+      },
+      {
+        "node_id": "n3",
+        "parent_id": "n1",
+        "r_ohm_per_phase": 0.12,
+        "x_ohm_per_phase": 0.15,
+        "load_p_mw": 1,
+        "load_q_mvar": 0.3,
+        "ampacity_a": 1000
+      }
+    ],
+    "windows": [
+      {
+        "name": "normal",
+        "scale": 1,
+        "hours": 120
+      },
+      {
+        "name": "winter_peak",
+        "scale": 1.2,
+        "hours": 24
+      }
+    ]
+  },
+  "case_sha256": "33796d0d162b7ddc9540b231ee1d97a1b74eb0a3f3ce93113ddfd91bf0b11035",
+  "expected_windows": [
+    "normal",
+    "winter_peak"
+  ],
+  "not_field_approved": true,
+  "independent_reference_must_be_executed_outside_this_service": true
+}

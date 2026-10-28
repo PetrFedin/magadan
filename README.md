@@ -1,45 +1,65 @@
-# ГИДРОКОНТУР 360 — МАГАДАН
+> **Актуальная разработка: [V7.6](README_V76.md). Статус LAB PASS / PRODUCTION HOLD; настоящих данных объектов Магаданской области, PostgreSQL RLS-приёмки или промышленного допуска нет.**
 
-**Стадия: инженерно-экономическая исследовательская платформа (V7.9 LAB).**  
-**Промышленный допуск: PRODUCTION HOLD.**  
-**Публикация исходников: НЕ ПОДТВЕРЖДЕНА — восстановление репозитория в процессе.**
+# HydroKontur 360 - Magadan: V7.2 laboratory release
 
-ГИДРОКОНТУР 360 — проект воспроизводимой инженерно-экономической аналитики для потенциальных задач энергетической инфраструктуры Магаданской области и возможного обсуждения НИОКР с Группой «РусГидро». Упоминание «РусГидро» **не означает согласования, финансирования, партнёрства или доступа к данным компании**.
+**Release date:** 2026-10-23. **Industrial status: HOLD.**
 
-## Основные направления
+This package continues the V7.1 server. Six product lanes now share a synthetic-only authenticated case execution, immutable source/result hashing, engine-source pinning and retrievable scenario comparisons. V7.1's independently reviewed grid calculation and staged investment approval remain separate; *a V7.2 study cannot be promoted as production investment evidence*.
 
-1. **HydroForecast:** гидрологические прогнозы, проверка временной доступности фактических данных, качество и неопределённость.
-2. **CascadeEconomics:** водный баланс и исследование сценариев двух гидроэнергетических ступеней без автоматического оперативного управления.
-3. **TurbineReliability:** диагностика аномалий, связь с техническим обслуживанием и ремонтными сценариями.
-4. **GridLoss Planner:** модель синтетической радиальной сети, сравнение сценариев потерь, валидация ограничений.
-5. **HeatNet Economics:** тепловые и гидравлические балансы, исследовательская экономика потерь.
-6. **HydroCAPEX:** WBS, годовой CAPEX/OPEX, стоимость условно предотвращённых потерь, NPV, анализ чувствительности и доказательства решений.
+## Delivered
 
-## Связанные модули и принципы
+- `server/hydro_api/studies.py`: six strict domain-scoped synthetic engines.
+- `server/hydro_api/studies_api.py`: tenant/role-aware API and reproducibility routes.
+- `server/hydro_api/storage.py`: append-only `study_runs` table for the SQLite laboratory.
+- `server/migrations/060_studies_v72.sql`: pending native PostgreSQL study schema, FORCE RLS, composite-tenant FK, append-only and automated audit.
+- `server/ui/`: server-served workbench with six-domain research panel and examples.
+- `server/tests_v72/`: domain, HTTP security, audit, reproduction and schema contract tests.
+- `docs/`: architecture, Magadan site pilot data requirements, capital economics, WBS/regulatory scope, release roadmap and OpenAPI.
+- `artifacts_v72/`: exact test logs, failure evidence, independent static UI screenshots and acceptance report.
 
-- **Assurance Pack:** версия источника + SHA-256 + повторное вычисление + независимый аудит.
-- **Reference Comparison:** сверка с заявленным внешним расчётом; совпадение чисел НЕ доказывает независимую экспертизу.
-- **Benefit Ledger V7.9:** организация → актив → тип эффекта → период → источник; попытки двойного учёта в новой лабораторной модели отклоняются.
-- **Post-Investment M&V Research:** временная нормализация «до/после» только на синтетических данных. Ни одна оценка не признаётся фактической экономией без независимой проверки.
+## Tested facts in this artifact
 
-## Реальный статус этого GitHub-репозитория
+See `artifacts_v72/acceptance_summary.json` and the raw tests. Only synthetic data has been processed. The server tests are HTTP requests through FastAPI TestClient; they do **not** establish production network interoperability. The React/JS V6 tests belong to its prior standalone laboratory.
 
-Имеются ранее подготовленные в проектной библиотеке **V7.9 ZIP-сборка и Git bundle**. Их наличие и содержание ещё не подтверждены коммитом в этом репозитории. Пока полный исходный код не восстановлен и не опубликован, **не запускать CI, не утверждать, что код в GitHub соответствует V7.9, и не использовать репозиторий как подтверждённый исходник**. `docs/IMPORT_STATUS.md` описывает этот разрыв.
+Real Chromium localhost E2E is **BLOCKED_BY_ADMINISTRATOR** in this environment; separate inline static layout QA passed at 1440, 768 and 375 px. Neither screenshot nor static JS syntax check is an authenticated HTTP E2E pass.
 
-## Навигация
+Native PostgreSQL 17 RLS execution is **NOT DONE**. With native acceptance required, the suite failed closed because a dedicated PostgreSQL configuration does not exist. PostgreSQL migration 060 and native tests are delivered but not validated on a database.
 
-- [План V8](docs/ROADMAP_V8.md)
-- [Состояние переноса](docs/IMPORT_STATUS.md)
-- [Продуктовая архитектура](docs/ARCHITECTURE.md)
-- [Формулы и экономика](docs/MATHEMATICS_FINANCE.md)
-- [Магаданская область: данные и разрешения](docs/MAGADAN_PILOT.md)
-- [План проверки и допуска](docs/ACCEPTANCE_GATES.md)
-- [Правила GitHub](docs/GOVERNANCE.md)
+## Run the synthetic lab locally
 
-## Обязательные ограничения
+1. Create a Python environment and install `server/requirements.txt` and, when using V7.1 OIDC/Postgres features, its additional requirements. Use approved package sources.
+2. Export two different random secrets (>= 32 characters each): `HYDRO_JWT_SECRET`, `HYDRO_AUDIT_SECRET`.
+3. Set `HYDRO_PROFILE=legacy_lab` and an isolated local SQLite `HYDRO_DATABASE_URL`. Never point the demo seeder to customer or historical production databases.
+4. Set `HYDRO_ALLOW_DEMO_SEED=YES`; run `PYTHONPATH=server python -m hydro_api.seed_lab` on an EMPTY demo database. Credentials are randomly created and shown once.
+5. Start `PYTHONPATH=server uvicorn hydro_api.asgi:app --host 127.0.0.1 --port 8000` and open `/lab`.
+6. The new section 06 provides six modules. Examples are explicitly marked synthetic and cannot be submitted as genuine field data.
 
-**Не подтверждены:** PostgreSQL 17 RLS на настоящей БД, корпоративные SSO/MFA и внешнее WORM-хранилище, независимая электротехническая проверка на стороннем решателе, согласованные данные объекта Магаданской области, инженерные заключения, строительные сметы/разрешения, фактическая экономия и рентабельность пилотов.
+The laboratory uses local password login only for controlled testing. Corporate IdP must use the separate `postgres_lab` configuration, approved certificates and real MFA policy after acceptance. Do not expose the legacy laboratory to a public network.
 
-**Запрещён вывод:** лабораторные тесты, демонстрации и модельные значения сами по себе не разрешают строительство, операции АСУ ТП или инвестиционные решения.
+## Verification commands
 
-Исторические версии V7.x не должны без проверки смешиваться с текущей. Все изменения — в отдельных ветках с независимой рецензией, проверками на одном SHA и документированными ограничениями.
+```
+PYTHONPATH=server pytest -q server/tests server/tests_v71 server/tests_v72 \
+ --ignore=server/tests/test_browser.py \
+ --ignore=server/tests_v71/test_postgres_native.py
+cd v6-client && node --test tests/domain.test.mjs tests/assurance.test.mjs
+```
+
+PostgreSQL acceptance must be run only in a fresh isolated database with the explicit `HYDRO_NATIVE_TESTS_REQUIRED=1` contract; see `docs/V72_RELEASE_ROADMAP.md`. An unsupported or unreachable database is a blocker, not a successful SQL check.
+
+## Module ownership and extension
+
+| Lane | Server-authored synthetic study | Pending verified industrial model |
+| --- | --- | --- |
+| HydroForecast | Historical forecast scoring | Basin hydrological forecast and real calibration |
+| CascadeEconomics | Two-reservoir time-step balance | Real operating rules, water routing and constraints |
+| TurbineReliability | Robust vibration anomaly | Validated condition monitoring and repair economics |
+| GridLoss Planner | Two-bus AC benchmark | Real multi-bus Magadan feeder reference validation |
+| HeatNet Economics | Lumped thermal balance | Calibrated thermohydraulic network model |
+| HydroCAPEX | Small constrained investment portfolio | ERP, contract/budget/BOQ and post-investment audit |
+
+## Release exclusions and provenance
+
+No GitHub repo, corporate database, public deployment, actual RusHydro project, grid equipment or SCADA systems were changed. No third-party engineering acceptance, real asset consent, real-world savings or grant award is implied by laboratory test success.
+
+Detailed source log: `docs/V72_MASTER_SYSTEM_DESIGN.md`, `docs/V72_MAGADAN_PILOT_CARDS.md`, `docs/V72_FINANCE_AND_CONSTRUCTION.md`, `docs/V72_ACCEPTANCE_PROTOCOL.md`, `docs/V72_RELEASE_ROADMAP.md`.

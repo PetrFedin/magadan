@@ -1,0 +1,41 @@
+:root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#162738;background:#f4f7f9;font-size:15px;line-height:1.5}*{box-sizing:border-box}body{margin:0}header{background:#0e2c43;color:#fff;display:flex;align-items:center;gap:18px;padding:19px max(28px,calc((100vw - 1250px)/2))}.mark{border-radius:12px;background:#00a7a0;font-weight:800;padding:12px}.flag{margin-left:auto;font-size:11px;letter-spacing:.09em;border:1px solid #527084;border-radius:30px;padding:10px}header h1{font-size:19px;margin:0;line-height:1.25}header small{font-size:12px;letter-spacing:.08em;color:#86dedb}header p{font-size:12px;color:#bdd0df;margin:4px 0 0}main{max-width:1250px;margin:0 auto;padding:24px 24px 65px}.hero{background:#e5f3f2;border:1px solid #cbe3e0;padding:25px;border-radius:18px;display:flex;justify-content:space-between;gap:16px;margin-bottom:18px}.hero h2{font-size:22px;margin:0 0 5px}.hero p{margin:0;color:#46646d}.chipline{max-width:380px;display:flex;flex-wrap:wrap;gap:6px;align-content:center}.chipline span{font-size:11px;background:#fff;padding:7px 9px;border-radius:20px;color:#326a68}.card{background:#fff;padding:22px;border-radius:16px;border:1px solid #dce5eb;margin-bottom:14px;box-shadow:0 3px 18px #12304709}.card h2{font-size:17px;margin:0 0 5px}.card h3{font-size:13px;margin:19px 0 5px;text-transform:uppercase;letter-spacing:.04em;color:#466579}.hint{font-size:12px;color:#6a7b87;margin:3px 0 13px}.cols{display:grid;grid-template-columns:1fr 1fr;gap:15px}.steps{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 18px}.steps span{background:#dfe8ee;padding:8px 14px;font-size:12px;font-weight:700;border-radius:22px;color:#45606c}label{display:block;font-size:12px;font-weight:700;color:#476173;margin:12px 0 3px}input,select,textarea{display:block;width:100%;font-family:inherit;font-size:14px;background:#fafcfd;color:#1a2c3c;border:1px solid #cbd8df;border-radius:9px;padding:11px;margin-top:5px}textarea{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12px;line-height:1.55;min-height:170px}input:focus,select:focus,textarea:focus{outline:3px solid #acf0e9}button{appearance:none;background:#e6edf1;border:1px solid #d7e4e8;color:#193748;font:inherit;font-size:13px;font-weight:700;padding:11px 13px;border-radius:9px;cursor:pointer}button:hover{filter:brightness(.97)}button.primary{background:#0b736e;border-color:#0b736e;color:white}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.session-bar{display:flex;justify-content:space-between;align-items:center;gap:12px}.result{font-size:11px;background:#102a3b;color:#d2f5e8;border-radius:10px;white-space:pre-wrap;word-break:break-word;max-height:270px;overflow:auto;padding:16px;min-height:88px}.readiness{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px}.readiness dt{color:#60798a}.readiness dd{margin:0;font-weight:700}.notice{border-radius:12px;padding:12px 16px;background:#e9f2f5;border-left:4px solid #4d97a1;font-size:13px;margin-top:8px;white-space:pre-wrap;overflow-wrap:anywhere}.notice.error{background:#fff0eb;border-color:#ce604c}footer{font-size:12px;text-align:center;color:#728b98;padding:20px 24px 40px}@media(max-width:760px){header{padding:15px;gap:10px}header h1{font-size:14px}header p{font-size:10px}.mark{padding:8px}.flag{font-size:8px;max-width:110px;text-align:center}main{padding:15px}.hero{display:block;padding:19px}.hero h2{font-size:19px}.chipline{margin-top:13px}.cols{grid-template-columns:1fr}.card{padding:17px}.readiness{grid-template-columns:1fr}.session-bar{align-items:start;flex-direction:column}}
+
+.studies-workspace{margin-top:20px;border-top:4px solid #4b7988}
+.studies-title{display:flex;align-items:start;justify-content:space-between;gap:12px}
+.studies-title h2{font-size:18px}
+.study-notice{font-size:10px;letter-spacing:.12em;border:1px solid #d3c9b4;background:#fdf8ee;color:#736349;font-weight:700;padding:8px 11px;border-radius:4px;white-space:nowrap}
+.study-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.study-output{max-height:425px;min-height:145px}
+@media(max-width:760px){.study-grid{grid-template-columns:1fr}.studies-title{flex-direction:column}}
+
+/* V7.3 engineering and finance. Production appearance without demo deception. */
+.radial-workspace{border-top:4px solid #1a7079;margin-top:18px}
+.v73-metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:16px 0 18px}
+.v73-metrics>div{padding:13px 15px;background:#f0f5f7;border:1px solid #dce8eb;border-radius:10px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.v73-metrics strong{font-size:12px;color:#153d50}
+.v73-metrics small{font-size:11px;color:#607c88}
+.radial-workspace .result{min-height:85px;max-height:330px}
+@media(max-width:760px){.v73-metrics{grid-template-columns:1fr}}
+
+/* V7.4: compact evidence programme UI with readable engineering JSON. */
+.programme-workspace{border-top:4px solid #254c66;margin-top:18px}
+.programme-help{font-size:13px;color:#38596b;background:#eaf0f5;border:1px solid #d4e3ec;border-radius:9px;padding:13px 17px;margin:14px 0}
+.programme-workspace select[multiple]{min-height:156px;padding:5px}
+.programme-workspace select[multiple] option{padding:7px 9px;border-radius:5px}
+.programme-workspace label{margin-top:15px}
+.programme-output{max-height:520px;min-height:180px}
+@media(max-width:760px){.programme-workspace select[multiple]{min-height:130px}.programme-workspace .actions button{flex-grow:1}}
+
+/* V7.5 tenant-isolated research handoffs, never a dispatching console */
+.handoff-workspace{margin-top:18px;border-top:4px solid #446f67}
+.handoff-workspace .result{max-height:360px;min-height:120px}
+.handoff-workspace textarea{min-height:190px}
+.handoff-workspace label{margin-top:14px}
+@media(max-width:760px){.handoff-workspace .actions button{flex-grow:1}}
+
+/* V7.6: explicit assumption lab, not a production operations console. */
+.assurance-workspace{margin-top:18px;border-top:4px solid #657e9a}
+.assurance-workspace textarea{min-height:150px}
+.assurance-workspace select[multiple]{min-height:140px}
+.assurance-workspace .readiness{padding:12px;background:#f2f5f7;border-radius:9px}
+@media(max-width:760px){.assurance-workspace .actions button{flex-grow:1}}

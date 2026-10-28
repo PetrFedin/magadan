@@ -1,0 +1,29 @@
+[
+  {
+    "document_width": 1440,
+    "viewport_width": 1440,
+    "section_width": 1202,
+    "labels": 6,
+    "width": 1440,
+    "horizontal_overflow": 0,
+    "browser_e2e": false
+  },
+  {
+    "document_width": 768,
+    "viewport_width": 768,
+    "section_width": 720,
+    "labels": 6,
+    "width": 768,
+    "horizontal_overflow": 0,
+    "browser_e2e": false
+  },
+  {
+    "document_width": 375,
+    "viewport_width": 375,
+    "section_width": 345,
+    "labels": 6,
+    "width": 375,
+    "horizontal_overflow": 0,
+    "browser_e2e": false
+  }
+]

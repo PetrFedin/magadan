@@ -1,0 +1,10 @@
+{
+  "total": 68,
+  "by_status": {
+    "LAB_IMPLEMENTED": 28,
+    "NOT_ACCEPTED": 11,
+    "PLANNED": 29
+  },
+  "production_accepted": 0,
+  "verification_basis": "Laboratory tests only; planned items unimplemented"
+}

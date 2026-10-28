@@ -1,0 +1,26 @@
+{
+  "release": "V7.7",
+  "date": "2026-10-24",
+  "status": "LAB_PASS_PRODUCTION_HOLD",
+  "python_passed_tests": 224,
+  "javascript_passed_tests": 63,
+  "synthetic_feeder_stress_cases": 64,
+  "http_openapi_operations": 65,
+  "mobile_layout_widths_checked": [
+    375,
+    768,
+    1440
+  ],
+  "postgres_native_rls_accepted": false,
+  "corporate_oidc_mfa_connected": false,
+  "compliance_external_audit_connected": false,
+  "external_pandapower_run_completed": false,
+  "real_magadan_data_available": false,
+  "industrial_approval_eligible": false,
+  "financial_example": {
+    "base_npv_rub": "-1655991.73",
+    "conditional_break_even_factor": "2.463875",
+    "wbs_budget_status_capex_plus_20_percent": "LAB_CONSTRUCTION_CAP_BREACH"
+  },
+  "notes": "Tests include domain/HTTP and static UI; not production acceptance; browser E2E not completed."
+}

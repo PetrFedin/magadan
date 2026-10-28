@@ -1,0 +1,398 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#0b141c"><title>ГИДРОКОНТУР 360 — МАГАДАН | лабораторный прототип</title><style>:root{font-family:Inter,Arial,'Helvetica Neue',sans-serif;color:#e8eef3;background:#0b141c;font-size:14px}*{box-sizing:border-box}body{margin:0}button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}input:focus,select:focus,button:focus-visible{outline:2px solid #68bcdf;outline-offset:2px}.app{min-height:100vh;display:flex}.sidebar{width:255px;flex:0 0 255px;background:#0b1823;border-right:1px solid #233747;padding:24px 14px;display:flex;flex-direction:column;gap:26px}.brand{display:flex;align-items:center;gap:12px;padding:4px 12px}.brand-emblem{height:40px;width:40px;border:1px solid #4c778e;background:linear-gradient(145deg,#113346,#192e48);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;color:#80c6e8}.brand strong{display:block;letter-spacing:.05em;font-size:16px}.brand small{font-size:10px;color:#8aa8b5;letter-spacing:.17em}.nav-title{margin:12px 13px;color:#698493;font-size:10px;font-weight:750;letter-spacing:.15em}.nav-item{border:0;background:transparent;color:#9eb2bd;padding:12px 14px;display:flex;gap:12px;align-items:center;text-align:left;width:100%;border-radius:9px;margin:2px 0;font-weight:550}.nav-item span:first-child{font-size:20px;width:22px;text-align:center;color:#7699a9}.nav-item:hover{background:#1a303d;color:white}.nav-item.active{background:#23495a;color:#effaff}.nav-item.active span:first-child{color:#6bd5ee}.side-note{margin-top:auto;padding:15px;border:1px solid #325061;border-radius:10px;background:#142b37;color:#abc6d4;font-size:11px;line-height:1.55}.side-note strong{color:#d6f4ff}.shell{flex:1;min-width:0}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #223441;min-height:82px;padding:17px 36px;background:#101c27}.topbar small{display:block;color:#7794a1;text-transform:uppercase;font-size:10px;letter-spacing:.16em}.topbar strong{font-size:16px}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.actions select,.actions button{border:1px solid #365060;color:#d8e5eb;background:#142631;border-radius:8px;padding:10px 11px;font-size:12px;max-width:230px}.actions button:hover{background:#203846}.action-report{color:#9bdbed!important}.main{padding:32px 36px 60px;max-width:1550px;margin:auto}.eyebrow{font-size:10px!important;letter-spacing:.18em!important;color:#7db9cc!important;text-transform:uppercase;font-weight:750}.hero{background:linear-gradient(130deg,#143245 0%,#132632 66%,#10202a);border:1px solid #305469;border-radius:16px;padding:38px;display:flex;justify-content:space-between;align-items:center;min-height:275px;overflow:hidden}.hero h2{font-size:34px;letter-spacing:-.055em;line-height:1.1;margin:15px 0 18px}.hero p{color:#afc2cb;font-size:13px;max-width:550px;line-height:1.8}.primary{background:#54afce;border:1px solid #68c2df;color:#0a2332;font-weight:750;border-radius:8px;padding:11px 16px}.primary:hover{background:#7bd4ef}.secondary{border:1px solid #4d7185;border-radius:8px;background:transparent;color:#b0e2f5;padding:11px 14px}.hero-art{width:260px;height:200px;flex:0 0 260px;position:relative}.orbit{position:absolute;border:1px solid #49788a;border-radius:50%;transform:rotate(-19deg)}.orbit.a{width:195px;height:195px;top:0;left:25px}.orbit.b{width:245px;height:126px;top:39px;left:0;transform:rotate(18deg)}.center-node{width:102px;height:102px;position:absolute;top:49px;left:70px;border-radius:50%;background:#265f73;box-shadow:0 0 60px #1e739060;border:1px solid #75ccdf;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:35px;font-weight:800;color:white}.center-node span{font-size:8px;color:#afdce9;letter-spacing:.18em}.node{position:absolute;background:#152d3c;border:1px solid #74a9ba;border-radius:14px;padding:5px 10px;font-size:9px;font-weight:800}.n1{left:10px;top:24px}.n2{right:0;top:60px}.n3{bottom:5px;left:38px}.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin:16px 0 24px}.metric{padding:19px;border:1px solid #283e4c;background:#13212c;border-radius:10px;min-width:0}.metric span,.metric small{display:block;color:#839ca7;font-size:11px}.metric strong{display:block;font-size:23px;font-weight:700;letter-spacing:-.035em;padding:8px 0;color:#eff8ff}.metric small{line-height:1.45}.content-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(320px,.85fr);gap:18px;align-items:start}.surface{background:#13222d;border:1px solid #293e4d;border-radius:13px;padding:21px;min-width:0;margin-bottom:16px}.surface-head{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #2b4050;padding-bottom:15px;margin-bottom:16px}.surface-head h3{font-size:16px;margin:0}.surface-head span{font-size:11px;color:#8da6b1}.module-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}.module-card{display:flex;gap:14px;text-align:left;align-items:center;padding:16px;background:#172c37;border:1px solid #32505e;border-radius:10px;color:#e7f3f8}.module-card:hover{border-color:#65b4cf;background:#1a3543}.module-icon{font-size:26px;min-width:27px}.module-card strong,.module-card small{display:block}.module-card strong{font-size:12px}.module-card small{font-size:11px;color:#97b0bc;margin-top:5px}.module-arrow{margin-left:auto;color:#7cb3c4}.principles>div{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid #263c48;color:#b7cbd4;font-size:12px}.principles>div:last-child{border:0}.principles b{color:#6bbfdc}.disclaimer{margin:18px 0;padding:16px 18px;background:#242a2f;border:1px solid #514b41;color:#d3c7b6;border-radius:10px;font-size:12px;line-height:1.6}.disclaimer b{color:#ffe0a9}.module-banner{background:linear-gradient(130deg,#19323f,#12242e);border:1px solid #325161;padding:25px;border-radius:12px;display:flex;gap:20px;align-items:center;margin-bottom:18px}.module-logo{width:70px;height:70px;flex:0 0 70px;border-radius:17px;border:1px solid var(--accent);color:var(--accent);display:grid;place-items:center;font-size:42px}.module-banner h2{font-size:25px;margin:6px 0}.module-banner p{font-size:12px;color:#a5bdc7;margin:0}.lab-label{margin-left:auto;color:#e1c79e;border:1px solid #967448;background:#40372c;padding:8px 10px;border-radius:6px;white-space:nowrap;font-size:10px}.explainer{font-size:12px;color:#aabfca;line-height:1.7;margin-bottom:22px}.calculator-grid,.decision-create{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.calculator-grid label,.decision-create label{font-size:11px;color:#a2b9c5;display:flex;flex-direction:column;gap:8px}.calculator-grid input,.decision-create input,.decision-create select,.decision-actions input{border:1px solid #436070;border-radius:7px;background:#0e1d26;color:#eff7fa;padding:11px;min-width:0;width:100%}.wide,.double{grid-column:1/-1}.calc-result{background:#152f3a;border:1px dashed #42697b;border-radius:9px;padding:19px;margin-top:18px;color:#b5d2de;font-size:12px;min-height:72px}.result-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.result-grid div{min-width:0}.result-grid small,.result-grid strong{display:block}.result-grid small{font-size:11px;color:#90b2be}.result-grid strong{margin-top:7px;font-size:16px;color:white;overflow-wrap:anywhere}.result-stamp{display:block;color:#77b3ca;margin-top:13px}.assets>p{font-size:12px;color:#aabfc9}.asset-chip{border:1px solid #3a5360;border-radius:9px;padding:13px;margin:10px 0;display:flex;align-items:center;gap:8px;font-size:12px;flex-wrap:wrap}.asset-pin{font-size:18px;color:#75b7c9}.asset-chip small{width:100%;padding-left:24px;color:#8ca4b0}.form-note{font-size:11px;line-height:1.65;color:#889fa9;margin:18px 0 0}.intro h2{font-size:27px;letter-spacing:-.035em;margin:0 0 8px}.intro p{color:#9eb7c3;font-size:13px;line-height:1.7;margin:0 0 22px}.compact{margin:16px 0 18px}.decision-list{min-height:450px}.decision-create{gap:14px}.decision-card{border:1px solid #37505d;border-radius:10px;padding:15px;margin-bottom:15px;background:#172b35}.decision-top{display:flex;align-items:start;justify-content:space-between;gap:14px}.decision-top small{font-size:10px;color:#84a4b4}.decision-top h3{font-size:14px;margin:8px 0 10px}.status{border:1px solid #657a87;color:#bccbd4;border-radius:20px;padding:5px 8px;font-size:10px;white-space:nowrap}.status.good{color:#83dbb4;border-color:#477c6b}.status.bad{color:#eda7a0;border-color:#985e63}.decision-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.decision-metrics .metric{padding:11px}.decision-metrics .metric strong{font-size:15px}.decision-evidence{color:#90abb8;font-size:11px;line-height:1.6;margin:13px 0}.decision-evidence code{color:#a7d9ea}.decision-actions{display:flex;gap:8px;flex-wrap:wrap}.decision-actions input{flex:1 1 180px}.smallbtn{font-size:11px;background:#234b5e;border:1px solid #5da4c1;color:#e4f5ff;padding:10px 12px;border-radius:7px}.smallbtn:hover{background:#326782}.empty-state{text-align:center;padding:54px 15px;color:#9db7c4}.empty-state>div{font-size:50px;color:#517e90}.empty-state h3{color:#d9ecf4}.data-table{border-collapse:collapse;width:100%;font-size:11px}.data-table th{text-align:left;color:#86a7b8;font-size:11px;border-bottom:1px solid #354e5e;padding:10px}.data-table td{padding:13px 10px;border-bottom:1px solid #27404e;color:#ccdde3;vertical-align:top}.data-table small{font-size:9px;color:#819ead}.data-table code{font-size:10px;color:#9ad2e9}.audit-banner{margin-bottom:20px;border:1px solid #437b6d;background:#17362d;border-radius:9px;padding:17px}.audit-banner.invalid{background:#422527;border-color:#b65d60}.audit-banner strong,.audit-banner small{display:block}.audit-banner small{color:#b3cabc;font-size:11px;margin-top:8px}.toast{position:fixed;right:24px;bottom:20px;border:1px solid #65abc5;background:#153f50;color:white;border-radius:10px;padding:14px 18px;box-shadow:0 5px 40px #0007;opacity:0;pointer-events:none;transform:translateY(18px);transition:.2s;max-width:400px;z-index:100}.toast.show{opacity:1;transform:translateY(0)}.toast.error{background:#57282c;border-color:#dd8884}code{font-family:ui-monospace,Consolas,monospace}
+@media (max-width:1180px){.sidebar{width:206px;flex-basis:206px}.main{padding:23px}.topbar{padding:13px 20px}.actions select{max-width:155px}.hero-art{transform:scale(.85);transform-origin:right center}.metrics{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}}
+@media (max-width:720px){.app{display:block}.sidebar{width:100%;border-right:0;border-bottom:1px solid #2a414e;padding:10px;gap:4px}.brand{padding:4px 10px}.brand-emblem{width:32px;height:32px;font-size:19px}.nav-title,.side-note{display:none}#nav{display:flex;overflow-x:auto;gap:4px;padding-bottom:3px}.nav-item{width:auto;white-space:nowrap;padding:8px 10px;font-size:11px;flex:0 0 auto}.nav-item span:first-child{font-size:14px;width:14px}.topbar{align-items:flex-start;flex-direction:column;padding:13px 15px}.topbar strong{font-size:14px}.actions{width:100%;gap:6px}.actions select,.actions button{flex:1;max-width:none;min-width:98px;padding:8px 5px;font-size:10px}.main{padding:14px}.hero{padding:24px;min-height:230px}.hero h2{font-size:26px}.hero-art{display:none}.metrics{gap:8px}.metric{padding:13px}.metric strong{font-size:18px}.module-grid{grid-template-columns:1fr}.module-banner{padding:15px;gap:12px}.module-logo{width:46px;height:46px;flex-basis:46px;font-size:28px}.module-banner h2{font-size:18px}.lab-label{font-size:8px;white-space:normal;text-align:center;padding:6px}.calculator-grid,.decision-create{grid-template-columns:1fr}.wide,.double{grid-column:1}.decision-top{flex-direction:column}.decision-metrics{grid-template-columns:1fr 1fr}.content-grid{display:block}.surface{padding:14px}.data-table{font-size:10px}.data-table th,.data-table td{padding:6px 4px}.result-grid{grid-template-columns:1fr}.intro h2{font-size:23px}}
+</style></head><body><div class="app"><aside class="sidebar"><div class="brand"><div class="brand-emblem">≋</div><div><strong>ГИДРОКОНТУР</strong><small>360 / MAGADAN</small></div></div><div><p class="nav-title">НАВИГАЦИЯ</p><nav id="nav"></nav></div><div class="side-note"><strong>ЛАБОРАТОРНАЯ СБОРКА V0.2</strong><br>Все данные и сценарии синтетические. Нет доступа к реальным объектам, АСУ ТП и системам «РусГидро». Production HOLD.</div></aside><div class="shell"><header class="topbar"><div><small>Магаданская область · аналитическая модель</small><strong>Инженерно-экономическое обоснование решений</strong><small id="who"></small></div><div class="actions"><select id="org" aria-label="Организация"></select><select id="role" aria-label="Роль пользователя"></select><button id="save" class="action-report" title="Экспорт учебного журнала">↓ JSON</button><button id="reset" title="Сбросить учебные данные">Сброс</button></div></header><main id="main" class="main"></main></div></div><div class="toast" id="toast" role="status"></div><script>
+(async()=>{
+/** ГИДРОКОНТУР 360 • Laboratory reference engine v0.1 (synthetic data ONLY).
+ * Not an operational control system, a hydraulic/electrical solver, or a certified engineering model.
+ */
+const MODULES = Object.freeze([
+  {id:'hydro',name:'HydroForecast',kind:'Гидрологические прогнозы',icon:'≈',color:'#48b2ce'},
+  {id:'cascade',name:'CascadeEconomics',kind:'Водно-энергетические сценарии',icon:'⇆',color:'#64a9f5'},
+  {id:'turbine',name:'TurbineReliability',kind:'Диагностика оборудования',icon:'◈',color:'#e4b46e'},
+  {id:'grid',name:'GridLoss Planner',kind:'Электросети и потери',icon:'⌁',color:'#77bc9e'},
+  {id:'heat',name:'HeatNet Economics',kind:'Тепловые сети',icon:'♨',color:'#e8908a'},
+  {id:'capex',name:'HydroCAPEX',kind:'Инвестиционные решения',icon:'▧',color:'#aa98d6'}
+]);
+const ASSETS=Object.freeze([
+  {id:'kolyma',label:'Колымская ГЭС',orgId:'kolymaenergo',modules:['hydro','cascade','turbine','capex'],isRealName:true},
+  {id:'ust',label:'Усть-Среднеканская ГЭС',orgId:'kolymaenergo',modules:['hydro','cascade','turbine','capex'],isRealName:true},
+  {id:'grid-demo',label:'Учебный сетевой участок М-01',orgId:'magadanenergo',modules:['grid','capex'],isRealName:false},
+  {id:'heat-demo',label:'Учебный тепловой участок Т-01',orgId:'magadanenergo',modules:['heat','capex'],isRealName:false}
+]);
+const PROPOSED_ROLES=['analyst','engineer','finance','approver','operator','auditor'];
+const FLOW=Object.freeze({
+  draft:{submit:{next:'engineering_review',role:'analyst'}},
+  engineering_review:{engineering_pass:{next:'financial_review',role:'engineer'},reject:{next:'rejected',role:'engineer'}},
+  financial_review:{financial_pass:{next:'approval_pending',role:'finance'},reject:{next:'rejected',role:'finance'}},
+  approval_pending:{approve:{next:'approved',role:'approver'},reject:{next:'rejected',role:'approver'}},
+  approved:{start_execution:{next:'in_execution',role:'operator'}},
+  in_execution:{submit_execution:{next:'verification_pending',role:'operator'}},
+  verification_pending:{verify:{next:'verified',role:'auditor'},request_correction:{next:'in_execution',role:'auditor'}},
+  verified:{},rejected:{}
+});
+const STATUS_LABEL={draft:'Черновик',engineering_review:'Инженерная проверка',financial_review:'Финансовая проверка',approval_pending:'Утверждение',approved:'Утверждено',in_execution:'Исполнение',verification_pending:'Проверка результата',verified:'Результат подтверждён',rejected:'Отклонено'};
+const ACTION_LABEL={submit:'Передать инженеру',engineering_pass:'Подтвердить инженерно',financial_pass:'Подтвердить финансово',approve:'Утвердить',start_execution:'Начать исполнение',submit_execution:'Предъявить результат',verify:'Подтвердить результат',reject:'Отклонить',request_correction:'Вернуть на исправление'};
+function number(v,name,{min=-Infinity,max=Infinity}={}){if(typeof v !=='number'||!Number.isFinite(v)||v<min||v>max)throw new Error(`Некорректный параметр «${name}»`);return v;}
+function nonempty(v,name){if(typeof v!=='string'||!v.trim())throw new Error(`Поле «${name}» обязательно`);return v.trim();}
+const round=(v,n=3)=>Number(v.toFixed(n));
+function npv({capexMln,annualBenefitMln,annualOpexMln=0,discountRate,years}){
+  number(capexMln,'CAPEX, млн ₽',{min:0});number(annualBenefitMln,'эффект, млн ₽',{min:0});number(annualOpexMln,'OPEX, млн ₽',{min:0});number(discountRate,'ставка',{min:0,max:1});number(years,'горизонт',{min:1,max:50});if(!Number.isInteger(years))throw new Error('Горизонт должен быть целым числом лет');
+  const net=annualBenefitMln-annualOpexMln;
+  const factor=discountRate===0?years:(1-Math.pow(1+discountRate,-years))/discountRate;
+  return {valueMln:round(-capexMln+net*factor,5),annualNetMln:round(net,5),factor:round(factor,6),classification:net>0?'сценарий с положительным потоком':'сценарий без положительного потока'};
+}
+function gridEnergyBalance({inputMwh,outputMwh,ownUseMwh=0,calculatedTechnicalLossMwh}){
+  number(inputMwh,'вход, МВт·ч',{min:0});number(outputMwh,'выход, МВт·ч',{min:0});number(ownUseMwh,'собственные нужды, МВт·ч',{min:0});number(calculatedTechnicalLossMwh,'технические потери, МВт·ч',{min:0});
+  if(inputMwh===0)throw new Error('Для баланса требуется ненулевой вход');
+  const measured=inputMwh-outputMwh-ownUseMwh;
+  if(measured < -1e-8)throw new Error('Баланс отрицательный: нужна проверка данных и границ учёта');
+  const diff=measured-calculatedTechnicalLossMwh;
+  return {measuredLossMwh:round(measured),lossPct:round(measured/inputMwh*100),unexplainedMwh:round(diff),status:diff<0?'Несогласованность измерений и модели':'Обязательна проверка причин необъяснённого остатка',noFraudInference:true};
+}
+function hydroBalance({storageM3,inflowM3s,outflowM3s,seconds,minStorageM3,maxStorageM3}){
+  number(storageM3,'запас воды',{min:0});number(inflowM3s,'приток',{min:0});number(outflowM3s,'расход',{min:0});number(seconds,'шаг времени',{min:1,max:366*86400});number(minStorageM3,'минимальный запас',{min:0});number(maxStorageM3,'максимальный запас',{min:0});
+  if(minStorageM3>maxStorageM3)throw new Error('Несогласованные границы хранения');
+  const predicted=storageM3+(inflowM3s-outflowM3s)*seconds;
+  return {storageEndM3:round(predicted),valid:predicted>=minStorageM3&&predicted<=maxStorageM3,reason:predicted<minStorageM3?'Ниже нижней учебной границы':predicted>maxStorageM3?'Выше верхней учебной границы':'Внутри учебных ограничений'};
+}
+function hydropower({flowM3s,headM,efficiency,ratedMw}){
+  number(flowM3s,'расход',{min:0});number(headM,'напор',{min:0});number(efficiency,'КПД',{min:0,max:1});number(ratedMw,'мощность',{min:0});
+  const theoretical=1000*9.81*flowM3s*headM*efficiency/1_000_000;
+  return {calculatedMw:round(theoretical),overRated:theoretical>ratedMw,warning:theoretical>ratedMw?'Требуется проверка ограничений агрегатов':'Упрощённая формула — не режимный расчёт'};
+}
+function heatDuty({massKgSec,temperatureSupplyC,temperatureReturnC,heatCapacityKjKgK=4.186}){
+  number(massKgSec,'массовый расход',{min:0});number(temperatureSupplyC,'температура подачи',{min:-50,max:250});number(temperatureReturnC,'температура обратки',{min:-50,max:250});number(heatCapacityKjKgK,'удельная теплоёмкость',{min:0.01,max:10});
+  if(temperatureSupplyC<=temperatureReturnC)throw new Error('Температура подачи должна превышать температуру обратки для выбранного режима');
+  return {dutyMw:round(massKgSec*heatCapacityKjKgK*(temperatureSupplyC-temperatureReturnC)/1000),warning:'Тепловой баланс, не гидравлическая модель и не модель потерь'};
+}
+function conditionAnomaly({value,referenceMean,referenceSd,comparableRegime}){
+  number(value,'показание');number(referenceMean,'среднее');number(referenceSd,'стандартное отклонение',{min:0});
+  if(!comparableRegime)return {status:'unavailable',message:'Режимы несопоставимы',failureProbability:null};
+  if(referenceSd===0)return {status:'unavailable',message:'Недостаточная вариативность эталона',failureProbability:null};
+  const z=Math.abs(value-referenceMean)/referenceSd;
+  return {status:z>=3?'review':'observation',zScore:round(z),message:z>=3?'Отклонение требует проверки':'В пределах учебного порога',failureProbability:null};
+}
+function forecastMAE(forecast,observed){
+  if(!Array.isArray(forecast)||!Array.isArray(observed)||forecast.length<2||forecast.length!==observed.length)throw new Error('Нужны одинаковые ряды длиной не менее 2');
+  let total=0;for(let i=0;i<forecast.length;i++){number(forecast[i],`прогноз ${i}`);number(observed[i],`факт ${i}`);total+=Math.abs(forecast[i]-observed[i]);}
+  return {mae:round(total/forecast.length),samples:forecast.length,warning:'Нет оценки временной утечки: требуется реальная backtesting-процедура'};
+}
+function portfolioBenefits(initiatives){
+  const grouped=new Map();for(const i of initiatives){if(!['approved','in_execution','verification_pending','verified'].includes(i.status))continue;const key=nonempty(i.benefitKey,'benefitKey');if(!grouped.has(key))grouped.set(key,[]);grouped.get(key).push(i);}
+  let uniqueMln=0;const duplicates=[],conflicts=[];
+  for(const [key,items] of grouped){if(items.length===1){uniqueMln+=items[0].annualBenefitMln;continue;} duplicates.push(key);if(items.some(x=>Math.abs(x.annualBenefitMln-items[0].annualBenefitMln)>1e-8)){conflicts.push(key);continue;}uniqueMln+=items[0].annualBenefitMln;}
+  return {uniqueAnnualBenefitMln:round(uniqueMln),duplicateKeys:duplicates,conflictingKeys:conflicts,excludedUntilReview:conflicts.length};
+}
+const emptyState=()=>({version:1,initiatives:[],events:[]});
+function createInitiative(state,request,actor){
+  if(actor.role!=='analyst')throw new Error('Создавать инициативы может аналитик');
+  const asset=ASSETS.find(x=>x.id===request.assetId);if(!asset)throw new Error('Объект не найден');
+  if(actor.orgId!==asset.orgId)throw new Error('Доступ к другой организации запрещён');
+  if(!asset.modules.includes(request.moduleId))throw new Error('Модуль не разрешён для данного объекта');
+  nonempty(request.title,'наименование');nonempty(request.evidenceRef,'источник данных');nonempty(request.benefitKey,'код эффекта');
+  const financial=npv(request);const id=`DEC-${String(state.initiatives.length+1).padStart(3,'0')}`;
+  const entry={id,title:request.title.trim(),assetId:asset.id,orgId:asset.orgId,moduleId:request.moduleId,benefitKey:request.benefitKey,authorId:actor.userId,status:'draft',capexMln:request.capexMln,annualBenefitMln:request.annualBenefitMln,annualOpexMln:request.annualOpexMln,discountRate:request.discountRate,years:request.years,npvMln:financial.valueMln,evidenceRef:request.evidenceRef,approvals:{},executionEvidence:null,outcomeEvidence:null};
+  return {...state,initiatives:[...state.initiatives,entry]};
+}
+function availableActions(initiative,actor){const transitions=FLOW[initiative.status]||{};return Object.entries(transitions).filter(([action,config])=>config.role===actor.role&&actor.orgId===initiative.orgId&&!( ['engineering_pass','financial_pass','approve','verify'].includes(action)&&initiative.authorId===actor.userId)).map(([action])=>action);}
+function transitionDecision(state,id,action,actor,evidence=''){
+  const i=state.initiatives.find(v=>v.id===id);if(!i)throw new Error('Решение не найдено');
+  const rule=FLOW[i.status]?.[action];if(!rule)throw new Error(`Переход ${action} запрещён из состояния ${i.status}`);
+  if(rule.role!==actor.role||actor.orgId!==i.orgId)throw new Error('Недостаточно прав для перехода');
+  if(['engineering_pass','financial_pass','approve','verify'].includes(action)&&actor.userId===i.authorId)throw new Error('Разделение полномочий: автор не подтверждает своё решение');
+  if(['engineering_pass','financial_pass','approve','submit_execution','verify','reject','request_correction'].includes(action))nonempty(evidence,'доказательство или обоснование');
+  if(action==='verify'&&!i.executionEvidence)throw new Error('Нет подтверждения исполнения');
+  const next={...i,status:rule.next,approvals:{...i.approvals}};
+  if(['engineering_pass','financial_pass','approve'].includes(action))next.approvals[action]={actor:actor.userId,evidence:evidence.trim()};
+  if(action==='submit_execution')next.executionEvidence=evidence.trim();
+  if(action==='verify')next.outcomeEvidence={methodAndFacts:evidence.trim(),confirmedBy:actor.userId};
+  return {...state,initiatives:state.initiatives.map(v=>v.id===id?next:v)};
+}
+const enc=new TextEncoder();const bytesToHex=arr=>[...new Uint8Array(arr)].map(x=>x.toString(16).padStart(2,'0')).join('');
+// Only for opaque-origin browser previews; NOT cryptographic, NEVER a production authentication substitute.
+function weakChecksum(s){let h=2166136261;for(const c of s){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return 'PREVIEW-NONCRYPTO-'+(h>>>0).toString(16).padStart(8,'0');}
+async function hashRecord(base){const payload=JSON.stringify(base);return globalThis.crypto?.subtle?bytesToHex(await globalThis.crypto.subtle.digest('SHA-256',enc.encode(payload))):weakChecksum(payload);}
+async function appendAudit(state,event){
+  const prevHash=state.events.length?state.events.at(-1).hash:'GENESIS';
+  const base={seq:state.events.length+1,at:event.at||new Date().toISOString(),action:nonempty(event.action,'действие'),actor:nonempty(event.actor,'участник'),objectId:event.objectId||'',note:event.note||'',prevHash};
+  const hash=await hashRecord(base);
+  return {...state,events:[...state.events,{...base,hash}]};
+}
+async function verifyAudit(events){
+  let prev='GENESIS';for(let j=0;j<events.length;j++){
+    const {hash,...base}=events[j];if(base.prevHash!==prev||base.seq!==j+1)return false;
+    const expected=await hashRecord(base);if(hash!==expected)return false;prev=hash;
+  }
+  return true;
+}
+
+/**
+ * Hydrokontur 360 V6 lab assurance algorithms.
+ * Domain guardrails only: no control of real energy infrastructure, no
+ * authenticated users, no production certificate, no authoritative data.
+ */
+const EPS = 1e-9;
+function need(p, reason) { if (!p) throw new Error(reason); }
+function finite(n, name, min = -Infinity) {
+  need(typeof n === 'number' && Number.isFinite(n) && n >= min, `Invalid ${name}`);
+  return n;
+}
+function id(v, label) { need(typeof v === 'string' && v.trim().length > 0, `Missing ${label}`); return v.trim(); }
+function instant(v, label) {
+  need(typeof v === 'string' && /^\d{4}-\d\d-\d\dT\d\d:\d\d:\d\d(?:\.\d+)?(?:Z|[+-]\d\d:\d\d)$/.test(v), `Invalid ISO timestamp ${label}`);
+  const x = Date.parse(v);
+  need(Number.isFinite(x), `Invalid date ${label}`);
+  return x;
+}
+const average = arr => arr.reduce((s,x)=>s+x,0)/arr.length;
+const fixed = (v, digits=6) => Number(v.toFixed(digits));
+
+/** Rows have strict temporal provenance. Actual observations may become available only after targetAt. */
+function verifyForecastBacktest(rows, {asOf, expectedUnit='m3/s'} = {}) {
+  need(Array.isArray(rows) && rows.length >= 2, 'At least two forecast records required');
+  const cutoff = instant(asOf, 'asOf');
+  const errors = [], absolute = [], actuals = [], issues = new Set();
+  for (let i=0;i<rows.length;i++) {
+    const r = rows[i];
+    need(r && typeof r === 'object', `Invalid row ${i}`);
+    id(r.forecastId, `forecastId ${i}`);
+    need(!issues.has(r.forecastId), `Duplicate forecastId ${r.forecastId}`); issues.add(r.forecastId);
+    need(r.unit === expectedUnit, `Wrong unit in row ${i}`);
+    const issue = instant(r.issuedAt,'issuedAt');
+    const target = instant(r.targetAt,'targetAt');
+    const features = instant(r.featuresAvailableAt,'featuresAvailableAt');
+    const observed = instant(r.observedAvailableAt,'observedAvailableAt');
+    need(features <= issue, `FORECAST_LEAKAGE: future features in ${r.forecastId}`);
+    need(issue < target, `Forecast must precede target in ${r.forecastId}`);
+    need(observed >= target, `Observation timestamp precedes target in ${r.forecastId}`);
+    need(observed <= cutoff, `Observation not yet available in ${r.forecastId}`);
+    const y = finite(r.actual,`actual ${i}`,0);
+    const p = finite(r.predicted,`predicted ${i}`,0);
+    errors.push(p-y); absolute.push(Math.abs(p-y)); actuals.push(y);
+  }
+  const sq=errors.map(e=>e*e);const denom=actuals.reduce((a,b)=>a+b,0);
+  return {
+    count: rows.length, unit:expectedUnit, asOf,
+    mae:fixed(average(absolute)), rmse:fixed(Math.sqrt(average(sq))),
+    bias:fixed(average(errors)), wapePct: denom>EPS?fixed(100*absolute.reduce((a,b)=>a+b,0)/denom):null,
+    wapeStatus:denom>EPS?'valid':'undefined_zero_actual',
+    leakageCheck:'PASS', industrialValidation:false
+  };
+}
+
+/** Structural data quality with explicit missing-vs-zero distinction, source and tenancy. */
+function validateMeasurementBatch(batch, {orgId, assetId, metricUnits, asOf, minQuality='review'} = {}) {
+  need(Array.isArray(batch) && batch.length > 0,'Empty measurement batch');
+  need(['review','validated'].includes(minQuality),'Unknown minQuality policy');
+  id(orgId,'orgId');id(assetId,'assetId');need(metricUnits && typeof metricUnits==='object','No metric unit dictionary');
+  const cutoff=instant(asOf,'asOf'), keys=new Set(), errors=[];
+  const seen=[];
+  for(const r of batch){
+    if(!r || typeof r !== 'object'){errors.push({key:'UNKNOWN',problems:['RECORD_INVALID']});continue;}
+    const faults=[];
+    if(r.orgId!==orgId || r.assetId!==assetId)faults.push('TENANT_ASSET_SCOPE');
+    if(!r.sourceId || typeof r.sourceId!=='string')faults.push('SOURCE_MISSING');
+    if(!Object.prototype.hasOwnProperty.call(metricUnits,r.metricId))faults.push('METRIC_UNKNOWN');
+    else if(metricUnits[r.metricId]!==r.unit)faults.push('UNIT_MISMATCH');
+    const stamp = typeof r.observedAt==='string'?Date.parse(r.observedAt):NaN;
+    if(!Number.isFinite(stamp))faults.push('TIME_INVALID');
+    else if(stamp>cutoff)faults.push('FUTURE_OBSERVATION');
+    if(!Object.prototype.hasOwnProperty.call(r,'value') || r.value===null)faults.push('MISSING_NOT_ZERO');
+    else if(typeof r.value!=='number'||!Number.isFinite(r.value))faults.push('NOT_FINITE');
+    if(!['validated','review','rejected'].includes(r.quality))faults.push('QUALITY_UNKNOWN');
+    if(r.quality==='rejected')faults.push('QUALITY_REJECTED');
+    if(r.quality==='review' && minQuality==='validated')faults.push('QUALITY_BELOW_POLICY');
+    const key=[r.orgId,r.assetId,r.sourceId,r.metricId,r.observedAt].join('|');
+    if(keys.has(key))faults.push('DUPLICATE');keys.add(key);
+    seen.push(key);
+    if(faults.length)errors.push({key,problems:faults});
+  }
+  return {total:batch.length,accepted:batch.length-errors.length,rejected:errors.length,errors,valid:errors.length===0,unitDictionary:metricUnits,qualityPolicy:minQuality};
+}
+
+const CONTEXT_FIELDS=['orgId','assetId','baselineSnapshotId','constraintSetId','modelVersion','valuationDate','currency','discountRate'];
+function compareBase(a,b){
+  const differences=[];
+  for(const k of CONTEXT_FIELDS)if(a.context?.[k]!==b.context?.[k])differences.push(k);
+  return differences;
+}
+function scenarioNpv(s){
+  finite(s.capexMln,'capexMln',0);need(Array.isArray(s.cashflowsMln)&&s.cashflowsMln.length>=1 && s.cashflowsMln.length<=50,'Invalid cash flow period');
+  const rate=finite(s.context.discountRate,'discountRate',0);need(rate<=1,'Discount rate exceeds laboratory limit');
+  return -s.capexMln+s.cashflowsMln.reduce((a,c,i)=>a+finite(c,`cash flow period ${i}`)/Math.pow(1+rate,i+1),0);
+}
+function constraints(s){
+  need(Array.isArray(s.constraints)&&s.constraints.length,'No verified constraint list');
+  const failed=[];
+  for(const c of s.constraints){
+    id(c.id,'constraint.id');
+    need(c.kind==='hard'||c.kind==='informational','Unknown constraint type');
+    need(typeof c.passed==='boolean','Constraint missing verification');
+    id(c.evidenceRef,'constraint.evidenceRef');
+    if(c.kind==='hard'&&!c.passed)failed.push(c.id);
+  }
+  return failed;
+}
+/** Rejects unverified hard constraints and incomparable baselines before monetization. */
+function compareDecisionScenarios(base,alternative){
+  need(base&&alternative,'Two scenarios required');
+  id(base.scenarioId,'baseline scenario id');id(alternative.scenarioId,'alternative scenario id');
+  need(base.scenarioId!==alternative.scenarioId,'Same scenario id');
+  for(const scenario of [base,alternative]){
+    need(scenario.context && typeof scenario.context==='object','Scenario context missing');
+    for(const key of CONTEXT_FIELDS){
+      need(scenario.context[key] !== undefined && scenario.context[key] !== null && scenario.context[key] !== '',`Scenario context missing ${key}`);
+    }
+  }
+  const difference=compareBase(base,alternative);
+  need(!difference.length,`INCOMPARABLE_BASELINES: ${difference.join(',')}`);
+  need(base.cashflowsMln?.length===alternative.cashflowsMln?.length,'Different cash flow horizons');
+  const baseFails=constraints(base),altFails=constraints(alternative);
+  if(baseFails.length||altFails.length)return {comparable:true,admissible:false,failedConstraints:{baseline:baseFails,alternative:altFails},deltaNpvMln:null};
+  const npvBase=scenarioNpv(base),npvAlternative=scenarioNpv(alternative);
+  return {comparable:true,admissible:true,npvBaseMln:fixed(npvBase),npvAlternativeMln:fixed(npvAlternative),deltaNpvMln:fixed(npvAlternative-npvBase),result:'SYNTHETIC_SCENARIO_NOT_IMPLEMENTATION_RECOMMENDATION'};
+}
+
+/** Portfolio gate: hard obligations, dependencies, resource caps, alternatives. */
+function checkPortfolio({projects, selectedIds, annualCapsMln}) {
+  need(Array.isArray(projects)&&Array.isArray(selectedIds),'Projects and selection required');
+  need(annualCapsMln&&typeof annualCapsMln==='object','Annual budget caps missing');
+  const byId=new Map();for(const p of projects){id(p.id,'project.id');need(!byId.has(p.id),'Duplicate project');byId.set(p.id,p);}
+  const sel=new Set(selectedIds);need(sel.size===selectedIds.length,'Duplicate selection');
+  const errors=[];const spends={};
+  for(const p of projects){if(p.mandatory&&!sel.has(p.id))errors.push({code:'MANDATORY_MISSING',project:p.id});}
+  for(const idv of sel){
+    const p=byId.get(idv);if(!p){errors.push({code:'PROJECT_UNKNOWN',project:idv});continue;}
+    for(const d of p.dependencies||[]){
+      if(!byId.has(d))errors.push({code:'DEPENDENCY_UNKNOWN',project:p.id,dependency:d});
+      if(!sel.has(d))errors.push({code:'DEPENDENCY_MISSING',project:p.id,dependency:d});
+    }
+    for(const x of p.exclusions||[])if(sel.has(x))errors.push({code:'MUTUAL_EXCLUSION',project:p.id,with:x});
+    for(const [year,cost] of Object.entries(p.cashOutByYearMln||{})){finite(cost,`cost ${p.id} ${year}`,0);spends[year]=(spends[year]||0)+cost;}
+  }
+  const colors=new Map();
+  function visit(pid,path=[]){
+    if(colors.get(pid)===2)return;
+    if(colors.get(pid)===1){errors.push({code:'DEPENDENCY_CYCLE',path:[...path,pid]});return;}
+    const node=byId.get(pid);if(!node)return;colors.set(pid,1);
+    for(const child of node.dependencies||[])if(sel.has(child))visit(child,[...path,pid]);
+    colors.set(pid,2);
+  }
+  for(const pid of sel)visit(pid);
+  for(const [year,amount] of Object.entries(spends)){
+    if(!Object.prototype.hasOwnProperty.call(annualCapsMln,year))errors.push({code:'BUDGET_YEAR_UNDEFINED',year});
+    else {finite(annualCapsMln[year],`budget ${year}`,0);if(amount>annualCapsMln[year]+EPS)errors.push({code:'BUDGET_LIMIT',year,amountMln:fixed(amount),limitMln:annualCapsMln[year]});}
+  }
+  return {valid:errors.length===0,errors,annualSpendMln:Object.fromEntries(Object.entries(spends).map(([k,v])=>[k,fixed(v)])),countSelected:sel.size,industrialValidation:false};
+}
+
+/** Reconcile financial benefit by real owner and impact key. No cross-organization merger. */
+function reconcileBenefitsScoped(rows){
+  need(Array.isArray(rows),'Array of benefits required');
+  const groups=new Map(),flags=[];let sum=0;
+  for(const r of rows){
+    id(r.orgId,'organization');id(r.benefitKey,'benefitKey');id(r.evidenceRef,'evidenceRef');
+    const amount=finite(r.annualBenefitMln,'annualBenefitMln',0);
+    if(!['approved','in_execution','verification_pending','verified'].includes(r.status))continue;
+    const k=r.orgId+'|'+r.benefitKey;
+    if(!groups.has(k))groups.set(k,[]);groups.get(k).push({...r,amount});
+  }
+  for(const [key,g] of groups){
+    const vals=g.map(x=>x.annualBenefitMln);
+    if(Math.max(...vals)-Math.min(...vals)>EPS){flags.push({key,type:'AMOUNT_CONFLICT',excludedMln:null});continue;}
+    if(g.length>1)flags.push({key,type:'SHARED_EFFECT_COUNTED_ONCE',duplicates:g.length});
+    sum+=vals[0];
+  }
+  return {uniqueAnnualBenefitMln:fixed(sum),groups:groups.size,flags,canApproveAggregate:!flags.some(x=>x.type==='AMOUNT_CONFLICT')};
+}
+
+const key='hydrokontur-v6-lab-state';
+let state=emptyState();let role='analyst';let orgId='magadanenergo';let route='overview';let integrity=true;
+const orgNames={magadanenergo:'Магаданэнерго · учебный контур',kolymaenergo:'Колымаэнерго · учебный контур'};
+const rolesRu={analyst:'Аналитик',engineer:'Главный инженер',finance:'Финансовый эксперт',approver:'Утверждающий',operator:'Исполнитель',auditor:'Независимый аудитор'};
+const safe=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
+const $=(s)=>document.querySelector(s);
+const fmt=(n,d=2)=>Number(n).toLocaleString('ru-RU',{maximumFractionDigits:d,minimumFractionDigits:d});
+function actor(){return {role,userId:`demo-${orgId}-${role}`,orgId};}
+function load(){try{const data=JSON.parse(localStorage.getItem(key)||'null');if(data&&Array.isArray(data.events)&&Array.isArray(data.initiatives))state=data;}catch(e){console.warn('Bad demo storage',e);} }
+function persist(){try{localStorage.setItem(key,JSON.stringify(state));}catch(e){console.warn("Demo storage unavailable; in-memory mode",e);}}
+async function refreshIntegrity(){integrity=await verifyAudit(state.events);}
+function toast(message,error=false){const t=$('#toast');t.textContent=message;t.className='toast show'+(error?' error':'');setTimeout(()=>t.className='toast',3500);}
+function moduleOptions(assetId){let asset=ASSETS.find(a=>a.id===assetId);return MODULES.filter(m=>asset?.modules.includes(m.id));}
+function nav(){const items=[{id:'overview',name:'Обзор Магадана',symbol:'◫'},...MODULES.map(m=>({id:m.id,name:m.name,symbol:m.icon})),{id:'decisions',name:'Реестр решений',symbol:'◎'},{id:'audit',name:'Журнал доказательств',symbol:'▤'},{id:'assurance',name:'V6 Assurance Lab',symbol:'◇'},{id:'quality',name:'Проверки и ограничения',symbol:'✓'}];$('#nav').innerHTML=items.map(x=>`<button data-nav="${x.id}" class="nav-item ${route===x.id?'active':''}"><span>${x.symbol}</span><span>${safe(x.name)}</span></button>`).join('');document.querySelectorAll('[data-nav]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.nav)));}
+function go(to){route=to;location.hash='#'+to;render();}
+function setupShell(){$('#org').innerHTML=Object.entries(orgNames).map(([k,v])=>`<option value="${k}">${safe(v)}</option>`).join('');$('#org').value=orgId;$('#role').innerHTML=PROPOSED_ROLES.map(r=>`<option value="${r}">${rolesRu[r]}</option>`).join('');$('#role').value=role;$('#org').onchange=(e)=>{orgId=e.target.value;render();};$('#role').onchange=(e)=>{role=e.target.value;render();};$('#save').onclick=()=>{let blob=new Blob([JSON.stringify({state,exportedAt:new Date().toISOString(),classification:'SYNTHETIC DEMO; NO PRODUCTION DATA'},null,2)],{type:'application/json'});let u=URL.createObjectURL(blob);let a=document.createElement('a');a.href=u;a.download='hydrokontur-demo-evidence.json';a.click();setTimeout(()=>URL.revokeObjectURL(u),500);toast('Экспортировано учебное досье');};$('#reset').onclick=()=>{state=emptyState();persist();refreshIntegrity().then(()=>render());toast('Учебные решения очищены');};}
+function section(title,sub,content){return `<div class="section-head"><h2>${safe(title)}</h2><p>${safe(sub)}</p></div>${content}`;}
+const moduleExamples={
+ hydro:{title:'Контроль качества прогноза притока',desc:'Учебные ряды — не фактические наблюдения Колымского бассейна.',code:'forecastMAE',fields:[['prediction','Прогноз (м³/с), через запятую','41,52,47,63','text'],['observed','Факт (м³/с), через запятую','43,50,49,61','text']]},
+ cascade:{title:'Водно-энергетический учебный баланс',desc:'Упрощённый баланс и формула мощности; без правил использования водных ресурсов и характеристик агрегатов.',code:'hydroBalance',fields:[['storage','Начальный объём (м³)','1000000'],['qin','Приток (м³/с)','10'],['qout','Отток (м³/с)','6'],['head','Напор (м)','80'],['eff','КПД','0.9'],['rated','Учебная граница мощности (МВт)','40']]},
+ turbine:{title:'Сравнение диагностического сигнала',desc:'Учебный Z-score; не прогноз отказа и не оценка вероятности аварии.',code:'conditionAnomaly',fields:[['value','Показание','125'],['mean','Среднее сопоставимого режима','100'],['sd','Стандартное отклонение','5'],['comparable','Режимы сопоставимы: 1/0','1']]},
+ grid:{title:'Баланс учебного электросетевого участка',desc:'Измеренный остаток не означает хищение, дефект или подтверждённые технические потери.',code:'gridEnergyBalance',fields:[['input','Вход (МВт·ч)','1000'],['output','Полезный отпуск (МВт·ч)','940'],['own','Собственные нужды (МВт·ч)','10'],['technical','Расчётные технические потери (МВт·ч)','34']]},
+ heat:{title:'Иллюстративный тепловой баланс',desc:'Одна формула теплового потока; это не гидравлический решатель и не расчёт сетевых потерь.',code:'heatDuty',fields:[['mass','Массовый расход (кг/с)','100'],['supply','Температура подачи (°C)','95'],['return','Температура обратки (°C)','65']]},
+ capex:{title:'Дисконтированный денежный поток',desc:'Упрощённый сценарий без налогов, инфляции, остаточной стоимости и регуляторной экономики.',code:'npv',fields:[['capex','CAPEX (млн ₽)','28'],['gross','Годовой эффект (млн ₽)','10.7'],['opex','Дополнительный OPEX (млн ₽)','1.5'],['rate','Ставка дисконтирования','0.12'],['years','Лет','8']]}
+};
+function metric(title,value,caption){return `<div class="metric"><span>${safe(title)}</span><strong>${safe(value)}</strong><small>${safe(caption)}</small></div>`;}
+function overview(){let mine=state.initiatives.filter(x=>x.orgId===orgId);const val=portfolioBenefits(mine);const by=Object.entries(STATUS_LABEL).map(([id,label])=>({label,count:mine.filter(i=>i.status===id).length})).filter(x=>x.count);
+return `<div class="hero"><div><p class="eyebrow">МАГАДАНСКАЯ ОБЛАСТЬ / ИССЛЕДОВАТЕЛЬСКАЯ ПЛАТФОРМА</p><h2>От инженерного сигнала<br>к доказанному решению.</h2><p>Шесть специализированных направлений, единый реестр объектов, проверяемые сценарии и финансовая прослеживаемость.</p><button class="primary" id="open-decisions">Открыть инвестиционные решения ↗</button></div><div class="hero-art"><div class="orbit a"></div><div class="orbit b"></div><div class="center-node">360<span>MAGADAN</span></div><span class="node n1">ГЭС</span><span class="node n2">СЕТИ</span><span class="node n3">ТЕПЛО</span></div></div>
+<div class="metrics">${metric('Продуктовых модулей','06','Демонстрационные расчёты')}${metric('Карточек решений',String(mine.length),'Только текущая организация')}${metric('Учтённый годовой эффект',fmt(val.uniqueAnnualBenefitMln)+' млн ₽','Учебные значения; не факт')}${metric('Дублирующихся эффектов',String(val.duplicateKeys.length),'Защита от двойного счёта')}</div>
+<div class="content-grid"><div class="surface"><div class="surface-head"><h3>Отраслевые направления</h3><span>6 модулей</span></div><div class="module-grid">${MODULES.map(m=>`<button class="module-card" data-open="${m.id}"><span class="module-icon" style="color:${m.color}">${m.icon}</span><div><strong>${m.name}</strong><small>${m.kind}</small></div><span class="module-arrow">↗</span></button>`).join('')}</div></div><div class="surface"><div class="surface-head"><h3>Контрольные принципы</h3></div><div class="principles"><div><b>01</b><span>Единицы измерения и качество данных</span></div><div><b>02</b><span>Физические ограничения до экономики</span></div><div><b>03</b><span>Разделение полномочий</span></div><div><b>04</b><span>Один экономический эффект — один раз</span></div><div><b>05</b><span>Документальный след до факта</span></div></div></div></div><div class="disclaimer"><b>Ограничение демоверсии.</b> Все числовые показатели, расчёты и решения синтетические. Названия Колымской и Усть-Среднеканской ГЭС используются только для демонстрации организационной структуры. Промышленной интеграции, архивов телеметрии, проектной экспертизы и управления оборудованием нет.</div>`;
+}
+function moduleView(id){const m=MODULES.find(m=>m.id===id),ex=moduleExamples[id];const permitted=ASSETS.filter(a=>a.orgId===orgId&&a.modules.includes(id));const formfields=ex.fields.map(([id,label,val,type])=>`<label>${safe(label)}<input name="${id}" type="${type||'number'}" step="any" value="${safe(val)}" required /></label>`).join('');return `<div class="module-banner" style="--accent:${m.color}"><div class="module-logo">${m.icon}</div><div><p class="eyebrow">ИНЖЕНЕРНО-ЭКОНОМИЧЕСКАЯ ЛАБОРАТОРИЯ</p><h2>${m.name}</h2><p>${m.kind} · Магаданская область</p></div><span class="lab-label">УЧЕБНЫЕ ДАННЫЕ</span></div><div class="content-grid"><div class="surface"><div class="surface-head"><h3>${safe(ex.title)}</h3><span>Локальный расчёт</span></div><p class="explainer">${safe(ex.desc)}</p><form id="calculator" class="calculator-grid">${formfields}<button type="submit" class="primary wide">Рассчитать сценарий</button></form><div id="calc-result" class="calc-result" aria-live="polite">Показатели появятся после расчёта.</div></div><div class="surface"><div class="surface-head"><h3>Региональный контекст</h3></div><div class="assets"><p>Доступные учебные объекты текущей организации</p>${permitted.map(a=>`<div class="asset-chip"><span class="asset-pin">⌖</span><span>${safe(a.label)}</span><small>${a.isRealName?'Реальное название · данные синтетические':'Вымышленный объект'}</small></div>`).join('')||'<p>Нет объектов в выбранном периметре — переключите организацию.</p>'}</div><button id="to-decision" class="secondary">Создать карточку инвестиционного решения →</button><div class="form-note">Расчёт не создаёт подтверждённого экономического эффекта. Решение требует источника, инженерного заключения, финансовой проверки и независимой приёмки.</div></div></div>`;}
+function renderResult(id,form){const v=Object.fromEntries([...new FormData(form).entries()].map(([k,v])=>[k,v]));const n=k=>Number(v[k]);let entries=[];
+  switch(id){
+    case 'hydro':{const x=forecastMAE(v.prediction.split(',').map(Number),v.observed.split(',').map(Number));entries=[['MAE',`${fmt(x.mae)} м³/с`],['Проверенных пар',x.samples],['Ограничение',x.warning]];break;}
+    case 'cascade':{const x=hydroBalance({storageM3:n('storage'),inflowM3s:n('qin'),outflowM3s:n('qout'),seconds:3600,minStorageM3:0,maxStorageM3:2_000_000});const p=hydropower({flowM3s:n('qout'),headM:n('head'),efficiency:n('eff'),ratedMw:n('rated')});entries=[['Ожидаемый запас',fmt(x.storageEndM3)+' м³'],['Условная мощность',fmt(p.calculatedMw)+' МВт'],['Проверка границ',x.valid?'В пределах условных границ':x.reason],['Примечание',p.warning]];break;}
+    case 'turbine':{const x=conditionAnomaly({value:n('value'),referenceMean:n('mean'),referenceSd:n('sd'),comparableRegime:n('comparable')===1});entries=[['Состояние',x.message],['Z-score',x.zScore??'Не определяется'],['Вероятность отказа','Не вычислялась']];break;}
+    case 'grid':{const x=gridEnergyBalance({inputMwh:n('input'),outputMwh:n('output'),ownUseMwh:n('own'),calculatedTechnicalLossMwh:n('technical')});entries=[['Измеренный остаток',fmt(x.measuredLossMwh)+' МВт·ч'],['Условная доля',fmt(x.lossPct)+'%'],['Необъяснённый остаток',fmt(x.unexplainedMwh)+' МВт·ч'],['Оценка',x.status]];break;}
+    case 'heat':{const x=heatDuty({massKgSec:n('mass'),temperatureSupplyC:n('supply'),temperatureReturnC:n('return')});entries=[['Тепловая мощность',fmt(x.dutyMw)+' МВт'],['Ограничение',x.warning]];break;}
+    case 'capex':{const x=npv({capexMln:n('capex'),annualBenefitMln:n('gross'),annualOpexMln:n('opex'),discountRate:n('rate'),years:n('years')});entries=[['NPV',fmt(x.valueMln)+' млн ₽'],['Годовой поток',fmt(x.annualNetMln)+' млн ₽'],['Аннуитетный коэффициент',fmt(x.factor,4)]];break;}
+  }
+  $('#calc-result').innerHTML=`<div class="result-grid">${entries.map(([a,b])=>`<div><small>${safe(a)}</small><strong>${safe(b)}</strong></div>`).join('')}</div><small class="result-stamp">Результат учебного вычисления · не промышленный расчёт</small>`;
+}
+function decisionCreate(){let permitted=ASSETS.filter(a=>a.orgId===orgId);let moduleForAsset=permitted.length?moduleOptions(permitted[0].id):[];
+  return `<div class="surface"><div class="surface-head"><h3>Новая инициатива</h3><span>Только аналитик</span></div><form id="new-decision" class="decision-create"><label>Объект<select name="assetId" id="asset-select">${permitted.map(a=>`<option value="${a.id}">${safe(a.label)}</option>`).join('')}</select></label><label>Исходный модуль<select name="moduleId" id="module-select">${moduleForAsset.map(m=>`<option value="${m.id}">${m.name}</option>`).join('')}</select></label><label class="double">Название мероприятия<input name="title" required value="Демо: вариант модернизации для проверки" maxlength="160"></label><label>Код экономического эффекта<input name="benefitKey" required value="MAG-TEST-01" maxlength="60"></label><label>Источник основания<input name="evidenceRef" required value="synthetic/data-v0.2" maxlength="120"></label><label>CAPEX, млн ₽<input type="number" name="capexMln" value="28" min="0" step="any" required></label><label>Годовой валовый эффект, млн ₽<input type="number" name="annualBenefitMln" value="10.7" min="0" step="any" required></label><label>Дополнительный OPEX, млн ₽<input type="number" name="annualOpexMln" value="1.5" min="0" step="any" required></label><label>Ставка дисконтирования (доля)<input type="number" name="discountRate" value="0.12" min="0" max="1" step="any" required></label><label>Горизонт, лет<input type="number" name="years" value="8" min="1" max="50" step="1" required></label><button type="submit" class="primary double" ${role!=='analyst'?'disabled title="Включите роль Аналитик"':''}>Создать инициативу с проверкой входных данных</button></form><div class="form-note">В демоверсии роль выбирается вручную; это не производственная аутентификация. Данные сохраняются только в браузере.</div></div>`;
+}
+function decisionItem(x){const asset=ASSETS.find(a=>a.id===x.assetId);const available=availableActions(x,actor());const status=x.status==='verified'?'good':x.status==='rejected'?'bad':'';
+  return `<article class="decision-card"><div class="decision-top"><div><small>${safe(x.id)} · ${safe(asset?.label)} · ${safe(MODULES.find(m=>m.id===x.moduleId)?.name)}</small><h3>${safe(x.title)}</h3></div><span class="status ${status}">${safe(STATUS_LABEL[x.status]||x.status)}</span></div><div class="decision-metrics">${metric('CAPEX',fmt(x.capexMln)+' млн ₽','Расчётный')}${metric('NPV',fmt(x.npvMln)+' млн ₽','Упрощённая модель')}${metric('Эффект в год',fmt(x.annualBenefitMln)+' млн ₽',safe(x.benefitKey))}</div><div class="decision-evidence">Основание: <code>${safe(x.evidenceRef)}</code> · Согласований: ${Object.keys(x.approvals).length} · Результат: ${x.outcomeEvidence?'есть акт':'не подтверждён'}</div>${available.length?`<div class="decision-actions"><input data-note="${x.id}" placeholder="Ссылка на протокол, заключение или акт" aria-label="Доказательство для ${x.id}">${available.map(a=>`<button class="smallbtn" data-act="${a}" data-id="${x.id}">${safe(ACTION_LABEL[a])}</button>`).join('')}</div>`:`<div class="form-note">Нет доступных действий для выбранной роли. Требуется следующий участник процесса либо завершена стадия.</div>`}</article>`;
+}
+function decisions(){const mine=state.initiatives.filter(i=>i.orgId===orgId);const dup=portfolioBenefits(mine);return `<div class="intro"><h2>Инвестиционные решения</h2><p>Документально контролируемый путь: инициатор → инженер → экономист → утверждение → исполнение → независимая проверка результата.</p></div><div class="metrics compact">${metric('Инициативы',mine.length,'Текущая организация')}${metric('Дубли кодов эффекта',dup.duplicateKeys.length,'Один эффект не суммируется повторно')}${metric('Конфликт сумм',dup.conflictingKeys.length,'Исключено из итоговой суммы')}${metric('Утверждённый валовый эффект',fmt(dup.uniqueAnnualBenefitMln)+' млн ₽/год','Сценарная, не фактическая величина')}</div><div class="content-grid"><div class="surface decision-list"><div class="surface-head"><h3>Реестр</h3><span>${mine.length} инициатив</span></div>${mine.length?mine.map(decisionItem).join(''):'<div class="empty-state"><div>◇</div><h3>Нет решений для этой организации</h3><p>Создайте учебную карточку. Смена роли покажет независимые проверки, которые нужны для следующего этапа.</p></div>'}</div>${decisionCreate()}</div>`;}
+async function auditView(){const v=await verifyAudit(state.events);const entries=state.events.filter(x=>!x.objectId||state.initiatives.find(i=>i.id===x.objectId)?.orgId===orgId);return `<div class="intro"><h2>Журнал доказательств</h2><p>Цепочка SHA-256 в защищённом браузерном контексте, учебный контрольный хеш в режиме ограниченного предпросмотра.</p></div><div class="audit-banner ${v?'valid':'invalid'}"><strong>${v?'Целостность записей подтверждена':'Обнаружено изменение журнала'}</strong><small>${state.events.length} событий; журнал хранится в браузере, без серверной защиты или доверенной подписи</small></div><div class="surface"><div class="surface-head"><h3>События</h3><span>Только читаемая история</span></div>${entries.length?`<table class="data-table"><thead><tr><th>№ и время</th><th>Действие / объект</th><th>Участник</th><th>Отпечаток</th></tr></thead><tbody>${entries.slice().reverse().map(x=>`<tr><td>${x.seq}<br><small>${safe(x.at)}</small></td><td>${safe(x.action)}<br><small>${safe(x.objectId)}</small></td><td>${safe(x.actor)}</td><td><code>${safe(x.hash.slice(0,15))}…</code></td></tr>`).join('')}</tbody></table>`:'<div class="empty-state"><p>Событий пока нет. Сначала создайте решение.</p></div>'}</div>`;}
+function quality(){const tests=[['Математика','NPV; баланс воды; тепловой поток; баланс электросети','Автотесты Node.js'],['Данные','Строгие единицы измерения, отрицательный баланс, отсутствующие сведения','Локальная валидация'],['Решения','Семь стадий, роли, инженерное и финансовое согласование','Модель состояний'],['Эффект','Дубли кодов предотвращают двойной учёт','Портфельный контроль'],['Доказательства','SHA-256 цепочка и проверка изменения','Клиентская демонстрация'],['Границы','Нет SCADA, АСУ ТП, технологических команд и доступа к реальной телеметрии','Явное исключение'],['Не реализовано','Серверная авторизация, БД, криптоподписи, подключение инженерных солверов, BIM/ERP, CI/CD production','Production HOLD']];return `<div class="intro"><h2>Контроль качества</h2><p>Ниже — реальный состав проверяемого лабораторного ПО. Наличие пункта в архитектуре не означает его промышленной реализации.</p></div><div class="surface"><div class="surface-head"><h3>Проверяемые механизмы</h3><span>Код и тесты в комплекте</span></div><table class="data-table"><thead><tr><th>Раздел</th><th>Что проверяется</th><th>Область проверки</th></tr></thead><tbody>${tests.map(t=>`<tr><td><b>${t[0]}</b></td><td>${t[1]}</td><td>${t[2]}</td></tr>`).join('')}</tbody></table><div class="disclaimer"><b>Статус безопасности:</b> фронтендовый выбор роли не обеспечивает защиты данных. Для реального развёртывания необходимы серверная аутентификация, авторизация, журнал в защищённом хранилище, журналы доступа, угрозмодель и независимый аудит.</div></div>`;}
+
+function assurancePanel(){
+  return `<div class="intro"><h2>V6 Assurance Lab</h2><p>Executable quality and scenario proof checks on synthetic data only. No operational commands or live engineering models.</p></div>
+  <div class="surface"><div class="surface-head"><h3>Evidence-based gates</h3><span>34 added automated tests</span></div>
+  <div class="content-grid"><div class="surface" style="padding:18px"><h3>Forecast time-leakage gate</h3><p>Requires all model features to exist by forecast issue time and observed truth by evaluation time.</p><button class="smallbtn" data-assure="forecast-good">Valid history</button> <button class="smallbtn" data-assure="forecast-bad">Deliberate leakage</button></div>
+  <div class="surface" style="padding:18px"><h3>Scenario comparability</h3><p>Same asset, evidence snapshot, model, constraint set and valuation date; hard constraints cannot be overridden by benefit.</p><button class="smallbtn" data-assure="scenario-good">Comparable scenarios</button> <button class="smallbtn" data-assure="scenario-bad">Incomparable baselines</button></div>
+  <div class="surface" style="padding:18px"><h3>Capital portfolio gates</h3><p>Mandatory investment, dependencies, mutually exclusive alternatives and annual cash budgets.</p><button class="smallbtn" data-assure="portfolio-good">Valid portfolio</button> <button class="smallbtn" data-assure="portfolio-bad">Missing mandatory project</button></div>
+  <div class="surface" style="padding:18px"><h3>Measurement quality</h3><p>Separates absent value from valid zero, rejects wrong units, tenant scope and future observations.</p><button class="smallbtn" data-assure="quality-good">Valid measurement</button> <button class="smallbtn" data-assure="quality-bad">Unit mismatch</button></div></div>
+  <div class="surface" style="padding:18px;margin-top:16px"><div class="surface-head"><h3>Gate output</h3><span>Validation response JSON</span></div><pre id="assurance-output" style="white-space:pre-wrap;word-break:break-word;max-height:350px;overflow:auto">Choose one proof test. No live plant data is loaded.</pre></div></div>`;
+}
+function runAssurance(which){
+  const row=(forecastId,predicted,actual)=>({forecastId,issuedAt:'2026-10-01T12:00:00Z',featuresAvailableAt:'2026-10-01T11:00:00Z',targetAt:'2026-10-02T12:00:00Z',observedAvailableAt:'2026-10-03T12:00:00Z',unit:'m3/s',predicted,actual});
+  const baseCtx={orgId:'kolymaenergo',assetId:'kolyma',baselineSnapshotId:'DATA-01',constraintSetId:'C-01',modelVersion:'study-v0',valuationDate:'2026-10-20',currency:'RUB',discountRate:0.12};
+  const sc=(scenarioId,b)=>({scenarioId,context:{...baseCtx},capexMln:10,cashflowsMln:[b,b,b],constraints:[{id:'hard-rule-01',kind:'hard',passed:true,evidenceRef:'synthetic-protocol'}]});
+  const project=(id,mandatory)=>({id,mandatory,dependencies:[],exclusions:[],cashOutByYearMln:{2027:3}});
+  const measured={orgId:'magadanenergo',assetId:'grid-demo',metricId:'energy',unit:'MWh',sourceId:'synthetic-meter',observedAt:'2026-10-01T10:00:00Z',value:0,quality:'validated'};
+  const data={
+    'forecast-good':()=>verifyForecastBacktest([row('F1',11,10),row('F2',18,20)],{asOf:'2026-10-20T12:00:00Z'}),
+    'forecast-bad':()=>verifyForecastBacktest([{...row('F1',11,10),featuresAvailableAt:'2026-10-02T12:01:00Z'},row('F2',18,20)],{asOf:'2026-10-20T12:00:00Z'}),
+    'scenario-good':()=>compareDecisionScenarios(sc('BASE',7),sc('ALT',9)),
+    'scenario-bad':()=>compareDecisionScenarios(sc('BASE',7),{...sc('ALT',9),context:{...baseCtx,baselineSnapshotId:'DATA-02'}}),
+    'portfolio-good':()=>checkPortfolio({projects:[project('MAND',true),project('OPTION',false)],selectedIds:['MAND','OPTION'],annualCapsMln:{2027:8}}),
+    'portfolio-bad':()=>checkPortfolio({projects:[project('MAND',true),project('OPTION',false)],selectedIds:['OPTION'],annualCapsMln:{2027:8}}),
+    'quality-good':()=>validateMeasurementBatch([measured],{orgId:'magadanenergo',assetId:'grid-demo',metricUnits:{energy:'MWh'},asOf:'2026-10-20T12:00:00Z'}),
+    'quality-bad':()=>validateMeasurementBatch([{...measured,unit:'kWh'}],{orgId:'magadanenergo',assetId:'grid-demo',metricUnits:{energy:'MWh'},asOf:'2026-10-20T12:00:00Z'})
+  };
+  return data[which]();
+}
+
+async function render(){nav();$('#org').value=orgId;$('#role').value=role;$('#who').textContent=`${rolesRu[role]} / ${orgId==='kolymaenergo'?'Колымаэнерго':'Магаданэнерго'}`;let view=route==='overview'?overview():MODULES.some(m=>m.id===route)?moduleView(route):route==='decisions'?decisions():route==='audit'?await auditView():route==='assurance'?assurancePanel():quality();$('#main').innerHTML=view;document.querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>go(b.dataset.open));if($('#open-decisions'))$('#open-decisions').onclick=()=>go('decisions');document.querySelectorAll('[data-assure]').forEach(b=>b.onclick=()=>{try{const value=runAssurance(b.dataset.assure);$('#assurance-output').textContent=JSON.stringify({gate:b.dataset.assure,result:value,scope:'SYNTHETIC_ONLY'},null,2);}catch(e){$('#assurance-output').textContent=JSON.stringify({gate:b.dataset.assure,blocked:true,reason:e.message},null,2);}});if($('#to-decision'))$('#to-decision').onclick=()=>go('decisions');if($('#calculator'))$('#calculator').onsubmit=e=>{e.preventDefault();try{renderResult(route,e.target);toast('Учебный расчёт выполнен');}catch(err){$('#calc-result').textContent=err.message;toast(err.message,true);}};
+  if($('#new-decision')){$('#asset-select').onchange=e=>{$('#module-select').innerHTML=moduleOptions(e.target.value).map(m=>`<option value="${m.id}">${m.name}</option>`).join('');};$('#new-decision').onsubmit=async e=>{e.preventDefault();try{const raw=Object.fromEntries(new FormData(e.target));const req={...raw,capexMln:Number(raw.capexMln),annualBenefitMln:Number(raw.annualBenefitMln),annualOpexMln:Number(raw.annualOpexMln),discountRate:Number(raw.discountRate),years:Number(raw.years)};const next=createInitiative(state,req,actor());const item=next.initiatives.at(-1);state=await appendAudit(next,{action:'create',actor:actor().userId,objectId:item.id,note:'Лабораторная карточка'});persist();render();toast('Инициатива создана, требуется инженерная проверка');}catch(err){toast(err.message,true);}};}
+  document.querySelectorAll('[data-act]').forEach(b=>b.onclick=async()=>{const note=document.querySelector(`[data-note="${b.dataset.id}"]`)?.value||'';try{let next=transitionDecision(state,b.dataset.id,b.dataset.act,actor(),note);state=await appendAudit(next,{action:b.dataset.act,actor:actor().userId,objectId:b.dataset.id,note:note||'Лабораторный переход'});persist();render();toast('Этап изменён; запись добавлена в журнал');}catch(err){toast(err.message,true);}});
+}
+window.addEventListener('hashchange',()=>{let v=location.hash.replace('#','');if(v&&v!==route){route=v;render();}});
+load();route=location.hash.slice(1)||'overview';if(!['overview','decisions','audit','assurance','quality',...MODULES.map(m=>m.id)].includes(route))route='overview';setupShell();await refreshIntegrity();await render();
+})().catch(e=>console.error(e));
+</script></body></html>

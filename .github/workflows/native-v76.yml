@@ -1,0 +1,69 @@
+name: HydroKontur V7.6 native PostgreSQL 17 acceptance (manual, synthetic only)
+
+on: [workflow_dispatch]
+permissions:
+  contents: read
+
+jobs:
+  isolated-native-acceptance:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: hydrokontur_v72_acceptance_v76
+          POSTGRES_PASSWORD: lab-temporary-postgres-only
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install test dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Bootstrap a NEW isolated database, never production
+        env:
+          HYDRO_PG_ADMIN_URL: postgresql://postgres:lab-temporary-postgres-only@127.0.0.1:5432/hydrokontur_v72_acceptance_v76
+        run: python scripts/bootstrap_native.py --out /tmp/hydro-native-v76.json
+      - name: Python HTTP, domain and static SQL regressions
+        env:
+          PYTHONPATH: server
+        run: >-
+          pytest -q server/tests server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 server/tests_v76
+          --ignore=server/tests/test_browser.py
+          --ignore=server/tests_v71/test_postgres_native.py
+          --junitxml=/tmp/python-v76-junit.xml
+      - name: Legacy deterministic JavaScript tests
+        run: node --test v6-client/tests/domain.test.mjs v6-client/tests/assurance.test.mjs
+      - name: Synthetic solver stress suite
+        run: python scripts/stress_radial_v73.py --output /tmp/stress-v76.json
+      - name: Synthetic domain handoff and programme reproduction (inherited V7.5)
+        env:
+          PYTHONPATH: server
+        run: python scripts/reproduce_handoffs_v75.py --output /tmp/showcase-v76.json
+      - name: MANDATORY genuine PostgreSQL 17 RLS, migration 100 and transaction acceptance
+        env:
+          HYDRO_NATIVE_TESTS_REQUIRED: '1'
+          HYDRO_NATIVE_CONFIG: /tmp/hydro-native-v76.json
+          PYTHONPATH: server
+        run: pytest -q server/tests_v71/test_postgres_native.py --junitxml=/tmp/native-v76-junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: v76-test-artifacts
+          path: |
+            /tmp/python-v76-junit.xml
+            /tmp/native-v76-junit.xml
+            /tmp/stress-v76.json
+            /tmp/showcase-v76.json
+          if-no-files-found: warn
+      - name: Remove ephemeral credentials
+        if: always()
+        run: rm -f /tmp/hydro-native-v76.json

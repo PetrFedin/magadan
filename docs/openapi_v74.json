@@ -1,0 +1,3223 @@
+{
+  "components": {
+    "schemas": {
+      "AssetNew": {
+        "additionalProperties": false,
+        "properties": {
+          "classification": {
+            "const": "LAB_REFERENCE",
+            "default": "LAB_REFERENCE",
+            "title": "Classification",
+            "type": "string"
+          },
+          "name": {
+            "maxLength": 160,
+            "minLength": 3,
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "AssetNew",
+        "type": "object"
+      },
+      "AttachEvidence": {
+        "additionalProperties": false,
+        "properties": {
+          "evidence_id": {
+            "title": "Evidence Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "evidence_id"
+        ],
+        "title": "AttachEvidence",
+        "type": "object"
+      },
+      "CapitalScreen": {
+        "additionalProperties": false,
+        "properties": {
+          "annual_caps_rub": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                  "type": "string"
+                }
+              ]
+            },
+            "maxProperties": 20,
+            "minProperties": 1,
+            "title": "Annual Caps Rub",
+            "type": "object"
+          },
+          "contingency_percent": {
+            "anyOf": [
+              {
+                "maximum": 25.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Contingency Percent"
+          },
+          "currency": {
+            "const": "RUB",
+            "default": "RUB",
+            "title": "Currency",
+            "type": "string"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/WBSLine"
+            },
+            "maxItems": 80,
+            "minItems": 1,
+            "title": "Lines",
+            "type": "array"
+          },
+          "tax_basis": {
+            "const": "EXCL_VAT_SYNTHETIC",
+            "default": "EXCL_VAT_SYNTHETIC",
+            "title": "Tax Basis",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 160,
+            "minLength": 8,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "title",
+          "annual_caps_rub",
+          "lines",
+          "contingency_percent"
+        ],
+        "title": "CapitalScreen",
+        "type": "object"
+      },
+      "ComparisonInput": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline_run_id": {
+            "title": "Baseline Run Id",
+            "type": "string"
+          },
+          "proposed_run_id": {
+            "title": "Proposed Run Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "baseline_run_id",
+          "proposed_run_id"
+        ],
+        "title": "ComparisonInput",
+        "type": "object"
+      },
+      "EvidenceNew": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "kind": {
+            "enum": [
+              "grid_input",
+              "engineering_report",
+              "financial_report",
+              "approval_memo",
+              "execution_proof",
+              "outcome_report"
+            ],
+            "title": "Kind",
+            "type": "string"
+          },
+          "payload": {
+            "additionalProperties": true,
+            "title": "Payload",
+            "type": "object"
+          },
+          "source_ref": {
+            "maxLength": 256,
+            "minLength": 5,
+            "title": "Source Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "asset_id",
+          "kind",
+          "source_ref",
+          "payload"
+        ],
+        "title": "EvidenceNew",
+        "type": "object"
+      },
+      "FeederNode": {
+        "additionalProperties": false,
+        "properties": {
+          "ampacity_a": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 100000.0,
+            "title": "Ampacity A",
+            "type": "number"
+          },
+          "load_p_mw": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Load P Mw",
+            "type": "number"
+          },
+          "load_q_mvar": {
+            "maximum": 100.0,
+            "minimum": 0.0,
+            "title": "Load Q Mvar",
+            "type": "number"
+          },
+          "node_id": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Node Id",
+            "type": "string"
+          },
+          "parent_id": {
+            "maxLength": 40,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Parent Id",
+            "type": "string"
+          },
+          "r_ohm_per_phase": {
+            "maximum": 30.0,
+            "minimum": 1e-05,
+            "title": "R Ohm Per Phase",
+            "type": "number"
+          },
+          "x_ohm_per_phase": {
+            "maximum": 30.0,
+            "minimum": 0.0,
+            "title": "X Ohm Per Phase",
+            "type": "number"
+          }
+        },
+        "required": [
+          "node_id",
+          "parent_id",
+          "r_ohm_per_phase",
+          "x_ohm_per_phase",
+          "load_p_mw",
+          "load_q_mvar",
+          "ampacity_a"
+        ],
+        "title": "FeederNode",
+        "type": "object"
+      },
+      "FinanceInput": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "baseline_run_id": {
+            "title": "Baseline Run Id",
+            "type": "string"
+          },
+          "benefit_key": {
+            "maxLength": 100,
+            "minLength": 5,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Benefit Key",
+            "type": "string"
+          },
+          "finance": {
+            "$ref": "#/components/schemas/LabFinance"
+          },
+          "proposed_run_id": {
+            "title": "Proposed Run Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "baseline_run_id",
+          "proposed_run_id",
+          "asset_id",
+          "benefit_key",
+          "finance"
+        ],
+        "title": "FinanceInput",
+        "type": "object"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "title": "Detail",
+            "type": "array"
+          }
+        },
+        "title": "HTTPValidationError",
+        "type": "object"
+      },
+      "HeatMoney": {
+        "additionalProperties": false,
+        "properties": {
+          "annual_opex_delta_rub": {
+            "anyOf": [
+              {
+                "maximum": 1000000000000000.0,
+                "minimum": -1000000000000000.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Annual Opex Delta Rub"
+          },
+          "capital_cost_rub": {
+            "anyOf": [
+              {
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Capital Cost Rub"
+          },
+          "discount_rate": {
+            "anyOf": [
+              {
+                "maximum": 0.6,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Discount Rate"
+          },
+          "hours_per_year": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 8784.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Hours Per Year"
+          },
+          "notes": {
+            "maxLength": 1200,
+            "minLength": 20,
+            "title": "Notes",
+            "type": "string"
+          },
+          "scope": {
+            "const": "SYNTHETIC_HEAT_NOT_TARIFF",
+            "default": "SYNTHETIC_HEAT_NOT_TARIFF",
+            "title": "Scope",
+            "type": "string"
+          },
+          "value_rub_per_kwh": {
+            "$ref": "#/components/schemas/PriceBand"
+          },
+          "years": {
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Years",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "hours_per_year",
+          "value_rub_per_kwh",
+          "capital_cost_rub",
+          "annual_opex_delta_rub",
+          "discount_rate",
+          "years",
+          "notes"
+        ],
+        "title": "HeatMoney",
+        "type": "object"
+      },
+      "HeatScenarioScreen": {
+        "additionalProperties": false,
+        "properties": {
+          "baseline_study_id": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Baseline Study Id",
+            "type": "string"
+          },
+          "benefit_key": {
+            "maxLength": 100,
+            "minLength": 5,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Benefit Key",
+            "type": "string"
+          },
+          "finance": {
+            "$ref": "#/components/schemas/HeatMoney"
+          },
+          "proposed_study_id": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Proposed Study Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "baseline_study_id",
+          "proposed_study_id",
+          "benefit_key",
+          "finance"
+        ],
+        "title": "HeatScenarioScreen",
+        "type": "object"
+      },
+      "InitiativeNew": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "effect_key": {
+            "maxLength": 80,
+            "minLength": 4,
+            "title": "Effect Key",
+            "type": "string"
+          },
+          "run_id": {
+            "title": "Run Id",
+            "type": "string"
+          },
+          "title": {
+            "maxLength": 160,
+            "minLength": 6,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "asset_id",
+          "run_id",
+          "title",
+          "effect_key"
+        ],
+        "title": "InitiativeNew",
+        "type": "object"
+      },
+      "LabFinance": {
+        "additionalProperties": false,
+        "properties": {
+          "annual_opex_delta_rub": {
+            "anyOf": [
+              {
+                "maximum": 1000000000000000.0,
+                "minimum": -1000000000000000.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Annual Opex Delta Rub"
+          },
+          "annual_repeat_count": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 8784.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Annual Repeat Count"
+          },
+          "capital_cost_rub": {
+            "anyOf": [
+              {
+                "maximum": 1000000000000000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Capital Cost Rub"
+          },
+          "discount_rate": {
+            "anyOf": [
+              {
+                "maximum": 0.6,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Discount Rate"
+          },
+          "notes": {
+            "maxLength": 1200,
+            "minLength": 18,
+            "title": "Notes",
+            "type": "string"
+          },
+          "scope": {
+            "const": "SYNTHETIC_NOT_A_TARIFF",
+            "default": "SYNTHETIC_NOT_A_TARIFF",
+            "title": "Scope",
+            "type": "string"
+          },
+          "value_per_kwh_rub": {
+            "$ref": "#/components/schemas/PriceBand"
+          },
+          "years": {
+            "maximum": 30.0,
+            "minimum": 1.0,
+            "title": "Years",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "capital_cost_rub",
+          "annual_opex_delta_rub",
+          "value_per_kwh_rub",
+          "discount_rate",
+          "years",
+          "annual_repeat_count",
+          "notes"
+        ],
+        "title": "LabFinance",
+        "type": "object"
+      },
+      "LoadWindow": {
+        "additionalProperties": false,
+        "properties": {
+          "hours": {
+            "exclusiveMinimum": 0.0,
+            "maximum": 8784.0,
+            "title": "Hours",
+            "type": "number"
+          },
+          "name": {
+            "maxLength": 60,
+            "minLength": 1,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Name",
+            "type": "string"
+          },
+          "scale": {
+            "maximum": 2.5,
+            "minimum": 0.01,
+            "title": "Scale",
+            "type": "number"
+          }
+        },
+        "required": [
+          "name",
+          "scale",
+          "hours"
+        ],
+        "title": "LoadWindow",
+        "type": "object"
+      },
+      "Login": {
+        "additionalProperties": false,
+        "properties": {
+          "email": {
+            "maxLength": 256,
+            "minLength": 3,
+            "title": "Email",
+            "type": "string"
+          },
+          "password": {
+            "maxLength": 1024,
+            "minLength": 1,
+            "title": "Password",
+            "type": "string"
+          }
+        },
+        "required": [
+          "email",
+          "password"
+        ],
+        "title": "Login",
+        "type": "object"
+      },
+      "ModelNew": {
+        "additionalProperties": false,
+        "properties": {
+          "algorithm": {
+            "const": "balanced_two_bus_AC_PQ_lab_v1",
+            "title": "Algorithm",
+            "type": "string"
+          },
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "params": {
+            "additionalProperties": true,
+            "title": "Params",
+            "type": "object"
+          }
+        },
+        "required": [
+          "asset_id",
+          "algorithm"
+        ],
+        "title": "ModelNew",
+        "type": "object"
+      },
+      "PriceBand": {
+        "additionalProperties": false,
+        "properties": {
+          "base": {
+            "anyOf": [
+              {
+                "maximum": 10000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Base"
+          },
+          "high": {
+            "anyOf": [
+              {
+                "maximum": 10000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "High"
+          },
+          "low": {
+            "anyOf": [
+              {
+                "maximum": 10000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Low"
+          }
+        },
+        "required": [
+          "low",
+          "base",
+          "high"
+        ],
+        "title": "PriceBand",
+        "type": "object"
+      },
+      "ProgrammeLink": {
+        "additionalProperties": false,
+        "properties": {
+          "from_study_id": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "From Study Id",
+            "type": "string"
+          },
+          "relationship": {
+            "enum": [
+              "forecast_context_for_cascade",
+              "cascade_context_for_capex",
+              "diagnostics_context_for_capex",
+              "grid_context_for_capex",
+              "heat_context_for_capex"
+            ],
+            "title": "Relationship",
+            "type": "string"
+          },
+          "to_study_id": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "To Study Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "from_study_id",
+          "to_study_id",
+          "relationship"
+        ],
+        "title": "ProgrammeLink",
+        "type": "object"
+      },
+      "ProgrammeNew": {
+        "additionalProperties": false,
+        "properties": {
+          "capital": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CapitalScreen"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "financial_dossier_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 12,
+            "title": "Financial Dossier Ids",
+            "type": "array"
+          },
+          "heat_screenings": {
+            "items": {
+              "$ref": "#/components/schemas/HeatScenarioScreen"
+            },
+            "maxItems": 8,
+            "title": "Heat Screenings",
+            "type": "array"
+          },
+          "links": {
+            "items": {
+              "$ref": "#/components/schemas/ProgrammeLink"
+            },
+            "maxItems": 48,
+            "title": "Links",
+            "type": "array"
+          },
+          "purpose": {
+            "maxLength": 1800,
+            "minLength": 30,
+            "title": "Purpose",
+            "type": "string"
+          },
+          "reference_code": {
+            "maxLength": 80,
+            "minLength": 6,
+            "pattern": "^LAB-[A-Za-z0-9_-]+$",
+            "title": "Reference Code",
+            "type": "string"
+          },
+          "scope": {
+            "const": "SYNTHETIC_MAGADAN_RESEARCH_ONLY",
+            "default": "SYNTHETIC_MAGADAN_RESEARCH_ONLY",
+            "title": "Scope",
+            "type": "string"
+          },
+          "study_ids": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 24,
+            "minItems": 1,
+            "title": "Study Ids",
+            "type": "array"
+          },
+          "title": {
+            "maxLength": 180,
+            "minLength": 12,
+            "title": "Title",
+            "type": "string"
+          }
+        },
+        "required": [
+          "reference_code",
+          "title",
+          "purpose",
+          "study_ids"
+        ],
+        "title": "ProgrammeNew",
+        "type": "object"
+      },
+      "RadialCase": {
+        "additionalProperties": false,
+        "properties": {
+          "min_voltage_pu": {
+            "maximum": 1.0,
+            "minimum": 0.7,
+            "title": "Min Voltage Pu",
+            "type": "number"
+          },
+          "model_kind": {
+            "const": "radial_ac_v73",
+            "default": "radial_ac_v73",
+            "title": "Model Kind",
+            "type": "string"
+          },
+          "nodes": {
+            "items": {
+              "$ref": "#/components/schemas/FeederNode"
+            },
+            "maxItems": 16,
+            "minItems": 1,
+            "title": "Nodes",
+            "type": "array"
+          },
+          "reference_name": {
+            "maxLength": 120,
+            "minLength": 3,
+            "title": "Reference Name",
+            "type": "string"
+          },
+          "source_voltage_kv_ll": {
+            "exclusiveMinimum": 1.0,
+            "maximum": 500.0,
+            "title": "Source Voltage Kv Ll",
+            "type": "number"
+          },
+          "windows": {
+            "items": {
+              "$ref": "#/components/schemas/LoadWindow"
+            },
+            "maxItems": 48,
+            "minItems": 1,
+            "title": "Windows",
+            "type": "array"
+          }
+        },
+        "required": [
+          "reference_name",
+          "source_voltage_kv_ll",
+          "min_voltage_pu",
+          "nodes",
+          "windows"
+        ],
+        "title": "RadialCase",
+        "type": "object"
+      },
+      "RadialStudyNew": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "case": {
+            "$ref": "#/components/schemas/RadialCase"
+          },
+          "scenario_group": {
+            "maxLength": 100,
+            "minLength": 4,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Scenario Group",
+            "type": "string"
+          },
+          "scope": {
+            "const": "SYNTHETIC_LAB_ONLY",
+            "default": "SYNTHETIC_LAB_ONLY",
+            "title": "Scope",
+            "type": "string"
+          },
+          "source_ref": {
+            "maxLength": 220,
+            "minLength": 15,
+            "pattern": "^SYNTHETIC-[A-Za-z0-9_-]+$",
+            "title": "Source Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "asset_id",
+          "scenario_group",
+          "source_ref",
+          "case"
+        ],
+        "title": "RadialStudyNew",
+        "type": "object"
+      },
+      "ReviewNew": {
+        "additionalProperties": false,
+        "properties": {
+          "accepted": {
+            "title": "Accepted",
+            "type": "boolean"
+          },
+          "note": {
+            "maxLength": 1000,
+            "minLength": 8,
+            "title": "Note",
+            "type": "string"
+          }
+        },
+        "required": [
+          "accepted",
+          "note"
+        ],
+        "title": "ReviewNew",
+        "type": "object"
+      },
+      "RunNew": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "evidence_id": {
+            "title": "Evidence Id",
+            "type": "string"
+          },
+          "model_id": {
+            "title": "Model Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "asset_id",
+          "evidence_id",
+          "model_id"
+        ],
+        "title": "RunNew",
+        "type": "object"
+      },
+      "StudyCompare": {
+        "additionalProperties": false,
+        "properties": {
+          "left_run_id": {
+            "title": "Left Run Id",
+            "type": "string"
+          },
+          "right_run_id": {
+            "title": "Right Run Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "left_run_id",
+          "right_run_id"
+        ],
+        "title": "StudyCompare",
+        "type": "object"
+      },
+      "StudyNew": {
+        "additionalProperties": false,
+        "properties": {
+          "asset_id": {
+            "title": "Asset Id",
+            "type": "string"
+          },
+          "case": {
+            "additionalProperties": true,
+            "title": "Case",
+            "type": "object"
+          },
+          "module": {
+            "enum": [
+              "hydroforecast",
+              "cascade",
+              "turbine",
+              "gridloss",
+              "heatnet",
+              "hydrocapex"
+            ],
+            "title": "Module",
+            "type": "string"
+          },
+          "scenario_group": {
+            "maxLength": 100,
+            "minLength": 4,
+            "pattern": "^[A-Za-z0-9_-]+$",
+            "title": "Scenario Group",
+            "type": "string"
+          },
+          "scope": {
+            "const": "SYNTHETIC_LAB_ONLY",
+            "default": "SYNTHETIC_LAB_ONLY",
+            "title": "Scope",
+            "type": "string"
+          },
+          "source_ref": {
+            "maxLength": 220,
+            "minLength": 15,
+            "pattern": "^SYNTHETIC-[A-Za-z0-9_-]+$",
+            "title": "Source Ref",
+            "type": "string"
+          }
+        },
+        "required": [
+          "asset_id",
+          "module",
+          "source_ref",
+          "scenario_group",
+          "case"
+        ],
+        "title": "StudyNew",
+        "type": "object"
+      },
+      "TransitionNew": {
+        "additionalProperties": false,
+        "properties": {
+          "expected_revision": {
+            "minimum": 0.0,
+            "title": "Expected Revision",
+            "type": "integer"
+          },
+          "to_state": {
+            "enum": [
+              "engineering_review",
+              "financial_review",
+              "approval_pending",
+              "approved",
+              "in_execution",
+              "verification_pending",
+              "verified"
+            ],
+            "title": "To State",
+            "type": "string"
+          }
+        },
+        "required": [
+          "to_state",
+          "expected_revision"
+        ],
+        "title": "TransitionNew",
+        "type": "object"
+      },
+      "ValidationError": {
+        "properties": {
+          "ctx": {
+            "title": "Context",
+            "type": "object"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "title": "Location",
+            "type": "array"
+          },
+          "msg": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "title": "Error Type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError",
+        "type": "object"
+      },
+      "WBSLine": {
+        "additionalProperties": false,
+        "properties": {
+          "category": {
+            "enum": [
+              "survey",
+              "design",
+              "equipment",
+              "civil_works",
+              "logistics",
+              "commissioning",
+              "contingency",
+              "other"
+            ],
+            "title": "Category",
+            "type": "string"
+          },
+          "code": {
+            "maxLength": 48,
+            "minLength": 2,
+            "pattern": "^[A-Za-z0-9_.-]+$",
+            "title": "Code",
+            "type": "string"
+          },
+          "predecessors": {
+            "items": {
+              "type": "string"
+            },
+            "maxItems": 20,
+            "title": "Predecessors",
+            "type": "array"
+          },
+          "price_source_ref": {
+            "maxLength": 150,
+            "minLength": 18,
+            "pattern": "^SYNTHETIC-[A-Za-z0-9_-]+$",
+            "title": "Price Source Ref",
+            "type": "string"
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0.0,
+                "maximum": 1000000000000.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Quantity"
+          },
+          "title": {
+            "maxLength": 180,
+            "minLength": 6,
+            "title": "Title",
+            "type": "string"
+          },
+          "unit": {
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Unit",
+            "type": "string"
+          },
+          "unit_price_rub": {
+            "anyOf": [
+              {
+                "maximum": 100000000000000.0,
+                "minimum": 0.0,
+                "type": "number"
+              },
+              {
+                "pattern": "^(?!^[-+.]*$)[+-]?0*\\d*\\.?\\d*$",
+                "type": "string"
+              }
+            ],
+            "title": "Unit Price Rub"
+          },
+          "year": {
+            "maximum": 2045.0,
+            "minimum": 2026.0,
+            "title": "Year",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "title",
+          "category",
+          "year",
+          "quantity",
+          "unit",
+          "unit_price_rub",
+          "price_source_ref"
+        ],
+        "title": "WBSLine",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "HTTPBearer": {
+        "scheme": "bearer",
+        "type": "http"
+      }
+    }
+  },
+  "info": {
+    "description": "No industrial connections, not a production authorization or SCADA system",
+    "title": "HydroKontur Magadan V7.4 / controlled engineering lab",
+    "version": "0.7.4"
+  },
+  "openapi": "3.1.0",
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "health_health_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Health"
+      }
+    },
+    "/v7/auth/login": {
+      "post": {
+        "operationId": "login_v7_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Login"
+      }
+    },
+    "/v7/auth/logout": {
+      "post": {
+        "operationId": "logout_v7_auth_logout_post",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Logout"
+      }
+    },
+    "/v7/me": {
+      "get": {
+        "operationId": "me_v7_me_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Me"
+      }
+    },
+    "/v7/meta/limitations": {
+      "get": {
+        "operationId": "limitations_v7_meta_limitations_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Limitations"
+      }
+    },
+    "/v7/orgs/{org_id}/assets": {
+      "get": {
+        "operationId": "assets_v7_orgs__org_id__assets_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Assets"
+      },
+      "post": {
+        "operationId": "add_asset_v7_orgs__org_id__assets_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AssetNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Asset"
+      }
+    },
+    "/v7/orgs/{org_id}/audit/export": {
+      "get": {
+        "operationId": "export_audit_v7_orgs__org_id__audit_export_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Export Audit"
+      }
+    },
+    "/v7/orgs/{org_id}/audit/verify": {
+      "get": {
+        "operationId": "verify_audit_v7_orgs__org_id__audit_verify_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Verify Audit"
+      }
+    },
+    "/v7/orgs/{org_id}/evidence": {
+      "get": {
+        "operationId": "list_evidence_v7_orgs__org_id__evidence_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Evidence"
+      },
+      "post": {
+        "operationId": "add_evidence_v7_orgs__org_id__evidence_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EvidenceNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Evidence"
+      }
+    },
+    "/v7/orgs/{org_id}/evidence/{evidence_id}/review": {
+      "post": {
+        "operationId": "review_evidence_v7_orgs__org_id__evidence__evidence_id__review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "evidence_id",
+            "required": true,
+            "schema": {
+              "title": "Evidence Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Review Evidence"
+      }
+    },
+    "/v7/orgs/{org_id}/initiatives": {
+      "get": {
+        "operationId": "list_initiatives_v7_orgs__org_id__initiatives_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Initiatives"
+      },
+      "post": {
+        "operationId": "add_initiative_v7_orgs__org_id__initiatives_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/InitiativeNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Initiative"
+      }
+    },
+    "/v7/orgs/{org_id}/initiatives/{iid}/dossier": {
+      "get": {
+        "operationId": "dossier_v7_orgs__org_id__initiatives__iid__dossier_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "iid",
+            "required": true,
+            "schema": {
+              "title": "Iid",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Dossier"
+      }
+    },
+    "/v7/orgs/{org_id}/initiatives/{iid}/evidence": {
+      "post": {
+        "operationId": "attach_v7_orgs__org_id__initiatives__iid__evidence_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "iid",
+            "required": true,
+            "schema": {
+              "title": "Iid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AttachEvidence"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Attach"
+      }
+    },
+    "/v7/orgs/{org_id}/initiatives/{iid}/transition": {
+      "post": {
+        "operationId": "transition_v7_orgs__org_id__initiatives__iid__transition_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "iid",
+            "required": true,
+            "schema": {
+              "title": "Iid",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TransitionNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Transition"
+      }
+    },
+    "/v7/orgs/{org_id}/models": {
+      "get": {
+        "operationId": "list_models_v7_orgs__org_id__models_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Models"
+      },
+      "post": {
+        "operationId": "add_model_v7_orgs__org_id__models_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ModelNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Add Model"
+      }
+    },
+    "/v7/orgs/{org_id}/models/{model_id}/review": {
+      "post": {
+        "operationId": "review_model_v7_orgs__org_id__models__model_id__review_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "model_id",
+            "required": true,
+            "schema": {
+              "title": "Model Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReviewNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Review Model"
+      }
+    },
+    "/v7/orgs/{org_id}/runs": {
+      "get": {
+        "operationId": "list_runs_v7_orgs__org_id__runs_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Runs"
+      },
+      "post": {
+        "operationId": "run_v7_orgs__org_id__runs_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RunNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Run"
+      }
+    },
+    "/v7/orgs/{org_id}/runs/{run_id}": {
+      "get": {
+        "operationId": "get_run_v7_orgs__org_id__runs__run_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Get Run"
+      }
+    },
+    "/v71/meta/readiness": {
+      "get": {
+        "operationId": "readiness_v71_meta_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Readiness"
+      }
+    },
+    "/v71/orgs/{org_id}/audit/delivery": {
+      "get": {
+        "operationId": "audit_delivery_v71_orgs__org_id__audit_delivery_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Audit Delivery"
+      }
+    },
+    "/v71/orgs/{org_id}/runs/{run_id}/reproduce": {
+      "post": {
+        "operationId": "reproduce_v71_orgs__org_id__runs__run_id__reproduce_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "run_id",
+            "required": true,
+            "schema": {
+              "title": "Run Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reproduce"
+      }
+    },
+    "/v72/meta/modules": {
+      "get": {
+        "operationId": "modules_v72_meta_modules_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Modules"
+      }
+    },
+    "/v72/meta/modules/{module}/schema": {
+      "get": {
+        "operationId": "module_schema_v72_meta_modules__module__schema_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "module",
+            "required": true,
+            "schema": {
+              "title": "Module",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "summary": "Module Schema"
+      }
+    },
+    "/v72/orgs/{org_id}/studies": {
+      "get": {
+        "operationId": "listing_v72_orgs__org_id__studies_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "query",
+            "name": "asset_id",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Asset Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Listing"
+      },
+      "post": {
+        "operationId": "create_v72_orgs__org_id__studies_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create"
+      }
+    },
+    "/v72/orgs/{org_id}/studies/compare-pair": {
+      "post": {
+        "operationId": "compare_v72_orgs__org_id__studies_compare_pair_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StudyCompare"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Compare"
+      }
+    },
+    "/v72/orgs/{org_id}/studies/{study_id}": {
+      "get": {
+        "operationId": "detail_v72_orgs__org_id__studies__study_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "study_id",
+            "required": true,
+            "schema": {
+              "title": "Study Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Detail"
+      }
+    },
+    "/v72/orgs/{org_id}/studies/{study_id}/reproduce": {
+      "post": {
+        "operationId": "reproduce_v72_orgs__org_id__studies__study_id__reproduce_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "study_id",
+            "required": true,
+            "schema": {
+              "title": "Study Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reproduce"
+      }
+    },
+    "/v73/meta/readiness": {
+      "get": {
+        "operationId": "v73_readiness_v73_meta_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "V73 Readiness"
+      }
+    },
+    "/v73/orgs/{org_id}/economic-dossiers": {
+      "get": {
+        "operationId": "list_dossiers_v73_orgs__org_id__economic_dossiers_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Dossiers"
+      },
+      "post": {
+        "operationId": "create_dossier_v73_orgs__org_id__economic_dossiers_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinanceInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Dossier"
+      }
+    },
+    "/v73/orgs/{org_id}/economic-dossiers/{dossier_id}": {
+      "get": {
+        "operationId": "show_dossier_v73_orgs__org_id__economic_dossiers__dossier_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "dossier_id",
+            "required": true,
+            "schema": {
+              "title": "Dossier Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Show Dossier"
+      }
+    },
+    "/v73/orgs/{org_id}/economic-dossiers/{dossier_id}/reproduce": {
+      "post": {
+        "operationId": "reproduce_dossier_v73_orgs__org_id__economic_dossiers__dossier_id__reproduce_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "dossier_id",
+            "required": true,
+            "schema": {
+              "title": "Dossier Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reproduce Dossier"
+      }
+    },
+    "/v73/orgs/{org_id}/radial-runs": {
+      "get": {
+        "operationId": "list_radial_runs_v73_orgs__org_id__radial_runs_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "List Radial Runs"
+      },
+      "post": {
+        "operationId": "create_run_v73_orgs__org_id__radial_runs_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RadialStudyNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create Run"
+      }
+    },
+    "/v73/orgs/{org_id}/radial-runs/compare": {
+      "post": {
+        "operationId": "compare_v73_orgs__org_id__radial_runs_compare_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ComparisonInput"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Compare"
+      }
+    },
+    "/v74/meta/readiness": {
+      "get": {
+        "operationId": "meta_v74_meta_readiness_get",
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          }
+        },
+        "summary": "Meta"
+      }
+    },
+    "/v74/orgs/{org_id}/capital-screen": {
+      "post": {
+        "operationId": "capital_screen_v74_orgs__org_id__capital_screen_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CapitalScreen"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Capital Screen"
+      }
+    },
+    "/v74/orgs/{org_id}/programmes": {
+      "get": {
+        "operationId": "listing_v74_orgs__org_id__programmes_get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Listing"
+      },
+      "post": {
+        "operationId": "create_v74_orgs__org_id__programmes_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ProgrammeNew"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Create"
+      }
+    },
+    "/v74/orgs/{org_id}/programmes/{programme_id}": {
+      "get": {
+        "operationId": "detail_v74_orgs__org_id__programmes__programme_id__get",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "programme_id",
+            "required": true,
+            "schema": {
+              "title": "Programme Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Detail"
+      }
+    },
+    "/v74/orgs/{org_id}/programmes/{programme_id}/reproduce": {
+      "post": {
+        "operationId": "reproduce_v74_orgs__org_id__programmes__programme_id__reproduce_post",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "org_id",
+            "required": true,
+            "schema": {
+              "title": "Org Id",
+              "type": "string"
+            }
+          },
+          {
+            "in": "path",
+            "name": "programme_id",
+            "required": true,
+            "schema": {
+              "title": "Programme Id",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            },
+            "description": "Successful Response"
+          },
+          "422": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            },
+            "description": "Validation Error"
+          }
+        },
+        "security": [
+          {
+            "HTTPBearer": []
+          }
+        ],
+        "summary": "Reproduce"
+      }
+    }
+  }
+}

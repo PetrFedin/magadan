@@ -1,0 +1,8 @@
+{
+  "file": "/mnt/data/hydro_v8/hydrokontur-v8/artifacts_v8/V8_REPRODUCIBLE_RESEARCH_CASE.json",
+  "source_sha256": "07fd1f501e705fef1a6af66648185f16bf5c15eeee76c747c1bf9798deeff70d",
+  "signed_difference_kwh": 13.191738,
+  "quality_envelope": 0.152522,
+  "joint_support_fraction": 1.0,
+  "realized_savings_certified": false
+}

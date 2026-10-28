@@ -1,0 +1,124 @@
+id,module,requirement,priority,implementation_status,proof_or_gap,production_accepted
+HK72-001,Core,Server-side membership check,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-002,Core,Role-specific study writing,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-003,Core,Cross-tenant study read rejection,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-004,Core,Append-only synthetic study rows,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-005,Core,Versioned input/result hashes,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-006,Core,Pinned-engine recalculation,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-007,Core,Explicit source SYNTHETIC gate,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-008,Core,Engine JSON schemas,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-009,Core,Scenario pair comparison caveat,P0,LAB_IMPLEMENTED,server/tests_v72/test_studies.py,NO
+HK72-010,Core,Native PostgreSQL 17 RLS acceptance,P0,NOT_ACCEPTED,"Native DB, corporate IdP and authorized environments required",NO
+HK72-011,Core,Independent WORM retention test,P0,NOT_ACCEPTED,"Native DB, corporate IdP and authorized environments required",NO
+HK72-012,Core,Corporate SSO/MFA connection,P0,NOT_ACCEPTED,"Native DB, corporate IdP and authorized environments required",NO
+HK72-013,Core,Full browser HTTP E2E,P0,NOT_ACCEPTED,"Native DB, corporate IdP and authorized environments required",NO
+HK72-014,Core,Backup and restore rehearsal,P0,NOT_ACCEPTED,"Native DB, corporate IdP and authorized environments required",NO
+HK72-015,Core,Threat modeling and penetration testing,P0,NOT_ACCEPTED,"Native DB, corporate IdP and authorized environments required",NO
+HK72-016,HydroForecast,Retrospective MAE/RMSE/bias,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-017,HydroForecast,Out-of-time forecast training gate,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-018,HydroForecast,Interval coverage and WAPE undefined safeguard,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-019,HydroForecast,Validated basin GIS,P1,PLANNED,Magadan hydrology expert and data rights required,NO
+HK72-020,HydroForecast,Physical snowmelt/runoff model,P1,PLANNED,Magadan hydrology expert and data rights required,NO
+HK72-021,HydroForecast,Historical hindcast against incumbent baseline,P1,PLANNED,Magadan hydrology expert and data rights required,NO
+HK72-022,HydroForecast,Forecast uncertainty calibration,P1,PLANNED,Magadan hydrology expert and data rights required,NO
+HK72-023,HydroForecast,Expert-approved hydrological dataset,P1,PLANNED,Magadan hydrology expert and data rights required,NO
+HK72-024,CascadeEconomics,Single-step two-reservoir mass balance,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-025,CascadeEconomics,Hydropower approximation and storage bounds,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-026,CascadeEconomics,Minimum release and rated-capacity checks,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-027,CascadeEconomics,Approved basin operating rules,P1,PLANNED,Independently validated operator model required,NO
+HK72-028,CascadeEconomics,Time-lagged water routing,P1,PLANNED,Independently validated operator model required,NO
+HK72-029,CascadeEconomics,Turbine curves and reservoir level curves,P1,PLANNED,Independently validated operator model required,NO
+HK72-030,CascadeEconomics,Multi-period mixed-integer optimization,P1,PLANNED,Independently validated operator model required,NO
+HK72-031,CascadeEconomics,Operator-authenticated stress scenarios,P1,PLANNED,Independently validated operator model required,NO
+HK72-032,TurbineReliability,Robust MAD deviation scoring,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-033,TurbineReliability,Operating-load comparability check,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-034,TurbineReliability,Explicit undefined failure probability,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-035,TurbineReliability,OEM-grade sensor calibration,P1,PLANNED,Maintenance history and expert verification required,NO
+HK72-036,TurbineReliability,Failure event taxonomy and EAM integration,P1,PLANNED,Maintenance history and expert verification required,NO
+HK72-037,TurbineReliability,Independent detection-performance study,P1,PLANNED,Maintenance history and expert verification required,NO
+HK72-038,TurbineReliability,Confirmed spare-part lead times and North logistics,P1,PLANNED,Maintenance history and expert verification required,NO
+HK72-039,GridLoss,Balanced two-bus numerical AC calculation,P0,LAB_IMPLEMENTED,server/hydro_api/engineering.py and legacy tests,NO
+HK72-040,GridLoss,Independent high-voltage solution comparison,P0,LAB_IMPLEMENTED,server/hydro_api/engineering.py and legacy tests,NO
+HK72-041,GridLoss,Power balance residual verification,P0,LAB_IMPLEMENTED,server/hydro_api/engineering.py and legacy tests,NO
+HK72-042,GridLoss,Verified Magadan feeder topology,P1,PLANNED,Authorized operational data and industry tool benchmark required,NO
+HK72-043,GridLoss,Multi-bus unbalanced power flow,P1,PLANNED,Authorized operational data and industry tool benchmark required,NO
+HK72-044,GridLoss,N-1 independent engineering verification,P1,PLANNED,Authorized operational data and industry tool benchmark required,NO
+HK72-045,GridLoss,Technical-vs-nontechnical losses allocation,P1,PLANNED,Authorized operational data and industry tool benchmark required,NO
+HK72-046,GridLoss,Post-construction savings counterfactual,P1,PLANNED,Authorized operational data and industry tool benchmark required,NO
+HK72-047,HeatNet,Steady-state heat delivery and UA loss,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-048,HeatNet,Thermal units and temperature assumptions,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-049,HeatNet,Pressure and hydraulic network solver,P1,PLANNED,Approved ZuluThermo-like engineering baseline required,NO
+HK72-050,HeatNet,Pipe friction and distributed heat exchange,P1,PLANNED,Approved ZuluThermo-like engineering baseline required,NO
+HK72-051,HeatNet,Calibration against actual measurements,P1,PLANNED,Approved ZuluThermo-like engineering baseline required,NO
+HK72-052,HeatNet,Regional heat-service reliability and tariff accounting,P1,PLANNED,Approved ZuluThermo-like engineering baseline required,NO
+HK72-053,HydroCAPEX,Decimal-based discounted cashflows,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-054,HydroCAPEX,Mandatory investment preservation,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-055,HydroCAPEX,Dependencies and cycle rejection,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-056,HydroCAPEX,Mutual exclusion and yearly budget enforcement,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-057,HydroCAPEX,Duplicate benefit key rejection,P0,LAB_IMPLEMENTED,tests_v72/test_studies.py,NO
+HK72-058,HydroCAPEX,Corporate ERP/EPM budget binding,P1,PLANNED,"Economic sponsor, cost evidence and legal construction docs required",NO
+HK72-059,HydroCAPEX,Legal engineering approval,P1,PLANNED,"Economic sponsor, cost evidence and legal construction docs required",NO
+HK72-060,HydroCAPEX,WBS/CBS and bills of quantity,P1,PLANNED,"Economic sponsor, cost evidence and legal construction docs required",NO
+HK72-061,HydroCAPEX,BIM/4D review,P1,PLANNED,"Economic sponsor, cost evidence and legal construction docs required",NO
+HK72-062,HydroCAPEX,Magadan climate/geocryology and logistics,P1,PLANNED,"Economic sponsor, cost evidence and legal construction docs required",NO
+HK72-063,HydroCAPEX,Actual post-investment effectiveness,P1,PLANNED,"Economic sponsor, cost evidence and legal construction docs required",NO
+HK72-064,Regional,Owner-authorized asset data acquisition,P0,NOT_ACCEPTED,RusHydro and individual asset owners have not authorized pilot data,NO
+HK72-065,Regional,Independent field engineer signoff,P0,NOT_ACCEPTED,RusHydro and individual asset owners have not authorized pilot data,NO
+HK72-066,Regional,Procurement and grants eligibility dossier,P0,NOT_ACCEPTED,RusHydro and individual asset owners have not authorized pilot data,NO
+HK72-067,Regional,Regulatory applicability by project,P0,NOT_ACCEPTED,RusHydro and individual asset owners have not authorized pilot data,NO
+HK72-068,Regional,Economic and social benefit separation,P0,NOT_ACCEPTED,RusHydro and individual asset owners have not authorized pilot data,NO
+HK73-069,GridLoss,Radial network topology with cycle and orphan rejection,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-070,GridLoss,Balanced 3phase multi-node sweep plus independent nodal KCL crosscheck,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-071,GridLoss,Multi-period weighted feeder energy losses,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-072,GridLoss,Ampacity and voltage-limits diagnostic flags,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-073,GridLoss,Like-for-like topology and load invariant comparison,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-074,GridLoss,Synthetic radial HTTP calculation tenant-scoped,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-075,HydroCAPEX,Physical-result to NPV scenarios with correct MWh/kWh units,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-076,HydroCAPEX,Annual hour expansion bounded by 8784,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-077,HydroCAPEX,Immutable synthetic economic dossier and independent reproduction,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-078,HydroCAPEX,Prevent repeat benefit-key and baseline/alternative pair,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-079,Core,Reject NaN Inf booleans and near-zero line resistance,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-080,Core,Bounded per-request radial model complexity,P0,LAB_IMPLEMENTED,server/tests_v73/test_radial_and_finance.py,NO
+HK73-081,Core,PostgreSQL dossier tenant RLS and composite FK migration draft,P0,DESIGNED_UNACCEPTED,server/migrations/070_grid_economic_dossiers_v73.sql,NO
+HK73-082,Regional,Full native PG17 run of dossier migration and direct SQL bypass tests,P0,NOT_ACCEPTED,Dedicated PostgreSQL17 + psycopg + signed test report required,NO
+HK73-083,Regional,Field feeder independently validated against pandapower or OpenDSS,P0,NOT_ACCEPTED,Written data consent and professional engineering signoff required,NO
+HK73-084,Regional,Actual baseline loss monitoring with approved measurement and verification,P1,PLANNED,Field measurements and M&V protocol required,NO
+HK73-085,GridLoss,Unbalanced phase and transformer load flow,P1,PLANNED,External validated industrial solver required,NO
+HK73-086,GridLoss,N-1 outage and protection checks,P1,PLANNED,System operator signed model and N-1 benchmark required,NO
+HK73-087,HydroForecast,Value-of-information attribution shared with cascade scenarios,P1,PLANNED,Approved hydrology hindcast and economic value model required,NO
+HK73-088,CascadeEconomics,Multi-step travel delay and release constraints,P1,PLANNED,Approved Kolyma cascade physical model required,NO
+HK73-089,TurbineReliability,EAM events and correctly calibrated defect-detection performance,P1,PLANNED,Confirmed repair logs and independent expert labels required,NO
+HK73-090,HeatNet,Verified hydraulic/thermal model against heat industry standard,P1,PLANNED,Authorized Magadan heat-network data and engineer signoff required,NO
+HK73-091,HydroCAPEX,Reconciliation against enterprise approved project valuation,P1,PLANNED,"Corporate finance methodology, ERP approvals and contract costs required",NO
+HK74-001,Core,Research programme record with title/purpose and organization,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-002,Core,Independent role economist required to create research programme,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-003,Core,Cross-tenant programme lookup indistinguishable from missing object,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-004,Core,Strict six-domain semantic link direction,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-005,Core,Semantic link has no automatic numerical data transfer,P0,LAB_IMPLEMENTED,server/hydro_api/programme_v74.py,NO
+HK74-006,Core,Pinned source input/result and code fingerprint,P0,LAB_IMPLEMENTED,server/hydro_api/programme_api_v74.py,NO
+HK74-007,Core,Immutable researcher-created programme and relational child links,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-008,Core,Program replay rechecks source-link count and source integrity,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-009,Core,Alternative source study cannot be silently exchanged,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-010,Core,Research-only status excludes industrial investment workflow,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-011,Construction,WBS quantities prices years and category validation,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-012,Construction,WBS no duplicate package codes or cycles,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-013,Construction,No predecessor scheduled after successor,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-014,Construction,Budget caps per year with explicitly priced contingency,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-015,Construction,No double-booking contingency as line and percentage,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-016,Construction,Missing survey/design/commissioning stage screening,P1,LAB_IMPLEMENTED,server/hydro_api/programme_v74.py,NO
+HK74-017,Finance,Cross-check WBS capital with included grid and heat CAPEX,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-018,HeatNet Economics,Heat finance strictly derived from two pinned same-load studies,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-019,HeatNet Economics,Reject incomparable temperature/flow/length profiles,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-020,HeatNet Economics,Negative heat saving retains negative financial result,P1,LAB_IMPLEMENTED,server/tests_v74/test_programme.py,NO
+HK74-021,Finance,Block duplicate claim keys across grid and heat in one programme,P0,LAB_IMPLEMENTED,server/hydro_api/programme_v74.py,NO
+HK74-022,Core,Postgres FORCE RLS and tenant FK for programme child links,P0,DESIGNED_UNACCEPTED,server/migrations/080_research_programme_v74.sql,NO
+HK74-023,Security,Native PostgreSQL 17/role/RLS/concurrency test on real database,P0,NOT_ACCEPTED,HYDRO_NATIVE_TESTS_REQUIRED: NATIVE_ACCEPTANCE_BLOCKED,NO
+HK74-024,Security,Corporate IdP MFA and security approval,P0,NOT_ACCEPTED,Real corporate provider not connected,NO
+HK74-025,Security,External compliance-grade immutable archive,P0,NOT_ACCEPTED,No WORM storage accepted,NO
+HK74-026,Engineering,Actual feeder of Magadan region approved for use,P0,NOT_ACCEPTED,Consent and field data missing,NO
+HK74-027,Engineering,Independent electrical engineering benchmark,P0,NOT_ACCEPTED,Not compared with domain solver on field data,NO
+HK74-028,Engineering,Cross-domain numerical forecast-to-cascade integration,P1,PLANNED,"Require proven Q(t) profile, travel delays and constraints",NO
+HK74-029,UX,Working lab programme composer and budget checker,P1,LAB_IMPLEMENTED,server/ui/ui.js; browser E2E blocked,NO
+HK74-030,UX,Browser-to-backend E2E acceptance,P0,NOT_ACCEPTED,Playwright localhost blocked by environment,NO
+HK74-031,Finance,Confirmed tariff and audited project bills / construction estimates,P1,NOT_ACCEPTED,Corporate data and legal right missing,NO
+HK74-032,Core,Auditor replay reexecutes source studies and recalculates grid finance evidence,P0,LAB_IMPLEMENTED,server/tests_v74/test_programme.py::test_deep_reproduction_executes_actual_engine_not_only_hashes,NO

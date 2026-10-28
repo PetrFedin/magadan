@@ -1,0 +1,55 @@
+{
+  "project": "HydroKontur 360 - Magadan",
+  "release": "V7.6",
+  "date": "2026-10-24",
+  "release_class": "SYNTHETIC_LAB_ONLY",
+  "production_ready": false,
+  "industrial_approval_eligible": false,
+  "python_tests_passed": 207,
+  "python_test_groups": {
+    "server/tests": 35,
+    "server/tests_v71": 55,
+    "server/tests_v72": 29,
+    "server/tests_v73": 26,
+    "server/tests_v74": 22,
+    "server/tests_v75": 24,
+    "server/tests_v76": 16
+  },
+  "javascript_tests_passed": 63,
+  "all_tests_included_in_207_exclude_native_pg_and_browser": true,
+  "openapi_total_http_operations": 59,
+  "openapi_v76_http_operations": 5,
+  "new_or_refined_requirements": 43,
+  "synthetic_reproduction": "PASS",
+  "synthetic_sources": true,
+  "synthetic_replayed_handoffs": 2,
+  "synthetic_wbs_total_rub": "3050000.00",
+  "synthetic_npvs_rub": {
+    "low": "-2221610.95",
+    "base": "-1655991.73",
+    "high": "-1090372.50"
+  },
+  "postgresql_native_required": "NATIVE_ACCEPTANCE_BLOCKED",
+  "postgresql_native_executed": false,
+  "corporate_sso_connected": false,
+  "external_worm_connected": false,
+  "real_magadan_data": false,
+  "independent_engineer_accepted": false,
+  "live_http_server_health": "HTTP_200",
+  "browser_network_e2e": "NOT_ACCEPTED_ERR_BLOCKED_BY_ADMINISTRATOR",
+  "static_layout_verified_widths": [
+    1440,
+    768,
+    375
+  ],
+  "git_modified_or_published": false,
+  "unclosed_gates": [
+    "PostgreSQL17 RLS transactions and recovery",
+    "production corporate OIDC/MFA",
+    "external WORM and independent audit",
+    "authorized Magadan engineering data",
+    "independent engineering and financial peer review",
+    "construction estimates permits and project approval"
+  ],
+  "assertion_scope": "Only isolated synthetic API/domain/unit and static UI QA performed; no remote deployment."
+}

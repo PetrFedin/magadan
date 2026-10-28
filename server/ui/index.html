@@ -1,0 +1,293 @@
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>ГИДРОКОНТУР 360 — МАГАДАН | V8.0 Lab</title><link rel="stylesheet" href="/lab-assets/ui.css"></head><body>
+<header><div class="mark">ГК</div><div><h1>ГИДРОКОНТУР 360 <small>МАГАДАН</small></h1><p>V8.0 · Верифицируемые инженерные модели и финансовые досье</p></div><span class="flag">SYNTHETIC LAB / НЕ АСУ ТП</span></header>
+<main>
+<section class="hero"><div><h2>От проверенных входных данных к обоснованному решению</h2><p>Инженерное доказательство → независимая проверка → финансовое заключение → полномочное решение → контроль результата.</p></div><div class="chipline"><span>Токен 15 мин</span><span>RBAC на сервере</span><span>HMAC аудит</span><span>6 моделей · WBS · контроль происхождения</span></div></section>
+<section class="card" id="auth-card"><h2>Авторизация</h2><p class="hint">Учётные записи создаются отдельно локальной командой. Выбор роли в интерфейсе отсутствует.</p><form id="login-form"><label>Почта<input name="email" autocomplete="username" type="email" placeholder="engineer@example.test" required></label><label>Пароль<input name="password" autocomplete="current-password" type="password" required></label><button type="submit" class="primary">Войти</button></form><p id="login-result" role="status"></p></section>
+<section class="session card" id="session" hidden><div class="session-bar"><div><strong id="identity"></strong><p id="role-info" class="hint"></p></div><button id="logout" class="secondary">Выйти и отозвать токен</button></div><label>Разрешённая организация<select id="org"></select></label></section>
+<div id="lab" hidden>
+<div class="steps"><span>01 · Данные</span><span>02 · Модель</span><span>03 · Расчёт</span><span>04 · Инвестиция</span><span>05 · Аудит</span><span>06 · Six-domain studies</span><span>07 · Grid & finance evidence</span><span>08 · Research programme</span><span>09 · Engineering handoffs</span><span>10 · Research value assurance</span><span>11 · External reference & sensitivity</span><span>12 · Физика → годовая экономика</span><span>13 · Эффекты и M&V</span><span>14 · Границы измерения</span></div>
+<section class="cols">
+<div class="card"><h2>01. Объекты и доказательства</h2><p class="hint">Организация определяет доступ по серверной записи членства, не по названию объекта.</p><label>Объект<select id="asset"></select></label><h3>Создать источник</h3><label>Тип документа<select id="kind"><option value="grid_input">Grid input · лабораторная сеть</option><option value="engineering_report">Инженерное заключение</option><option value="financial_report">Финансовое заключение</option><option value="approval_memo">Протокол решения</option><option value="execution_proof">Подтверждение исполнения</option><option value="outcome_report">Проверка результата</option></select></label><label>Источник / номер документа<input id="source_ref" value="SYNTHETIC-LAB-GRID-2026" maxlength="200"></label><label>Структурированные данные (JSON)<textarea id="payload" rows="10" spellcheck="false"></textarea></label><div class="actions"><button id="fill-sample" class="secondary">Заполнить эталон</button><button id="create-evidence" class="primary">Сохранить данные</button></div><h3>Независимая проверка</h3><label>Документ<select id="evidence-list"></select></label><div class="actions"><button id="accept-evidence">Подтвердить</button><button id="reject-evidence" class="secondary">Отклонить</button></div></div>
+<div class="card"><h2>02. Инженерная модель</h2><p class="hint">Только двухузловая лабораторная AC-модель с аналитической перепроверкой. Не промышленная схема Магадана.</p><div class="actions"><button id="create-model" class="primary">Создать неизменяемую версию</button><button id="accept-model" class="secondary">Проверить версию</button></div><label>Модель<select id="model-list"></select></label><h2>03. Выполнить расчёт</h2><p class="hint">Нужны независимо подтверждённые входные данные и модель.</p><button id="calculate" class="primary">Запустить физический расчёт</button><label>Расчёт<select id="run-list"></select></label><pre id="calc-result" class="result">Результаты появятся здесь.</pre></div>
+</section>
+<section class="cols">
+<div class="card"><h2>04. Инвестиционное решение</h2><p class="hint">Никаких автоматических команд оборудованию. Каждая стадия проверяется API.</p><label>Наименование<input id="initiative-title" value="Обследование эталонной учебной линии 20 кВ"/></label><label>Идентификатор эффекта<input id="effect-key" value="SYNTHETIC-2026-CASE"/></label><button id="create-initiative" class="primary">Создать инициативу</button><label>Инициатива<select id="initiative-list"></select></label><label>Приложить проверенный документ<select id="attached-evidence"></select></label><button id="attach-evidence">Привязать документ</button><label>Следующий допустимый этап<select id="next-state"></select></label><button id="transition" class="primary">Провести согласование</button><pre id="dossier-result" class="result">Досье появится после выбора инициативы.</pre></div>
+<div class="card"><h2>05. Контроль и аудит</h2><p class="hint">Хеш-цепочка и серверные проверки защищают лабораторные записи от штатного изменения, но не заменяют внешнее WORM-хранилище.</p><button id="verify-audit" class="primary">Проверить цепочку событий</button><pre id="audit-result" class="result">Аудит доступен члену организации с ролью auditor или admin.</pre><h3>Инженерная и эксплуатационная готовность</h3><dl class="readiness"><dt>Корпоративные системы</dt><dd>Не подключены</dd><dt>Реальные данные Магаданской области</dt><dd>Не подключены</dd><dt>Проверка двухузловой модели</dt><dd>Реализована</dd><dt>Корпоративный SSO / MFA</dt><dd>Не подключены</dd><dt>PostgreSQL RLS</dt><dd>Проектная схема, без промышленной проверки</dd><dt>Промышленный допуск</dt><dd>HOLD</dd></dl></div>
+</section>
+<section class="card studies-workspace" id="study-workspace">
+  <div class="studies-title"><div><h2>06. Research studies - six engineering domains</h2><p class="hint">Independent synthetic cases; NOT field-validated calculations or approval evidence.</p></div><span class="study-notice">SYNTHETIC / HOLD</span></div>
+  <div class="study-grid">
+    <div><label>Domain<select id="study-module">
+      <option value="hydroforecast">01 / HydroForecast</option>
+      <option value="cascade">02 / CascadeEconomics</option>
+      <option value="turbine">03 / TurbineReliability</option>
+      <option value="gridloss">04 / GridLoss Planner</option>
+      <option value="heatnet">05 / HeatNet Economics</option>
+      <option value="hydrocapex">06 / HydroCAPEX</option>
+    </select></label><label>Scenario group<input id="study-group" value="magadan-research-2026" maxlength="100" /></label>
+    <label>Reviewed asset<select id="study-asset"></select></label>
+    <label>Input dataset (strict JSON)<textarea id="study-case" rows="14" spellcheck="false"></textarea></label>
+    <div class="actions"><button id="study-load" class="secondary">Load reproducible sample</button><button id="study-execute" class="primary">Run on server</button></div></div>
+    <div><label>Saved lab study<select id="study-run-list"></select></label>
+    <div class="actions"><button id="study-reproduce" class="secondary">Verify and reproduce</button><button id="study-open" class="secondary">Open study</button></div>
+    <pre id="study-result" class="result study-output">No saved study selected.</pre>
+    <h3>Compare two runs of the same asset/module</h3>
+    <label>Reference study<select id="study-left"></select></label>
+    <label>Alternative study<select id="study-right"></select></label>
+    <button id="study-compare" class="secondary">Compare with caveats</button>
+    <pre id="study-comparison" class="result">A matching scenario tag is not proof of equivalent baselines.</pre>
+    </div>
+  </div>
+</section>
+<section class="card radial-workspace" id="radial-workspace">
+  <div class="studies-title"><div><h2>07. Магадан — инженерно-финансовый контур</h2>
+    <p class="hint">Многоузловая радиальная сеть → сопоставимый технический вариант → расчёт потерь → денежные сценарии → неизменяемое лабораторное досье.</p>
+    </div><span class="study-notice">ИСКУССТВЕННЫЕ ДАННЫЕ · НЕ ПРОЕКТ</span></div>
+  <div class="v73-metrics"><div><strong>Два независимых расчётных метода</strong><small>Backward/forward sweep + nodal KCL</small></div><div><strong>Сопоставимые условия</strong><small>Топология, нагрузки, окна, напряжение</small></div><div><strong>Денежные сценарии</strong><small>NPV без фиктивного тарифа</small></div></div>
+  <div class="study-grid">
+    <div>
+      <h3>Инженерная модель радиального участка</h3><label>Объект лаборатории<select id="radial-asset"></select></label>
+      <label>Группа сценариев<input id="radial-group" value="magadan-radial-research-v73" /></label>
+      <label>Параметры сети и временных окон, JSON<textarea id="radial-case" rows="16" spellcheck="false"></textarea></label>
+      <div class="actions"><button id="radial-sample" class="secondary">Загрузить базовый сценарий</button>
+        <button id="radial-improve" class="secondary">Вариант с меньшим R</button>
+        <button id="radial-create" class="primary">Сохранить расчёт</button></div>
+      <pre class="result" id="radial-output">Сценарий не выполнен.</pre>
+    </div>
+    <div>
+      <h3>Сопоставление и экономическое досье</h3>
+      <label>Базовый расчёт<select id="radial-baseline"></select></label>
+      <label>Альтернативный расчёт<select id="radial-alternative"></select></label>
+      <button id="radial-compare" class="secondary">Проверить сопоставимость</button>
+      <pre class="result" id="radial-comparison">Изменения нагрузки и топологии запрещают прямое сравнение.</pre>
+      <label>Код независимого экономического эффекта<input id="radial-benefit-key" value="synthetic-grid-loss-saving-v73" /></label>
+      <label>Финансовые допущения, JSON<textarea id="radial-finance" rows="11" spellcheck="false"></textarea></label>
+      <div class="actions"><button id="radial-create-dossier" class="primary">Рассчитать и сохранить досье</button></div>
+      <label>Сохранённое экономическое досье<select id="radial-dossier-list"></select></label>
+      <div class="actions"><button id="radial-open-dossier" class="secondary">Открыть</button>
+        <button id="radial-reproduce-dossier" class="secondary">Воспроизвести</button></div>
+      <pre class="result" id="radial-dossier">Прогнозная экономика не является подтверждённой фактической экономией.</pre>
+    </div>
+  </div>
+  <p class="hint"><strong>Ограничение:</strong> только симметричная радиальная сеть и искусственные параметры. Не моделируются трансформаторы, несимметрия фаз, РЗА, аварийные режимы, тарифное регулирование или реальные электросети Магаданской области. Решение нельзя отправить в промышленный инвестиционный процесс.</p>
+</section>
+
+
+<section class="card programme-workspace" id="programme-workspace">
+ <div class="studies-title"><div><h2>08. Программа развития · доказательное досье</h2>
+   <p class="hint">Связь всех шести направлений, экономических сценариев и предварительного бюджета Магаданской области.</p></div>
+   <span class="study-notice">LAB ONLY · NO INVESTMENT APPROVAL</span></div>
+ <div class="programme-help"><strong>Порядок работы:</strong> выберите сохранённые исследования, добавьте допустимые семантические связи, проверьте WBS, сформируйте неизменяемое досье и передайте аудитору для воспроизведения.</div>
+ <div class="study-grid">
+ <div>
+  <h3>А. Источники и сценарии</h3>
+  <label>Номер исследования<input id="programme-ref" value="LAB-MAGADAN-2027-CANDIDATE" maxlength="80"></label>
+  <label>Наименование<input id="programme-title" value="Энергетическая программа Магаданской области — лабораторная модель"></label>
+  <label>Цель исследования<textarea id="programme-purpose" rows="3">Сопоставление синтетических энергетических расчётов, инвестиционных альтернатив и стоимости работ для проверки архитектуры ГИДРОКОНТУР 360. Не является ТЭО объекта.</textarea></label>
+  <label>Включённые инженерные расчёты (можно выбрать несколько)<select id="programme-study-ids" multiple size="8" aria-label="Выберите расчёты для программы"></select></label>
+  <div class="actions"><button id="programme-links-generate" class="secondary">Построить допустимые связи</button></div>
+  <label>Связи расчётов (JSON)<textarea id="programme-links" rows="5" spellcheck="false">[]</textarea></label>
+  <label>Экономические досье электросети (мультивыбор)<select id="programme-finance-ids" multiple size="4"></select></label>
+  <label>Теплосетевые финансовые сценарии (JSON)<textarea id="programme-heat" rows="5" spellcheck="false">[]</textarea></label>
+  <div class="actions"><button id="programme-heat-example" class="secondary">Пример теплосетевого сравнения</button></div>
+ </div>
+ <div>
+  <h3>Б. Строительная экономика и воспроизведение</h3>
+  <p class="hint">План WBS не заменяет сметный расчёт, проект, изыскания или разрешение на строительство.</p>
+  <label>Бюджет и календарь работ (JSON)<textarea id="programme-capital" rows="13" spellcheck="false"></textarea></label>
+  <div class="actions"><button id="programme-budget-sample" class="secondary">Подставить пример WBS</button>
+    <button id="programme-budget-check" class="secondary">Проверить бюджет</button></div>
+  <pre class="result" id="programme-budget-result">Предварительная проверка бюджета не выполнена.</pre>
+  <div class="actions"><button id="programme-create" class="primary">Сохранить исследовательское досье</button></div>
+  <label>Сохранённое досье<select id="programme-list"></select></label>
+  <div class="actions"><button id="programme-open" class="secondary">Открыть</button>
+    <button id="programme-reproduce" class="secondary">Независимо воспроизвести</button></div>
+  <pre class="result programme-output" id="programme-output">Досье сформируется после выбора исходных расчётов.</pre>
+ </div></div>
+ <p class="hint"><strong>Контур безопасности:</strong> рабочие данные предприятий, утверждения инвестиционного комитета, регуляторные заключения и реальная экономия в этом разделе отсутствуют. Семантические связи не подтверждают физически корректный перенос значений между продуктами.</p>
+</section>
+
+
+<section class="card handoff-workspace" id="handoff-workspace">
+ <div class="studies-title"><div><h2>09. Проверяемые связи расчётных моделей</h2>
+ <p class="hint">HydroForecast → CascadeEconomics и TurbineReliability → варианты ремонтных мероприятий. Только синтетические данные.</p></div>
+ <span class="study-notice">RESEARCH · NO INDUSTRIAL APPROVAL</span></div>
+ <div class="programme-help">Каждая передача содержит явные единицы, временной горизонт, исходные хеши и проверку полномочий. <b>Результат не заменяет инженерную экспертизу или разрешение на эксплуатацию.</b></div>
+ <div class="study-grid">
+  <div>
+   <label>Тип связи<select id="handoff-type"><option value="forecast_to_cascade">Гидрологический прогноз → каскад</option>
+    <option value="turbine_to_maintenance">Диагностика → ремонтная экономика</option></select></label>
+   <label>Исходное исследование<select id="handoff-left"></select></label>
+   <label>Второе исследование (для гидрологического сценария)<select id="handoff-right"></select></label>
+   <label>Досье программы (необязательно)<select id="handoff-programme"><option value="">Без привязки</option></select></label>
+   <label>Правила и условные исходные величины (JSON)<textarea id="handoff-settings" rows="15" spellcheck="false"></textarea></label>
+   <div class="actions"><button id="handoff-example" class="secondary">Подставить пример</button>
+    <button id="handoff-create" class="primary">Создать версионированную связь</button></div>
+  </div>
+  <div>
+   <label>Сохранённые исследовательские связи<select id="handoff-list"></select></label>
+   <div class="actions"><button id="handoff-open" class="secondary">Открыть</button>
+    <button id="handoff-reproduce" class="secondary">Воспроизвести</button></div>
+   <pre id="handoff-result" class="result programme-output">Для запуска сначала сохраните исходные исследования в разделе 06.</pre>
+   <h3>Проверка связей в исследовательской программе</h3>
+   <div class="actions"><button id="handoff-programme-open" class="secondary">Состояние связей</button>
+    <button id="handoff-programme-reproduce" class="secondary">Воспроизвести все связи</button></div>
+   <pre id="handoff-assurance" class="result">Для действительного инженерного подтверждения необходимы независимые специалисты и исходные данные владельца.</pre>
+  </div>
+ </div>
+ <p class="hint"><strong>Инженерная граница:</strong> прогноз исторический, режим каскада упрощён, ремонтные потери не являются вероятностной оценкой аварии. Любые строительные решения и реальное управление энергосистемой запрещены.</p>
+</section>
+
+
+<section class="card assurance-workspace" id="assurance-workspace">
+ <div class="studies-title"><div><h2>10. Инженерно-финансовая достоверность · V7.6</h2>
+  <p class="hint">Версии межмодульных расчётов → экспериментальная маршрутизация воды → WBS из программы → годовые денежные сценарии → воспроизводимое досье.</p>
+  </div><span class="study-notice">LAB ONLY / НЕ ИНВЕСТИЦИОННОЕ РЕШЕНИЕ</span></div>
+ <div class="programme-help"><strong>Порядок работы:</strong> сформируйте программу с WBS в разделе 08; прикрепите к ней связи в разделе 09. Затем создайте досье экономиста. Аудитор повторно выполнит физические и финансовые вычисления. Положительный NPV не даёт права на строительство.</div>
+ <div class="study-grid">
+  <div>
+   <label>Код пакета<input id="assurance-ref" value="LAB-V76-MAGADAN-ASSURANCE" maxlength="100"></label>
+   <label>Исходная программа с WBS<select id="assurance-programme"></select></label>
+   <label>Межмодульные расчёты (мультивыбор)<select id="assurance-handoffs" multiple size="6"></select></label>
+   <label>Гидрологический расчёт для маршрутизации (необязательно)<select id="assurance-routing-handoff"></select></label>
+   <label>Параметры исследовательской маршрутизации, JSON<textarea id="assurance-routing" spellcheck="false" rows="5"></textarea></label>
+   <label>Годовые денежные допущения, JSON<textarea id="assurance-finance" spellcheck="false" rows="14"></textarea></label>
+   <div class="actions"><button id="assurance-sample" class="secondary">Синтетические допущения</button>
+    <button id="assurance-create" class="primary">Сохранить пакет с проверками</button></div>
+  </div>
+  <div>
+   <h3>Сохранённое досье</h3>
+   <label>Пакет<select id="assurance-list"></select></label>
+   <div class="actions"><button id="assurance-open" class="secondary">Открыть исходники и NPV</button>
+    <button id="assurance-reproduce" class="secondary">Повторить всю цепочку</button></div>
+   <pre id="assurance-output" class="result programme-output">Расчёт не запущен. Отсутствие источников не равно нулю.</pre>
+   <h3>Обязательные промышленные допуски</h3>
+   <dl class="readiness"><dt>PostgreSQL RLS</dt><dd>НЕ ПРИНЯТО</dd><dt>IdP / MFA</dt><dd>НЕ ПОДКЛЮЧЕНО</dd><dt>WORM / независимый аудит</dt><dd>НЕ ПОДКЛЮЧЕНО</dd><dt>Реальные магаданские данные</dt><dd>НЕТ</dd><dt>Внешняя инженерная экспертиза</dt><dd>НЕТ</dd><dt>Инвестиционное утверждение</dt><dd>ЗАПРЕЩЕНО</dd></dl>
+   <p class="hint">Границы: линейный резервуар не является утверждённой гидравлической моделью; годовая выгода введена экономистом как условное допущение, не вычисляется автоматически из гидрологического результата.</p>
+  </div>
+ </div>
+</section>
+
+
+<section class="card assurance-workspace" id="reference-workspace">
+ <div class="studies-title"><div><h2>11. Сопоставление с внешним расчётом и устойчивость экономики · V7.7</h2>
+ <p class="hint">Экспорт фиксированного синтетического сетевого случая, загрузка заявленного расчёта другого инструмента и сверка напряжений, токов, потерь.</p></div>
+ <span class="study-notice">НЕ ЯВЛЯЕТСЯ НЕЗАВИСИМОЙ ЭКСПЕРТИЗОЙ</span></div>
+ <div class="study-grid"><div>
+   <h3>Эталонный расчёт электросети</h3>
+   <label>Сохранённое сетевое исследование<select id="reference-study"></select></label>
+   <button id="reference-export" class="secondary">Экспортировать входные данные</button>
+   <label>Зафиксированный запрос для внешнего решателя<textarea id="reference-request" readonly rows="11" spellcheck="false"></textarea></label>
+   <label>Результат расчёта (строгий JSON, происхождение пока не аттестовано)<textarea id="reference-submission" rows="12" spellcheck="false" placeholder="Вставьте результат отдельного инструмента"></textarea></label>
+   <button id="reference-import" class="primary">Проверить и сохранить сравнение</button>
+   <label>Идентификатор сохранённого сравнения<input id="reference-comparison-id" readonly></label>
+   <button id="reference-reproduce" class="secondary">Воспроизвести сравнение (аудитор)</button>
+   <pre id="reference-result" class="result">Совпадение чисел не подтверждает личность эксперта или подлинность сторонней программы.</pre>
+ </div><div>
+   <h3>Устойчивость годового инвестиционного расчёта</h3>
+   <label>Досье с сохранённым WBS<select id="reference-assurance"></select></label>
+   <button id="reference-sensitivity" class="primary">Проверить чувствительность NPV</button>
+   <pre id="reference-finance-output" class="result">Изменение цены энергии или CAPEX не означает подтверждённую вероятность сценария.</pre>
+   <h3>Обязательные пределы использования</h3>
+   <dl class="readiness"><dt>Происхождение стороннего расчёта</dt><dd>НЕ ПОДТВЕРЖДЕНО</dd><dt>Независимый инженер</dt><dd>НЕ НАЗНАЧЕН</dd><dt>Реальные данные Магаданской области</dt><dd>НЕ ПОЛУЧЕНЫ</dd><dt>PostgreSQL 17 RLS</dt><dd>НЕ ИСПЫТАН НАТИВНО</dd><dt>Корпоративная идентификация</dt><dd>НЕ ПОДКЛЮЧЕНА</dd><dt>Промышленное инвестиционное решение</dt><dd>ЗАПРЕЩЕНО</dd></dl>
+   <p class="hint">После запуска отдельного расчётного инструмента результат проходит проверку полного состава узлов, временных окон, согласованности потерь и численных допусков. Нужны отдельно подтверждённые методика, исполнитель, версии и разрешённые объектные данные.</p>
+ </div></div>
+</section>
+
+<section class="card assurance-workspace" id="annual-grid-workspace">
+ <div class="studies-title"><div><h2>12. Годовая экономика сетевого мероприятия · V7.8</h2>
+ <p class="hint">Сопоставимые инженерные сценарии → потери в каждом окне нагрузки → стоимость потерь по годам → единственная WBS → денежные потоки и NPV.</p>
+ </div><span class="study-notice">ТОЛЬКО SYNTHETIC · NO TARIFF / NO APPROVAL</span></div>
+ <div class="programme-help">Внимание: нужна <b>отдельная программа с двумя радиальными исследованиями и единственной WBS</b> с этапом пусконаладки. Выгода допускается только с первого полного года после завершения работ. Неполные годовые профили не экстраполируются.</div>
+ <div class="study-grid"><div>
+ <label>Программа с эксклюзивной WBS<select id="v78-programme"></select></label>
+ <label>Базовый сетевой расчёт<select id="v78-baseline"></select></label>
+ <label>Сравниваемая альтернатива<select id="v78-proposed"></select></label>
+ <label>Явные экономические допущения по годам и нагрузочным окнам (JSON)<textarea id="v78-finance" spellcheck="false" rows="19"></textarea></label>
+ <div class="actions"><button class="secondary" id="v78-sample">Загрузить прозрачный синтетический пример</button>
+ <button class="primary" id="v78-create">Сформировать неизменяемое досье</button></div>
+ </div><div>
+ <h3>Сохранённые годовые финансовые досье</h3>
+ <label>Досье<select id="v78-history"></select></label>
+ <div class="actions"><button id="v78-open" class="secondary">Открыть с проверкой хешей</button>
+ <button id="v78-reproduce" class="secondary">Повторить расчёт (аудитор)</button></div>
+ <pre class="result programme-output" id="v78-output">Экономическая оценка ещё не выполнена. Нет объекта, тарифной базы или независимой инженерной экспертизы.</pre>
+ <h3>Контроль промышленной пригодности</h3>
+ <dl class="readiness"><dt>Применимость к сетям Магаданской области</dt><dd>НЕ ДОКАЗАНА</dd>
+ <dt>Покрытие 8 760 / 8 784 часов</dt><dd>ПРОВЕРЯЕТСЯ ПО ГОДУ</dd>
+ <dt>CAPEX и источник цены</dt><dd>ИСКЛЮЧИТЕЛЬНО СИНТЕТИКА</dd>
+ <dt>Полный тарифно-налоговый расчёт</dt><dd>НЕ ПОДКЛЮЧЁН</dd>
+ <dt>Независимая инженерная проверка</dt><dd>НЕТ</dd>
+ <dt>Разрешение на строительство</dt><dd>НЕТ</dd></dl>
+ <p class="hint">Превышение бюджета, нарушение электротехнических ограничений, некорректный годовой профиль и повторный учёт одной сметы фиксируются как причины отказа. Никаких команд АСУ ТП интерфейс не содержит.</p>
+ </div></div>
+</section>
+
+<section class="card assurance-workspace" id="benefit-v79-workspace">
+ <div class="studies-title"><div><h2>13. Benefit ownership and outcome evidence | V7.9</h2>
+ <p class="hint">Single effect boundary by asset, family and calendar years. Conservative overlap lock. Synthetic estimates only.</p>
+ </div><span class="study-notice">NOT REAL SAVINGS / FIELD HOLD</span></div>
+ <div class="programme-help"><strong>Evidence gate:</strong> a source report is not a measured outcome. Reserve the same economic effect once, then use a separate pre/post normalization screen for research. No automatic investment approval.</div>
+ <div class="study-grid">
+  <div>
+   <h3>A. Synthetic benefit reservation</h3>
+   <label>Asset boundary<select id="v79-boundary"></select></label>
+   <label>Effect family<select id="v79-family"><option value="ELECTRIC_ENERGY_COST">Electricity cost</option><option value="HEAT_ENERGY_COST">Heat cost</option><option value="MAINTENANCE_COST">Maintenance cost</option><option value="DECISION_PROCESS">Decision process</option></select></label>
+   <label>Source class<select id="v79-source-kind"><option value="GRID_ANNUAL_V78">Annual grid dossier</option><option value="MAINTENANCE_HANDOFF_V75">Maintenance handoff</option><option value="PROGRAMME_V74">Heat research programme</option><option value="ASSURANCE_V76">Programme assurance</option></select></label>
+   <label>Source record<select id="v79-source"></select></label>
+   <label>First year<input id="v79-from" type="number" min="2026" max="2050" value="2030"></label>
+   <label>Last year<input id="v79-to" type="number" min="2026" max="2050" value="2031"></label>
+   <label>Measurement plan reference<input id="v79-plan-ref" value="SYNTHETIC-MAGADAN-MV-V79-PLAN-001"></label>
+   <label>Boundary definition<textarea id="v79-boundary-note" rows="3">Single synthetic asset and same loss-cost mechanism. This is NOT a verified measurement boundary.</textarea></label>
+   <label>Comparison normalization<textarea id="v79-normalization" rows="3">Compare the same physical asset, measured conditions and non-overlapping calendar years; maintain separate source and cost assumptions. No actual data here.</textarea></label>
+   <button class="primary" id="v79-reserve">Reserve source without claiming savings</button>
+   <label>Saved reservation<select id="v79-history"></select></label>
+   <div class="actions"><button class="secondary" id="v79-open">Check source</button><button class="secondary" id="v79-reproduce">Audit (auditor)</button></div>
+   <pre class="result" id="v79-output">A reservation cannot certify realized cashflows or allow investment approval.</pre>
+  </div>
+  <div>
+   <h3>B. Post-project counterfactual screening</h3>
+   <p class="hint">OLS baseline trained on PRE-commissioning synthetic observations only; load and air-temperature normalization. No causal confidence interval.</p>
+   <label>Research M&amp;V input (strict JSON)<textarea id="v79-mv-case" spellcheck="false" rows="16"></textarea></label>
+   <div class="actions"><button class="secondary" id="v79-mv-example">Generate synthetic example</button><button class="primary" id="v79-mv-create">Store M&amp;V research</button></div>
+   <label>Saved normalization<select id="v79-mv-list"></select></label>
+   <div class="actions"><button class="secondary" id="v79-mv-open">Recompute</button><button class="secondary" id="v79-mv-reproduce">Audit (auditor)</button><button class="secondary" id="v8-mv-quality">Проверка качества V8</button></div>
+   <pre class="result programme-output" id="v79-mv-output">No post-project analysis is an accepted proof of savings until a measurement plan, meters and independent review are approved.</pre>
+   <h3>Unclosed acceptance gates</h3>
+   <dl class="readiness"><dt>Native PostgreSQL/RLS</dt><dd>NOT TESTED</dd><dt>Legacy dossier backfill</dt><dd>NOT COMPLETED</dd><dt>External M&amp;V field readings</dt><dd>NOT AVAILABLE</dd><dt>Independent engineer</dt><dd>NOT ACCEPTED</dd><dt>Magadan asset operator</dt><dd>NOT CONTRACTED</dd><dt>Production</dt><dd>HOLD</dd></dl>
+  </div>
+ </div>
+</section>
+
+<section class="card assurance-workspace" id="boundary-v8-workspace">
+ <div class="studies-title"><div><h2>14. Физические границы и аудит двойного учёта | V8</h2>
+ <p class="hint">Один энергетический поток может учитываться под разными идентификаторами активов. Здесь фиксируются каноническая граница, вложенность и потенциальные пересечения.</p></div>
+ <span class="study-notice">ONLY SYNTHETIC · NOT FIELD VERIFIED</span></div>
+ <div class="programme-help">Сначала формируется карта границ, затем возможны лабораторные резервирования эффектов. После первой заявки карта организации замораживается. Старые финансовые досье не импортируются автоматически. Доступ на запись только у администратора организации.</div>
+ <div class="study-grid">
+  <div><h3>A. Каноническая измерительная граница</h3>
+   <label>Код границы<input id="v8-boundary-id" value="SYNTHETIC-MAGADAN-FEEDER-BOUNDARY-001"></label>
+   <label>Класс измерения<select id="v8-quantity"><option value="ELECTRIC_ENERGY">Электроэнергия</option><option value="HEAT_ENERGY">Тепловая энергия</option><option value="EQUIPMENT_MAINTENANCE">Ремонт и надёжность</option><option value="FINANCIAL_PROCESS">Финансовый процесс</option></select></label>
+   <label>Входит в границу<select id="v8-parent"><option value="">Нет родительской границы</option></select></label>
+   <label>Код источника<input id="v8-evidence" value="SYNTHETIC-MAGADAN-BOUNDARY-RESEARCH-2026"></label>
+   <button class="primary" id="v8-boundary-create">Создать границу (admin)</button>
+   <label>Актив<select id="v8-boundary-asset"></select></label>
+   <label>Привязать к границе<select id="v8-boundary-map"></select></label>
+   <button class="secondary" id="v8-boundary-assign">Назначить границу активу (admin)</button>
+   <label>Граница A<select id="v8-overlap-a"></select></label>
+   <label>Граница B<select id="v8-overlap-b"></select></label>
+   <button class="secondary" id="v8-overlap-create">Отметить потенциальное пересечение (admin)</button>
+  </div>
+  <div><h3>Б. Инвентаризация доказательств и ограничений</h3>
+   <div class="actions"><button id="v8-boundary-refresh" class="secondary">Сверить границы и старые досье</button></div>
+   <pre class="result programme-output" id="v8-boundary-output">Нет результатов сверки. Публикация суммарной экономии запрещена.</pre>
+   <h3>Принцип исключения двойного учёта</h3>
+   <p class="hint">При совпадении физических границ, вложенности или явного пересечения заявки на один тип потока и пересекающийся период отклоняются. Для разных организаций консолидированный эффект остаётся HOLD до отдельной процедуры согласования.</p>
+   <dl class="readiness"><dt>Изоляция в лабораторной SQLite</dt><dd>Тестируется</dd><dt>Нативные RLS и конкуренция PostgreSQL</dt><dd>НЕ ПРИНЯТЫ</dd><dt>Возможность переоценить старые досье</dt><dd>ТОЛЬКО РЕЕСТР РАСХОЖДЕНИЙ</dd><dt>Доказанный финансовый эффект</dt><dd>НЕТ</dd></dl>
+  </div>
+ </div>
+</section>
+</div>
+<div id="notice" class="notice" role="status" aria-live="polite">Ожидается вход в лабораторную систему.</div>
+</main><footer>ГИДРОКОНТУР 360 — МАГАДАН · V8 LAB · Только синтетические данные. Нет доступа к технологическому управлению, SCADA, генерации, диспетчеризации и корпоративным сетям.</footer>
+<script type="module" src="/lab-assets/ui.js"></script></body></html>

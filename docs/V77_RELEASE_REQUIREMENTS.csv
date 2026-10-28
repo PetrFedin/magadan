@@ -1,0 +1,24 @@
+id,component,requirement,implementation_status,acceptance_status,required_evidence,next_owner
+V77-001,GridLoss,Export version-pinned radial case with tenant scope,Implemented,LAB_PASS,HTTP export and case SHA-256,Backend
+V77-002,GridLoss,Require exact time-window set,Implemented,LAB_PASS,Negative and positive contract tests,Backend
+V77-003,GridLoss,Require exact node set and line-loss consistency,Implemented,LAB_PASS,Structured reference checks,Engineering
+V77-004,GridLoss,Compare current and voltage with disclosed tolerances,Implemented,LAB_PASS,Numerical mismatch report,Engineering
+V77-005,GridLoss,Keep uploaded reference result UNATTESTED,Implemented,LAB_PASS,False approval flags and schema rejection,Security
+V77-006,GridLoss,Execute pandapower on independent environment,Adapter only,BLOCKED,Pandapower execution log version and provenance,Independent engineer
+V77-007,GridLoss,Independently sign engineering conclusion,Not implemented,BLOCKED,Signed engineer report tied to source hashes,Independent engineer
+V77-008,HydroCAPEX,Synthetic WBS NPV sensitivity by factor,Implemented,LAB_PASS,Pinned baseline and response scenario tests,Finance
+V77-009,HydroCAPEX,Disclose annual budget breach by scenario,Implemented,LAB_PASS,Capital-plus-20-percent budget test,Finance
+V77-010,HydroCAPEX,Calculate conditional break-even factor,Implemented,LAB_PASS,Deterministic zero-benefit and sensitivity tests,Finance
+V77-011,Core,Persist reference comparison and reject edits,Implemented in SQLite,LAB_PASS,Append-only tests and audit replay,Backend
+V77-012,Core,Enable PostgreSQL RLS and composite tenant constraints,Candidate SQL,BLOCKED,Native PostgreSQL 17 acceptance,Security DBA
+V77-013,Core,Verify corporate IdP with actual MFA integration,OIDC lab adapter,BLOCKED,IdP issuance and revocation acceptance,Corporate IT
+V77-014,Core,External compliance WORM retention,API adapter only,BLOCKED,Object version retention test and audit,Corporate IT
+V77-015,Core,Chrome responsive static viewport 1440/768/375,Implemented,STATIC_LAYOUT_PASS,Chromium static screenshots and widths,UX
+V77-016,Core,End-to-end authenticated browser workflow,Not accepted,BLOCKED,Real browser with allowed local/remote HTTP,QA
+V77-017,Magadan,Select licensed operational feeder data,Not started,BLOCKED,Documented data access and topology owner,Customer
+V77-018,Magadan,Validate multi-node grid against external reference,Not started,BLOCKED,Approved network and signed comparison,Engineering
+V77-019,HydroForecast,Field-calibrated basin model,Not started,BLOCKED,Authorized hydrological record and expert,Hydrology
+V77-020,CascadeEconomics,Verify Kolym hydro operational constraints,Not started,BLOCKED,Technical and water-use rules plus expert,Hydro engineer
+V77-021,TurbineReliability,Calibrate confirmed defect history,Not started,BLOCKED,Historical failures and independent validation,Reliability engineer
+V77-022,HeatNet,Calibrated hydraulic model of authorized Magadan district,Not started,BLOCKED,Heat-network plans and metering record,Thermal engineer
+V77-023,HydroCAPEX,Real site-specific project and construction cost estimates,Not started,BLOCKED,Surveys design WBS supplier price confirmation,Project owner

@@ -1,0 +1,26 @@
+{
+  "release": "V7.1 RC1",
+  "changes": [
+    "OIDC adapter and server sessions",
+    "six fresh-database PostgreSQL migrations",
+    "transaction-bound RLS design",
+    "independent audit receiver, outbox and receipt verification",
+    "calculation source/runtime pinning and reproduction",
+    "native acceptance suite and unexecuted workflow"
+  ],
+  "not_completed": [
+    "native PostgreSQL acceptance",
+    "corporate IdP/MFA integration",
+    "real WORM storage acceptance",
+    "independent engineer signoff",
+    "Magadan field data",
+    "production deployment"
+  ],
+  "unchanged": [
+    "other user GitHub repositories",
+    "industrial servers",
+    "corporate data",
+    "V6 six-module client source",
+    "prior PDF and spreadsheet deliverables"
+  ]
+}

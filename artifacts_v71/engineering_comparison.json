@@ -1,0 +1,377 @@
+{
+  "scope": "SYNTHETIC_MATHEMATICAL_ONLY",
+  "field_data": false,
+  "independent_specialist_signoff": false,
+  "execution": {
+    "implementation_sha256": "d386ebc0cbf8875d31f8a7565cb7267208896e38b91631e68957d62c3d98285d",
+    "python": "3.13.5",
+    "scipy": "1.17.0",
+    "numpy": "2.3.5",
+    "algorithm": "balanced_two_bus_AC_PQ_lab_v1"
+  },
+  "case_count": 10,
+  "max_absolute_loss_difference_mw": 4.718293915295657e-10,
+  "max_absolute_voltage_difference_kv": 4.877023229710176e-10,
+  "cases": [
+    {
+      "input": {
+        "source_voltage_kv_ll": 10.0,
+        "load_p_mw": 1.0,
+        "load_q_mvar": 0.0,
+        "line_r_ohm_per_phase": 0.1,
+        "line_x_ohm_per_phase": 0.2,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 9.98996992,
+        "receiving_voltage_pu": 0.998996992,
+        "sending_p_mw": 1.001002009,
+        "load_p_mw": 1.0,
+        "line_loss_p_mw": 0.001002009,
+        "line_loss_q_mvar": 0.002004018,
+        "line_energy_loss_mwh": 0.100200904,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 9.989969919648452,
+        "line_loss_p_mw": 0.0010020090381869366,
+        "iterations": 5,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 3.81869364688564e-11,
+      "absolute_voltage_difference_kv": 3.5154812394466717e-10
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 20.0,
+        "load_p_mw": 1.0,
+        "load_q_mvar": 0.3,
+        "line_r_ohm_per_phase": 0.5,
+        "line_x_ohm_per_phase": 0.2,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 19.971960533,
+        "receiving_voltage_pu": 0.998598027,
+        "sending_p_mw": 1.001366328,
+        "load_p_mw": 1.0,
+        "line_loss_p_mw": 0.001366328,
+        "line_loss_q_mvar": 0.000546531,
+        "line_energy_loss_mwh": 0.136632843,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 19.971960532944994,
+        "line_loss_p_mw": 0.0013663284265316735,
+        "iterations": 5,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 4.265316734790997e-10,
+      "absolute_voltage_difference_kv": 5.5006665888868156e-11
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 20.0,
+        "load_p_mw": 5.0,
+        "load_q_mvar": 2.0,
+        "line_r_ohm_per_phase": 0.3,
+        "line_x_ohm_per_phase": 0.4,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 19.884206378,
+        "receiving_voltage_pu": 0.994210319,
+        "sending_p_mw": 5.022004055,
+        "load_p_mw": 5.0,
+        "line_loss_p_mw": 0.022004055,
+        "line_loss_q_mvar": 0.02933874,
+        "line_energy_loss_mwh": 2.200405534,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 19.884206378108615,
+        "line_loss_p_mw": 0.02200405534153489,
+        "iterations": 7,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 3.4153488717714175e-10,
+      "absolute_voltage_difference_kv": 1.0861711530196771e-10
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 20.0,
+        "load_p_mw": 10.0,
+        "load_q_mvar": 3.0,
+        "line_r_ohm_per_phase": 0.1,
+        "line_x_ohm_per_phase": 0.1,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 19.934756439,
+        "receiving_voltage_pu": 0.996737822,
+        "sending_p_mw": 10.027428662,
+        "load_p_mw": 10.0,
+        "line_loss_p_mw": 0.027428662,
+        "line_loss_q_mvar": 0.027428662,
+        "line_energy_loss_mwh": 2.742866247,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 19.934756438630135,
+        "line_loss_p_mw": 0.02742866247182939,
+        "iterations": 6,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 4.718293915295657e-10,
+      "absolute_voltage_difference_kv": 3.6986591567256255e-10
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 35.0,
+        "load_p_mw": 10.0,
+        "load_q_mvar": 6.0,
+        "line_r_ohm_per_phase": 0.5,
+        "line_x_ohm_per_phase": 0.5,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 34.769868458,
+        "receiving_voltage_pu": 0.993424813,
+        "sending_p_mw": 10.056247447,
+        "load_p_mw": 10.0,
+        "line_loss_p_mw": 0.056247447,
+        "line_loss_q_mvar": 0.056247447,
+        "line_energy_loss_mwh": 5.624744729,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 34.769868457512295,
+        "line_loss_p_mw": 0.05624744729142002,
+        "iterations": 7,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 2.914200200598849e-10,
+      "absolute_voltage_difference_kv": 4.877023229710176e-10
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 110.0,
+        "load_p_mw": 30.0,
+        "load_q_mvar": 10.0,
+        "line_r_ohm_per_phase": 0.3,
+        "line_x_ohm_per_phase": 0.2,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 109.899905535,
+        "receiving_voltage_pu": 0.99909005,
+        "sending_p_mw": 30.024838572,
+        "load_p_mw": 30.0,
+        "line_loss_p_mw": 0.024838572,
+        "line_loss_q_mvar": 0.016559048,
+        "line_energy_loss_mwh": 2.483857156,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 109.89990553507765,
+        "line_loss_p_mw": 0.02483857156375306,
+        "iterations": 5,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 4.362469413488057e-10,
+      "absolute_voltage_difference_kv": 7.764811016386375e-11
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 220.0,
+        "load_p_mw": 100.0,
+        "load_q_mvar": 35.0,
+        "line_r_ohm_per_phase": 1.2,
+        "line_x_ohm_per_phase": 2.1,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 219.11556833,
+        "receiving_voltage_pu": 0.995979856,
+        "sending_p_mw": 100.28055701,
+        "load_p_mw": 100.0,
+        "line_loss_p_mw": 0.28055701,
+        "line_loss_q_mvar": 0.490974768,
+        "line_energy_loss_mwh": 28.055701002,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 219.11556832999372,
+        "line_loss_p_mw": 0.28055701002124156,
+        "iterations": 7,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 2.1241564063245733e-11,
+      "absolute_voltage_difference_kv": 6.281197784119286e-12
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 10.0,
+        "load_p_mw": 1.0,
+        "load_q_mvar": 0.1,
+        "line_r_ohm_per_phase": 0.001,
+        "line_x_ohm_per_phase": 0.0,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 9.999899999,
+        "receiving_voltage_pu": 0.99999,
+        "sending_p_mw": 1.0000101,
+        "load_p_mw": 1.0,
+        "line_loss_p_mw": 1.01e-05,
+        "line_loss_q_mvar": 0.0,
+        "line_energy_loss_mwh": 0.00101002,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 9.999899998994978,
+        "line_loss_p_mw": 1.0100202005060245e-05,
+        "iterations": 3,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 2.0200506024520086e-10,
+      "absolute_voltage_difference_kv": 5.021760784984508e-12
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 35.0,
+        "load_p_mw": 2.0,
+        "load_q_mvar": 1.0,
+        "line_r_ohm_per_phase": 0.5,
+        "line_x_ohm_per_phase": 0.8,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 34.948481464,
+        "receiving_voltage_pu": 0.998528042,
+        "sending_p_mw": 2.002046838,
+        "load_p_mw": 2.0,
+        "line_loss_p_mw": 0.002046838,
+        "line_loss_q_mvar": 0.00327494,
+        "line_energy_loss_mwh": 0.204683761,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 34.94848146384981,
+        "line_loss_p_mw": 0.002046837610437761,
+        "iterations": 5,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 3.895622392377507e-10,
+      "absolute_voltage_difference_kv": 1.5018741805761238e-10
+    },
+    {
+      "input": {
+        "source_voltage_kv_ll": 35.0,
+        "load_p_mw": 8.0,
+        "load_q_mvar": 4.0,
+        "line_r_ohm_per_phase": 0.8,
+        "line_x_ohm_per_phase": 1.1,
+        "period_hours": 100.0,
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data"
+      },
+      "root_result": {
+        "method": "balanced_two_bus_AC_PQ_lab_v1",
+        "reference_name": "SYNTHETIC LAB: no actual Magadan grid data",
+        "receiving_voltage_kv_ll": 34.688283361,
+        "receiving_voltage_pu": 0.99109381,
+        "sending_p_mw": 8.053188085,
+        "load_p_mw": 8.0,
+        "line_loss_p_mw": 0.053188085,
+        "line_loss_q_mvar": 0.073133617,
+        "line_energy_loss_mwh": 5.318808542,
+        "active_power_balance_residual_mw": 0.0,
+        "solver_residual_pu": 0.0,
+        "independent_closed_form_voltage_difference_v": 0.0,
+        "validation": "numerical AC nodal equations cross-checked with closed-form high-voltage root; NOT independent third-party field validation",
+        "limitations": "Balanced one-line two-bus, constant PQ, no shunt/capacitance, no voltage control, no dynamics or N-1, no loss calibration",
+        "data_classification": "SYNTHETIC_LAB_ONLY"
+      },
+      "separately_initialized_reference": {
+        "receiving_voltage_kv_ll": 34.68828336128004,
+        "line_loss_p_mw": 0.053188085423588764,
+        "iterations": 7,
+        "classification": "SYNTHETIC_MATHEMATICAL_REFERENCE_ONLY"
+      },
+      "absolute_loss_difference_mw": 4.235887612891176e-10,
+      "absolute_voltage_difference_kv": 2.800391030177707e-10
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "navigation": [
+    "hydro",
+    "cascade",
+    "turbine",
+    "grid",
+    "heat",
+    "capex"
+  ],
+  "workflow": [
+    "analyst:submit",
+    "engineer:engineering_pass",
+    "finance:financial_pass",
+    "approver:approve",
+    "operator:start_execution",
+    "operator:submit_execution",
+    "auditor:verify"
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "screenshots": [
+    "overview-desktop.png",
+    "grid-desktop.png",
+    "decisions-verified-desktop.png",
+    "audit-desktop.png",
+    "overview-mobile.png"
+  ],
+  "audit": "8 append-only hashed events verified",
+  "negative_balance_blocked": true,
+  "mobile_widths": {
+    "scroll": 375,
+    "view": 375
+  }
+}

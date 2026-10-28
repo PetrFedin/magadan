@@ -1,0 +1,16 @@
+﻿method,path,request,response,negative_test
+GET,/v1/orgs/{orgId}/assets,"User JWT, org scope","asset list with version, quality and pagination",403 cross-org; versioned read
+POST,/v1/assets/{assetId}/measurements:ingest,"ingest grant, records, units, timestamps","batch_id, accepted, rejected, reasons",reject malformed/future/duplicate
+POST,/v1/datasets/{id}/freeze,authorized data steward,"immutable snapshot id, source manifest",freeze rejects unapproved quality
+POST,/v1/models/{id}/evaluate,"model version, forecast issue snapshots","MAE/RMSE/Bias/WAPE, leakage gate",future features fail
+POST,/v1/scenarios:compare,two comparable scenario dossiers,"admissibility, difference, evidence",incomparable baselines fail
+GET,/v1/constraints/{id},verified constraint set version,hard/soft constraint manifest,rejected if missing authority
+POST,/v1/initiatives,authorized analyst and asset scope,draft ID and revision,cross-org create fails
+POST,/v1/initiatives/{id}/transitions,"action, actor, evidence, expected revision","revised status, audit receipt",bypass and stale revision fail
+POST,/v1/portfolios/assess,"project set, selection, budget caps",feasibility gate and budget series,mandatory/dependency fail
+POST,/v1/benefits:reconcile,org-scoped causal IDs and evidence,"deduplicated value, conflicts",conflict excluded
+POST,/v1/projects/{id}/costs,approved CBS/WBS source and authorizations,revision and cost snapshot,unapproved writes rejected
+GET,/v1/projects/{id}/cashflow,approved budget and cash actuals,"baseline, forecast, actual series",explicit unit and fiscal year
+POST,/v1/projects/{id}/outcomes,"auditor evidence, normalized baseline",verified/unverified result,no synthetic reported as actual
+GET,/v1/audit/export,auditor access and export scope,signed external evidence bundle,tamper test fails
+GET,/v1/system/readiness,"engineer, security, finance gate status",reasons for Production HOLD,no green without source data

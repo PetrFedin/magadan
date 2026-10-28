@@ -1,0 +1,10 @@
+
+==================================== ERRORS ====================================
+______________ ERROR collecting tests_v71/test_postgres_native.py ______________
+server/tests_v71/test_postgres_native.py:14: in <module>
+    raise RuntimeError('NATIVE_ACCEPTANCE_BLOCKED: dedicated PostgreSQL configuration is missing')
+E   RuntimeError: NATIVE_ACCEPTANCE_BLOCKED: dedicated PostgreSQL configuration is missing
+=========================== short test summary info ============================
+ERROR server/tests_v71/test_postgres_native.py - RuntimeError: NATIVE_ACCEPTANCE_BLOCKED: dedicated PostgreSQL configuration is missing
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.14s
