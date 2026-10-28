@@ -27,7 +27,7 @@ python -m tools.check_source_admission --root /authorized/staging/hydrokontur-v7
   --require-manifest-pin --trusted-manifest-sha256 <trusted_manifest_sha256>
 ```
 
-Если независимая SHA-256 исходного архива отсутствует, импорт можно выполнить для изолированного исследования, но **CI admission не должен считаться завершённым**. Для GitHub CI передаются две проверенные SHA-256 из **внешней доверенной записи**: архив в `HYDRO_TRUSTED_V79_ARCHIVE_SHA256` и точный манифест в `HYDRO_TRUSTED_V79_MANIFEST_SHA256`. Значения не являются секретами; их должен независимо сверить reviewer с реально полученным архивом, а не просто переписать из PR. Двойной контроль нужен, поскольку самоутверждённый archive SHA в изменяемом манифесте никак не связывает содержимое файлов с архивом без проверенного SHA самого манифеста. Вычисление обеих сумм самим скриптом восстановления не доказывает их независимость.
+Если независимая SHA-256 исходного архива отсутствует, импорт можно выполнить для изолированного исследования, но **CI admission не должен считаться завершённым**. Для GitHub CI передаются две проверенные SHA-256 из **внешней доверенной записи**: архив в `HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256` и точный манифест в `HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256`. Значения не являются секретами; их должен независимо сверить reviewer с реально полученным архивом, а не просто переписать из PR. Двойной контроль нужен, поскольку самоутверждённый archive SHA в изменяемом манифесте никак не связывает содержимое файлов с архивом без проверенного SHA самого манифеста. Вычисление обеих сумм самим скриптом восстановления не доказывает их независимость.
 
 До получения подлинного ZIP/bundle и независимого значения SHA-256 ничего не подставлять ради зелёного статуса. Миграции 001–140 нужно сверить с ранее выпущенными версиями, а не запускать на промышленной БД.
 
@@ -51,3 +51,17 @@ python -m tools.check_source_admission --root /authorized/staging/hydrokontur-v7
 ## Новый статус: 28.10.2026
 
 Реальные GitHub hosted runners снова назначаются. [Runner Probe #40753247435](https://github.com/PetrFedin/magadan/actions/runs/40753247435) завершился SUCCESS. В [Recovery #40753247431](https://github.com/PetrFedin/magadan/actions/runs/40753247431) выполнены `Ran 42 tests ... OK`. Проверка `source-tree-admission` остановилась корректно, поскольку оригинальные байты архива недоступны, полный код не опубликован, независимые SHA-256 пусты. **Проблема назначения runner больше не блокирует работу**; приёмка программы не пройдена. Архивные материалы в `docs/archive_lab_references/` являются только историческими текстовыми извлечениями.
+
+
+## V8.0 как первоочередной кандидат восстановления (28.10.2026)
+
+В библиотеке проекта доступна запись более поздней сборки `HydroKontur_360_Magadan_V8_0_Boundary_MV_Engineering_Source_Tests.zip`, но её **оригинальные байты получить пока нельзя**. Отдельные текстовые документы V8 сохранены в `docs/archive_lab_references/` только как непроверенный по GitHub исходный материал.
+
+Инструменты импорта теперь различают строго две версии:
+
+- `python tools/import_v79_snapshot.py /path/V79.zip --destination /path/staging-v79 --release v7.9 --expected-sha256 <trusted_sha256>` — миграции 001–140.
+- `python tools/import_v79_snapshot.py /path/V8.zip --destination /path/staging-v8 --release v8.0 --expected-sha256 <trusted_sha256>` — миграции 001–150, обязательны SQL 150, исходник физического boundary-движка и тесты V8.
+
+Для допуска `python -m tools.check_source_admission --root /path/staging-v8 --expected-release v8.0 --require-external-pin --trusted-archive-sha256 <trusted_archive_sha256> --require-manifest-pin --trusted-manifest-sha256 <trusted_manifest_sha256>`.
+
+На GitHub релиз явно объявляется через переменную `HYDRO_SOURCE_RELEASE` (`v7.9` или `v8.0`), а независимо сверенные контрольные суммы — через `HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256` и `HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256`. **Не брать хеши из самого непроверенного PR**. Все результаты пока ограничены синтетическими тестами восстановления, не промышленной приёмкой.
