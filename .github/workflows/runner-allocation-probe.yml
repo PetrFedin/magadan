@@ -1,9 +1,8 @@
+# Manual diagnostic only: avoids a redundant runner job on every PR.
 # Minimal runner admission probe. Does NOT validate HydroKontur application.
 name: Magadan Runner Allocation Probe
 
 on:
-  pull_request:
-    branches: [main]
   workflow_dispatch:
 
 permissions:
