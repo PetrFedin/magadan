@@ -18,7 +18,7 @@ import unicodedata
 if not __package__:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from tools.import_v79_snapshot import MIGRATIONS, REQUIRED, REJECT_DIRS, safe_path
+from tools.import_v79_snapshot import MIGRATIONS, REQUIRED, REJECT_DIRS, safe_path, release_spec
 
 
 class AdmissionBlocked(Exception):
@@ -36,20 +36,28 @@ def sha256(path: Path) -> str:
 def check(root: Path, trusted_archive_sha256: str | None = None,
           require_external_pin: bool = False,
           trusted_manifest_sha256: str | None = None,
-          require_manifest_pin: bool = False) -> dict:
+          require_manifest_pin: bool = False,
+          expected_release: str | None = None) -> dict:
     """Verify known archive bytes and protected source roots, not application quality.
 
     A self-reported SHA-256 manifest is insufficient to establish independent
     source provenance. A trusted value must arrive through a separate channel.
     """
     root = root.resolve(strict=True)
-    missing = [p for p in REQUIRED if not (root / p).is_file()]
+    release = 'v8.0' if (root / 'server/migrations/150_boundary_graph_v8.sql').is_file() else 'v7.9'
+    spec = release_spec(release)
+    missing = [p for p in spec['required'] if not (root / p).is_file()]
     if missing:
         raise AdmissionBlocked('REQUIRED_SOURCE_FILES_MISSING: ' + ', '.join(missing))
     sql = sorted((root / 'server' / 'migrations').glob('[0-9][0-9][0-9]_*.sql'))
     numbers = sorted(p.name[:3] for p in sql)
-    if numbers != list(MIGRATIONS):
+    if numbers != list(spec['migrations']):
         raise AdmissionBlocked('MIGRATION_SEQUENCE_MISMATCH: ' + ','.join(numbers))
+    if release == 'v8.0':
+        required_files = list(root.rglob('server/hydro_api/*boundary*v8*.py'))
+        required_tests = list(root.rglob('server/tests_v8/*.py'))
+        if not required_files or not required_tests or any(x.is_symlink() for x in required_files + required_tests):
+            raise AdmissionBlocked('V8_BOUNDARY_ENGINE_OR_TESTS_MISSING')
     mf = root / 'SOURCE_RECOVERY_MANIFEST.json'
     if mf.is_symlink() or not mf.is_file():
         raise AdmissionBlocked('PROVENANCE_MANIFEST_MISSING: original source archive has not been staged')
@@ -68,6 +76,10 @@ def check(root: Path, trusted_archive_sha256: str | None = None,
         info = json.loads(mf.read_text(encoding='utf-8'))
     except (OSError, ValueError) as exc:
         raise AdmissionBlocked('INVALID_PROVENANCE_MANIFEST') from exc
+    if info.get('source_release', 'v7.9') != release:
+        raise AdmissionBlocked('SOURCE_RELEASE_MANIFEST_MISMATCH')
+    if expected_release is not None and expected_release != release:
+        raise AdmissionBlocked('EXPECTED_SOURCE_RELEASE_MISMATCH')
     if info.get('classification') != 'SOURCE_IMPORT_STAGED_NOT_ACCEPTED':
         raise AdmissionBlocked('BAD_SOURCE_CLASSIFICATION')
     if info.get('production_ready') is not False or info.get('native_postgresql_accepted') is not False:
@@ -111,7 +123,7 @@ def check(root: Path, trusted_archive_sha256: str | None = None,
             raise AdmissionBlocked('SOURCE_FILE_SIZE_DRIFT: ' + name)
         if not re.fullmatch('[0-9a-f]{64}', claimed) or sha256(target) != claimed:
             raise AdmissionBlocked('SOURCE_FILE_SHA256_DRIFT: ' + name)
-    if not set(REQUIRED).issubset(seen):
+    if not set(spec['required']).issubset(seen):
         raise AdmissionBlocked('SOURCE_MANIFEST_INCOMPLETE')
     # The repo may also contain its own reviewed GitHub workflow, recovery tools,
     # tests, documentation and .git internals. Their hashes do not come from the
@@ -130,6 +142,7 @@ def check(root: Path, trusted_archive_sha256: str | None = None,
             raise AdmissionBlocked('UNMANIFESTED_EXECUTABLE_SOURCE: ' + rel.as_posix())
     return {
         'status': 'SOURCE_TREE_AND_MANIFEST_MATCH_ONLY',
+        'source_release': release,
         'file_count_verified': len(entries),
         'original_archive_sha256_claim': digest,
         'external_source_hash_pinned': trusted_archive_sha256 is not None,
@@ -156,12 +169,15 @@ def main() -> int:
                    help='SHA-256 of the exact source manifest from a separate trusted release record')
     p.add_argument('--require-manifest-pin', action='store_true',
                    help='Fail if externally pinned source manifest digest is absent')
+    p.add_argument('--expected-release', choices=('v7.9','v8.0'), default='v7.9',
+                   help='Exact pinned source release; cannot silently promote v7.9 to v8.0')
     args = p.parse_args()
     try:
         print(json.dumps(check(args.root, args.trusted_archive_sha256,
                                args.require_external_pin,
                                args.trusted_manifest_sha256,
-                               args.require_manifest_pin), indent=2, ensure_ascii=False))
+                               args.require_manifest_pin,
+                               args.expected_release), indent=2, ensure_ascii=False))
         return 0
     except (AdmissionBlocked, OSError) as exc:
         print('SOURCE_ADMISSION_BLOCKED: ' + str(exc), file=sys.stderr)
