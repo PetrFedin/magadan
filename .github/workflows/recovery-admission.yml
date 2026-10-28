@@ -33,12 +33,14 @@ jobs:
           echo 'A green result does not prove that HydroKontur app sources were imported.'
 
   source-tree-admission:
-    name: SOURCE_ADMISSION_BLOCKED until real V7.9 sources exist
+    name: Import provenance admission (EXTERNAL ATTESTATION REQUIRED)
     needs: [recovery-tool-tests]
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.13'
@@ -53,8 +55,20 @@ jobs:
             echo 'Never claim provenance based only on self-declared manifest or archive hash.'
             exit 2
           fi
-          python -m tools.check_source_admission --root . \
-            --expected-release "${HYDRO_SOURCE_RELEASE:-v7.9}" \
+          # Historical source is fixed at its import SHA. Later documented code
+          # edits on this PR must NOT mutate the original source manifest.
+          RELEASE="${HYDRO_SOURCE_RELEASE:-v8.0}"
+          if [ "$RELEASE" != "v8.0" ]; then
+            echo '::error::This integration PR contains the V8.0 original import.'
+            exit 2
+          fi
+          BASELINE="eab0d0b1e418558914a448a21cf496982ac10a1d"
+          git merge-base --is-ancestor "$BASELINE" HEAD
+          STAGE="$(mktemp -d)"
+          trap 'rm -rf "$STAGE"' EXIT
+          git archive "$BASELINE" | tar -xf - -C "$STAGE"
+          python -m tools.check_source_admission --root "$STAGE" \
+            --expected-release "$RELEASE" \
             --require-external-pin \
             --trusted-archive-sha256 "$HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256" \
             --require-manifest-pin \
