@@ -1,0 +1,73 @@
+name: HydroKontur V8.0 Synthetic Lab Regression (NOT production admission)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - 'v6-client/**'
+      - 'scripts/**'
+      - 'MANIFEST_SHA256_V8.json'
+      - 'SOURCE_RECOVERY_MANIFEST.json'
+      - '.github/workflows/v8-lab-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v8-synthetic-lab-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthetic-lab-only:
+    name: Code, tests and internal file integrity (NO field approval)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify original V8 manifest against tracked source files
+        run: |
+          python - <<'PY'
+          import hashlib,json,pathlib
+          root=pathlib.Path('.')
+          man=json.loads((root/'MANIFEST_SHA256_V8.json').read_text())
+          assert man['file_count']==452,man.get('file_count')
+          for name,sha in man['files'].items():
+              path=root/name
+              assert path.is_file() and not path.is_symlink(),name
+              assert hashlib.sha256(path.read_bytes()).hexdigest()==sha,name
+          assert (root/'SOURCE_RECOVERY_MANIFEST.json').is_file()
+          print('V8 internal SHA256 manifest matches',len(man['files']),'original files')
+          print('This is internal integrity, NOT independently attested provenance.')
+          PY
+      - name: Install synthetic lab test dependencies
+        run: |
+          python -m pip install -r server/requirements.txt
+      - name: Python earlier modules (synthetic only)
+        env:
+          PYTHONPATH: server
+        run: |
+          python -m pytest -q server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \\
+            --ignore=server/tests_v71/test_postgres_native.py -m 'not native_pg'
+      - name: Python newer modules (synthetic only)
+        env:
+          PYTHONPATH: server
+        run: |
+          python -m pytest -q server/tests_v75 server/tests_v76 server/tests_v77 \\
+            server/tests_v78 server/tests_v79 server/tests_v8 server/tests \\
+            --ignore=server/tests_v78/test_postgres_native_v78.py \\
+            --ignore=server/tests/test_browser.py -m 'not native_pg'
+      - name: JavaScript unit tests
+        working-directory: v6-client
+        run: npm test
+      - name: Explicit release boundary
+        run: |
+          echo 'Synthetic tests only; NO native PostgreSQL RLS, independent power flow, SSO, WORM or actual Magadan data acceptance.'
+          echo 'PRODUCTION HOLD. Source provenance admission is a separate independent gate.'
