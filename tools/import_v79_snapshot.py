@@ -42,6 +42,19 @@ REQUIRED = (
 )
 MIGRATIONS = ("001", "010", "020", "030", "040", "050", "060", "070",
               "080", "090", "100", "110", "120", "130", "140")
+
+RELEASES = {
+    "v7.9": {"required": REQUIRED, "migrations": MIGRATIONS},
+    "v8.0": {"required": REQUIRED + ("server/migrations/150_boundary_graph_v8.sql",),
+             "migrations": MIGRATIONS + ("150",)},
+}
+
+
+def release_spec(release: str) -> dict:
+    try:
+        return RELEASES[release]
+    except (KeyError, TypeError):
+        raise ImportBlocked("UNSUPPORTED_SOURCE_RELEASE") from None
 REJECT_DIRS = {".git", ".venv", "venv", "node_modules", "__pycache__", ".pytest_cache"}
 # High-confidence signatures only; use dedicated secret scanning before publication.
 SECRETS = (
@@ -89,7 +102,8 @@ def check_secrets(data: bytes):
         raise ImportBlocked("HIGH_CONFIDENCE_SECRET_DETECTED")
 
 
-def inspect_tree(root: Path) -> list[dict]:
+def inspect_tree(root: Path, release: str = "v7.9") -> list[dict]:
+    spec = release_spec(release)
     records: list[dict] = []
     visited = set()
     total = 0
@@ -116,13 +130,18 @@ def inspect_tree(root: Path) -> list[dict]:
             raise ImportBlocked("GIT_LFS_POINTER_NOT_SOURCE_CODE")
         records.append({"path": rel, "bytes": size, "sha256": sha256_file(p)})
     files = {entry["path"] for entry in records}
-    missing = sorted(set(REQUIRED) - files)
+    missing = sorted(set(spec["required"]) - files)
     if missing:
         raise ImportBlocked("REQUIRED_SOURCE_FILES_MISSING: " + ", ".join(missing))
     migration_paths = [p for p in files if re.fullmatch(r"server/migrations/\d{3}_[^/]+\.sql", p)]
     numbers = [Path(p).name[:3] for p in migration_paths]
-    if sorted(numbers) != list(MIGRATIONS):
+    if sorted(numbers) != list(spec["migrations"]):
         raise ImportBlocked("MIGRATION_SEQUENCE_MISMATCH")
+    if release == "v8.0":
+        if not any(re.fullmatch(r"server/hydro_api/[^/]*boundary[^/]*v8[^/]*\.py", p) for p in files):
+            raise ImportBlocked("V8_BOUNDARY_ENGINE_NOT_PRESENT")
+        if not any(re.fullmatch(r"server/tests_v8/[^/]+\.py", p) for p in files):
+            raise ImportBlocked("V8_TEST_SUITE_NOT_PRESENT")
     return records
 
 
@@ -195,7 +214,9 @@ def extract_bundle(source: Path, temp: Path):
     shutil.rmtree(git_dir)
 
 
-def recover(source: Path, destination: Path, expected_sha256: str | None = None) -> dict:
+def recover(source: Path, destination: Path, expected_sha256: str | None = None,
+            release: str = "v7.9") -> dict:
+    release_spec(release)
     if not source.is_file() or source.suffix.lower() not in {".zip", ".bundle"}:
         raise ImportBlocked("EXPECTED_EXISTING_ZIP_OR_GIT_BUNDLE")
     if destination.exists():
@@ -212,8 +233,9 @@ def recover(source: Path, destination: Path, expected_sha256: str | None = None)
             extract_zip(source, stage)
         else:
             extract_bundle(source, stage)
-        records = inspect_tree(stage)
+        records = inspect_tree(stage, release)
         report = {
+            "source_release": release,
             "classification": "SOURCE_IMPORT_STAGED_NOT_ACCEPTED",
             "archive_name": source.name,
             "archive_sha256": digest,
@@ -241,13 +263,16 @@ def main() -> int:
     parser.add_argument("source", type=Path, help="Existing V7.9 .zip or .bundle")
     parser.add_argument("--destination", required=True, type=Path,
                         help="New, non-existing staging directory, never repository root")
+    parser.add_argument("--release", choices=tuple(RELEASES), default="v7.9",
+                        help="Exact source version: v7.9 (001-140) or v8.0 (001-150)")
     parser.add_argument("--expected-sha256", metavar="HEX", default=None,
                         help="Optional independently confirmed SHA-256 of original archive")
     args = parser.parse_args()
     if args.expected_sha256 and not re.fullmatch(r"[0-9a-fA-F]{64}", args.expected_sha256):
         parser.error("--expected-sha256 must contain exactly 64 hex digits")
     try:
-        print(json.dumps(recover(args.source.resolve(), args.destination.resolve(), args.expected_sha256),
+        print(json.dumps(recover(args.source.resolve(), args.destination.resolve(), args.expected_sha256,
+                                 release=args.release),
                          ensure_ascii=False, indent=2))
         return 0
     except (ImportBlocked, zipfile.BadZipFile, subprocess.CalledProcessError, subprocess.TimeoutExpired) as exc:
