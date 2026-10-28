@@ -54,15 +54,15 @@ jobs:
         env:
           PYTHONPATH: server
         run: |
-          python -m pytest -q server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \\
+          python -m pytest -q server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
             --ignore=server/tests_v71/test_postgres_native.py -m 'not native_pg'
       - name: Python newer modules (synthetic only)
         env:
           PYTHONPATH: server
         run: |
-          python -m pytest -q server/tests_v75 server/tests_v76 server/tests_v77 \\
-            server/tests_v78 server/tests_v79 server/tests_v8 server/tests \\
-            --ignore=server/tests_v78/test_postgres_native_v78.py \\
+          python -m pytest -q server/tests_v75 server/tests_v76 server/tests_v77 \
+            server/tests_v78 server/tests_v79 server/tests_v8 server/tests \
+            --ignore=server/tests_v78/test_postgres_native_v78.py \
             --ignore=server/tests/test_browser.py -m 'not native_pg'
       - name: JavaScript unit tests
         working-directory: v6-client
