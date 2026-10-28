@@ -44,11 +44,11 @@ jobs:
           python-version: '3.13'
       - name: Require original source tree, manifest and independent SHA-256
         env:
-          HYDRO_TRUSTED_V79_ARCHIVE_SHA256: ${{ vars.HYDRO_TRUSTED_V79_ARCHIVE_SHA256 }}
-          HYDRO_TRUSTED_V79_MANIFEST_SHA256: ${{ vars.HYDRO_TRUSTED_V79_MANIFEST_SHA256 }}
+          HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256: ${{ vars.HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256 }}
+          HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256: ${{ vars.HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256 }}
           HYDRO_SOURCE_RELEASE: ${{ vars.HYDRO_SOURCE_RELEASE }}
         run: |
-          if [ -z "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" ] || [ -z "$HYDRO_TRUSTED_V79_MANIFEST_SHA256" ]; then
+          if [ -z "$HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256" ] || [ -z "$HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256" ]; then
             echo '::error::Original archive AND source manifest require separately reviewed SHA-256 pins.'
             echo 'Never claim provenance based only on self-declared manifest or archive hash.'
             exit 2
@@ -56,9 +56,9 @@ jobs:
           python -m tools.check_source_admission --root . \
             --expected-release "${HYDRO_SOURCE_RELEASE:-v7.9}" \
             --require-external-pin \
-            --trusted-archive-sha256 "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" \
+            --trusted-archive-sha256 "$HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256" \
             --require-manifest-pin \
-            --trusted-manifest-sha256 "$HYDRO_TRUSTED_V79_MANIFEST_SHA256"
+            --trusted-manifest-sha256 "$HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256"
 
   application-regression:
     name: Actual HydroKontur Python/JS regression (after source admission)
