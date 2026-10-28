@@ -46,6 +46,7 @@ jobs:
         env:
           HYDRO_TRUSTED_V79_ARCHIVE_SHA256: ${{ vars.HYDRO_TRUSTED_V79_ARCHIVE_SHA256 }}
           HYDRO_TRUSTED_V79_MANIFEST_SHA256: ${{ vars.HYDRO_TRUSTED_V79_MANIFEST_SHA256 }}
+          HYDRO_SOURCE_RELEASE: ${{ vars.HYDRO_SOURCE_RELEASE }}
         run: |
           if [ -z "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" ] || [ -z "$HYDRO_TRUSTED_V79_MANIFEST_SHA256" ]; then
             echo '::error::Original archive AND source manifest require separately reviewed SHA-256 pins.'
@@ -53,6 +54,7 @@ jobs:
             exit 2
           fi
           python -m tools.check_source_admission --root . \
+            --expected-release "${HYDRO_SOURCE_RELEASE:-v7.9}" \
             --require-external-pin \
             --trusted-archive-sha256 "$HYDRO_TRUSTED_V79_ARCHIVE_SHA256" \
             --require-manifest-pin \
@@ -72,12 +74,17 @@ jobs:
         with:
           node-version: '22'
       - name: Test Python application (synthetic lab only)
+        env:
+          HYDRO_SOURCE_RELEASE: ${{ vars.HYDRO_SOURCE_RELEASE }}
         run: |
           python -m pip install --upgrade pip
           python -m pip install -r server/requirements.txt
-          PYTHONPATH=server python -m pytest -q \
-            server/tests server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
-            server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 server/tests_v79 \
+          groups=(server/tests server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74
+            server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 server/tests_v79)
+          if [ "${HYDRO_SOURCE_RELEASE:-v7.9}" = 'v8.0' ]; then
+            groups+=(server/tests_v8)
+          fi
+          PYTHONPATH=server python -m pytest -q "${groups[@]}" -m 'not native_pg' \
             --ignore=server/tests/test_browser.py \
             --ignore=server/tests_v71/test_postgres_native.py \
             --ignore=server/tests_v78/test_postgres_native_v78.py
