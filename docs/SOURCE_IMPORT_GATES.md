@@ -46,3 +46,8 @@ python -m tools.check_source_admission --root /authorized/staging/hydrokontur-v7
 ## Диагностика GitHub Actions
 
 Запуск [#40529740608](https://github.com/PetrFedin/magadan/actions/runs/40529740608) завершился до исполнения шагов (runner_id=0; steps=[]; продолжительность 2 секунды). Пакет локально проверенных тестов не был исполнен GitHub. Вероятные ограничения hosted runner требуют проверки в настройках аккаунта, **без внесения расходов и без раскрытия приватного репозитория**. См. `docs/CI_RUNNER_INCIDENT_2026-10-27.md`.
+
+
+## Новый статус: 28.10.2026
+
+Реальные GitHub hosted runners снова назначаются. [Runner Probe #40753247435](https://github.com/PetrFedin/magadan/actions/runs/40753247435) завершился SUCCESS. В [Recovery #40753247431](https://github.com/PetrFedin/magadan/actions/runs/40753247431) выполнены `Ran 42 tests ... OK`. Проверка `source-tree-admission` остановилась корректно, поскольку оригинальные байты архива недоступны, полный код не опубликован, независимые SHA-256 пусты. **Проблема назначения runner больше не блокирует работу**; приёмка программы не пройдена. Архивные материалы в `docs/archive_lab_references/` являются только историческими текстовыми извлечениями.
