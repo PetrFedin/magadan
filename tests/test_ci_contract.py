@@ -9,11 +9,14 @@ class RecoveryCIContract(unittest.TestCase):
         script=(ROOT/'.github/workflows/recovery-admission.yml').read_text()
         self.assertIn('source-tree-admission:', script)
         self.assertIn('--require-external-pin', script)
-        self.assertIn('HYDRO_TRUSTED_V79_ARCHIVE_SHA256', script)
-        self.assertIn('HYDRO_TRUSTED_V79_MANIFEST_SHA256', script)
+        self.assertIn('HYDRO_TRUSTED_SOURCE_ARCHIVE_SHA256', script)
+        self.assertIn('HYDRO_TRUSTED_SOURCE_MANIFEST_SHA256', script)
         self.assertIn('--require-manifest-pin', script)
         self.assertIn('needs: [source-tree-admission]', script)
         self.assertIn('server/tests_v79', script)
+        self.assertIn('server/tests_v8', script)
+        self.assertIn('HYDRO_SOURCE_RELEASE', script)
+        self.assertIn('--expected-release', script)
         self.assertNotIn('  push:\n', script)
 
     def test_field_ready_is_not_claimed_from_ci(self):
