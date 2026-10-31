@@ -29,7 +29,7 @@ jobs:
         run: |
           python -m compileall -q server/hydro_api/hydro_reference_v81.py
           python -m json.tool data/references/V81_KOLYMA_2025_RULES.json > /dev/null
-      - name: Run 29 source and fail-closed research tests
+      - name: Run 30 source and fail-closed research tests
         run: |
           python -m unittest discover -s server/tests_v81 -p 'test_hydro_reference_v81.py' -v
       - name: Reproduce published-context-only receipt (NEVER a dispatch order)
