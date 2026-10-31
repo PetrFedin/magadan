@@ -1,0 +1,33 @@
+{
+  "stage": "V8.2",
+  "as_of": "2026-10-31",
+  "scope": "Standalone research daily hydrology hindcast, no SCADA or Cascade actions",
+  "parent_pr": "https://github.com/PetrFedin/magadan/pull/7",
+  "local": {
+    "python": "3.13.5",
+    "tests_passed": 18,
+    "tests_total": 18,
+    "fixture": "SYNTHETIC_NOT_MAGADAN",
+    "layout_smoke": "PASS",
+    "canonical_no_source_exit_code": 3,
+    "canonical_status": "HOLD",
+    "forecast_to_cascade": null,
+    "actual_dispatch_approved": false,
+    "investment_approved": false
+  },
+  "source_git_blob_sha1": "a05ae6a785e6880fbd3a46cee79696680380e8e3",
+  "test_git_blob_sha1": "787df9706043fa8d803345ab72d031d4ec5e5d0d",
+  "original_daily_inflow_records_received": 0,
+  "independent_field_source_authorization_verified": false,
+  "real_holdout_error_measured": false,
+  "calibrated_cascade_transfer": false,
+  "remote_ci": {
+    "result": "FAILURE_BEFORE_JOB_STEPS",
+    "observed_run_id": 41200759077,
+    "url": "https://github.com/PetrFedin/magadan/actions/runs/41200759077",
+    "steps": null,
+    "root_cause_verified": false
+  },
+  "output": "DRAFT_LOCAL_TESTS_PASS_REMOTE_CI_HOLD_REAL_DATA_HOLD_PRODUCTION_HOLD",
+  "note": "Private archived recordings, full reservoir rules and real hydrological data are not available; no forecast skill or earned savings are claimed."
+}
