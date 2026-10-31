@@ -6,8 +6,8 @@
   "base": "feature/v79-source-recovery",
   "original_V8_PR": "https://github.com/PetrFedin/magadan/pull/5",
   "blobs": {
-    "source": "eeb927884717224407576c28e7967e18dd7a3a78",
-    "tests": "8d88c1caaf6d8ab4b1b0af5cacdae8dc792749bd",
+    "source": "f5524fce7fc2bada174fc156df8078afb0b0a88d",
+    "tests": "c31578aa4f3e3ec02b3fe111000062bf59ab8c53",
     "regulation_context": "e48260a68a6e034fdb1c559a2228622ad8aca7ae",
     "docs": "75ee29d61b5a26ea2c179baefaf4b2fbd3de4f11",
     "workflow": "b880681ae411c200ac4c3dd3f664055d3928b152"
@@ -15,8 +15,8 @@
   "local_tests": {
     "method": "python3 -m unittest discover -s server/tests_v81 -p test_hydro_reference_v81.py -v",
     "run_environment": "local Python 3.13",
-    "passed": 29,
-    "total": 29,
+    "passed": 30,
+    "total": 30,
     "data": "Published regulatory summary and synthetic invalid-input fixtures",
     "actual_hydrological_forecast_skill_tested": false,
     "source_blob_byte_identical_to_local_tested": true,
@@ -37,6 +37,6 @@
   "investment_approval": false,
   "native_pg17_e2e_tested": false,
   "remote_actions_green": false,
-  "status": "DRAFT_LOCAL_HYDRO_REFERENCE_29_OF_29_PASS_HYDRO_FORECAST_HOLD_PRODUCTION_HOLD",
-  "notes": "Real official historical statistics and synthetic unit checks are not verified real-time inflow or a predictive model. This gate intentionally does NOT enable any live energy dispatch or financial claims."
+  "status": "DRAFT_LOCAL_HYDRO_REFERENCE_30_OF_30_PASS_HYDRO_FORECAST_HOLD_PRODUCTION_HOLD",
+  "notes": "Real official historical statistics and synthetic unit checks are not verified real-time inflow or a predictive model. This gate intentionally does NOT enable any live energy dispatch or financial claims. V8.1 additionally pins a canonical SHA-256 of the published station numbers (self-computed fidelity check, NOT government signature)."
 }
