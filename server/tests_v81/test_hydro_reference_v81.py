@@ -95,6 +95,10 @@ class ReferenceV81Test(unittest.TestCase):
         self.raw['stations']['KOLYMA_UPSTREAM']['exceedance_km3']['95']='100'
         with self.assertRaises(InvalidReference):validate(self.raw)
 
+    def test_plausible_numeric_tampering_also_rejected(self):
+        self.raw['stations']['KOLYMA_UPSTREAM']['exceedance_km3']['5'] = '21.5'
+        with self.assertRaises(InvalidReference):validate(self.raw)
+
     def test_missing_rare_probability_rejected(self):
         del self.raw['stations']['KOLYMA_UPSTREAM']['exceedance_km3']['99']
         with self.assertRaises(InvalidReference):validate(self.raw)
