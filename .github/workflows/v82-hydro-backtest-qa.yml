@@ -1,0 +1,53 @@
+name: Magadan V8.2 research-only HydroForecast backtest
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/v82-hydro-backtest-20261031]
+  pull_request:
+    paths:
+      - 'server/hydro_api/hydro_backtest_v82.py'
+      - 'server/tests_v82/**'
+      - 'data/references/V82_no_authorized_daily_observations.json'
+      - '.github/workflows/v82-hydro-backtest-qa.yml'
+permissions:
+  contents: read
+jobs:
+  hydro-no-leakage:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile source and validate canonical input
+        run: |
+          python -m compileall -q server/hydro_api/hydro_backtest_v82.py
+          python -m json.tool data/references/V82_no_authorized_daily_observations.json > /dev/null
+      - name: Run 18 unit tests using only synthetic hydrological observations
+        run: |
+          python -m unittest discover -s server/tests_v82 -p 'test_hydro_backtest_v82.py' -v
+      - name: Missing real data must return HOLD, never fake a forecast or approval
+        run: |
+          set +e
+          python server/hydro_api/hydro_backtest_v82.py --input data/references/V82_no_authorized_daily_observations.json --output hydro_v82_hold_receipt.json
+          code=$?
+          set -e
+          test "$code" -eq 3
+          python - <<'PY'
+          import json
+          x=json.load(open('hydro_v82_hold_receipt.json',encoding='utf-8'))
+          assert x['status']=='HOLD'
+          assert x['forecast_to_cascade'] is None
+          assert x['actual_dispatch_approved'] is False
+          assert x['investment_approved'] is False
+          assert x['validated_future_skill'] is False
+          PY
+      - name: Retain machine-readable HOLD proof
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: magadan-v82-research-only-hold
+          path: hydro_v82_hold_receipt.json
+          if-no-files-found: ignore
