@@ -8,6 +8,7 @@ No operational dispatch, economic savings or investment is approved.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from decimal import Decimal, InvalidOperation, ROUND_HALF_EVEN
 from pathlib import Path
@@ -15,6 +16,10 @@ from pathlib import Path
 SITES = ('KOLYMA_UPSTREAM', 'UST_SREDNEKAN_DOWNSTREAM')
 EXCEEDANCE = ('1', '5', '10', '25', '50', '75', '90', '95', '97', '99')
 EXPECTED_DOC = 'ROSVODRESURSY_ORDER_174_2025'
+# SHA-256 of canonical (sorted-key compact UTF-8) station table transcribed
+# from Sections III and VII of Order 174; detects plausible numeric edits.
+# It is NOT a cryptographic signature by Rosvodresursy.
+STATIONS_RESEARCH_SHA256 = 'bdbb1eecdfaa7c2780c6fe395992a6380f5211a67bf0db9df90e6cae1ed91126'
 SECONDS_MEAN_YEAR = Decimal('365.2425') * Decimal('86400')
 FLOWS = {'KOLYMA_UPSTREAM': Decimal('100'),
          'UST_SREDNEKAN_DOWNSTREAM': Decimal('70')}
@@ -74,6 +79,9 @@ def validate(raw):
         required = decimal_value(row.get('nominal_sanitary_release_cms'), key + ':sanitary')
         if required != FLOWS[key]:
             raise InvalidReference(key + ': sanitary release no longer matches pinned source')
+    canonical = json.dumps(stations, sort_keys=True, separators=(',', ':'), ensure_ascii=False)
+    if hashlib.sha256(canonical.encode('utf-8')).hexdigest() != STATIONS_RESEARCH_SHA256:
+        raise InvalidReference('Published regulation station table differs from pinned reviewed V8.1 transcription')
     if raw.get('stations_are_independent') is not False:
         raise InvalidReference('Nested upstream/downstream basins must not be added')
     if raw.get('raw_88_year_daily_dataset_available') is not False:
