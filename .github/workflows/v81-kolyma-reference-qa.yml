@@ -1,0 +1,56 @@
+name: Magadan V8.1 public Kolyma hydrology research-only checks
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - research/v81-kolyma-hydrology-evidence-20261031
+  pull_request:
+    paths:
+      - 'server/hydro_api/hydro_reference_v81.py'
+      - 'server/tests_v81/test_hydro_reference_v81.py'
+      - 'data/references/V81_KOLYMA_2025_RULES.json'
+      - 'docs/V81_KOLYMA_PUBLIC_HYDROLOGY_AND_FORECAST_PROOFS.md'
+      - '.github/workflows/v81-kolyma-reference-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  public-reference-fail-closed:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile and check JSON format
+        run: |
+          python -m compileall -q server/hydro_api/hydro_reference_v81.py
+          python -m json.tool data/references/V81_KOLYMA_2025_RULES.json > /dev/null
+      - name: Run 29 source and fail-closed research tests
+        run: |
+          python -m unittest discover -s server/tests_v81 -p 'test_hydro_reference_v81.py' -v
+      - name: Reproduce published-context-only receipt (NEVER a dispatch order)
+        run: |
+          python server/hydro_api/hydro_reference_v81.py --reference data/references/V81_KOLYMA_2025_RULES.json --output v81_public_hydro_receipt.json
+          python - <<'PY'
+          import json
+          r = json.load(open('v81_public_hydro_receipt.json'))
+          assert r['status']=='PUBLIC_REFERENCE_ONLY'
+          assert r['forecast_next_water_year_km3'] is None
+          assert r['cascade_summed_runoff_km3'] is None
+          assert r['hydropower_mwh_forecast'] is None
+          assert r['financial_savings_rub'] is None
+          assert r['approved_for_dispatch'] is False
+          assert r['approved_for_investment'] is False
+          assert r['operational_status']=='HOLD_NO_APPROVED_DAILY_INFLOW_DATA'
+          PY
+      - name: Attach public research receipt
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: magadan-v81-public-research-only
+          path: v81_public_hydro_receipt.json
+          if-no-files-found: ignore
