@@ -1,0 +1,74 @@
+{
+  "schema_version": "HYDRO_V81",
+  "document_id": "ROSVODRESURSY_ORDER_174_2025",
+  "document_date": "2025-07-07",
+  "registration_date": "2025-08-01",
+  "registration_number": "83126",
+  "source_type": "PUBLISHED_REGULATORY_TABLE",
+  "scope": "KOLYMA_CASCADE_PUBLIC_HYDROLOGY",
+  "observation_window": "1934-2021",
+  "observation_years": 88,
+  "volume_unit": "km3_per_water_year",
+  "stations_are_independent": false,
+  "raw_88_year_daily_dataset_available": false,
+  "source_urls": {
+    "hydrology_annual": "https://www.consultant.ru/document/cons_doc_LAW_511518/080fd801a8ed3e26f5c81964b6d1f06a42753b04/",
+    "release_sanitary": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/vii/",
+    "order_metadata": "https://www.consultant.ru/document/cons_doc_LAW_511518/2ff7a8c72de3994f30496a0ccbb1ddafdaddf518/"
+  },
+  "stations": {
+    "KOLYMA_UPSTREAM": {
+      "name": "Kolymskoye Reservoir hydropower gauging cross-section",
+      "unit": "km3_per_water_year",
+      "observed_min_km3": "6.51",
+      "observed_min_year": "1949/50",
+      "observed_max_km3": "25.5",
+      "observed_max_year": "2013/14",
+      "mean_annual_km3": "15.1",
+      "reported_cv": "0.25",
+      "reported_cs": "0.25",
+      "exceedance_km3": {
+        "1": "24.5",
+        "5": "21.6",
+        "10": "20.1",
+        "25": "17.6",
+        "50": "14.9",
+        "75": "12.4",
+        "90": "10.3",
+        "95": "9.18",
+        "97": "8.45",
+        "99": "7.17"
+      },
+      "nominal_sanitary_release_cms": "100"
+    },
+    "UST_SREDNEKAN_DOWNSTREAM": {
+      "name": "Ust-Srednekanskoye Reservoir hydropower gauging cross-section",
+      "unit": "km3_per_water_year",
+      "observed_min_km3": "11.1",
+      "observed_min_year": "1949/50",
+      "observed_max_km3": "39.3",
+      "observed_max_year": "2004/05",
+      "mean_annual_km3": "24.9",
+      "reported_cv": "0.24",
+      "reported_cs": "0.24",
+      "exceedance_km3": {
+        "1": "39.8",
+        "5": "35.1",
+        "10": "32.8",
+        "25": "28.8",
+        "50": "24.6",
+        "75": "20.7",
+        "90": "17.4",
+        "95": "15.5",
+        "97": "14.4",
+        "99": "12.3"
+      },
+      "nominal_sanitary_release_cms": "70"
+    }
+  },
+  "evidence_status": "PUBLIC_REGULATORY_TEXT_READ_NOT_AUTHORIZED_RAW_HYDROMET_DATA",
+  "engineering_approval": false,
+  "dispatch_approval": false,
+  "forecast_next_water_year": null,
+  "method_warning": "Fitted 1% exceedance (downstream 39.8 km3) exceeds historical observed maximum (39.3 km3); do not mistake design quantile for observed event. Downstream catchment includes upstream water; no summing. Full rules, reservoir curves, navigation and fishery constraints not implemented."
+}
