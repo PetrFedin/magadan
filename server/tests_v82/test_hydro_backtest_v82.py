@@ -7,7 +7,9 @@ import unittest
 from datetime import date,datetime,timedelta,timezone
 from pathlib import Path
 
-sys.path.insert(0,str(Path(__file__).resolve().parent))
+_HERE=Path(__file__).resolve()
+_SRC=_HERE.parents[2] / 'server' / 'hydro_api'
+sys.path.insert(0,str(_SRC if _SRC.is_dir() else _HERE.parent))
 from hydro_backtest_v82 import benchmark, timestamp, score
 
 class HydroV82Test(unittest.TestCase):
