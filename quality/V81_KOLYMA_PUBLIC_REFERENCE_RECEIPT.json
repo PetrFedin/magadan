@@ -1,0 +1,42 @@
+{
+  "version": "V8.1",
+  "as_of": "2026-10-31",
+  "repo": "PetrFedin/magadan",
+  "branch": "research/v81-kolyma-hydrology-evidence-20261031",
+  "base": "feature/v79-source-recovery",
+  "original_V8_PR": "https://github.com/PetrFedin/magadan/pull/5",
+  "blobs": {
+    "source": "eeb927884717224407576c28e7967e18dd7a3a78",
+    "tests": "8d88c1caaf6d8ab4b1b0af5cacdae8dc792749bd",
+    "regulation_context": "e48260a68a6e034fdb1c559a2228622ad8aca7ae",
+    "docs": "75ee29d61b5a26ea2c179baefaf4b2fbd3de4f11",
+    "workflow": "b880681ae411c200ac4c3dd3f664055d3928b152"
+  },
+  "local_tests": {
+    "method": "python3 -m unittest discover -s server/tests_v81 -p test_hydro_reference_v81.py -v",
+    "run_environment": "local Python 3.13",
+    "passed": 29,
+    "total": 29,
+    "data": "Published regulatory summary and synthetic invalid-input fixtures",
+    "actual_hydrological_forecast_skill_tested": false,
+    "source_blob_byte_identical_to_local_tested": true,
+    "remote_test_file_format_slightly_different_from_local_fixture": true
+  },
+  "external_regulation": {
+    "order": "2025-07-07 No 174",
+    "ministry_registration": "2025-08-01 No 83126",
+    "published_1934_2021_summary_per_gauging_section": true,
+    "underlying_daily_timeseries_not_received": true,
+    "source_original_pdf_with_independent_hash_not_available": true
+  },
+  "expected_canonical_status": "PUBLIC_REFERENCE_ONLY",
+  "forecast_next_water_year": null,
+  "total_cascade_runoff": null,
+  "field_source_data_authorization": false,
+  "operational_dispatch_approval": false,
+  "investment_approval": false,
+  "native_pg17_e2e_tested": false,
+  "remote_actions_green": false,
+  "status": "DRAFT_LOCAL_HYDRO_REFERENCE_29_OF_29_PASS_HYDRO_FORECAST_HOLD_PRODUCTION_HOLD",
+  "notes": "Real official historical statistics and synthetic unit checks are not verified real-time inflow or a predictive model. This gate intentionally does NOT enable any live energy dispatch or financial claims."
+}
