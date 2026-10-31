@@ -1,5 +1,7 @@
 # ГИДРОКОНТУР 360 — МАГАДАН
 
+> **31.10.2026 · исследовательское дополнение V8.1 к HydroForecast (отдельный Draft):** [принципиально новые опубликованные гидрологические данные двух створов Колымы и методика](docs/V81_KOLYMA_PUBLIC_HYDROLOGY_AND_FORECAST_PROOFS.md), [нормативные таблицы 2025 года](data/references/V81_KOLYMA_2025_RULES.json), [проверяемый сценарный модуль](server/hydro_api/hydro_reference_v81.py), 29 локальных unit-тестов PASS. Публичные 88-летние статистические характеристики — реальные **нормативные исходные сведения**, но не полученные операторские суточные измерения, не прогноз на 2027 год и не допуск к управлению ГЭС. Результат FORECAST NULL / FIELD DATA HOLD / REMOTE CI HOLD / PRODUCTION HOLD. Эта ветка базируется на [Draft PR #5](https://github.com/PetrFedin/magadan/pull/5); ни её код, ни V8.1 не слиты в main.
+
 **V8.0 · инженерно-экономическая исследовательская платформа · SYNTHETIC LAB ONLY**
 
 **Реальный статус: исходный код восстановлен в Draft PR; лабораторные тесты пройдены локально; SOURCE PROVENANCE REVIEW / NATIVE PG17 / FIELD ENGINEERING — HOLD. PRODUCTION HOLD.**
