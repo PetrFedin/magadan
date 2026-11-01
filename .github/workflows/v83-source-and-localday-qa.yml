@@ -1,0 +1,65 @@
+name: Magadan V8.3 published hydrology and local-day forecast checks
+on:
+  workflow_dispatch:
+  push:
+    branches: [research/v83-seasonal-reference-localday-20261031]
+  pull_request:
+    paths:
+      - 'server/hydro_api/hydro_monthly_v83.py'
+      - 'server/hydro_api/hydro_backtest_v83.py'
+      - 'server/tests_v83/**'
+      - 'data/references/V83_*.json'
+      - '.github/workflows/v83-source-and-localday-qa.yml'
+permissions:
+  contents: read
+jobs:
+  research-gates:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Compile code, validate published source JSON
+        run: |
+          python -m compileall -q server/hydro_api/hydro_backtest_v83.py server/hydro_api/hydro_monthly_v83.py
+          python -m json.tool data/references/V83_official_monthly_characteristic_years.json > /dev/null
+      - name: Run source and local-day leakage regressions (48 tests, not actual forecast)
+        run: python -m unittest discover -s server/tests_v83 -p 'test*' -v
+      - name: Official selected historical profiles must never become 2027 forecast
+        run: |
+          python server/hydro_api/hydro_monthly_v83.py --reference data/references/V83_official_monthly_characteristic_years.json --output v83_public_reference.json > /dev/null
+          python - <<'PY'
+          import json
+          x=json.load(open('v83_public_reference.json'))
+          assert x['status']=='PUBLIC_CHARACTERISTIC_YEARS_ONLY'
+          assert x['forecast_for_2027'] is None
+          assert x['approved_for_dispatch'] is False
+          assert x['approved_for_cascade'] is False
+          assert x['nested_gauge_total_km3'] is None
+          PY
+      - name: Missing daily measurements must fail closed
+        run: |
+          set +e
+          python server/hydro_api/hydro_backtest_v83.py --input data/references/V83_no_authorized_daily_observations.json --output v83_hindcast_hold.json > /dev/null
+          code=$?
+          set -e
+          test "$code" -eq 3
+          python - <<'PY'
+          import json
+          x=json.load(open('v83_hindcast_hold.json'))
+          assert x['status']=='HOLD'
+          assert x['forecast_to_cascade'] is None
+          assert x['actual_dispatch_approved'] is False
+          assert x['investment_approved'] is False
+          PY
+      - name: Upload research-only receipts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: magadan-v83-source-monthly-no-forecast
+          path: |
+            v83_public_reference.json
+            v83_hindcast_hold.json
+          if-no-files-found: ignore

@@ -1,0 +1,30 @@
+{
+  "version": "V8.3",
+  "as_of": "2026-10-31",
+  "scope": "Research-only monthly characteristic years + local-time hindcast",
+  "source": "Rosvodresursy 2025 Order 174 section III",
+  "actual_daily_records_received": 0,
+  "legal_time_series_permission_verified": false,
+  "scenario_examples": 6,
+  "published_monthly_reconciled": 6,
+  "new_local_tests_passed": 48,
+  "synthetic_hindcast_only": true,
+  "probabilistic_2027_prediction": null,
+  "operator_dispatch": false,
+  "cascade_production_transfer": false,
+  "investment_authorized": false,
+  "remote_ci_green_verified": false,
+  "status": "DRAFT_LOCAL_QA_PASS_REMOTE_CI_HOLD_DAILY_DATA_HOLD",
+  "sha256_by_file": {
+    "V83_PUBLIC_ONLY_RECEIPT.json": "f49d614e4f7fc45d252d15e69c16c38d24b466667df6f15141e2064d0b095e05",
+    "docs/V83_REAL_MONTHLY_DATA_LOCAL_TIME_RU.md": "99bd8508661434601f48829cbfeff3bb1e5fe7eeb49d98c85561d109c66beb03",
+    ".github/workflows/v83-source-and-localday-qa.yml": "5fae788ae0aa6c3638b6319a0a8f445647cce1efbf6cfbb2ca0ac86ad2b0ae02",
+    "server/tests_v83/test_hydro_backtest_v83.py": "d17a76180ef789e126e71a827253cc24aaf5743cb7e61a6b76fbf36f794c1c5a",
+    "server/tests_v83/test_monthly_v83.py": "3a093577fcb51f8037739d5ef7cec3e6a6ad018bbc9054d3bb8c06dc3e057a90",
+    "server/hydro_api/hydro_backtest_v83.py": "9fadb896c4327a3fc96a66b74ed11228a1441aa52541c4236654143f037530a1",
+    "server/hydro_api/hydro_backtest_v82.py": "a6a3480f85284a85a143962ad68022921ad70b326f9a355cb7a28a60eb8edded",
+    "server/hydro_api/hydro_monthly_v83.py": "d8cd5bc73dbe5039ec501ef51a27b09bf6716fd2d44d6baeed44dee1122bd2f5",
+    "data/references/V83_no_authorized_daily_observations.json": "1b153a63c0e7c1c91d0d9adde4000f8a7dc0bde2dcb55977534cf763b9f685de",
+    "data/references/V83_official_monthly_characteristic_years.json": "14651e9f30fc96e428afa246ab0c695989c5389b11bb76f64665034c92970963"
+  }
+}

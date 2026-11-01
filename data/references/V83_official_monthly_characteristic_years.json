@@ -1,0 +1,26 @@
+{
+  "schema_version": "HYDRO_V83_PUBLIC_MONTHLY",
+  "document_id": "ROSVODRESURSY_ORDER_174_2025",
+  "source_date": "2025-07-07",
+  "source_url": "https://www.consultant.ru/document/cons_doc_LAW_511518/080fd801a8ed3e26f5c81964b6d1f06a42753b04/",
+  "source_section": "III paragraph 11 characteristic intra-annual runoff",
+  "data_kind": "PUBLISHED_SELECTED_HISTORICAL_YEARS_NOT_CURRENT_MONITORING",
+  "volume_unit": "km3_per_water_year_month",
+  "water_year_months": ["05", "06", "07", "08", "09", "10", "11", "12", "01", "02", "03", "04"],
+  "site_notes": "Downstream includes upstream flow; totals may not be added. The three years are deliberately selected examples, not a probabilistic forecast sample.",
+  "cases": {
+    "KOLYMA_UPSTREAM": {
+      "wet": {"water_year": "2004/05", "reported_annual_km3": "23", "monthly_km3": ["2", "9.7", "3.9", "3.7", "2.8", "0.7", "0.09", "0.05", "0.02", "0.02", "0.01", "0.01"]},
+      "average": {"water_year": "2002/03", "reported_annual_km3": "14.77", "monthly_km3": ["2.6", "3.4", "3.33", "3.2", "1.8", "0.3", "0.07", "0.03", "0.02", "0", "0.01", "0.01"]},
+      "dry": {"water_year": "1952/53", "reported_annual_km3": "11.22", "monthly_km3": ["0.5", "3.8", "2.7", "2.4", "1.4", "0.3", "0.08", "0.03", "0.01", "0", "0", "0"]}
+    },
+    "UST_SREDNEKAN_DOWNSTREAM": {
+      "wet": {"water_year": "2004/05", "reported_annual_km3": "39.27", "monthly_km3": ["4.49", "15.19", "5.48", "6.62", "5.6", "1.48", "0.22", "0.09", "0.04", "0.02", "0.02", "0.02"]},
+      "average": {"water_year": "2002/03", "reported_annual_km3": "24.07", "monthly_km3": ["4.1", "6.27", "4.74", "4.75", "3.23", "0.63", "0.17", "0.08", "0.04", "0.02", "0.02", "0.02"]},
+      "dry": {"water_year": "1952/53", "reported_annual_km3": "18.45", "monthly_km3": ["0.73", "7.52", "3.72", "3.67", "1.99", "0.53", "0.16", "0.06", "0.03", "0.02", "0.01", "0.01"]}
+    }
+  },
+  "raw_daily_archives_available": false,
+  "operational_dispatch_authorization": false,
+  "estimate_for_2027": null
+}
