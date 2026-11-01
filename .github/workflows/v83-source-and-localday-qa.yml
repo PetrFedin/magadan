@@ -54,12 +54,15 @@ jobs:
           assert x['actual_dispatch_approved'] is False
           assert x['investment_approved'] is False
           PY
-      - name: Upload research-only receipts
+      - name: Record research-only receipts in GitHub job summary (no artifact quota)
         if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: magadan-v83-source-monthly-no-forecast
-          path: |
-            v83_public_reference.json
-            v83_hindcast_hold.json
-          if-no-files-found: ignore
+        run: |
+          echo '### V8.3 | public history only, daily-forecast HOLD' >> "$GITHUB_STEP_SUMMARY"
+          echo "Commit: $GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
+          for f in v83_public_reference.json v83_hindcast_hold.json; do
+            if test -f "$f"; then
+              sha256sum "$f" | tee -a "$GITHUB_STEP_SUMMARY"
+            else
+              echo "NOT GENERATED: $f" >> "$GITHUB_STEP_SUMMARY"
+            fi
+          done
