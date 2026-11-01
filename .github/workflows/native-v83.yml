@@ -1,4 +1,4 @@
-name: V8.3 Cascade Forecast Synthetic / PG17 Acceptance Gate
+name: V8.3.1 Cascade Forecast Synthetic / PG17 Acceptance Gate
 
 on:
   pull_request:
@@ -39,6 +39,7 @@ jobs:
       - name: Verify deterministic synthetic scenario matrix and absence of money
         run: |
           python scripts/reproduce_v83.py --out /tmp/hydro-v83-synthetic
+          python scripts/verify_route_independent_v83.py
           python - <<'PY'
           import json
           from pathlib import Path
@@ -46,6 +47,9 @@ jobs:
           assert j['summary']['all_normal_scenarios_mass_balance'] is True
           assert j['summary']['all_energy_values_nonfinance'] is True
           assert j['summary']['daily_branch_evaluations']==60
+          route=json.loads(Path('artifacts_v83/independent_hourly_route_v83.json').read_text())
+          assert route['scenarios']==438 and route['conservation_check_passed'] is True
+          assert route['external_hydraulic_solver_executed'] is False
           assert j['summary']['source_data_attested'] is False
           PY
       - name: Scope disclosure

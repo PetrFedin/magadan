@@ -775,6 +775,7 @@ function syntheticCascadeV83(){
     hydraulic_head_loss_m:1,rated_capacity_mw:ratedMW});
   const delay=Number(selected('v83-delay'));
   return {forecast,daily_observation_semantics:'UTC_DAILY_MEAN_PERIOD_END_AT_OBSERVED_AT',
+    target_start_state_and_prior_release_basis:'SYNTHETIC_CONDITIONAL_FUTURE_ASSUMPTIONS_NOT_KNOWN_AT_FORECAST_ISSUE',
     initial_storage_state_ref:'SYNTHETIC-CASCADE-TARGET-DAY-START-STORAGE-2026',
     upper:common(upperAsset,'SYNTHETIC-UPPER-STATION',1e9,9e8,1.1e9,380,410,300,310,250,125,25,120),
     lower:common(lowerAsset,'SYNTHETIC-LOWER-STATION',5e8,4e8,6e8,300,330,220,232,200,145,30,150),

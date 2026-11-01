@@ -180,3 +180,66 @@ def test_report_is_deterministic_and_statistical_limits_preserved():
     assert first['actual_magadan_hydro_curve_used'] is False
     assert first['external_engineer_verified'] is False
     assert all('SYNTHETIC' in s['status'] or s['status']=='LAB_FEASIBLE_ONLY' for s in [first['scenarios'][0]['upper']])
+
+
+def test_density_changes_power_linearly_not_storage_volume():
+    d=cascade_case_v83()
+    a=calc(d)
+    d['water_density_kg_m3']=995
+    b=calc(d)
+    assert a['feasible_all_three_synthetic_scenarios']
+    assert b['feasible_all_three_synthetic_scenarios']
+    for i in range(3):
+        for reservoir in ('upper','lower'):
+            p=a['scenarios'][i][reservoir]['power_mw']
+            other=b['scenarios'][i][reservoir]['power_mw']
+            assert isclose(other/p,0.995,abs_tol=1e-12)
+            assert isclose(a['scenarios'][i][reservoir]['end_storage_m3'],
+                           b['scenarios'][i][reservoir]['end_storage_m3'],abs_tol=1e-6)
+
+
+def test_zero_turbine_flow_returns_real_zero_not_missing_energy():
+    d=cascade_case_v83()
+    d['upper']['turbine_release_cms']=0
+    d['upper']['spill_release_cms']=150
+    r=calc(d)
+    assert r['feasible_all_three_synthetic_scenarios']
+    assert all(s['upper']['power_mw']==0 for s in r['scenarios'])
+    assert all(s['upper']['energy_mwh']==0 for s in r['scenarios'])
+    assert all(s['total_energy_mwh'] is not None for s in r['scenarios'])
+
+
+def test_negative_net_head_never_emits_false_generation():
+    d=cascade_case_v83()
+    for row, elevation in zip(d['upper']['storage_curve'],[250,260,270]):
+        row['upstream_elevation_m']=elevation
+    r=calc(d)
+    assert all('upper:NONPOSITIVE_NET_HEAD' in s['violations'] for s in r['scenarios'])
+    assert all(s['upper']['energy_mwh'] is None for s in r['scenarios'])
+    assert all(s['total_energy_mwh'] is None for s in r['scenarios'])
+
+
+def test_global_mass_balance_does_not_mask_individual_violation():
+    d=cascade_case_v83()
+    d['upper']['minimum_release_cms']=190
+    r=calc(d)
+    assert all(abs(s['global_mass_balance_residual_m3'])<1e-4 for s in r['scenarios'])
+    assert all(not s['feasible_under_synthetic_constraints'] for s in r['scenarios'])
+    assert all(s['total_energy_mwh'] is None for s in r['scenarios'])
+
+
+def test_future_storage_and_prior_release_are_explicit_scenario_assumptions():
+    d=cascade_case_v83()
+    result=calc(d)
+    assert result['conditional_future_assumptions_flag']=='TARGET_START_STORAGE_AND_PREVIOUS_DAY_RELEASES_ARE_SCENARIO_INPUTS_NOT_MEASURED_AT_ISSUE'
+    assert 'FUTURE portions' in ' '.join(result['limitations'])
+    d.pop('target_start_state_and_prior_release_basis')
+    with pytest.raises(ValidationError,match='target_start_state_and_prior_release_basis'):
+        CoupledCascadeV83.model_validate(d)
+
+
+def test_future_state_assumptions_cannot_be_mislabelled_observed():
+    d=cascade_case_v83()
+    d['target_start_state_and_prior_release_basis']='MEASURED_AS_OF_ISSUE'
+    with pytest.raises(ValidationError,match='target_start_state_and_prior_release_basis'):
+        CoupledCascadeV83.model_validate(d)

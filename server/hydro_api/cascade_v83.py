@@ -17,7 +17,7 @@ from .forecast_v82 import DailyForecastResearchV82, StrictForecast, evaluate_dai
 SECONDS_PER_DAY = 86_400.0
 HOURS_PER_DAY = 24.0
 GRAVITY_M_S2 = 9.80665
-ENGINE_TAG = 'v83-one-day-cascade-lag-volume-head-efficiency-screen-v1'
+ENGINE_TAG = 'v83.1-one-day-cascade-lag-volume-head-efficiency-conditional-v2'
 
 
 class StrictV83(StrictForecast):
@@ -117,6 +117,7 @@ class CoupledCascadeV83(StrictV83):
     scope: Literal['SYNTHETIC_CASCADE_RESEARCH_ONLY'] = 'SYNTHETIC_CASCADE_RESEARCH_ONLY'
     forecast: DailyForecastResearchV82
     daily_observation_semantics: Literal['UTC_DAILY_MEAN_PERIOD_END_AT_OBSERVED_AT']
+    target_start_state_and_prior_release_basis: Literal['SYNTHETIC_CONDITIONAL_FUTURE_ASSUMPTIONS_NOT_KNOWN_AT_FORECAST_ISSUE']
     initial_storage_state_ref: str = Field(min_length=20, max_length=120, pattern=r'^SYNTHETIC-[A-Za-z0-9_-]+$')
     upper: ReservoirV83
     lower: ReservoirV83
@@ -278,6 +279,7 @@ def evaluate_coupled_cascade_v83(case:CoupledCascadeV83)->dict:
       'forecast_actual_lead_to_target_day_start_hours':(day_start-issued).total_seconds()/3600,
       'forecast_actual_lead_to_target_day_end_hours':(target-issued).total_seconds()/3600,
       'observation_timestamp_semantics':case.daily_observation_semantics,
+      'target_start_state_and_prior_release_basis':case.target_start_state_and_prior_release_basis,
       'forecast_selected_model':forecast['selected_model'],
       'hydrology_report':{'horizon_days':forecast['horizon_days'],
                           'nominal_interval_fraction':forecast['calibration']['nominal_band_fraction'],
@@ -290,11 +292,13 @@ def evaluate_coupled_cascade_v83(case:CoupledCascadeV83)->dict:
       'feasible_all_three_synthetic_scenarios':not any_failure,
       'scenario_energy_span_mwh':None if any(x is None for x in energies) else max(energies)-min(energies),
       'calibration_and_stationarity_risk_flags':risk,
+      'conditional_future_assumptions_flag':'TARGET_START_STORAGE_AND_PREVIOUS_DAY_RELEASES_ARE_SCENARIO_INPUTS_NOT_MEASURED_AT_ISSUE',
       'qualification':'SYNTHETIC_CONSTRAINT_FAILURE' if any_failure else (
          'SYNTHETIC_STATISTICS_UNCERTAIN' if risk else 'SYNTHETIC_PHYSICAL_SCREEN_ONLY'),
       'limitations':[
           'V8.2 supplies ONLY ONE TARGET DAY; timestamp is END of preceding 24h averaging period',
           'The synthetic starting storage represents target-day opening, not the as_of forecast instant',
+          'Prior-day full release and target-day opening storage include FUTURE portions after the D10 issuance and are CONDITIONAL assumptions, not causal observations',
           'Dry/central/wet interval endpoints are NOT assigned scenario probabilities',
           'Upper and lower releases are fixed synthetic test inputs, never dispatch optimisation',
           'Pure travel-time shift assumes uniform daily flow; no attenuation, Saint-Venant hydraulics or backwater',

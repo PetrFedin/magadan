@@ -159,7 +159,7 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
         engine,SessionLocal=setup_postgres(db_url)
     else:
         engine,SessionLocal=setup_engine(db_url)
-    app=FastAPI(title='HydroKontur Magadan V8.3 / controlled engineering lab',version='0.8.3-lab',
+    app=FastAPI(title='HydroKontur Magadan V8.3.1 / controlled engineering lab',version='0.8.3.1-lab',
                 description='No industrial connections, not a production authorization or SCADA system')
     app.state.engine=engine;app.state.SessionLocal=SessionLocal
     app.mount('/lab-assets',StaticFiles(directory=str(Path(__file__).parent.parent/'ui')),name='lab-assets')

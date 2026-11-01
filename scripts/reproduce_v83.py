@@ -68,7 +68,7 @@ def main(argv=None):
         report=evaluate_coupled_cascade_v83(model)
         reports['constraint_'+label]=report
     summary={
-      'release':'8.3','scope':'SYNTHETIC_ONLY','forecast_engine':FORECAST_ENGINE_V82,
+      'release':'8.3.1','scope':'SYNTHETIC_ONLY','forecast_engine':FORECAST_ENGINE_V82,
       'cascade_engine':CASCADE_ENGINE_V83,
       'synthetic_cases':len(cases),'forecast_regimes_cms':[-30,0,30,65,100],
       'travel_lags_hours':[0,12,24,36],

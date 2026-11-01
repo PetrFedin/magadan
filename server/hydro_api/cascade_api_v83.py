@@ -18,7 +18,7 @@ def install_cascade_v83_routes(app,get_db,current_user,access,asset,sha,canonica
 
     @router.get('/v83/meta/cascade-readiness')
     def readiness():
-        return {'release':'8.3-LAB','engine':ENGINE_TAG,
+        return {'release':'8.3.1-LAB','engine':ENGINE_TAG,
            'forecast_engine':FORECAST_ENGINE_V82,
            'forecast_horizon_eligible_days':[2],
            'two_reservoir_mass_balance_with_in_transit_storage':True,

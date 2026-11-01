@@ -48,6 +48,7 @@ def cascade_case_v83(delay_hours=12):
     return {
       'forecast':daily_flow_fixture(horizon=2),
       'daily_observation_semantics':'UTC_DAILY_MEAN_PERIOD_END_AT_OBSERVED_AT',
+      'target_start_state_and_prior_release_basis':'SYNTHETIC_CONDITIONAL_FUTURE_ASSUMPTIONS_NOT_KNOWN_AT_FORECAST_ISSUE',
       'initial_storage_state_ref':'SYNTHETIC-CASCADE-TARGET-DAY-START-STORAGE-2026',
       'upper':upper,'lower':lower,
       'route':{'delay_hours':delay_hours,'previous_daily_releases_cms':history,

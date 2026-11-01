@@ -25,6 +25,7 @@ def test_ui_uses_authenticated_server_and_two_distinct_assets():
     assert 'refreshV83();' in JS
     assert 'forecast.horizon_days=2' in JS
     assert 'daily_observation_semantics:' in JS
+    assert 'target_start_state_and_prior_release_basis:' in JS
     assert "el('v83-output').textContent" in JS
     assert 'innerHTML=' not in JS
 
