@@ -97,7 +97,8 @@ def test_forecast_wide_horizons_correct_issuance_and_target():
         assert len(r['holdout_rows'])==28
         first_row=r['holdout_rows'][0]
         assert (datetime.fromisoformat(first_row['target_at'])-
-                datetime.fromisoformat(first_row['issued_at']))==timedelta(days=horizon,hours=-12)
+                datetime.fromisoformat(first_row['issued_at']))==timedelta(days=horizon,hours=-10)
+        assert r['actual_forecast_lead_hours']==24*horizon-10
 
 
 def test_prediction_uses_only_end_index():
@@ -217,3 +218,22 @@ def test_daily_volume_conversion_is_one_target_day_not_horizon_total():
     assert v['upper']==round(f['upper_cms']*86400/1_000_000,6)
     assert r['holdout']['mae_target_day_volume_million_m3']==round(r['holdout']['mae_cms']*86400/1_000_000,6)
     assert r['reservoir_rules_and_cascade_mapping_verified'] is False
+
+
+def test_historical_origin_rejects_measurement_available_after_issuance():
+    d=daily_flow_fixture()
+    at=datetime.fromisoformat(d['observations'][45]['observed_at'])
+    d['observations'][45]['available_at']=(at+timedelta(hours=11)).isoformat()
+    # Individual observation is within allowed +12 h availability, but the
+    # 10 h forecast origin cannot have used it.
+    with pytest.raises(ValidationError,match='HISTORICAL_ORIGIN_FEATURE_NOT_YET_AVAILABLE_AT_ISSUE'):
+        DailyForecastResearchV82.model_validate(d)
+
+
+def test_issued_at_matches_origin_in_every_backtest_row():
+    r=run(daily_flow_fixture(horizon=4))
+    assert r['daily_issuance_offset_hours']==10
+    for row in r['holdout_rows']:
+        issue=datetime.fromisoformat(row['issued_at'])
+        target=datetime.fromisoformat(row['target_at'])
+        assert target-issue==timedelta(hours=r['actual_forecast_lead_hours'])

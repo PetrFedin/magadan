@@ -73,6 +73,13 @@ class DailyForecastResearchV82(StrictForecast):
             raise ValueError('AS_OF_NOT_FRESH_OR_BEFORE_LAST_OBSERVATION_AVAILABILITY')
         if any(_utc(p.available_at)>asof for p in self.observations):
             raise ValueError('FUTURE_INFORMATION_LEAKAGE_IN_FLOW_SERIES')
+        # Every historical origin has the SAME issuance time-of-day as the
+        # requested final forecast, otherwise a backtest may silently use a
+        # fresher measurement than was available at its issue timestamp.
+        issue_offset=asof-dates[-1]
+        if any(_utc(p.available_at)-d>issue_offset
+               for p,d in zip(self.observations,dates)):
+            raise ValueError('HISTORICAL_ORIGIN_FEATURE_NOT_YET_AVAILABLE_AT_ISSUE')
         return self
 
 
@@ -111,6 +118,8 @@ def _scores(actual:list[float],pred:list[float])->dict:
 def evaluate_daily_forecast(case:DailyForecastResearchV82)->dict:
     series=[x.mean_flow_cms for x in case.observations]
     dates=[_utc(x.observed_at) for x in case.observations]
+    issue_offset=_utc(case.as_of)-dates[-1]
+    lead_hours=case.horizon_days*24-issue_offset.total_seconds()/3600
     n=len(series);h=case.horizon_days
     selection=range(n-84,n-56)
     calibration=range(n-56,n-28)
@@ -188,7 +197,7 @@ def evaluate_daily_forecast(case:DailyForecastResearchV82)->dict:
         warnings.append('SYNTHETIC_THRESHOLD_POTENTIALLY_CROSSED_NOT_AN_ALARM')
     records=[{
        'target_at':dates[i].isoformat(),
-       'issued_at':(dates[i-h]+timedelta(hours=12)).isoformat(),
+       'issued_at':(dates[i-h]+issue_offset).isoformat(),
        'actual_cms':round(series[i],6),'point_cms':round(p,6),
        'lower_cms':round(l,6),'upper_cms':round(u,6),
        'persistence_cms':round(b,6),'inside_band':bool(ok),
@@ -197,7 +206,9 @@ def evaluate_daily_forecast(case:DailyForecastResearchV82)->dict:
        'scope':'SYNTHETIC_HYDROFORECAST_RESEARCH_ONLY',
        'method':ENGINE_TAG,'issued_at':_utc(case.as_of).isoformat(),
        'asset_id':case.asset_id,'observations':n,
-       'horizon_days':h,'cadence':'DAILY_UTC_MEAN_FLOW_CMS',
+       'horizon_days':h,'actual_forecast_lead_hours':round(lead_hours,6),
+       'daily_issuance_offset_hours':round(issue_offset.total_seconds()/3600,6),
+       'cadence':'DAILY_UTC_MEAN_FLOW_CMS',
        'split':{
           'initial_history':n-84,'selection':SELECTION_DAYS,
           'calibration':CALIBRATION_DAYS,'holdout':HOLDOUT_DAYS,

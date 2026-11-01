@@ -18,13 +18,13 @@
 | --- | --- | --- |
 | A: V7.1–V7.4 | `PYTHONPATH=server python -m pytest -q server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 --ignore=server/tests_v71/test_postgres_native.py` | **132 PASS** |
 | B: V7.5–V7.8 | `PYTHONPATH=server python -m pytest -q server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 --ignore=server/tests_v78/test_postgres_native_v78.py` | **75 PASS** |
-| C: V7.9–V8.2 + core | `PYTHONPATH=server python -m pytest -q server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests --ignore=server/tests/test_browser.py` | **114 PASS, 1 SKIP** |
+| C: V7.9–V8.2 + core | `PYTHONPATH=server python -m pytest -q server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests --ignore=server/tests/test_browser.py` | **116 PASS, 1 SKIP** |
 | JS | `cd v6-client && npm test` | **63 PASS** |
 | Static JS | `node --check server/ui/ui.js` | **PASS** |
 | Test cases / analysis | `PYTHONPATH=server python scripts/reproduce_v82.py` | **20/20 deterministic synthetic cases generated** |
 | Charts | `PYTHONPATH=server python scripts/plot_forecast_v82.py` | Two static PNG figures generated |
 
-Total **321 Python PASS, 1 SKIP, 63 JS PASS** across separately completed groups. Native PostgreSQL test modules V7.1 and V7.8 were explicitly excluded, V8.1 native test remains skipped. These numbers are **local**, not a confirmed GitHub Actions result for V8.2.
+Total **323 Python PASS, 1 SKIP, 63 JS PASS** across separately completed groups. Native PostgreSQL test modules V7.1 and V7.8 were explicitly excluded, V8.1 native test remains skipped. These numbers are **local**, not a confirmed GitHub Actions result for V8.2.
 
 ## Browser E2E attempted — blocked
 
@@ -55,3 +55,7 @@ Complete stress matrix with all 20 source SHA and metrics in `scenario_compariso
 5. This build remains an **integrated LAB candidate**. Do not merge or deploy to production until real release gates are met.
 
 **Methodological references:** WMO Guidelines on the Verification of Hydrological Forecasts (WMO-No.1364, 2025), https://public.wmo.int/media/news/wmo-issues-guidelines-verification-of-hydrological-forecasts ; Oliveira et al. (2024), https://jmlr.org/beta/papers/v25/23-1553.html .
+
+## Дополнительное временное уточнение после первичной публикации V8.2
+
+При повторной независимой проверке обнаружено расхождение между временем выпуска исторических прогнозов (`+12 ч`) и временем выпуска финального прогноза (`as_of = +10 ч`). Исторический `issued_at` приведён к реальному UTC-смещению текущего `as_of`; запрет использования показаний после конкретного origin усилен в валидаторе. Добавлены два теста. Численные значения прогнозов, MAE и RMSE по уже сформированному синтетическому ряду не изменились, но датировки `issued_at` и SHA отчёта поменялись. Окончательный тестовый счёт обновлён после повторного исполнения.
