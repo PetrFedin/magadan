@@ -289,5 +289,37 @@
 </section>
 </div>
 <div id="notice" class="notice" role="status" aria-live="polite">Ожидается вход в лабораторную систему.</div>
-</main><footer>ГИДРОКОНТУР 360 — МАГАДАН · V8 LAB · Только синтетические данные. Нет доступа к технологическому управлению, SCADA, генерации, диспетчеризации и корпоративным сетям.</footer>
+<section class="card forecast-v82-workspace" id="forecast-v82-workspace">
+  <div class="studies-title"><div>
+    <h2>14. Гидрологический прогноз · статистическая проверка V8.2</h2>
+    <p class="hint">Суточный расход Q, м³/с · три простые прогнозные модели · раздельная выборка · независимый исторический тест.</p>
+  </div><span class="study-notice">SYNTHETIC / НЕ ПРОГНОЗ ГЭС</span></div>
+  <div class="programme-help"><strong>Методика:</strong> начальная история → 28 дней отбора модели → 28 дней калибровки интервала → 28 дней оценки. Историческая ошибка и эмпирическое покрытие не гарантируют точность будущих событий, особенно паводков.</div>
+  <div class="study-grid">
+    <div>
+      <h3>Исходные параметры</h3>
+      <label>Синтетический объект (не привязанный к реальной гидростанции)<select id="v82-asset"></select></label>
+      <label>Горизонт прогноза<select id="v82-horizon"><option value="1">1 сутки</option><option value="2" selected>2 суток</option><option value="3">3 суток</option><option value="5">5 суток</option><option value="7">7 суток</option></select></label>
+      <label>Режим тестирования<select id="v82-regime"><option value="0">Исходный синтетический ряд</option><option value="65">Сдвиг водности на периоде проверки +65 м³/с</option></select></label>
+      <label>Синтетическая граница наблюдения, м³/с<input type="number" min="0" step="1" id="v82-threshold" value="200"></label>
+      <div class="actions"><button class="secondary" id="v82-sample">Сформировать учебный ряд (168 суток)</button><button class="primary" id="v82-run">Рассчитать и проверить</button></div>
+      <label>Исходные ежедневные измерения, строго JSON<textarea id="v82-case" spellcheck="false" rows="10" placeholder="Нажмите «Сформировать учебный ряд»"></textarea></label>
+      <p class="hint">Один запрос без записи в БД. Период UTC, метки доступности и источника проверяются сервером. Пользователи с ролью engineer или auditor могут рассчитать лабораторный сценарий.</p>
+    </div>
+    <div>
+      <h3>Проверка вне обучающей выборки</h3>
+      <div class="forecast-v82-kpis" aria-live="polite">
+        <div><small>MAE, м³/с</small><strong id="v82-mae">—</strong></div>
+        <div><small>RMSE, м³/с</small><strong id="v82-rmse">—</strong></div>
+        <div><small>Покрытие интервала</small><strong id="v82-coverage">—</strong></div>
+        <div><small>Прогноз, м³/с</small><strong id="v82-point">—</strong></div>
+      </div>
+      <div id="v82-plot" class="forecast-v82-plot" role="img" aria-label="Сравнение исторического расхода воды с прогнозом и интервалом неопределённости"></div>
+      <div id="v82-assessment" class="programme-help" role="status">Результата пока нет. Данные лабораторные, реальная прогнозная компетентность не доказана.</div>
+      <pre class="result programme-output" id="v82-output">Отдельные значения ошибок, модели, хэшей и флаги риска появятся после выполнения расчёта.</pre>
+      <dl class="readiness"><dt>Фактические уровни и расходы ГЭС</dt><dd>НЕ ПОДКЛЮЧЕНЫ</dd><dt>Калибровка паводковых экстремумов</dt><dd>НЕ ПРИНЯТА</dd><dt>Вероятность превышения порога</dt><dd>НЕ РАССЧИТЫВАЕТСЯ</dd><dt>Независимая гидрологическая экспертиза</dt><dd>НЕ ПРОВЕДЕНА</dd><dt>Оперативное управление каскадом</dt><dd>ЗАПРЕЩЕНО</dd></dl>
+    </div>
+  </div>
+</section>
+</main><footer>ГИДРОКОНТУР 360 — МАГАДАН · V8.2 LAB · Только синтетические данные. Нет доступа к технологическому управлению, SCADA, генерации, диспетчеризации и корпоративным сетям.</footer>
 <script type="module" src="/lab-assets/ui.js"></script></body></html>

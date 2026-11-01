@@ -28,5 +28,5 @@ def test_v78_rls_and_immutable_table_contract():
 
 def test_v78_migration_sequence_and_native_gate_remains_open():
     files=sorted((ROOT/'migrations').glob('[0-9]*.sql'))
-    assert [x.name.split('_')[0] for x in files]==['001','010','020','030','040','050','060','070','080','090','100','110','120','130','140','150']
+    assert [x.name.split('_')[0] for x in files]==['001','010','020','030','040','050','060','070','080','090','100','110','120','130','140','150','160']
     assert 'NATIVE_ACCEPTANCE_BLOCKED' in (ROOT/'tests_v71'/'test_postgres_native.py').read_text()

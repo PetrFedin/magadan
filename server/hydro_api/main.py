@@ -159,7 +159,7 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
         engine,SessionLocal=setup_postgres(db_url)
     else:
         engine,SessionLocal=setup_engine(db_url)
-    app=FastAPI(title='HydroKontur Magadan V8.0 / controlled engineering lab',version='0.8.0-lab',
+    app=FastAPI(title='HydroKontur Magadan V8.2 / controlled engineering lab',version='0.8.2-lab',
                 description='No industrial connections, not a production authorization or SCADA system')
     app.state.engine=engine;app.state.SessionLocal=SessionLocal
     app.mount('/lab-assets',StaticFiles(directory=str(Path(__file__).parent.parent/'ui')),name='lab-assets')
@@ -287,6 +287,9 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
     # V8.0 canonical laboratory measurement boundaries; no corporate recognition.
     from .boundary_api_v8 import install_boundary_routes
     install_boundary_routes(app,get_db,current_user,access,asset,record_audit,audit_secret)
+
+    from .forecast_api_v82 import install_forecast_v82_routes
+    install_forecast_v82_routes(app,get_db,current_user,access,asset,sha,canonical)
 
     @app.get('/health')
     def health():return {'service':'hydrokontur-v75-lab','status':'ok','production_ready':False}

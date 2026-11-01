@@ -1,0 +1,93 @@
+{
+  "project": "HydroKontur 360 / Magadan",
+  "candidate": "V8.1_SQL_PHYSICAL_SCOPE_SERIALIZATION",
+  "created_at": "2026-11-01",
+  "base": "V8.0 original recovered archive, not production",
+  "base_manifest_sha256": "c8d248cb351aa57de315edb370f3143da6b0fe1954df48fabf618d12e55146d3",
+  "python_version": "3.13.5",
+  "total_python_pass": 289,
+  "python_native_skipped": 1,
+  "javascript_pass": 63,
+  "groups": [
+    {
+      "name": "V71-V74",
+      "passed": 132
+    },
+    {
+      "name": "V75-V78",
+      "passed": 75
+    },
+    {
+      "name": "V79,V8,V81,core",
+      "passed": 82,
+      "native_skipped": 1
+    }
+  ],
+  "postgresql17_native_result": "NOT_RUN_NO_NATIVE_DATABASE",
+  "github_ci_result": "NOT_VERIFIED_FOR_THIS_CANDIDATE",
+  "source_archive_unchanged": true,
+  "legacy_150_sha256": "b934c917637f2fac26b298ddd831342105847d16abee164d3aaedc7d81b2a405",
+  "base_sources_missing": 0,
+  "base_sources_changed_count": 4,
+  "base_sources_changed_paths": [
+    "server/tests_v72/test_migration_contract.py",
+    "server/tests_v76/test_sql_contract.py",
+    "server/tests_v77/test_sql_contract.py",
+    "server/tests_v78/test_sql_and_integrity.py"
+  ],
+  "real_money_savings_confirmed": false,
+  "industrial_approval_eligible": false,
+  "production_hold": true,
+  "files": [
+    {
+      "path": "server/migrations/160_boundary_claim_serialization_v81.sql",
+      "sha256": "cc326497f8842a6c4bed0ec448c8bedee1f561d496f67b633f9ed205315d5f0f",
+      "bytes": 4616
+    },
+    {
+      "path": "server/tests_v81/test_sql_graph_serialization_v81.py",
+      "sha256": "ccab9b65bff78b8a22faf693dcd9ce1a786d628f1b50075f6c5fc5ecc4514c7b",
+      "bytes": 3613
+    },
+    {
+      "path": "server/tests_v81/test_pg_graph_freeze_native_v81.py",
+      "sha256": "c457e861d77d0d1cca3c53ab878f38a127d898ddaa96a6188d127f9ce829d596",
+      "bytes": 4459
+    },
+    {
+      "path": "server/tests_v72/test_migration_contract.py",
+      "sha256": "1a647c59f3e4e5eb48eee2157757874fb7b08c428c4bc97d5f883f2b8a4d4e41",
+      "bytes": 916
+    },
+    {
+      "path": "server/tests_v76/test_sql_contract.py",
+      "sha256": "6af1f0b549e6652f4a75fd48d99bd1b06f2e2cb1e386672e047b3500d97c6e2e",
+      "bytes": 1703
+    },
+    {
+      "path": "server/tests_v77/test_sql_contract.py",
+      "sha256": "720218fc7b93f245d33557d9a5b5cdc91144716fe65f3c026694c304ce15afe1",
+      "bytes": 1377
+    },
+    {
+      "path": "server/tests_v78/test_sql_and_integrity.py",
+      "sha256": "c5ce24d5e9dbd4c0b5c58793e01b9e9df21e3e9d1b76ecc61f719654a3f33c31",
+      "bytes": 1546
+    },
+    {
+      "path": "docs/V81_GRAPH_SERIALIZATION_ACCEPTANCE_RU.md",
+      "sha256": "1abda48bdb54df1c4839ff1ef6a164aa2aa3baa1ef9db288c259ac053a08a37e",
+      "bytes": 8192
+    },
+    {
+      "path": "artifacts_v81/TEST_REPORT_V81.md",
+      "sha256": "754801a392f24b6da82443135e39e68088c4182ca29ac290df1c77b06ecedbad",
+      "bytes": 5311
+    },
+    {
+      "path": "README_V81.md",
+      "sha256": "e11bd053b1ac1e08493c3783edc539e4e78c0c7741a475113ec86ee8e4c31a0d",
+      "bytes": 4078
+    }
+  ]
+}

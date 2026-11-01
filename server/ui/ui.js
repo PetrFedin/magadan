@@ -42,6 +42,7 @@ async function refresh(){
   await refreshV78();
   await refreshV79();
   await refreshV8();
+  refreshV82();
 }
 function updateTransition(){const i=initiatives.find(x=>x.id===selected('initiative-list'));const s=el('next-state');s.replaceChildren();if(i&&follow[i.state]){const op=document.createElement('option');op.value=follow[i.state];op.textContent=follow[i.state]+' · revision '+i.revision;s.append(op)}}
 async function perform(fn){try{await fn();await refresh()}catch(e){info(e.message,true)}}
@@ -78,6 +79,11 @@ function clearTenantView(){
   el('v79-output').textContent='';el('v79-mv-output').textContent='';
   for(const id of ['v8-boundary-asset','v8-boundary-map','v8-overlap-a','v8-overlap-b','v8-parent'])el(id).replaceChildren();
   el('v8-boundary-output').textContent='';
+  el('v82-plot').replaceChildren();
+  el('v82-output').textContent='';
+  el('v82-assessment').textContent='Новый контекст: исходные расчёты очищены.';
+  for(const id of ['v82-mae','v82-rmse','v82-coverage','v82-point'])el(id).textContent='—';
+  el('v82-case').value='';
 async function restoreCorporateSession(){
   who=await api('/v7/me');
   el('identity').textContent=who.email;
@@ -662,4 +668,73 @@ el('v8-mv-quality').addEventListener('click',()=>perform(async()=>{
   const res=await api(v8Root()+'/measurement-screens/'+encodeURIComponent(id)+'/quality');
   el('v79-mv-output').textContent=JSON.stringify(res,null,2);
   info('Качество и совместная область условий рассчитаны; это не подтверждение экономии');
+}));
+
+
+// V8.2 synthetic hydrological research. A plotting aid only; no SCADA.
+function refreshV82(){
+  choices('v82-asset',assets.filter(x=>x.classification==='LAB_REFERENCE'),x=>x.name+' / '+x.id);
+}
+function syntheticDailyFlowV82(){
+  const n=168, horizon=Number(selected('v82-horizon'));
+  const shift=Number(selected('v82-regime'));
+  const origin=Date.UTC(2026,0,1);
+  const daily=86400000;
+  const observations=Array.from({length:n},(_,i)=>{
+     const t=origin+i*daily;
+     const q=160+0.16*i+15*Math.sin(2*Math.PI*i/32)+5*Math.sin(2*Math.PI*i/8)+4*Math.cos(2.1*i)+(i>=n-28?shift:0);
+     return {observed_at:new Date(t).toISOString(),
+       available_at:new Date(t+6*3600000).toISOString(),mean_flow_cms:Number(Math.max(0,q).toFixed(7)),
+       source_ref:'SYNTHETIC-MAGADAN-LAB-DAILY-Q-'+String(i).padStart(4,'0')};
+  });
+  return {asset_id:selected('v82-asset'),as_of:new Date(origin+(n-1)*daily+10*3600000).toISOString(),
+    horizon_days:horizon,miscoverage_alpha:0.1,
+    monitor_threshold_cms:Number(el('v82-threshold').value),observations};
+}
+const v82NS='http://www.w3.org/2000/svg';
+function plotForecastV82(rows){
+  const host=el('v82-plot');host.replaceChildren();
+  if(!rows?.length)return;
+  const svg=document.createElementNS(v82NS,'svg');svg.setAttribute('viewBox','0 0 820 260');
+  svg.setAttribute('role','img');svg.setAttribute('aria-label','28 прогнозов: факт, точечная оценка и эмпирическая полоса, м³/с');
+  const values=rows.flatMap(r=>[r.actual_cms,r.lower_cms,r.upper_cms]);
+  const min=Math.max(0,Math.min(...values)-5),max=Math.max(...values)+5;
+  const X=i=>48+i*(754/(rows.length-1));
+  const Y=v=>218-(v-min)*172/(max-min||1);
+  function path(points,color,width,fill='none'){
+    const node=document.createElementNS(v82NS,'path');node.setAttribute('d',points);node.setAttribute('stroke',color);
+    node.setAttribute('stroke-width',width);node.setAttribute('fill',fill);svg.append(node);
+  }
+  function title(t,x,y,color){const node=document.createElementNS(v82NS,'text');node.setAttribute('x',x);node.setAttribute('y',y);node.setAttribute('font-size','12');node.setAttribute('fill',color);node.textContent=t;svg.append(node)}
+  for(let i=0;i<4;i++){
+    const v=min+i*(max-min)/3, y=Y(v);
+    path(`M48 ${y} H802`,'#e2eaee',1);title(v.toFixed(1),5,y+4,'#587481');
+  }
+  const poly=rows.map((r,i)=>`${X(i)},${Y(r.upper_cms)}`).concat(rows.slice().reverse().map((r,i)=>`${X(rows.length-1-i)},${Y(r.lower_cms)}`)).join(' L');
+  path('M'+poly+' Z','none',0,'#d5e9e1');
+  path('M'+rows.map((r,i)=>`${X(i)},${Y(r.point_cms)}`).join(' L'),'#c47d44',2.4);
+  path('M'+rows.map((r,i)=>`${X(i)},${Y(r.actual_cms)}`).join(' L'),'#0e4659',2.4);
+  title('Факт',520,22,'#0e4659');title('Прогноз',578,22,'#c47d44');title('Полоса ошибок',660,22,'#41846b');
+  title('Дни независимой проверки →',576,249,'#617986');
+  host.append(svg);
+}
+el('v82-sample').addEventListener('click',()=>{
+  if(!selected('v82-asset')){info('Сначала войдите и выберите синтетический объект',true);return}
+  el('v82-case').value=JSON.stringify(syntheticDailyFlowV82(),null,2);
+  info('Учебные 168 суток созданы; это не архив гидропостов Магаданской области.');
+});
+el('v82-run').addEventListener('click',()=>perform(async()=>{
+  const input=JSON.parse(el('v82-case').value);
+  const resp=await api('/v82/orgs/'+encodeURIComponent(org)+'/hydroforecast/evaluate','POST',input);
+  const r=resp.report,stats=r.holdout,output=el('v82-output');
+  el('v82-mae').textContent=stats.mae_cms.toFixed(2);
+  el('v82-rmse').textContent=stats.rmse_cms.toFixed(2);
+  el('v82-coverage').textContent=(100*stats.interval_empirical_coverage_fraction).toFixed(1)+' %';
+  el('v82-point').textContent=r.forecast.point_cms.toFixed(2);
+  plotForecastV82(r.holdout_rows);
+  el('v82-assessment').textContent='Модель: '+r.selected_model+' · Исторический период: '+stats.count+' суток · Эмпирический радиус: '+r.calibration.absolute_error_radius_cms.toFixed(2)+' м³/с · Ограничения: '+r.risk_flags.join(', ');
+  output.textContent=JSON.stringify({split:r.split,model_selection_mae_cms:r.model_selection_mae_cms,
+    calibration:r.calibration,holdout:r.holdout,persistence_holdout:r.persistence_holdout,
+    forecast:r.forecast,proof:resp.proof},null,2);
+  info('Исследовательский прогноз рассчитан и проверен на независимом историческом периоде; промышленное применение запрещено.');
 }));
