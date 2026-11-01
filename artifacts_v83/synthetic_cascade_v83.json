@@ -1,0 +1,1150 @@
+{
+  "forecast": {
+    "asset_id": "feeder-a",
+    "as_of": "2026-06-17T10:00:00+00:00",
+    "horizon_days": 2,
+    "miscoverage_alpha": 0.1,
+    "monitor_threshold_cms": 200,
+    "observations": [
+      {
+        "observed_at": "2026-01-01T00:00:00+00:00",
+        "available_at": "2026-01-01T06:00:00+00:00",
+        "mean_flow_cms": 164.0,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0000"
+      },
+      {
+        "observed_at": "2026-01-02T00:00:00+00:00",
+        "available_at": "2026-01-02T06:00:00+00:00",
+        "mean_flow_cms": 164.6025043,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0001"
+      },
+      {
+        "observed_at": "2026-01-03T00:00:00+00:00",
+        "available_at": "2026-01-03T06:00:00+00:00",
+        "mean_flow_cms": 169.0992082,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0002"
+      },
+      {
+        "observed_at": "2026-01-04T00:00:00+00:00",
+        "available_at": "2026-01-04T06:00:00+00:00",
+        "mean_flow_cms": 176.3485219,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0003"
+      },
+      {
+        "observed_at": "2026-01-05T00:00:00+00:00",
+        "available_at": "2026-01-05T06:00:00+00:00",
+        "mean_flow_cms": 169.1694471,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0004"
+      },
+      {
+        "observed_at": "2026-01-06T00:00:00+00:00",
+        "available_at": "2026-01-06T06:00:00+00:00",
+        "mean_flow_cms": 167.8343626,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0005"
+      },
+      {
+        "observed_at": "2026-01-07T00:00:00+00:00",
+        "available_at": "2026-01-07T06:00:00+00:00",
+        "mean_flow_cms": 173.8159313,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0006"
+      },
+      {
+        "observed_at": "2026-01-08T00:00:00+00:00",
+        "available_at": "2026-01-08T06:00:00+00:00",
+        "mean_flow_cms": 170.1619078,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0007"
+      },
+      {
+        "observed_at": "2026-01-09T00:00:00+00:00",
+        "available_at": "2026-01-09T06:00:00+00:00",
+        "mean_flow_cms": 174.4372857,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0008"
+      },
+      {
+        "observed_at": "2026-01-10T00:00:00+00:00",
+        "available_at": "2026-01-10T06:00:00+00:00",
+        "mean_flow_cms": 183.682225,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0009"
+      },
+      {
+        "observed_at": "2026-01-11T00:00:00+00:00",
+        "available_at": "2026-01-11T06:00:00+00:00",
+        "mean_flow_cms": 178.2672759,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0010"
+      },
+      {
+        "observed_at": "2026-01-12T00:00:00+00:00",
+        "available_at": "2026-01-12T06:00:00+00:00",
+        "mean_flow_cms": 175.9848181,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0011"
+      },
+      {
+        "observed_at": "2026-01-13T00:00:00+00:00",
+        "available_at": "2026-01-13T06:00:00+00:00",
+        "mean_flow_cms": 176.5175576,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0012"
+      },
+      {
+        "observed_at": "2026-01-14T00:00:00+00:00",
+        "available_at": "2026-01-14T06:00:00+00:00",
+        "mean_flow_cms": 164.6311425,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0013"
+      },
+      {
+        "observed_at": "2026-01-15T00:00:00+00:00",
+        "available_at": "2026-01-15T06:00:00+00:00",
+        "mean_flow_cms": 161.2579499,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0014"
+      },
+      {
+        "observed_at": "2026-01-16T00:00:00+00:00",
+        "available_at": "2026-01-16T06:00:00+00:00",
+        "mean_flow_cms": 165.7766926,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0015"
+      },
+      {
+        "observed_at": "2026-01-17T00:00:00+00:00",
+        "available_at": "2026-01-17T06:00:00+00:00",
+        "mean_flow_cms": 160.2577981,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0016"
+      },
+      {
+        "observed_at": "2026-01-18T00:00:00+00:00",
+        "available_at": "2026-01-18T06:00:00+00:00",
+        "mean_flow_cms": 161.6678228,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0017"
+      },
+      {
+        "observed_at": "2026-01-19T00:00:00+00:00",
+        "available_at": "2026-01-19T06:00:00+00:00",
+        "mean_flow_cms": 166.1194089,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0018"
+      },
+      {
+        "observed_at": "2026-01-20T00:00:00+00:00",
+        "available_at": "2026-01-20T06:00:00+00:00",
+        "mean_flow_cms": 155.8851046,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0019"
+      },
+      {
+        "observed_at": "2026-01-21T00:00:00+00:00",
+        "available_at": "2026-01-21T06:00:00+00:00",
+        "mean_flow_cms": 150.993457,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0020"
+      },
+      {
+        "observed_at": "2026-01-22T00:00:00+00:00",
+        "available_at": "2026-01-22T06:00:00+00:00",
+        "mean_flow_cms": 151.324746,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0021"
+      },
+      {
+        "observed_at": "2026-01-23T00:00:00+00:00",
+        "available_at": "2026-01-23T06:00:00+00:00",
+        "mean_flow_cms": 142.2509236,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0022"
+      },
+      {
+        "observed_at": "2026-01-24T00:00:00+00:00",
+        "available_at": "2026-01-24T06:00:00+00:00",
+        "mean_flow_cms": 143.894613,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0023"
+      },
+      {
+        "observed_at": "2026-01-25T00:00:00+00:00",
+        "available_at": "2026-01-25T06:00:00+00:00",
+        "mean_flow_cms": 152.8038646,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0024"
+      },
+      {
+        "observed_at": "2026-01-26T00:00:00+00:00",
+        "available_at": "2026-01-26T06:00:00+00:00",
+        "mean_flow_cms": 150.3595454,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0025"
+      },
+      {
+        "observed_at": "2026-01-27T00:00:00+00:00",
+        "available_at": "2026-01-27T06:00:00+00:00",
+        "mean_flow_cms": 153.8260354,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0026"
+      },
+      {
+        "observed_at": "2026-01-28T00:00:00+00:00",
+        "available_at": "2026-01-28T06:00:00+00:00",
+        "mean_flow_cms": 159.3377742,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0027"
+      },
+      {
+        "observed_at": "2026-01-29T00:00:00+00:00",
+        "available_at": "2026-01-29T06:00:00+00:00",
+        "mean_flow_cms": 151.3565597,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0028"
+      },
+      {
+        "observed_at": "2026-01-30T00:00:00+00:00",
+        "available_at": "2026-01-30T06:00:00+00:00",
+        "mean_flow_cms": 151.3578604,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0029"
+      },
+      {
+        "observed_at": "2026-01-31T00:00:00+00:00",
+        "available_at": "2026-01-31T06:00:00+00:00",
+        "mean_flow_cms": 158.0033348,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0030"
+      },
+      {
+        "observed_at": "2026-02-01T00:00:00+00:00",
+        "available_at": "2026-02-01T06:00:00+00:00",
+        "mean_flow_cms": 155.929355,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0031"
+      },
+      {
+        "observed_at": "2026-02-02T00:00:00+00:00",
+        "available_at": "2026-02-02T06:00:00+00:00",
+        "mean_flow_cms": 163.7700668,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0032"
+      },
+      {
+        "observed_at": "2026-02-03T00:00:00+00:00",
+        "available_at": "2026-02-03T06:00:00+00:00",
+        "mean_flow_cms": 175.673662,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0033"
+      },
+      {
+        "observed_at": "2026-02-04T00:00:00+00:00",
+        "available_at": "2026-02-04T06:00:00+00:00",
+        "mean_flow_cms": 173.5603039,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0034"
+      },
+      {
+        "observed_at": "2026-02-05T00:00:00+00:00",
+        "available_at": "2026-02-05T06:00:00+00:00",
+        "mean_flow_cms": 176.1826549,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0035"
+      },
+      {
+        "observed_at": "2026-02-06T00:00:00+00:00",
+        "available_at": "2026-02-06T06:00:00+00:00",
+        "mean_flow_cms": 180.2854502,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0036"
+      },
+      {
+        "observed_at": "2026-02-07T00:00:00+00:00",
+        "available_at": "2026-02-07T06:00:00+00:00",
+        "mean_flow_cms": 172.186112,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0037"
+      },
+      {
+        "observed_at": "2026-02-08T00:00:00+00:00",
+        "available_at": "2026-02-08T06:00:00+00:00",
+        "mean_flow_cms": 173.7156248,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0038"
+      },
+      {
+        "observed_at": "2026-02-09T00:00:00+00:00",
+        "available_at": "2026-02-09T06:00:00+00:00",
+        "mean_flow_cms": 181.3210612,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0039"
+      },
+      {
+        "observed_at": "2026-02-10T00:00:00+00:00",
+        "available_at": "2026-02-10T06:00:00+00:00",
+        "mean_flow_cms": 178.679906,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0040"
+      },
+      {
+        "observed_at": "2026-02-11T00:00:00+00:00",
+        "available_at": "2026-02-11T06:00:00+00:00",
+        "mean_flow_cms": 183.648955,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0041"
+      },
+      {
+        "observed_at": "2026-02-12T00:00:00+00:00",
+        "available_at": "2026-02-12T06:00:00+00:00",
+        "mean_flow_cms": 189.4678722,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0042"
+      },
+      {
+        "observed_at": "2026-02-13T00:00:00+00:00",
+        "available_at": "2026-02-13T06:00:00+00:00",
+        "mean_flow_cms": 180.1185575,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0043"
+      },
+      {
+        "observed_at": "2026-02-14T00:00:00+00:00",
+        "available_at": "2026-02-14T06:00:00+00:00",
+        "mean_flow_cms": 176.5527811,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0044"
+      },
+      {
+        "observed_at": "2026-02-15T00:00:00+00:00",
+        "available_at": "2026-02-15T06:00:00+00:00",
+        "mean_flow_cms": 175.8714624,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0045"
+      },
+      {
+        "observed_at": "2026-02-16T00:00:00+00:00",
+        "available_at": "2026-02-16T06:00:00+00:00",
+        "mean_flow_cms": 165.2830871,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0046"
+      },
+      {
+        "observed_at": "2026-02-17T00:00:00+00:00",
+        "available_at": "2026-02-17T06:00:00+00:00",
+        "mean_flow_cms": 165.881847,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0047"
+      },
+      {
+        "observed_at": "2026-02-18T00:00:00+00:00",
+        "available_at": "2026-02-18T06:00:00+00:00",
+        "mean_flow_cms": 171.5361113,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0048"
+      },
+      {
+        "observed_at": "2026-02-19T00:00:00+00:00",
+        "available_at": "2026-02-19T06:00:00+00:00",
+        "mean_flow_cms": 165.5846674,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0049"
+      },
+      {
+        "observed_at": "2026-02-20T00:00:00+00:00",
+        "available_at": "2026-02-20T06:00:00+00:00",
+        "mean_flow_cms": 166.2959123,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0050"
+      },
+      {
+        "observed_at": "2026-02-21T00:00:00+00:00",
+        "available_at": "2026-02-21T06:00:00+00:00",
+        "mean_flow_cms": 167.1996699,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0051"
+      },
+      {
+        "observed_at": "2026-02-22T00:00:00+00:00",
+        "available_at": "2026-02-22T06:00:00+00:00",
+        "mean_flow_cms": 154.8023493,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0052"
+      },
+      {
+        "observed_at": "2026-02-23T00:00:00+00:00",
+        "available_at": "2026-02-23T06:00:00+00:00",
+        "mean_flow_cms": 151.5739959,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0053"
+      },
+      {
+        "observed_at": "2026-02-24T00:00:00+00:00",
+        "available_at": "2026-02-24T06:00:00+00:00",
+        "mean_flow_cms": 153.5999898,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0054"
+      },
+      {
+        "observed_at": "2026-02-25T00:00:00+00:00",
+        "available_at": "2026-02-25T06:00:00+00:00",
+        "mean_flow_cms": 147.5959235,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0055"
+      },
+      {
+        "observed_at": "2026-02-26T00:00:00+00:00",
+        "available_at": "2026-02-26T06:00:00+00:00",
+        "mean_flow_cms": 153.1272382,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0056"
+      },
+      {
+        "observed_at": "2026-02-27T00:00:00+00:00",
+        "available_at": "2026-02-27T06:00:00+00:00",
+        "mean_flow_cms": 161.7413512,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0057"
+      },
+      {
+        "observed_at": "2026-02-28T00:00:00+00:00",
+        "available_at": "2026-02-28T06:00:00+00:00",
+        "mean_flow_cms": 157.4201652,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0058"
+      },
+      {
+        "observed_at": "2026-03-01T00:00:00+00:00",
+        "available_at": "2026-03-01T06:00:00+00:00",
+        "mean_flow_cms": 159.7366275,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0059"
+      },
+      {
+        "observed_at": "2026-03-02T00:00:00+00:00",
+        "available_at": "2026-03-02T06:00:00+00:00",
+        "mean_flow_cms": 162.7693348,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0060"
+      },
+      {
+        "observed_at": "2026-03-03T00:00:00+00:00",
+        "available_at": "2026-03-03T06:00:00+00:00",
+        "mean_flow_cms": 154.8452411,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0061"
+      },
+      {
+        "observed_at": "2026-03-04T00:00:00+00:00",
+        "available_at": "2026-03-04T06:00:00+00:00",
+        "mean_flow_cms": 158.4790028,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0062"
+      },
+      {
+        "observed_at": "2026-03-05T00:00:00+00:00",
+        "available_at": "2026-03-05T06:00:00+00:00",
+        "mean_flow_cms": 167.3713203,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0063"
+      },
+      {
+        "observed_at": "2026-03-06T00:00:00+00:00",
+        "available_at": "2026-03-06T06:00:00+00:00",
+        "mean_flow_cms": 167.1511598,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0064"
+      },
+      {
+        "observed_at": "2026-03-07T00:00:00+00:00",
+        "available_at": "2026-03-07T06:00:00+00:00",
+        "mean_flow_cms": 176.2274576,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0065"
+      },
+      {
+        "observed_at": "2026-03-08T00:00:00+00:00",
+        "available_at": "2026-03-08T06:00:00+00:00",
+        "mean_flow_cms": 185.0296719,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0066"
+      },
+      {
+        "observed_at": "2026-03-09T00:00:00+00:00",
+        "available_at": "2026-03-09T06:00:00+00:00",
+        "mean_flow_cms": 179.4579518,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0067"
+      },
+      {
+        "observed_at": "2026-03-10T00:00:00+00:00",
+        "available_at": "2026-03-10T06:00:00+00:00",
+        "mean_flow_cms": 180.9186645,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0068"
+      },
+      {
+        "observed_at": "2026-03-11T00:00:00+00:00",
+        "available_at": "2026-03-11T06:00:00+00:00",
+        "mean_flow_cms": 183.6810876,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0069"
+      },
+      {
+        "observed_at": "2026-03-12T00:00:00+00:00",
+        "available_at": "2026-03-12T06:00:00+00:00",
+        "mean_flow_cms": 176.8856473,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0070"
+      },
+      {
+        "observed_at": "2026-03-13T00:00:00+00:00",
+        "available_at": "2026-03-13T06:00:00+00:00",
+        "mean_flow_cms": 182.0349626,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0071"
+      },
+      {
+        "observed_at": "2026-03-14T00:00:00+00:00",
+        "available_at": "2026-03-14T06:00:00+00:00",
+        "mean_flow_cms": 190.1986869,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0072"
+      },
+      {
+        "observed_at": "2026-03-15T00:00:00+00:00",
+        "available_at": "2026-03-15T06:00:00+00:00",
+        "mean_flow_cms": 186.7142543,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0073"
+      },
+      {
+        "observed_at": "2026-03-16T00:00:00+00:00",
+        "available_at": "2026-03-16T06:00:00+00:00",
+        "mean_flow_cms": 190.2637065,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0074"
+      },
+      {
+        "observed_at": "2026-03-17T00:00:00+00:00",
+        "available_at": "2026-03-17T06:00:00+00:00",
+        "mean_flow_cms": 191.6593345,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0075"
+      },
+      {
+        "observed_at": "2026-03-18T00:00:00+00:00",
+        "available_at": "2026-03-18T06:00:00+00:00",
+        "mean_flow_cms": 179.5139382,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0076"
+      },
+      {
+        "observed_at": "2026-03-19T00:00:00+00:00",
+        "available_at": "2026-03-19T06:00:00+00:00",
+        "mean_flow_cms": 176.7504522,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0077"
+      },
+      {
+        "observed_at": "2026-03-20T00:00:00+00:00",
+        "available_at": "2026-03-20T06:00:00+00:00",
+        "mean_flow_cms": 176.8440449,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0078"
+      },
+      {
+        "observed_at": "2026-03-21T00:00:00+00:00",
+        "available_at": "2026-03-21T06:00:00+00:00",
+        "mean_flow_cms": 168.7394723,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0079"
+      },
+      {
+        "observed_at": "2026-03-22T00:00:00+00:00",
+        "available_at": "2026-03-22T06:00:00+00:00",
+        "mean_flow_cms": 172.4994556,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0080"
+      },
+      {
+        "observed_at": "2026-03-23T00:00:00+00:00",
+        "available_at": "2026-03-23T06:00:00+00:00",
+        "mean_flow_cms": 177.163985,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0081"
+      },
+      {
+        "observed_at": "2026-03-24T00:00:00+00:00",
+        "available_at": "2026-03-24T06:00:00+00:00",
+        "mean_flow_cms": 169.0506453,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0082"
+      },
+      {
+        "observed_at": "2026-03-25T00:00:00+00:00",
+        "available_at": "2026-03-25T06:00:00+00:00",
+        "mean_flow_cms": 168.248544,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0083"
+      },
+      {
+        "observed_at": "2026-03-26T00:00:00+00:00",
+        "available_at": "2026-03-26T06:00:00+00:00",
+        "mean_flow_cms": 166.3982004,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0084"
+      },
+      {
+        "observed_at": "2026-03-27T00:00:00+00:00",
+        "available_at": "2026-03-27T06:00:00+00:00",
+        "mean_flow_cms": 154.2265054,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0085"
+      },
+      {
+        "observed_at": "2026-03-28T00:00:00+00:00",
+        "available_at": "2026-03-28T06:00:00+00:00",
+        "mean_flow_cms": 154.7355446,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0086"
+      },
+      {
+        "observed_at": "2026-03-29T00:00:00+00:00",
+        "available_at": "2026-03-29T06:00:00+00:00",
+        "mean_flow_cms": 159.2064773,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0087"
+      },
+      {
+        "observed_at": "2026-03-30T00:00:00+00:00",
+        "available_at": "2026-03-30T06:00:00+00:00",
+        "mean_flow_cms": 155.6782218,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0088"
+      },
+      {
+        "observed_at": "2026-03-31T00:00:00+00:00",
+        "available_at": "2026-03-31T06:00:00+00:00",
+        "mean_flow_cms": 162.9647133,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0089"
+      },
+      {
+        "observed_at": "2026-04-01T00:00:00+00:00",
+        "available_at": "2026-04-01T06:00:00+00:00",
+        "mean_flow_cms": 169.0435866,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0090"
+      },
+      {
+        "observed_at": "2026-04-02T00:00:00+00:00",
+        "available_at": "2026-04-02T06:00:00+00:00",
+        "mean_flow_cms": 162.1868116,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0091"
+      },
+      {
+        "observed_at": "2026-04-03T00:00:00+00:00",
+        "available_at": "2026-04-03T06:00:00+00:00",
+        "mean_flow_cms": 164.0816058,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0092"
+      },
+      {
+        "observed_at": "2026-04-04T00:00:00+00:00",
+        "available_at": "2026-04-04T06:00:00+00:00",
+        "mean_flow_cms": 166.4796913,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0093"
+      },
+      {
+        "observed_at": "2026-04-05T00:00:00+00:00",
+        "available_at": "2026-04-05T06:00:00+00:00",
+        "mean_flow_cms": 160.8291421,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0094"
+      },
+      {
+        "observed_at": "2026-04-06T00:00:00+00:00",
+        "available_at": "2026-04-06T06:00:00+00:00",
+        "mean_flow_cms": 168.7735768,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0095"
+      },
+      {
+        "observed_at": "2026-04-07T00:00:00+00:00",
+        "available_at": "2026-04-07T06:00:00+00:00",
+        "mean_flow_cms": 178.7947971,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0096"
+      },
+      {
+        "observed_at": "2026-04-08T00:00:00+00:00",
+        "available_at": "2026-04-08T06:00:00+00:00",
+        "mean_flow_cms": 178.4783353,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0097"
+      },
+      {
+        "observed_at": "2026-04-09T00:00:00+00:00",
+        "available_at": "2026-04-09T06:00:00+00:00",
+        "mean_flow_cms": 186.522965,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0098"
+      },
+      {
+        "observed_at": "2026-04-10T00:00:00+00:00",
+        "available_at": "2026-04-10T06:00:00+00:00",
+        "mean_flow_cms": 191.1089318,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0099"
+      },
+      {
+        "observed_at": "2026-04-11T00:00:00+00:00",
+        "available_at": "2026-04-11T06:00:00+00:00",
+        "mean_flow_cms": 183.0710918,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0100"
+      },
+      {
+        "observed_at": "2026-04-12T00:00:00+00:00",
+        "available_at": "2026-04-12T06:00:00+00:00",
+        "mean_flow_cms": 185.2664427,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0101"
+      },
+      {
+        "observed_at": "2026-04-13T00:00:00+00:00",
+        "available_at": "2026-04-13T06:00:00+00:00",
+        "mean_flow_cms": 188.5421235,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0102"
+      },
+      {
+        "observed_at": "2026-04-14T00:00:00+00:00",
+        "available_at": "2026-04-14T06:00:00+00:00",
+        "mean_flow_cms": 184.0897785,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0103"
+      },
+      {
+        "observed_at": "2026-04-15T00:00:00+00:00",
+        "available_at": "2026-04-15T06:00:00+00:00",
+        "mean_flow_cms": 191.8771032,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0104"
+      },
+      {
+        "observed_at": "2026-04-16T00:00:00+00:00",
+        "available_at": "2026-04-16T06:00:00+00:00",
+        "mean_flow_cms": 198.3743786,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0105"
+      },
+      {
+        "observed_at": "2026-04-17T00:00:00+00:00",
+        "available_at": "2026-04-17T06:00:00+00:00",
+        "mean_flow_cms": 192.2217776,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0106"
+      },
+      {
+        "observed_at": "2026-04-18T00:00:00+00:00",
+        "available_at": "2026-04-18T06:00:00+00:00",
+        "mean_flow_cms": 193.4317851,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0107"
+      },
+      {
+        "observed_at": "2026-04-19T00:00:00+00:00",
+        "available_at": "2026-04-19T06:00:00+00:00",
+        "mean_flow_cms": 191.1758616,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0108"
+      },
+      {
+        "observed_at": "2026-04-20T00:00:00+00:00",
+        "available_at": "2026-04-20T06:00:00+00:00",
+        "mean_flow_cms": 178.6126725,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0109"
+      },
+      {
+        "observed_at": "2026-04-21T00:00:00+00:00",
+        "available_at": "2026-04-21T06:00:00+00:00",
+        "mean_flow_cms": 178.7114764,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0110"
+      },
+      {
+        "observed_at": "2026-04-22T00:00:00+00:00",
+        "available_at": "2026-04-22T06:00:00+00:00",
+        "mean_flow_cms": 180.4013452,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0111"
+      },
+      {
+        "observed_at": "2026-04-23T00:00:00+00:00",
+        "available_at": "2026-04-23T06:00:00+00:00",
+        "mean_flow_cms": 174.2667461,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0112"
+      },
+      {
+        "observed_at": "2026-04-24T00:00:00+00:00",
+        "available_at": "2026-04-24T06:00:00+00:00",
+        "mean_flow_cms": 179.1273168,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0113"
+      },
+      {
+        "observed_at": "2026-04-25T00:00:00+00:00",
+        "available_at": "2026-04-25T06:00:00+00:00",
+        "mean_flow_cms": 180.7106181,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0114"
+      },
+      {
+        "observed_at": "2026-04-26T00:00:00+00:00",
+        "available_at": "2026-04-26T06:00:00+00:00",
+        "mean_flow_cms": 169.9218526,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0115"
+      },
+      {
+        "observed_at": "2026-04-27T00:00:00+00:00",
+        "available_at": "2026-04-27T06:00:00+00:00",
+        "mean_flow_cms": 168.458325,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0116"
+      },
+      {
+        "observed_at": "2026-04-28T00:00:00+00:00",
+        "available_at": "2026-04-28T06:00:00+00:00",
+        "mean_flow_cms": 165.8827291,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0117"
+      },
+      {
+        "observed_at": "2026-04-29T00:00:00+00:00",
+        "available_at": "2026-04-29T06:00:00+00:00",
+        "mean_flow_cms": 156.3158458,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0118"
+      },
+      {
+        "observed_at": "2026-04-30T00:00:00+00:00",
+        "available_at": "2026-04-30T06:00:00+00:00",
+        "mean_flow_cms": 161.3642598,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0119"
+      },
+      {
+        "observed_at": "2026-05-01T00:00:00+00:00",
+        "available_at": "2026-05-01T06:00:00+00:00",
+        "mean_flow_cms": 167.3288484,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0120"
+      },
+      {
+        "observed_at": "2026-05-02T00:00:00+00:00",
+        "available_at": "2026-05-02T06:00:00+00:00",
+        "mean_flow_cms": 164.4530078,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0121"
+      },
+      {
+        "observed_at": "2026-05-03T00:00:00+00:00",
+        "available_at": "2026-05-03T06:00:00+00:00",
+        "mean_flow_cms": 171.2998646,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0122"
+      },
+      {
+        "observed_at": "2026-05-04T00:00:00+00:00",
+        "available_at": "2026-05-04T06:00:00+00:00",
+        "mean_flow_cms": 173.8299948,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0123"
+      },
+      {
+        "observed_at": "2026-05-05T00:00:00+00:00",
+        "available_at": "2026-05-05T06:00:00+00:00",
+        "mean_flow_cms": 165.4789206,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0124"
+      },
+      {
+        "observed_at": "2026-05-06T00:00:00+00:00",
+        "available_at": "2026-05-06T06:00:00+00:00",
+        "mean_flow_cms": 168.8352744,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0125"
+      },
+      {
+        "observed_at": "2026-05-07T00:00:00+00:00",
+        "available_at": "2026-05-07T06:00:00+00:00",
+        "mean_flow_cms": 172.4630376,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0126"
+      },
+      {
+        "observed_at": "2026-05-08T00:00:00+00:00",
+        "available_at": "2026-05-08T06:00:00+00:00",
+        "mean_flow_cms": 170.0809642,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0127"
+      },
+      {
+        "observed_at": "2026-05-09T00:00:00+00:00",
+        "available_at": "2026-05-09T06:00:00+00:00",
+        "mean_flow_cms": 181.2504669,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0128"
+      },
+      {
+        "observed_at": "2026-05-10T00:00:00+00:00",
+        "available_at": "2026-05-10T06:00:00+00:00",
+        "mean_flow_cms": 190.1011014,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0129"
+      },
+      {
+        "observed_at": "2026-05-11T00:00:00+00:00",
+        "available_at": "2026-05-11T06:00:00+00:00",
+        "mean_flow_cms": 187.7415029,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0130"
+      },
+      {
+        "observed_at": "2026-05-12T00:00:00+00:00",
+        "available_at": "2026-05-12T06:00:00+00:00",
+        "mean_flow_cms": 193.6654416,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0131"
+      },
+      {
+        "observed_at": "2026-05-13T00:00:00+00:00",
+        "available_at": "2026-05-13T06:00:00+00:00",
+        "mean_flow_cms": 194.68089,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0132"
+      },
+      {
+        "observed_at": "2026-05-14T00:00:00+00:00",
+        "available_at": "2026-05-14T06:00:00+00:00",
+        "mean_flow_cms": 186.3972343,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0133"
+      },
+      {
+        "observed_at": "2026-05-15T00:00:00+00:00",
+        "available_at": "2026-05-15T06:00:00+00:00",
+        "mean_flow_cms": 191.200198,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0134"
+      },
+      {
+        "observed_at": "2026-05-16T00:00:00+00:00",
+        "available_at": "2026-05-16T06:00:00+00:00",
+        "mean_flow_cms": 195.6847739,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0135"
+      },
+      {
+        "observed_at": "2026-05-17T00:00:00+00:00",
+        "available_at": "2026-05-17T06:00:00+00:00",
+        "mean_flow_cms": 192.9212763,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0136"
+      },
+      {
+        "observed_at": "2026-05-18T00:00:00+00:00",
+        "available_at": "2026-05-18T06:00:00+00:00",
+        "mean_flow_cms": 201.1347139,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0137"
+      },
+      {
+        "observed_at": "2026-05-19T00:00:00+00:00",
+        "available_at": "2026-05-19T06:00:00+00:00",
+        "mean_flow_cms": 203.8001396,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0138"
+      },
+      {
+        "observed_at": "2026-05-20T00:00:00+00:00",
+        "available_at": "2026-05-20T06:00:00+00:00",
+        "mean_flow_cms": 194.3904921,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0139"
+      },
+      {
+        "observed_at": "2026-05-21T00:00:00+00:00",
+        "available_at": "2026-05-21T06:00:00+00:00",
+        "mean_flow_cms": 194.0391248,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0140"
+      },
+      {
+        "observed_at": "2026-05-22T00:00:00+00:00",
+        "available_at": "2026-05-22T06:00:00+00:00",
+        "mean_flow_cms": 190.1725751,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0141"
+      },
+      {
+        "observed_at": "2026-05-23T00:00:00+00:00",
+        "available_at": "2026-05-23T06:00:00+00:00",
+        "mean_flow_cms": 179.5858937,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0142"
+      },
+      {
+        "observed_at": "2026-05-24T00:00:00+00:00",
+        "available_at": "2026-05-24T06:00:00+00:00",
+        "mean_flow_cms": 183.3681743,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0143"
+      },
+      {
+        "observed_at": "2026-05-25T00:00:00+00:00",
+        "available_at": "2026-05-25T06:00:00+00:00",
+        "mean_flow_cms": 185.8063687,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0144"
+      },
+      {
+        "observed_at": "2026-05-26T00:00:00+00:00",
+        "available_at": "2026-05-26T06:00:00+00:00",
+        "mean_flow_cms": 179.9186448,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0145"
+      },
+      {
+        "observed_at": "2026-05-27T00:00:00+00:00",
+        "available_at": "2026-05-27T06:00:00+00:00",
+        "mean_flow_cms": 183.781622,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0146"
+      },
+      {
+        "observed_at": "2026-05-28T00:00:00+00:00",
+        "available_at": "2026-05-28T06:00:00+00:00",
+        "mean_flow_cms": 181.4393801,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0147"
+      },
+      {
+        "observed_at": "2026-05-29T00:00:00+00:00",
+        "available_at": "2026-05-29T06:00:00+00:00",
+        "mean_flow_cms": 169.1677875,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0148"
+      },
+      {
+        "observed_at": "2026-05-30T00:00:00+00:00",
+        "available_at": "2026-05-30T06:00:00+00:00",
+        "mean_flow_cms": 169.058487,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0149"
+      },
+      {
+        "observed_at": "2026-05-31T00:00:00+00:00",
+        "available_at": "2026-05-31T06:00:00+00:00",
+        "mean_flow_cms": 167.8094694,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0150"
+      },
+      {
+        "observed_at": "2026-06-01T00:00:00+00:00",
+        "available_at": "2026-06-01T06:00:00+00:00",
+        "mean_flow_cms": 161.9931039,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0151"
+      },
+      {
+        "observed_at": "2026-06-02T00:00:00+00:00",
+        "available_at": "2026-06-02T06:00:00+00:00",
+        "mean_flow_cms": 170.60991,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0152"
+      },
+      {
+        "observed_at": "2026-06-03T00:00:00+00:00",
+        "available_at": "2026-06-03T06:00:00+00:00",
+        "mean_flow_cms": 175.9209256,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0153"
+      },
+      {
+        "observed_at": "2026-06-04T00:00:00+00:00",
+        "available_at": "2026-06-04T06:00:00+00:00",
+        "mean_flow_cms": 171.8493599,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0154"
+      },
+      {
+        "observed_at": "2026-06-05T00:00:00+00:00",
+        "available_at": "2026-06-05T06:00:00+00:00",
+        "mean_flow_cms": 177.21688,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0155"
+      },
+      {
+        "observed_at": "2026-06-06T00:00:00+00:00",
+        "available_at": "2026-06-06T06:00:00+00:00",
+        "mean_flow_cms": 176.9193377,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0156"
+      },
+      {
+        "observed_at": "2026-06-07T00:00:00+00:00",
+        "available_at": "2026-06-07T06:00:00+00:00",
+        "mean_flow_cms": 169.3067132,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0157"
+      },
+      {
+        "observed_at": "2026-06-08T00:00:00+00:00",
+        "available_at": "2026-06-08T06:00:00+00:00",
+        "mean_flow_cms": 175.9562365,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0158"
+      },
+      {
+        "observed_at": "2026-06-09T00:00:00+00:00",
+        "available_at": "2026-06-09T06:00:00+00:00",
+        "mean_flow_cms": 181.4920938,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0159"
+      },
+      {
+        "observed_at": "2026-06-10T00:00:00+00:00",
+        "available_at": "2026-06-10T06:00:00+00:00",
+        "mean_flow_cms": 181.6451635,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0160"
+      },
+      {
+        "observed_at": "2026-06-11T00:00:00+00:00",
+        "available_at": "2026-06-11T06:00:00+00:00",
+        "mean_flow_cms": 193.7010738,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0161"
+      },
+      {
+        "observed_at": "2026-06-12T00:00:00+00:00",
+        "available_at": "2026-06-12T06:00:00+00:00",
+        "mean_flow_cms": 199.1215664,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0162"
+      },
+      {
+        "observed_at": "2026-06-13T00:00:00+00:00",
+        "available_at": "2026-06-13T06:00:00+00:00",
+        "mean_flow_cms": 193.9847319,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0163"
+      },
+      {
+        "observed_at": "2026-06-14T00:00:00+00:00",
+        "available_at": "2026-06-14T06:00:00+00:00",
+        "mean_flow_cms": 198.3880657,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0164"
+      },
+      {
+        "observed_at": "2026-06-15T00:00:00+00:00",
+        "available_at": "2026-06-15T06:00:00+00:00",
+        "mean_flow_cms": 197.7444616,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0165"
+      },
+      {
+        "observed_at": "2026-06-16T00:00:00+00:00",
+        "available_at": "2026-06-16T06:00:00+00:00",
+        "mean_flow_cms": 191.4454393,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0166"
+      },
+      {
+        "observed_at": "2026-06-17T00:00:00+00:00",
+        "available_at": "2026-06-17T06:00:00+00:00",
+        "mean_flow_cms": 199.4995525,
+        "source_ref": "SYNTHETIC-MAGADAN-LAB-DAILY-Q-0167"
+      }
+    ]
+  },
+  "daily_observation_semantics": "UTC_DAILY_MEAN_PERIOD_END_AT_OBSERVED_AT",
+  "initial_storage_state_ref": "SYNTHETIC-CASCADE-TARGET-DAY-START-STORAGE-2026",
+  "upper": {
+    "asset_id": "feeder-a",
+    "name": "SYNTHETIC-UPPER-STATION",
+    "source_ref": "SYNTHETIC-CASCADE-UPSTREAM-CURVE-2026",
+    "start_volume_m3": 1000000000,
+    "min_volume_m3": 900000000,
+    "max_volume_m3": 1100000000,
+    "storage_curve": [
+      {
+        "volume_m3": 900000000,
+        "upstream_elevation_m": 380
+      },
+      {
+        "volume_m3": 1000000000,
+        "upstream_elevation_m": 395
+      },
+      {
+        "volume_m3": 1100000000,
+        "upstream_elevation_m": 410
+      }
+    ],
+    "tailwater_curve": [
+      {
+        "discharge_cms": 0,
+        "elevation_m": 300
+      },
+      {
+        "discharge_cms": 250,
+        "elevation_m": 305
+      },
+      {
+        "discharge_cms": 500,
+        "elevation_m": 310
+      }
+    ],
+    "efficiency_curve": [
+      {
+        "turbine_flow_fraction": 0,
+        "efficiency": 0
+      },
+      {
+        "turbine_flow_fraction": 0.5,
+        "efficiency": 0.9
+      },
+      {
+        "turbine_flow_fraction": 1,
+        "efficiency": 0.93
+      }
+    ],
+    "turbine_capacity_cms": 250,
+    "turbine_release_cms": 125,
+    "spill_release_cms": 25,
+    "other_losses_cms": 0,
+    "minimum_release_cms": 20,
+    "previous_release_cms": 150,
+    "max_daily_ramp_cms": 70,
+    "hydraulic_head_loss_m": 1,
+    "rated_capacity_mw": 120
+  },
+  "lower": {
+    "asset_id": "v83-lower",
+    "name": "SYNTHETIC-LOWER-STATION",
+    "source_ref": "SYNTHETIC-CASCADE-DOWNSTREAM-CURVE-2026",
+    "start_volume_m3": 500000000,
+    "min_volume_m3": 400000000,
+    "max_volume_m3": 600000000,
+    "storage_curve": [
+      {
+        "volume_m3": 400000000,
+        "upstream_elevation_m": 300
+      },
+      {
+        "volume_m3": 500000000,
+        "upstream_elevation_m": 315
+      },
+      {
+        "volume_m3": 600000000,
+        "upstream_elevation_m": 330
+      }
+    ],
+    "tailwater_curve": [
+      {
+        "discharge_cms": 0,
+        "elevation_m": 220
+      },
+      {
+        "discharge_cms": 250,
+        "elevation_m": 226
+      },
+      {
+        "discharge_cms": 500,
+        "elevation_m": 232
+      }
+    ],
+    "efficiency_curve": [
+      {
+        "turbine_flow_fraction": 0,
+        "efficiency": 0
+      },
+      {
+        "turbine_flow_fraction": 0.5,
+        "efficiency": 0.89
+      },
+      {
+        "turbine_flow_fraction": 1,
+        "efficiency": 0.91
+      }
+    ],
+    "turbine_capacity_cms": 200,
+    "turbine_release_cms": 145,
+    "spill_release_cms": 30,
+    "other_losses_cms": 0,
+    "minimum_release_cms": 25,
+    "previous_release_cms": 175,
+    "max_daily_ramp_cms": 80,
+    "hydraulic_head_loss_m": 1.5,
+    "rated_capacity_mw": 150
+  },
+  "route": {
+    "delay_hours": 12,
+    "previous_daily_releases_cms": [
+      150.0
+    ],
+    "source_ref": "SYNTHETIC-UPSTREAM-DAILY-RELEASE-2026"
+  },
+  "hydrological_mapping_ref": "SYNTHETIC-FLOW-TO-UPSTREAM-RESERVOIR-2026",
+  "lower_local_inflow_cms": 45,
+  "lower_local_inflow_ref": "SYNTHETIC-LOWER-LOCAL-FLOW-2026",
+  "water_density_kg_m3": 1000
+}

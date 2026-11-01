@@ -159,7 +159,7 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
         engine,SessionLocal=setup_postgres(db_url)
     else:
         engine,SessionLocal=setup_engine(db_url)
-    app=FastAPI(title='HydroKontur Magadan V8.2 / controlled engineering lab',version='0.8.2-lab',
+    app=FastAPI(title='HydroKontur Magadan V8.3 / controlled engineering lab',version='0.8.3-lab',
                 description='No industrial connections, not a production authorization or SCADA system')
     app.state.engine=engine;app.state.SessionLocal=SessionLocal
     app.mount('/lab-assets',StaticFiles(directory=str(Path(__file__).parent.parent/'ui')),name='lab-assets')
@@ -290,6 +290,11 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
 
     from .forecast_api_v82 import install_forecast_v82_routes
     install_forecast_v82_routes(app,get_db,current_user,access,asset,sha,canonical)
+
+    # V8.3 1-day forecast -> two-reservoir water balance and stage/efficiency.
+    # No operational/financial actions; both lab assets require tenant RBAC.
+    from .cascade_api_v83 import install_cascade_v83_routes
+    install_cascade_v83_routes(app,get_db,current_user,access,asset,sha,canonical)
 
     @app.get('/health')
     def health():return {'service':'hydrokontur-v75-lab','status':'ok','production_ready':False}

@@ -1,0 +1,37 @@
+{
+  "release": "8.3",
+  "scope": "SYNTHETIC_ONLY",
+  "forecast_engine": "v82-synthetic-daily-origin-calibration-v1",
+  "cascade_engine": "v83-one-day-cascade-lag-volume-head-efficiency-screen-v1",
+  "synthetic_cases": 20,
+  "forecast_regimes_cms": [
+    -30,
+    0,
+    30,
+    65,
+    100
+  ],
+  "travel_lags_hours": [
+    0,
+    12,
+    24,
+    36
+  ],
+  "daily_branch_evaluations": 60,
+  "constraint_stress_cases": 4,
+  "all_normal_scenarios_mass_balance": true,
+  "any_normal_scenario_infeasible": false,
+  "constraint_scenarios_flagged": {
+    "capacity_limit": true,
+    "minimum_release": true,
+    "storage_overflow": true,
+    "ramp_limit": true
+  },
+  "min_coverage_fraction": 0.75,
+  "max_hydrology_mae_cms": 12.505494,
+  "all_energy_values_nonfinance": true,
+  "source_data_attested": false,
+  "external_engineering_verified": false,
+  "magadan_field_pilot_passed": false,
+  "native_pg17_rls_passed": false
+}

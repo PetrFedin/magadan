@@ -1,0 +1,31 @@
+{
+  "mode": "CHROMIUM_STATIC_SET_CONTENT_NO_AUTH_NO_SERVER",
+  "status": "STATIC_LAYOUT_PASS",
+  "browser_e2e_verified": false,
+  "viewports": {
+    "375": {
+      "viewport_width": 375,
+      "document_scroll_width": 375,
+      "horizontal_overflow": false,
+      "cascade_section_visible": true,
+      "synthetic_disclosure_present": true,
+      "interactions_tested": false
+    },
+    "768": {
+      "viewport_width": 768,
+      "document_scroll_width": 768,
+      "horizontal_overflow": false,
+      "cascade_section_visible": true,
+      "synthetic_disclosure_present": true,
+      "interactions_tested": false
+    },
+    "1440": {
+      "viewport_width": 1440,
+      "document_scroll_width": 1440,
+      "horizontal_overflow": false,
+      "cascade_section_visible": true,
+      "synthetic_disclosure_present": true,
+      "interactions_tested": false
+    }
+  }
+}

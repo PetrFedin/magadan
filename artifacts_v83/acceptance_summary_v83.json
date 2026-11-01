@@ -1,0 +1,122 @@
+{
+  "release": "8.3",
+  "date": "2026-11-02",
+  "status": "LOCAL_LAB_PASS_PRODUCTION_HOLD",
+  "tests": {
+    "python_passed": 357,
+    "python_skipped": 3,
+    "by_group": {
+      "a": {
+        "passed": 132,
+        "skipped": 1
+      },
+      "b": {
+        "passed": 75,
+        "skipped": 1
+      },
+      "c": {
+        "passed": 150,
+        "skipped": 1
+      }
+    },
+    "javascript_passed": 63,
+    "javascript_failed": 0
+  },
+  "scenarios": {
+    "release": "8.3",
+    "scope": "SYNTHETIC_ONLY",
+    "forecast_engine": "v82-synthetic-daily-origin-calibration-v1",
+    "cascade_engine": "v83-one-day-cascade-lag-volume-head-efficiency-screen-v1",
+    "synthetic_cases": 20,
+    "forecast_regimes_cms": [
+      -30,
+      0,
+      30,
+      65,
+      100
+    ],
+    "travel_lags_hours": [
+      0,
+      12,
+      24,
+      36
+    ],
+    "daily_branch_evaluations": 60,
+    "constraint_stress_cases": 4,
+    "all_normal_scenarios_mass_balance": true,
+    "any_normal_scenario_infeasible": false,
+    "constraint_scenarios_flagged": {
+      "capacity_limit": true,
+      "minimum_release": true,
+      "storage_overflow": true,
+      "ramp_limit": true
+    },
+    "min_coverage_fraction": 0.75,
+    "max_hydrology_mae_cms": 12.505494,
+    "all_energy_values_nonfinance": true,
+    "source_data_attested": false,
+    "external_engineering_verified": false,
+    "magadan_field_pilot_passed": false,
+    "native_pg17_rls_passed": false
+  },
+  "ui_static": {
+    "mode": "CHROMIUM_STATIC_SET_CONTENT_NO_AUTH_NO_SERVER",
+    "status": "STATIC_LAYOUT_PASS",
+    "browser_e2e_verified": false,
+    "viewports": {
+      "375": {
+        "viewport_width": 375,
+        "document_scroll_width": 375,
+        "horizontal_overflow": false,
+        "cascade_section_visible": true,
+        "synthetic_disclosure_present": true,
+        "interactions_tested": false
+      },
+      "768": {
+        "viewport_width": 768,
+        "document_scroll_width": 768,
+        "horizontal_overflow": false,
+        "cascade_section_visible": true,
+        "synthetic_disclosure_present": true,
+        "interactions_tested": false
+      },
+      "1440": {
+        "viewport_width": 1440,
+        "document_scroll_width": 1440,
+        "horizontal_overflow": false,
+        "cascade_section_visible": true,
+        "synthetic_disclosure_present": true,
+        "interactions_tested": false
+      }
+    }
+  },
+  "browser_network_e2e": {
+    "mode": "CHROMIUM_WITH_IN_PROCESS_ASGI_TESTCLIENT_NETWORK_INTERCEPTION",
+    "status": "BROWSER_ASGI_INTERCEPTED_TRANSPORT_BLOCKED_OR_FAILED",
+    "standalone_network_http_e2e": false,
+    "real_magadan_assets": false,
+    "postgresql_rls_native": false,
+    "viewports": {},
+    "error": "Error: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://hydrokontur.invalid/lab\nCall log:\n  - navigating to \"http://hydrokontur.invalid/lab\", waiting until \"domcontentloaded\"\n"
+  },
+  "native_postgresql_17": {
+    "status": "NOT_EXECUTED",
+    "server_installed": false,
+    "rls_verified": false,
+    "concurrency_verified": false
+  },
+  "external_hydraulic_solver": {
+    "status": "NOT_EXECUTED"
+  },
+  "field_magadan_data": {
+    "status": "NOT_AUTHORIZED_OR_AVAILABLE"
+  },
+  "actual_rushydro_economics_accepted": false,
+  "source_sha256": {
+    "server/hydro_api/cascade_v83.py": "a4d525f414267a7b7965ac2fc1b79eb76de6f621649d1144bd05a731ac57aba5",
+    "server/hydro_api/cascade_api_v83.py": "d6fdb73353612ef50eb9f3a2a3f0ae9fb17f6a045213a6ffd8e65db1869e2508",
+    "server/hydro_api/forecast_v82.py": "929615c6a7b7c931ea619ac91d39ee17587ff9fff4cffbfb61d806ced2985699",
+    "server/ui/ui.js": "a798e0f9fa88c9ace086c3fa1b5c223fb1c0bb37c83f4a5550c7a446ff6eb655",
+    "server/tests_v83/test_cascade_v83.py": "d578e1afa786b36f53c47bf7ec297807f64500185cacca985f88e3e51e7d3fdb"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "mode": "CHROMIUM_WITH_IN_PROCESS_ASGI_TESTCLIENT_NETWORK_INTERCEPTION",
+  "status": "BROWSER_ASGI_INTERCEPTED_TRANSPORT_BLOCKED_OR_FAILED",
+  "standalone_network_http_e2e": false,
+  "real_magadan_assets": false,
+  "postgresql_rls_native": false,
+  "viewports": {},
+  "error": "Error: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://hydrokontur.invalid/lab\nCall log:\n  - navigating to \"http://hydrokontur.invalid/lab\", waiting until \"domcontentloaded\"\n"
+}

@@ -1,0 +1,151 @@
+{
+  "summary": {
+    "release": "8.3",
+    "scope": "SYNTHETIC_ONLY",
+    "forecast_engine": "v82-synthetic-daily-origin-calibration-v1",
+    "cascade_engine": "v83-one-day-cascade-lag-volume-head-efficiency-screen-v1",
+    "synthetic_cases": 20,
+    "forecast_regimes_cms": [
+      -30,
+      0,
+      30,
+      65,
+      100
+    ],
+    "travel_lags_hours": [
+      0,
+      12,
+      24,
+      36
+    ],
+    "daily_branch_evaluations": 60,
+    "constraint_stress_cases": 4,
+    "all_normal_scenarios_mass_balance": true,
+    "any_normal_scenario_infeasible": false,
+    "constraint_scenarios_flagged": {
+      "capacity_limit": true,
+      "minimum_release": true,
+      "storage_overflow": true,
+      "ramp_limit": true
+    },
+    "min_coverage_fraction": 0.75,
+    "max_hydrology_mae_cms": 12.505494,
+    "all_energy_values_nonfinance": true,
+    "source_data_attested": false,
+    "external_engineering_verified": false,
+    "magadan_field_pilot_passed": false,
+    "native_pg17_rls_passed": false
+  },
+  "scenario_inputs": [
+    {
+      "key": "regime_-30_lag_00",
+      "sha256": "72a69c4fd02efcbec6711cbf20f590ba12054ed9e551ff74fb353da04875c81b"
+    },
+    {
+      "key": "regime_-30_lag_12",
+      "sha256": "9ea2b41ae79d64e631d9348b123e99860258e4f9d21707c9e825217209f28bdc"
+    },
+    {
+      "key": "regime_-30_lag_24",
+      "sha256": "9e0cfe589d82ebc44878b9c7717cb0616a4d59d9ce434e2066f546b7a9bc69ac"
+    },
+    {
+      "key": "regime_-30_lag_36",
+      "sha256": "79235395e3f2a80b779eaa007c79933f1bde06cee5bf98a3ce298ac7e8f13a65"
+    },
+    {
+      "key": "regime_+0_lag_00",
+      "sha256": "a33bcd99b64464e0da6456b8cc8ffd6bff39645351171aacab81e60369545d88"
+    },
+    {
+      "key": "regime_+0_lag_12",
+      "sha256": "b2edc39cd8960ca40185020ec248e9ba92823384c0e97840020cb17c72976e8b"
+    },
+    {
+      "key": "regime_+0_lag_24",
+      "sha256": "c3dbb7326a02b5621d2558c77fec0f96132f91b8f1e9a5a2a8cb4a0baf1d0379"
+    },
+    {
+      "key": "regime_+0_lag_36",
+      "sha256": "b6491fdd290f1b59c3c0ea62dfd405b32f92a6af81e67920b780465276cddf26"
+    },
+    {
+      "key": "regime_+30_lag_00",
+      "sha256": "f744552138879286290dfe7d660e04c56770823df312e61d535eceb29a509b0e"
+    },
+    {
+      "key": "regime_+30_lag_12",
+      "sha256": "3d9ca7cd75fc44e23dcbcc311b5ca7e699073dcdb6148d882c30606e8635c2a6"
+    },
+    {
+      "key": "regime_+30_lag_24",
+      "sha256": "37993de9968fbaa080db4d20dc9aebea20ae9c9e493a777c1c04cfbaa0857803"
+    },
+    {
+      "key": "regime_+30_lag_36",
+      "sha256": "09f2f73b3e3577935b8d984f45bac022bda6fccd7d73c7a67682aaa99f4f61bf"
+    },
+    {
+      "key": "regime_+65_lag_00",
+      "sha256": "c8bab886f359fc7277d271cf07a75e38901e823241fe4c43431c7fe646985e4e"
+    },
+    {
+      "key": "regime_+65_lag_12",
+      "sha256": "321a6cbd6153065f3158c0e60028ae54ba4db129a38d5d5c4ec5d845067c9006"
+    },
+    {
+      "key": "regime_+65_lag_24",
+      "sha256": "469f7292dabbb0835b52db59035dad5788a1d027f223cfc99df1c000b880c95c"
+    },
+    {
+      "key": "regime_+65_lag_36",
+      "sha256": "4fa36f1ef8fb4146ea2818f6e71ac087d8c94a9739a25daa9794113f6ba7b9f4"
+    },
+    {
+      "key": "regime_+100_lag_00",
+      "sha256": "86922152ea441f8ef2d372c552f3baa76c62043e82074f7c60e521a37c4ebe2a"
+    },
+    {
+      "key": "regime_+100_lag_12",
+      "sha256": "0930a9b7542fca2c2a90a6e9773534c3e346b8385f9d1ab52898d4f7fb71bd6c"
+    },
+    {
+      "key": "regime_+100_lag_24",
+      "sha256": "e51de7a5236a725990f06d20c7a2c5dfb6557ba57705d24b40b220186a9facf4"
+    },
+    {
+      "key": "regime_+100_lag_36",
+      "sha256": "e32631cc6df825ba31ef2b7880fdca3b50063807d7d6f124c62288e96931db28"
+    }
+  ],
+  "report_digest_sha256": {
+    "regime_-30_lag_00": "91e568e0031a0e251eb01531d32b93e3bf15626f8d7899d5891ce994765bddd8",
+    "regime_-30_lag_12": "a726231afe5f0476d3ea91810fd7ae0ccb4225d5414c1ef93530e6f942009b00",
+    "regime_-30_lag_24": "6bc0d033311195023bcb745de2fb1f8280be2ea046063fb64fdeed178a875673",
+    "regime_-30_lag_36": "4445f996de1e0d12299d726bd6c29dcb2e968f5c49a536add85dca483864a9e1",
+    "regime_+0_lag_00": "72264ae6989566224f4a1ffcf81d4d485c5652559afdeca738e8f8c5db7dc1f8",
+    "regime_+0_lag_12": "5152559216ba6c50390433ee45099a725a1addc0a047933cbfde9c28831e2def",
+    "regime_+0_lag_24": "d15ae8242bf7ebc9975671a0c61ffb30568ed441efe8e3f45e9e0bd19691e6e9",
+    "regime_+0_lag_36": "ac3892b562504655924a63b6774864496f01353d78be9528c69b6d6bd886604c",
+    "regime_+30_lag_00": "197d05d51fb920da81483d56ec26af90390eeea862dfb820a965daafa10a2cbd",
+    "regime_+30_lag_12": "333124083a5f18844c699863b9527c3d6dfc6acd381a2b6f813852a394742635",
+    "regime_+30_lag_24": "7f240b81ff5830959a6353f2e68ec02d96314fd94deea28d83aeea5b023e19b9",
+    "regime_+30_lag_36": "3b471ad63b033b9e7bcf1e036a4e3718dee07b66053c62e9b5f290f3039a8f16",
+    "regime_+65_lag_00": "83e734a7b74d3194eceaae64ba362acbd749f3a353a21b85047db9efef570218",
+    "regime_+65_lag_12": "6c30bdf388ada74eca45d1d9926c5cadf2b2a3630122be1bb9e578300fd82a72",
+    "regime_+65_lag_24": "8b65df5199d30507d03669344eab5acb1c3477b959db2ebd28758b11bf91b8f6",
+    "regime_+65_lag_36": "fee5e360aab1bb4236698fe7d46e9c46b58d73c74b0ce1a5a9c8b9f3a29338a5",
+    "regime_+100_lag_00": "3f26e65a69bdcdf78d0dc453daaeb4374c58831e7c50db3a03c44eebbf29ae59",
+    "regime_+100_lag_12": "f1eb95eb760d517b34c2b0aae9084d6a4243cfb610dad85e8fdd30defcd23e16",
+    "regime_+100_lag_24": "b0e004719c0c94e0c0f4f7bac47855c4c75a7dd5aefdf5278f429ac05bdb8c1b",
+    "regime_+100_lag_36": "feaabe64b6b6040fc50b1653f7fb65d75bb53fc5df312d53c94abf4908bca92c",
+    "constraint_capacity_limit": "2e2a527176306eb91e3b3abc21beb26881dfb8f54642d37e30d75110ec3f3f61",
+    "constraint_minimum_release": "d82d548401e7fef5750a1b48f5e1a765f7af2a0b546c56345b2551425341a931",
+    "constraint_storage_overflow": "294e6600dbddaec23ec5e21308887cc30a0bc319e3809fef3a1ded61936fdad1",
+    "constraint_ramp_limit": "a2354eefe68d416d3148ebea92aae2ac1f0dcef916fd91da071da94678bec962"
+  },
+  "source_hash_sha256": {
+    "cascade_v83.py": "a4d525f414267a7b7965ac2fc1b79eb76de6f621649d1144bd05a731ac57aba5",
+    "forecast_v82.py": "929615c6a7b7c931ea619ac91d39ee17587ff9fff4cffbfb61d806ced2985699"
+  }
+}

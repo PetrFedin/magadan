@@ -43,6 +43,7 @@ async function refresh(){
   await refreshV79();
   await refreshV8();
   refreshV82();
+  refreshV83();
 }
 function updateTransition(){const i=initiatives.find(x=>x.id===selected('initiative-list'));const s=el('next-state');s.replaceChildren();if(i&&follow[i.state]){const op=document.createElement('option');op.value=follow[i.state];op.textContent=follow[i.state]+' · revision '+i.revision;s.append(op)}}
 async function perform(fn){try{await fn();await refresh()}catch(e){info(e.message,true)}}
@@ -737,4 +738,74 @@ el('v82-run').addEventListener('click',()=>perform(async()=>{
     calibration:r.calibration,holdout:r.holdout,persistence_holdout:r.persistence_holdout,
     forecast:r.forecast,proof:resp.proof},null,2);
   info('Исследовательский прогноз рассчитан и проверен на независимом историческом периоде; промышленное применение запрещено.');
+}));
+
+
+// V8.3: strict lab-only coupling: one predicted UTC day, two distinct assets.
+function refreshV83(){
+  const lab=assets.filter(a=>a.classification==='LAB_REFERENCE');
+  choices('v83-upper',lab,x=>x.name+' / '+x.id);
+  choices('v83-lower',lab.filter(a=>a.id!==selected('v83-upper')),x=>x.name+' / '+x.id);
+}
+el('v83-upper').addEventListener('change',refreshV83);
+function syntheticCascadeV83(){
+  const upperAsset=selected('v83-upper'),lowerAsset=selected('v83-lower');
+  if(!upperAsset||!lowerAsset||upperAsset===lowerAsset)
+    throw Error('Нужны два разных LAB_REFERENCE объекта в одной организации');
+  let forecast;
+  if(el('v82-case').value.trim()) forecast=JSON.parse(el('v82-case').value);
+  else forecast=syntheticDailyFlowV82();
+  forecast.asset_id=upperAsset;
+  forecast.horizon_days=2; // one FULL day begins after the 10:00 UTC issue.
+  const common=(asset_id,name,start,min,max,elevationLow,elevationHigh,tailLow,tailHigh,limitQ,turbineQ,spillQ,ratedMW)=>({
+    asset_id,name,source_ref:'SYNTHETIC-CASCADE-V83-CURVES-EXAMPLE-2026',
+    start_volume_m3:start,min_volume_m3:min,max_volume_m3:max,
+    storage_curve:[{volume_m3:min,upstream_elevation_m:elevationLow},
+                   {volume_m3:start,upstream_elevation_m:(elevationLow+elevationHigh)/2},
+                   {volume_m3:max,upstream_elevation_m:elevationHigh}],
+    tailwater_curve:[{discharge_cms:0,elevation_m:tailLow},
+                     {discharge_cms:250,elevation_m:(tailLow+tailHigh)/2},
+                     {discharge_cms:500,elevation_m:tailHigh}],
+    efficiency_curve:[{turbine_flow_fraction:0,efficiency:0},
+                      {turbine_flow_fraction:.5,efficiency:.9},
+                      {turbine_flow_fraction:1,efficiency:.93}],
+    turbine_capacity_cms:limitQ,turbine_release_cms:turbineQ,spill_release_cms:spillQ,
+    other_losses_cms:0,minimum_release_cms:20,
+    previous_release_cms:turbineQ+spillQ,max_daily_ramp_cms:80,
+    hydraulic_head_loss_m:1,rated_capacity_mw:ratedMW});
+  const delay=Number(selected('v83-delay'));
+  return {forecast,daily_observation_semantics:'UTC_DAILY_MEAN_PERIOD_END_AT_OBSERVED_AT',
+    initial_storage_state_ref:'SYNTHETIC-CASCADE-TARGET-DAY-START-STORAGE-2026',
+    upper:common(upperAsset,'SYNTHETIC-UPPER-STATION',1e9,9e8,1.1e9,380,410,300,310,250,125,25,120),
+    lower:common(lowerAsset,'SYNTHETIC-LOWER-STATION',5e8,4e8,6e8,300,330,220,232,200,145,30,150),
+    route:{delay_hours:delay,previous_daily_releases_cms:Array(Math.ceil(delay/24)).fill(150),
+      source_ref:'SYNTHETIC-DAILY-RELEASE-ROUTING-2026'},
+    hydrological_mapping_ref:'SYNTHETIC-UPSTREAM-FLOW-TO-RESERVOIR-2026',
+    lower_local_inflow_cms:45,lower_local_inflow_ref:'SYNTHETIC-DOWNSTREAM-LOCAL-INFLOW-2026',
+    water_density_kg_m3:1000};
+}
+el('v83-sample').addEventListener('click',()=>{
+  try{
+    el('v83-case').value=JSON.stringify(syntheticCascadeV83(),null,2);
+    info('Создан учебный связанный сценарий: расход, две кривые объёма, задержка, КПД, три варианта');
+  }catch(e){info(e.message,true)}
+});
+el('v83-run').addEventListener('click',()=>perform(async()=>{
+  const body=JSON.parse(el('v83-case').value);
+  const response=await api('/v83/orgs/'+encodeURIComponent(org)+'/cascade/forecast-screen','POST',body);
+  const r=response.report;
+  for(const [id,name] of [['v83-dry','dry'],['v83-central','central'],['v83-wet','wet']]){
+    const item=r.scenarios.find(x=>x.name===name);
+    el(id).textContent=item.upper_forecast_inflow_cms.toFixed(2);
+  }
+  el('v83-balance').textContent=r.scenarios.every(x=>Math.abs(x.global_mass_balance_residual_m3)<1e-3)?'Баланс сведён':'Проверить';
+  el('v83-assessment').textContent='Класс: '+r.qualification+
+    ' · Сценарии с нарушениями: '+r.scenarios.filter(s=>!s.feasible_under_synthetic_constraints).length+
+    ' · Важные статистические замечания: '+r.calibration_and_stationarity_risk_flags.join(', ')+
+    ' · Финансовый эффект: НЕ ПРИЗНАН';
+  el('v83-output').textContent=JSON.stringify({target_start:r.target_day_start_utc,
+      target_end:r.target_day_end_utc,lead_to_start_hours:r.forecast_actual_lead_to_target_day_start_hours,
+      scenario_energy_span_mwh:r.scenario_energy_span_mwh,
+      risk:r.hydrology_report,scenarios:r.scenarios,limitations:r.limitations,proof:response.proof},null,2);
+  info('Проверен лабораторный баланс по двум водохранилищам; никакого решения о режиме или экономии не принято.');
 }));

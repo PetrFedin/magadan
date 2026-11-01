@@ -321,5 +321,35 @@
     </div>
   </div>
 </section>
-</main><footer>ГИДРОКОНТУР 360 — МАГАДАН · V8.2 LAB · Только синтетические данные. Нет доступа к технологическому управлению, SCADA, генерации, диспетчеризации и корпоративным сетям.</footer>
+<section class="card cascade-v83-workspace" id="cascade-v83-workspace">
+  <div class="studies-title"><div>
+    <h2>15. Сценарный водный баланс двух ГЭС · V8.3</h2>
+    <p class="hint">Прогноз расхода → три физических сценария → водохранилища → запаздывание воды → напор и условная энергия.</p>
+  </div><span class="study-notice">НЕ ДИСПЕТЧЕРИЗАЦИЯ · SYNTHETIC</span></div>
+  <div class="programme-help"><strong>Строгие границы:</strong> используются только данные V8.2 на h=2 — полные следующие сутки <em>после</em> момента выпуска прогноза. Момент ежедневного наблюдения является <strong>концом</strong> предшествующих 24 часов. Указанные здесь кривые уровня, КПД, сбросы, запаздывание и начальные объёмы исключительно искусственные.</div>
+  <div class="study-grid">
+    <div>
+      <h3>Исходные допущения каскада</h3>
+      <label>Верхний синтетический объект<select id="v83-upper"></select></label>
+      <label>Нижний синтетический объект той же организации<select id="v83-lower"></select></label>
+      <label>Запаздывание стока, часы<select id="v83-delay"><option value="0">0 — мгновенный перенос</option><option value="12" selected>12 — частичный перенос</option><option value="24">24 — один день</option><option value="36">36 — полтора дня</option><option value="48">48 — два дня</option></select></label>
+      <div class="actions"><button id="v83-sample" class="secondary">Подготовить учебный каскад</button><button id="v83-run" class="primary">Проверить баланс</button></div>
+      <label>Версии кривых, параметров и прогноза (строго JSON)<textarea id="v83-case" rows="13" spellcheck="false" placeholder="Подготовьте отдельный синтетический пример"></textarea></label>
+      <p class="hint">Необходимы два разных LAB_REFERENCE объекта в одной организации. Никаких распоряжений на изменение сбросов, заявок на генерацию или финансовых проводок.</p>
+    </div>
+    <div>
+      <h3>Сравнение трёх сценариев</h3>
+      <div class="forecast-v82-kpis" aria-live="polite">
+        <div><small>Сухой сценарий, м³/с</small><strong id="v83-dry">—</strong></div>
+        <div><small>Базовый сценарий, м³/с</small><strong id="v83-central">—</strong></div>
+        <div><small>Влажный сценарий, м³/с</small><strong id="v83-wet">—</strong></div>
+        <div><small>Баланс воды</small><strong id="v83-balance">—</strong></div>
+      </div>
+      <div id="v83-assessment" role="status" class="programme-help">Ожидается синтетический расчёт; энергетическая эффективность реальных ГЭС не доказана.</div>
+      <pre class="result programme-output" id="v83-output">Подробные значения объёмов, транзита, напора, КПД, ограничений и SHA появятся после серверного расчёта.</pre>
+      <dl class="readiness"><dt>Независимая калибровка ВБР</dt><dd>НЕТ</dd><dt>Фактическое запаздывание воды</dt><dd>НЕ ИЗМЕРЕНО</dd><dt>Правила эксплуатации и экологические ограничения</dt><dd>НЕ ПРИНЯТЫ</dd><dt>Экономический эффект</dt><dd>НЕ ПРИЗНАЁТСЯ</dd><dt>PostgreSQL 17 / RLS</dt><dd>ОТДЕЛЬНЫЙ HOLD</dd></dl>
+    </div>
+  </div>
+</section>
+</main><footer>ГИДРОКОНТУР 360 — МАГАДАН · V8.3 LAB · Только синтетические данные. Нет доступа к технологическому управлению, SCADA, генерации, диспетчеризации и корпоративным сетям.</footer>
 <script type="module" src="/lab-assets/ui.js"></script></body></html>

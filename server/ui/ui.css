@@ -50,3 +50,8 @@
 .forecast-v82-plot svg{display:block;width:100%;height:auto}
 .forecast-v82-workspace #v82-case{min-height:200px;font-size:11px}
 @media(max-width:760px){.forecast-v82-kpis strong{font-size:20px}.forecast-v82-workspace .actions button{flex-grow:1}}
+
+/* V8.3 keeps source evidence readable, not a decorative dashboard. */
+.cascade-v83-workspace .programme-output{max-height:520px;overflow:auto;overflow-wrap:anywhere}
+.cascade-v83-workspace .study-grid{align-items:start}
+@media(max-width:600px){.cascade-v83-workspace .forecast-v82-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
