@@ -1,0 +1,189 @@
+name: HydroKontur V8.4 Split Synthetic QA (NOT production)
+
+on:
+  pull_request:
+    paths:
+      - 'server/**'
+      - 'scripts/**'
+      - 'v6-client/**'
+      - '.github/workflows/v84-full-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: magadan-v84-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  provenance-and-parser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Original immutable 452-file baseline and exact checkout
+        env:
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          python - <<'PY'
+          import hashlib,json,os,subprocess
+          def git(*args):
+              return subprocess.run(['git',*args],check=True,capture_output=True).stdout
+          actual=git('rev-parse','HEAD').decode().strip()
+          assert actual==os.environ['EXPECTED_SHA'],'CHECKOUT_SHA_MISMATCH'
+          baseline='eab0d0b1e418558914a448a21cf496982ac10a1d'
+          git('merge-base','--is-ancestor',baseline,'HEAD')
+          raw=git('show',f'{baseline}:MANIFEST_SHA256_V8.json')
+          assert hashlib.sha256(raw).hexdigest()=='c8d248cb351aa57de315edb370f3143da6b0fe1954df48fabf618d12e55146d3'
+          manifest=json.loads(raw)
+          assert len(manifest['files'])==452 and manifest['file_count']==452
+          for path,checksum in manifest['files'].items():
+              assert hashlib.sha256(git('show',f'{baseline}:{path}')).hexdigest()==checksum,path
+          print('IMMUTABLE_ORIGINAL_SHA256_452_452_PASS')
+          print('TESTED_HEAD_SHA='+actual)
+          print('Independent field-data provenance and production remain NOT VERIFIED.')
+          PY
+      - name: JUnit parser unit regression
+        run: PYTHONPATH=. python -m unittest discover -s scripts/tests -p 'test_v84_junit_gate.py' -v
+
+  python-regression:
+    needs: provenance-and-parser
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [v71-v74, v75-v78, v79-v832, legacy-seed]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r server/requirements.txt
+      - name: Execute synthetic shard with timeout and fail-closed JUnit gate
+        shell: bash
+        env:
+          SHARD: ${{ matrix.shard }}
+          PYTHONPATH: server
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_SHA"
+          case "$SHARD" in
+            v71-v74)
+              min=132; skips=1
+              args=(server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74
+                    --ignore=server/tests_v71/test_postgres_native.py)
+              ;;
+            v75-v78)
+              min=75; skips=1
+              args=(server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78
+                    --ignore=server/tests_v78/test_postgres_native_v78.py)
+              ;;
+            v79-v832)
+              min=167; skips=2
+              args=(server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests_v83 server/tests
+                    --ignore=server/tests_v8/test_postgres_native_boundary_v8.py
+                    --ignore=server/tests_v81/test_pg_graph_freeze_native_v81.py
+                    --ignore=server/tests/test_browser.py
+                    --deselect=server/tests/test_server.py::test_local_seed_runs_from_empty_database_and_refuses_second_seed)
+              ;;
+            legacy-seed)
+              min=1; skips=0
+              args=(server/tests/test_server.py::test_local_seed_runs_from_empty_database_and_refuses_second_seed)
+              ;;
+            *) echo "UNEXPECTED_SHARD" >&2; exit 2 ;;
+          esac
+          timeout --signal=TERM --kill-after=15s 600s \
+            python -m pytest -q -ra --maxfail=1 --junitxml=/tmp/v84-junit.xml "${args[@]}"
+          required=()
+          if test "$SHARD" = "v79-v832"; then
+            required+=(--require-case test_instantaneous_rated_peak_over_110_mw_not_approved)
+            required+=(--require-case test_v832_peak_capacity_failure_does_not_claim_financial_energy)
+          fi
+          if test "$SHARD" = "legacy-seed"; then
+            required+=(--require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed)
+          fi
+          python scripts/v84_junit_gate.py --junit /tmp/v84-junit.xml --shard "$SHARD" \
+            --min-passed "$min" --max-skipped "$skips" --actual-sha "$actual" \
+            --expected-sha "$EXPECTED_SHA" "${required[@]}"
+
+  javascript:
+    needs: provenance-and-parser
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Legacy JS and current UI syntax
+        run: |
+          set -e
+          node --check server/ui/ui.js
+          npm test --prefix v6-client
+          echo 'Static JS regression only: no authenticated browser E2E.'
+
+  engineering-synthetic:
+    needs: provenance-and-parser
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install -r server/requirements.txt
+      - name: Reproduce independent synthetic route, integral and 60 branches
+        run: |
+          set -e
+          python scripts/verify_route_independent_v83.py
+          python scripts/verify_energy_integral_v832.py
+          python scripts/reproduce_v83.py --out /tmp/v84-synthetic
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          s=json.loads(Path('/tmp/v84-synthetic/cascade_scenario_index_v83.json').read_text())['summary']
+          assert s['daily_branch_evaluations']==60
+          assert s['all_normal_scenarios_mass_balance'] is True
+          assert s['all_energy_values_nonfinance'] is True
+          assert s['source_data_attested'] is False
+          q=json.loads(Path('artifacts_v832/independent_energy_quadrature_v832.json').read_text())
+          assert q['cases']==256 and q['all_256_reference_checks_pass'] is True
+          assert q['external_hydraulic_solver_verified'] is False
+          print('SYNTHETIC_NON_FINANCIAL_ENGINEERING_PASS')
+          PY
+
+  final-check:
+    if: always()
+    needs: [provenance-and-parser, python-regression, javascript, engineering-synthetic]
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Incomplete, failed or skipped jobs cannot be GREEN
+        env:
+          SOURCE: ${{ needs.provenance-and-parser.result }}
+          PYTHON: ${{ needs.python-regression.result }}
+          JS: ${{ needs.javascript.result }}
+          ENGINEERING: ${{ needs.engineering-synthetic.result }}
+        run: |
+          set -eu
+          for result in "$SOURCE" "$PYTHON" "$JS" "$ENGINEERING"; do
+            test "$result" = success || { echo 'V84_QA_HOLD'; exit 1; }
+          done
+          echo 'V84_SPLIT_SYNTHETIC_QA_PASS_ONLY'
+          echo 'Not native PostgreSQL17 RLS, monolithic pytest, real browser roles, field hydrology or production.'
