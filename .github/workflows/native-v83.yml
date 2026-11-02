@@ -93,14 +93,26 @@ jobs:
           HYDRO_NATIVE_CONFIG: /tmp/hydro-native-v83.json
           PYTHONPATH: server
         run: |
-          python -m pytest -q server/tests_v71/test_postgres_native.py server/tests_v81/test_pg_graph_freeze_native_v81.py \
-            --junitxml=/tmp/native-v83-junit.xml
-      - uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: v83-native-postgres-evidence
-          path: /tmp/native-v83-junit.xml
-          if-no-files-found: warn
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=15s 1200s \
+            python -m pytest -q -ra --maxfail=1 \
+              server/tests_v71/test_postgres_native.py \
+              server/tests_v78/test_postgres_native_v78.py \
+              server/tests_v8/test_postgres_native_boundary_v8.py \
+              server/tests_v81/test_pg_graph_freeze_native_v81.py \
+              --junitxml=/tmp/native-v83-junit.xml
+      - name: Fail-closed actual PostgreSQL17 JUnit proof (no upload-artifact quota)
+        env:
+          HYDRO_NATIVE_TESTS_REQUIRED: '1'
+        run: |
+          set -e
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$GITHUB_SHA"
+          python scripts/v84_junit_gate.py --junit /tmp/native-v83-junit.xml \
+            --shard native-postgres17 --min-passed 10 --max-skipped 0 \
+            --actual-sha "$actual" --expected-sha "$GITHUB_SHA" \
+            --require-case test_native_installed_version_and_exact_lock_contract
+          echo 'Native PG17 test receipt is in Job Summary; production remains HOLD.'
       - name: Delete synthetic test credentials
         if: always()
         run: rm -f /tmp/hydro-native-v83.json
