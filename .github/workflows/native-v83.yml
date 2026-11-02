@@ -1,4 +1,4 @@
-name: V8.3.1 Cascade Forecast Synthetic / PG17 Acceptance Gate
+name: V8.3.2 Cascade Forecast Synthetic / PG17 Acceptance Gate
 
 on:
   pull_request:
@@ -6,6 +6,8 @@ on:
       - 'server/hydro_api/cascade_v83.py'
       - 'server/hydro_api/cascade_api_v83.py'
       - 'server/tests_v83/**'
+      - 'scripts/verify_energy_integral_v832.py'
+      - 'docs/V832_ENERGY_INTEGRATION_RU.md'
       - 'server/hydro_api/forecast_v82.py'
       - 'server/hydro_api/main.py'
       - 'server/ui/**'
@@ -40,6 +42,7 @@ jobs:
         run: |
           python scripts/reproduce_v83.py --out /tmp/hydro-v83-synthetic
           python scripts/verify_route_independent_v83.py
+          python scripts/verify_energy_integral_v832.py
           python - <<'PY'
           import json
           from pathlib import Path
@@ -49,6 +52,10 @@ jobs:
           assert j['summary']['daily_branch_evaluations']==60
           route=json.loads(Path('artifacts_v83/independent_hourly_route_v83.json').read_text())
           assert route['scenarios']==438 and route['conservation_check_passed'] is True
+          integral=json.loads(Path('artifacts_v832/independent_energy_quadrature_v832.json').read_text())
+          assert integral['cases']==256 and integral['all_256_reference_checks_pass'] is True
+          assert integral['max_abs_reference_error_mwh']<0.002
+          assert integral['external_hydraulic_solver_verified'] is False
           assert route['external_hydraulic_solver_executed'] is False
           assert j['summary']['source_data_attested'] is False
           PY

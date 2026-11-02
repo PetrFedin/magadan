@@ -103,3 +103,23 @@ def test_api_rejects_tampered_curve_and_untrusted_future_observation(env):
     assert c.post(ENDPOINT,headers=h('lead'),json=d).status_code==422
     d=cascade_case_v83();d['forecast']['observations'][-1]['available_at']='2033-01-01T00:00:00+00:00'
     assert c.post(ENDPOINT,headers=h('lead'),json=d).status_code==422
+
+
+def test_v832_peak_capacity_failure_does_not_claim_financial_energy(env):
+    permitted(env)
+    c,h=env['client'],env['h'];body=cascade_case_v83()
+    body['upper_other_local_inflow_cms']=1000
+    body['upper']['rated_capacity_mw']=110
+    r=c.post(ENDPOINT,headers=h('lead'),json=body)
+    assert r.status_code==200,r.text
+    report=r.json()['report']
+    assert report['production_ready'] is False
+    assert report['monetary_benefit_rub'] is None
+    assert report['eligible_for_financial_ledger'] is False
+    assert not report['feasible_all_three_synthetic_scenarios']
+    assert all(
+        'ELECTRICAL_RATED_CAPACITY_EXCEEDED' in item['upper']['violations']
+        and item['total_energy_mwh'] is None
+        for item in report['scenarios']
+    )
+    assert r.json()['proof']['benefit_registry_updated'] is False

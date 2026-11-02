@@ -17,7 +17,7 @@ from .forecast_v82 import DailyForecastResearchV82, StrictForecast, evaluate_dai
 SECONDS_PER_DAY = 86_400.0
 HOURS_PER_DAY = 24.0
 GRAVITY_M_S2 = 9.80665
-ENGINE_TAG = 'v83.1-one-day-cascade-lag-volume-head-efficiency-conditional-v2'
+ENGINE_TAG = 'v83.2-one-day-cascade-exact-piecewise-head-and-instantaneous-cap-v3'
 
 
 class StrictV83(StrictForecast):
@@ -177,7 +177,36 @@ def route_uniform_day(current_cms:float, settings:UniformTravelLagV83)->dict:
             'hydraulic_attenuation_modelled':False}
 
 
+
+def exact_mean_piecewise_linear(x0:float,x1:float,xs:list[float],ys:list[float])->float:
+    """Exact time average for x(t) linear and y(x) piecewise linear.
+
+    This integrates against the storage *volume coordinate*. The physical
+    assumption is a constant net volume rate throughout the target day.
+    It is NOT a transient solver for intraday varying head or dispatch.
+    """
+    if x0==x1:
+        return linear_interpolate(x0,xs,ys)
+    lo,hi=sorted((x0,x1))
+    if lo < xs[0] or hi > xs[-1]:
+        raise ValueError('EXTRAPOLATION_FORBIDDEN')
+    knots=[lo]+[x for x in xs[1:-1] if lo<x<hi]+[hi]
+    integrals=[]
+    for a,b in zip(knots,knots[1:]):
+        fa=linear_interpolate(a,xs,ys)
+        fb=linear_interpolate(b,xs,ys)
+        integrals.append((b-a)*(fa+fb)/2)
+    return fsum(integrals)/(hi-lo)
+
+
 def reservoir_step(res:ReservoirV83,inflow_cms:float,rho:float)->dict:
+    """Synthetic constant-flow daily screen with exact piecewise head integral.
+
+    Rate/volume constraints apply to a 24h constant-flow trajectory. The
+    instantaneous electrical peak is separately checked at BOTH endpoints,
+    preventing a midpoint-only false approval. Real intraday transients and
+    power controls are NOT simulated.
+    """
     outflow=res.turbine_release_cms+res.spill_release_cms
     final=res.start_volume_m3+(inflow_cms-outflow-res.other_losses_cms)*SECONDS_PER_DAY
     violations=[]
@@ -189,39 +218,54 @@ def reservoir_step(res:ReservoirV83,inflow_cms:float,rho:float)->dict:
         violations.append('MINIMUM_RELEASE_NOT_MET')
     if abs(outflow-res.previous_release_cms)>res.max_daily_ramp_cms+1e-9:
         violations.append('RELEASE_RAMP_LIMIT_EXCEEDED')
-    mid=(res.start_volume_m3+final)/2
-    head=None;power=None;energy=None;efficiency=None
+    mean_head=None;head_start=None;head_end=None
+    max_instantaneous_power=None
+    power=None;energy=None;efficiency=None
     try:
-        upstream=linear_interpolate(mid,
-                   [p.volume_m3 for p in res.storage_curve],
-                   [p.upstream_elevation_m for p in res.storage_curve])
+        volumes=[p.volume_m3 for p in res.storage_curve]
+        elevations=[p.upstream_elevation_m for p in res.storage_curve]
+        start_elevation=linear_interpolate(res.start_volume_m3,volumes,elevations)
+        end_elevation=linear_interpolate(final,volumes,elevations)
+        average_elevation=exact_mean_piecewise_linear(
+            res.start_volume_m3,final,volumes,elevations)
         tail=linear_interpolate(outflow,
                    [p.discharge_cms for p in res.tailwater_curve],
                    [p.elevation_m for p in res.tailwater_curve])
-        head=upstream-tail-res.hydraulic_head_loss_m
-        if head<=0:violations.append('NONPOSITIVE_NET_HEAD')
+        head_start=start_elevation-tail-res.hydraulic_head_loss_m
+        head_end=end_elevation-tail-res.hydraulic_head_loss_m
+        mean_head=average_elevation-tail-res.hydraulic_head_loss_m
+        if res.turbine_release_cms>0 and min(head_start,head_end)<=0:
+            violations.append('NONPOSITIVE_NET_HEAD')
         fraction=res.turbine_release_cms/res.turbine_capacity_cms
-        if fraction>1:raise ValueError('TURBINE_DISCHARGE_CURVE_DOMAIN_EXCEEDED')
+        if fraction>1:
+            raise ValueError('TURBINE_DISCHARGE_CURVE_DOMAIN_EXCEEDED')
         efficiency=linear_interpolate(fraction,
                    [p.turbine_flow_fraction for p in res.efficiency_curve],
                    [p.efficiency for p in res.efficiency_curve])
-        if head>0 and not violations:
-            power=rho*GRAVITY_M_S2*res.turbine_release_cms*head*efficiency/1e6
+        # Storage-elevation is strictly increasing and outflow constant.
+        # Therefore the highest hourly-scale instantaneous head over this
+        # simplified linear-storage path is at one of the two endpoints.
+        max_instantaneous_power=(rho*GRAVITY_M_S2*res.turbine_release_cms*
+                                 max(head_start,head_end)*efficiency/1e6)
+        if max_instantaneous_power>res.rated_capacity_mw+1e-9:
+            violations.append('ELECTRICAL_RATED_CAPACITY_EXCEEDED')
+        if not violations:
+            power=rho*GRAVITY_M_S2*res.turbine_release_cms*mean_head*efficiency/1e6
             energy=power*HOURS_PER_DAY
-            if power>res.rated_capacity_mw+1e-9:
-                violations.append('ELECTRICAL_RATED_CAPACITY_EXCEEDED')
-                power=None;energy=None
     except ValueError:
         violations.append('ENGINEERING_CURVE_EXTRAPOLATION_FORBIDDEN')
     if violations:
-        # Missing generation is NOT zero generation and cannot be monetised.
+        # A violated constraint makes the daily energy UNKNOWN, not zero.
         power=None;energy=None
     return {
       'asset_id':res.asset_id,'start_storage_m3':res.start_volume_m3,
       'end_storage_m3':final,'delta_storage_m3':final-res.start_volume_m3,
       'local_plus_routed_inflow_cms':inflow_cms,'turbine_release_cms':res.turbine_release_cms,
       'spill_release_cms':res.spill_release_cms,'other_losses_cms':res.other_losses_cms,
-      'net_head_m':None if head is None else round(head,8),
+      'net_head_m':None if mean_head is None else round(mean_head,8),
+      'head_at_start_m':head_start,'head_at_end_m':head_end,
+      'max_instantaneous_theoretical_power_mw':max_instantaneous_power,
+      'energy_integration_method':'EXACT_PIECEWISE_LINEAR_STAGE_AT_CONSTANT_NET_DAILY_FLOW',
       'interpolated_efficiency':efficiency,
       'power_mw':power,'energy_mwh':energy,
       'conservation_residual_m3':round(final-res.start_volume_m3-(inflow_cms-outflow-res.other_losses_cms)*SECONDS_PER_DAY,5),
@@ -302,6 +346,7 @@ def evaluate_coupled_cascade_v83(case:CoupledCascadeV83)->dict:
           'Dry/central/wet interval endpoints are NOT assigned scenario probabilities',
           'Upper and lower releases are fixed synthetic test inputs, never dispatch optimisation',
           'Pure travel-time shift assumes uniform daily flow; no attenuation, Saint-Venant hydraulics or backwater',
+          'Daily energy uses exact piecewise-linear head integration under constant releases; instantaneous peaking is checked at daily endpoints but unmodelled subdaily transients remain out of scope',
           'Piecewise-linear storage/forebay, tailwater and efficiency curves are synthetic and not site-attested',
           'Hydraulic loss held constant; temperature, evaporation and river exchange not measured',
           'No hydropower benefit is derived from the scenario energy span; not NPV, tariffs, tax or project ROI'],

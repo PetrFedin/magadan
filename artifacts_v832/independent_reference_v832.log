@@ -1,0 +1,17 @@
+{
+  "release": "V8.3.2",
+  "scope": "SYNTHETIC_CONSTANT_FLOW_EXACT_HEAD_INTEGRATION_ONLY",
+  "seed": 8322026,
+  "cases": 256,
+  "steps_per_case": 4096,
+  "reference": "INDEPENDENT_BISECT_AND_MIDPOINT_TIME_QUADRATURE",
+  "max_abs_reference_error_mwh": 6.429348559322534e-06,
+  "mean_abs_reference_error_mwh": 6.187496417453531e-07,
+  "old_midpoint_mean_abs_bias_mwh": 11.94084891852408,
+  "old_midpoint_max_abs_bias_mwh": 123.21792669074966,
+  "all_256_reference_checks_pass": true,
+  "real_hydrological_data_used": false,
+  "external_hydraulic_solver_verified": false,
+  "native_postgresql17_verified": false,
+  "production_eligible": false
+}

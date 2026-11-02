@@ -1,9 +1,9 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "HydroKontur Magadan V8.3.1 / controlled engineering lab",
+    "title": "HydroKontur Magadan V8.3.2 / controlled engineering lab",
     "description": "No industrial connections, not a production authorization or SCADA system",
-    "version": "0.8.3.1-lab"
+    "version": "0.8.3.2-lab"
   },
   "paths": {
     "/v72/meta/modules": {

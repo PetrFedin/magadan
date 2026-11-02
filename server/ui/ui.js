@@ -800,7 +800,9 @@ el('v83-run').addEventListener('click',()=>perform(async()=>{
     el(id).textContent=item.upper_forecast_inflow_cms.toFixed(2);
   }
   el('v83-balance').textContent=r.scenarios.every(x=>Math.abs(x.global_mass_balance_residual_m3)<1e-3)?'Баланс сведён':'Проверить';
+  const peakWarning=r.scenarios.some(s=>s.violations.some(v=>v.includes('ELECTRICAL_RATED_CAPACITY_EXCEEDED')));
   el('v83-assessment').textContent='Класс: '+r.qualification+
+    (peakWarning?' · ПРЕВЫШЕН синтетический предел мгновенной мощности: энергия не признаётся':' · Пиковая мощность проверена на обеих границах суток')+
     ' · Сценарии с нарушениями: '+r.scenarios.filter(s=>!s.feasible_under_synthetic_constraints).length+
     ' · Важные статистические замечания: '+r.calibration_and_stationarity_risk_flags.join(', ')+
     ' · Финансовый эффект: НЕ ПРИЗНАН';

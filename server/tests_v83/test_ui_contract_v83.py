@@ -34,3 +34,10 @@ def test_js_syntax_and_no_remote_dependencies():
     result=subprocess.run(['node','--check',str(ROOT/'server/ui/ui.js')],capture_output=True,text=True)
     assert result.returncode==0,result.stderr
     assert 'https://cdn' not in HTML
+
+
+def test_v832_capacity_warning_and_integral_disclosure_present():
+    assert 'V8.3.2' in HTML
+    assert 'peakWarning' in JS
+    assert 'ELECTRICAL_RATED_CAPACITY_EXCEEDED' in JS
+    assert 'ПРЕВЫШЕН синтетический предел мгновенной мощности' in JS
