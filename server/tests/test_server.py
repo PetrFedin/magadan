@@ -289,7 +289,7 @@ def test_local_seed_runs_from_empty_database_and_refuses_second_seed(tmp_path):
     db_path=tmp_path/'new-lab-seed.db'
     environment={**os.environ,'HYDRO_ALLOW_DEMO_SEED':'YES','HYDRO_DATABASE_URL':'sqlite:///'+str(db_path),
                  'PYTHONPATH':str(root)}
-    p=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True)
+    p=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True,timeout=60)
     assert p.returncode==0,p.stderr
     eng,Factory=setup_engine('sqlite:///'+str(db_path))
     with Factory() as db:
@@ -298,5 +298,5 @@ def test_local_seed_runs_from_empty_database_and_refuses_second_seed(tmp_path):
         assert db.scalar(select(func.count()).select_from(User))==7
         assert db.scalar(select(func.count()).select_from(Membership))==7
     eng.dispose()
-    rerun=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True)
+    rerun=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True,timeout=60)
     assert rerun.returncode==2 and 'not empty' in rerun.stderr
