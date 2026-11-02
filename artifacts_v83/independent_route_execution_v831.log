@@ -1,0 +1,16 @@
+{
+  "release": "8.3.1",
+  "scope": "SYNTHETIC_HOURLY_REFERENCE_ONLY",
+  "independent_integer_hour_lags_inclusive": [
+    0,
+    72
+  ],
+  "samples_per_lag": 6,
+  "scenarios": 438,
+  "seed": 8302026,
+  "max_flow_equivalent_error_cms": 2.5870071517096625e-13,
+  "conservation_check_passed": true,
+  "external_hydraulic_solver_executed": false,
+  "actual_magadan_hydrological_data_used": false,
+  "production_ready": false
+}

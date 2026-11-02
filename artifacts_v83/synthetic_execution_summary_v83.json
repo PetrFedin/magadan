@@ -1,8 +1,8 @@
 {
-  "release": "8.3",
+  "release": "8.3.1",
   "scope": "SYNTHETIC_ONLY",
   "forecast_engine": "v82-synthetic-daily-origin-calibration-v1",
-  "cascade_engine": "v83-one-day-cascade-lag-volume-head-efficiency-screen-v1",
+  "cascade_engine": "v83.1-one-day-cascade-lag-volume-head-efficiency-conditional-v2",
   "synthetic_cases": 20,
   "forecast_regimes_cms": [
     -30,
