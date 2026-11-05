@@ -41,3 +41,12 @@ def test_v832_capacity_warning_and_integral_disclosure_present():
     assert 'peakWarning' in JS
     assert 'ELECTRICAL_RATED_CAPACITY_EXCEEDED' in JS
     assert 'ПРЕВЫШЕН синтетический предел мгновенной мощности' in JS
+
+def test_v85_demo_seed_provides_two_realistically_named_synthetic_reservoir_assets():
+    """Structural contract only; browser and API acceptance remain separate."""
+    seed=(ROOT/'server/hydro_api/seed_lab.py').read_text(encoding='utf-8')
+    for ident in ('synthetic-feeder-a','synthetic-cascade-upper','synthetic-cascade-lower'):
+        assert ident in seed
+    assert "preferredUpper=lab.find(a=>a.id==='synthetic-cascade-upper')" in JS
+    assert "preferredLower=lowerPool.find(a=>a.id==='synthetic-cascade-lower')" in JS
+    assert "lowerPool=lab.filter(a=>a.id!==selected('v83-upper'))" in JS
