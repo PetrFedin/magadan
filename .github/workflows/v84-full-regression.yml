@@ -105,7 +105,7 @@ jobs:
             *) echo "UNEXPECTED_SHARD" >&2; exit 2 ;;
           esac
           timeout --signal=TERM --kill-after=15s 600s \
-            python -m pytest -q -ra --maxfail=1 --junitxml=/tmp/v84-junit.xml "${args[@]}"
+            python -m pytest -q -ra -o xfail_strict=true --maxfail=1 --junitxml=/tmp/v84-junit.xml "${args[@]}"
           required=()
           if test "$SHARD" = "v79-v832"; then
             required+=(--require-case test_instantaneous_rated_peak_over_110_mw_not_approved)
