@@ -14,7 +14,9 @@ def main():
         print('Refusing: demo seed only supports local SQLite',file=sys.stderr);return 2
     engine,Factory=setup_engine(url)
     with Factory() as db:
-        if db.scalar(select(Organization.id).limit(1)):
+        # A partial old laboratory database is NOT a valid fresh seed target.
+        if any(db.scalar(select(model.id).limit(1)) is not None
+               for model in (Organization, User, Membership, Asset)):
             print('Refusing: the database is not empty',file=sys.stderr);return 2
         org='magadan-synthetic-lab'
         db.add(Organization(id=org,name='HydroKontur synthetic multi-domain lab: NOT a field installation'))
