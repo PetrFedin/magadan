@@ -21,6 +21,71 @@ class EvidenceError(ValueError):
     """The offered evidence does not support the claimed result."""
 
 
+def collect_verified_cases(root: ET.Element) -> list[ET.Element]:
+    """Check all JUnit suite levels, rather than trusting leaf-only counts.
+
+    Pytest normally emits testsuites > testsuite > testcase. Other JUnit
+    producers may nest suites; every declared parent count must agree with
+    the aggregate of its descendants. Unexpected structures fail closed.
+    """
+    if root.tag not in {"testsuites", "testsuite"}:
+        raise EvidenceError("JUNIT_ROOT_UNEXPECTED")
+
+    def check_count(node: ET.Element, key: str, actual: int,
+                    mandatory: bool = False) -> None:
+        if mandatory and key not in node.attrib:
+            raise EvidenceError("JUNIT_TEST_COUNT_NOT_DECLARED")
+        if key in node.attrib:
+            try:
+                declared = int(node.attrib[key])
+            except (ValueError, TypeError) as exc:
+                raise EvidenceError("JUNIT_INVALID_DECLARED_OUTCOME") from exc
+            if declared < 0 or declared != actual:
+                raise EvidenceError("JUNIT_DECLARED_OUTCOME_MISMATCH:" + key)
+
+    def counters(cases: list[ET.Element]) -> dict[str, int]:
+        return {
+            "tests": len(cases),
+            "failures": sum(t.find("failure") is not None for t in cases),
+            "errors": sum(t.find("error") is not None for t in cases),
+            "skipped": sum(t.find("skipped") is not None for t in cases),
+        }
+
+    def inspect_suite(suite: ET.Element) -> list[ET.Element]:
+        if any(x.tag not in {"testcase", "testsuite", "properties",
+                             "system-out", "system-err"} for x in suite):
+            raise EvidenceError("JUNIT_UNEXPECTED_SUITE_CHILD")
+        cases = list(suite.findall("testcase"))
+        for child in suite.findall("testsuite"):
+            cases.extend(inspect_suite(child))
+        for key, actual in counters(cases).items():
+            check_count(suite, key, actual, mandatory=(key == "tests"))
+        return cases
+
+    if root.tag == "testsuite":
+        cases = inspect_suite(root)
+    else:
+        if any(child.tag != "testsuite" for child in root):
+            raise EvidenceError("JUNIT_WRAPPER_UNEXPECTED_CHILD")
+        cases = []
+        for suite in root.findall("testsuite"):
+            cases.extend(inspect_suite(suite))
+        for key, actual in counters(cases).items():
+            check_count(root, key, actual)
+
+    for case in cases:
+        if sum(case.find(tag) is not None for tag in
+               ("failure", "error", "skipped")) > 1:
+            raise EvidenceError("JUNIT_CONFLICTING_TESTCASE_OUTCOME")
+        if any(child.tag not in {"failure", "error", "skipped",
+                                 "properties", "system-out", "system-err"}
+               for child in case):
+            raise EvidenceError("JUNIT_UNEXPECTED_CASE_CHILD")
+    if not cases:
+        raise EvidenceError("JUNIT_NO_EXECUTED_CASES")
+    return cases
+
+
 def evaluate(junit: Path, *, shard: str, min_passed: int,
              max_skipped: int, actual_sha: str, expected_sha: str,
              required_cases: tuple[str, ...] = ()) -> dict:
@@ -32,37 +97,14 @@ def evaluate(junit: Path, *, shard: str, min_passed: int,
         raise EvidenceError("INVALID_TEST_COUNT_POLICY")
     if not junit.is_file() or junit.stat().st_size == 0:
         raise EvidenceError("JUNIT_FILE_MISSING_OR_EMPTY")
+    if junit.stat().st_size > 20_000_000:
+        raise EvidenceError("JUNIT_FILE_TOO_LARGE")
     raw = junit.read_bytes()
     try:
         root = ET.fromstring(raw)
     except ET.ParseError as exc:
         raise EvidenceError("JUNIT_XML_MALFORMED") from exc
-    if root.tag not in {"testsuites", "testsuite"}:
-        raise EvidenceError("JUNIT_ROOT_UNEXPECTED")
-    suites = [node for node in root.iter("testsuite")
-              if not any(child.tag == "testsuite" for child in node)]
-    if not suites:
-        raise EvidenceError("JUNIT_TESTSUITE_MISSING")
-    testcases: list[ET.Element] = []
-    for suite in suites:
-        cases = suite.findall("testcase")
-        try:
-            declared = int(suite.attrib["tests"])
-        except (KeyError, ValueError) as exc:
-            raise EvidenceError("JUNIT_TEST_COUNT_NOT_DECLARED") from exc
-        if declared != len(cases):
-            raise EvidenceError("JUNIT_TEST_COUNT_MISMATCH")
-        for attr, tag in (("failures", "failure"), ("errors", "error"),
-                          ("skipped", "skipped")):
-            if attr in suite.attrib:
-                try:
-                    expected = int(suite.attrib[attr])
-                except ValueError as exc:
-                    raise EvidenceError("JUNIT_INVALID_DECLARED_OUTCOME") from exc
-                observed = sum(len(c.findall(tag)) for c in cases)
-                if observed != expected:
-                    raise EvidenceError("JUNIT_DECLARED_OUTCOME_MISMATCH")
-        testcases.extend(cases)
+    testcases = collect_verified_cases(root)
     identities = [(t.attrib.get("classname"), t.attrib.get("name"))
                   for t in testcases]
     if any(not cls or not name for cls, name in identities):
