@@ -19,7 +19,18 @@ def main():
         org='magadan-synthetic-lab'
         db.add(Organization(id=org,name='Magadan synthetic electrical feeder: NOT a field installation'))
         db.flush()
-        db.add(Asset(id='synthetic-feeder-a',org_id=org,name='Synthetic reference 20 kV two-bus feeder',classification='LAB_REFERENCE'))
+        db.add_all([
+            Asset(id='synthetic-feeder-a', org_id=org,
+                  name='SYNTHETIC 20 kV two-bus grid feeder',
+                  classification='LAB_REFERENCE'),
+            Asset(id='synthetic-cascade-upper', org_id=org,
+                  name='SYNTHETIC upper reservoir / NOT a real HPP',
+                  classification='LAB_REFERENCE'),
+            Asset(id='synthetic-cascade-lower', org_id=org,
+                  name='SYNTHETIC lower reservoir / NOT a real HPP',
+                  classification='LAB_REFERENCE'),
+        ])
+        print('Seeded: 1 synthetic grid feeder + 2 synthetic cascade reservoir assets.')
         print('Generated credentials for local demonstration (not written to a file):')
         for role,name in [('engineer','engineer1'),('engineer','engineer2'),('economist','finance'),('manager','manager'),
                            ('auditor','auditor1'),('auditor','auditor2'),('viewer','viewer')]:
