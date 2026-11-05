@@ -17,7 +17,7 @@ def main():
         if db.scalar(select(Organization.id).limit(1)):
             print('Refusing: the database is not empty',file=sys.stderr);return 2
         org='magadan-synthetic-lab'
-        db.add(Organization(id=org,name='Magadan synthetic electrical feeder: NOT a field installation'))
+        db.add(Organization(id=org,name='HydroKontur synthetic multi-domain lab: NOT a field installation'))
         db.flush()
         db.add_all([
             Asset(id='synthetic-feeder-a', org_id=org,
