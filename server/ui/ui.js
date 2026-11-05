@@ -744,8 +744,13 @@ el('v82-run').addEventListener('click',()=>perform(async()=>{
 // V8.3: strict lab-only coupling: one predicted UTC day, two distinct assets.
 function refreshV83(){
   const lab=assets.filter(a=>a.classification==='LAB_REFERENCE');
-  choices('v83-upper',lab,x=>x.name+' / '+x.id);
-  choices('v83-lower',lab.filter(a=>a.id!==selected('v83-upper')),x=>x.name+' / '+x.id);
+  const preferredUpper=lab.find(a=>a.id==='synthetic-cascade-upper')?.id;
+  choices('v83-upper',lab,x=>x.name+' / '+x.id,preferredUpper);
+  const lowerPool=lab.filter(a=>a.id!==selected('v83-upper'));
+  const preferredLower=lowerPool.find(a=>a.id==='synthetic-cascade-lower')?.id
+    ||lowerPool.find(a=>a.id==='synthetic-cascade-upper')?.id
+    ||lowerPool[0]?.id;
+  choices('v83-lower',lab.filter(a=>a.id!==selected('v83-upper')),x=>x.name+' / '+x.id,preferredLower);
 }
 el('v83-upper').addEventListener('change',refreshV83);
 function syntheticCascadeV83(){
