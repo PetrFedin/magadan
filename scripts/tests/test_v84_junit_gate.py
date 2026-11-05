@@ -109,5 +109,55 @@ class EvidenceGateTests(unittest.TestCase):
                      max_skipped=0, actual_sha=SHA, expected_sha=SHA)
 
 
+
+    def test_nested_suite_aggregate_is_reconciled(self):
+        xml = ('<testsuites tests="2" failures="0" errors="0" skipped="0">'
+               '<testsuite tests="2"><testcase classname="cases" name="root"/>'
+               '<testsuite tests="1"><testcase classname="cases" name="nested"/>'
+               '</testsuite></testsuite></testsuites>')
+        result = self.check(xml, min_passed=2)
+        self.assertEqual(result["executed"], 2)
+
+    def test_forged_parent_aggregate_cannot_be_green(self):
+        xml = ('<testsuites tests="3"><testsuite tests="1">'
+               '<testcase classname="cases" name="actual"/>'
+               '</testsuite></testsuites>')
+        with self.assertRaisesRegex(EvidenceError, "JUNIT_DECLARED_OUTCOME_MISMATCH"):
+            self.check(xml)
+
+    def test_direct_case_outside_suite_is_rejected(self):
+        xml = ('<testsuites><testcase classname="outside" name="false_pass"/>'
+               '<testsuite tests="1"><testcase classname="real" name="valid"/>'
+               '</testsuite></testsuites>')
+        with self.assertRaisesRegex(EvidenceError, "JUNIT_WRAPPER_UNEXPECTED_CHILD"):
+            self.check(xml)
+
+    def test_conflicting_outcomes_cannot_be_green(self):
+        xml = document([case_xml("conflict",
+                       '<failure message="f"/><skipped message="s"/>')],
+                       failures=1, skipped=1)
+        with self.assertRaisesRegex(EvidenceError, "JUNIT_CONFLICTING_TESTCASE_OUTCOME"):
+            self.check(xml, max_skipped=1)
+
+    def test_suite_without_declared_test_count_is_rejected(self):
+        xml = ('<testsuites><testsuite><testcase classname="a" name="b"/>'
+               '</testsuite></testsuites>')
+        with self.assertRaisesRegex(EvidenceError, "JUNIT_TEST_COUNT_NOT_DECLARED"):
+            self.check(xml)
+
+    def test_unexpected_child_cannot_be_ignored(self):
+        xml = ('<testsuites><testsuite tests="1"><untrusted-result/>'
+               '<testcase classname="real" name="valid"/>'
+               '</testsuite></testsuites>')
+        with self.assertRaisesRegex(EvidenceError, "JUNIT_UNEXPECTED_SUITE_CHILD"):
+            self.check(xml)
+
+    def test_negative_count_is_rejected(self):
+        xml = ('<testsuites><testsuite tests="-1">'
+               '<testcase classname="a" name="b"/></testsuite></testsuites>')
+        with self.assertRaisesRegex(EvidenceError, "JUNIT_DECLARED_OUTCOME_MISMATCH"):
+            self.check(xml)
+
+
 if __name__ == "__main__":
     unittest.main()
