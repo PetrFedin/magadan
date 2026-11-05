@@ -294,7 +294,12 @@ def test_local_seed_runs_from_empty_database_and_refuses_second_seed(tmp_path):
     eng,Factory=setup_engine('sqlite:///'+str(db_path))
     with Factory() as db:
         assert db.scalar(select(func.count()).select_from(Organization))==1
-        assert db.scalar(select(func.count()).select_from(Asset))==1
+        assert db.scalar(select(func.count()).select_from(Asset))==3
+        assert set(db.scalars(select(Asset.id)).all())=={
+            'synthetic-feeder-a',
+            'synthetic-cascade-upper',
+            'synthetic-cascade-lower',
+        }
         assert db.scalar(select(func.count()).select_from(User))==7
         assert db.scalar(select(func.count()).select_from(Membership))==7
     eng.dispose()
