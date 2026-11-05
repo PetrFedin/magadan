@@ -1,4 +1,4 @@
-name: HydroKontur V8.4 Split Synthetic QA (NOT production)
+name: HydroKontur V8.5 Synthetic Role + Monolithic Python QA (NOT production)
 
 on:
   pull_request:
@@ -121,6 +121,51 @@ jobs:
             --min-passed "$min" --max-skipped "$skips" --actual-sha "$actual" \
             --expected-sha "$EXPECTED_SHA" "${required[@]}"
 
+  monolithic-python-order-probe:
+    needs: provenance-and-parser
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install application test dependencies
+        run: python -m pip install -r server/requirements.txt
+      - name: All non-native Python tests in ONE pytest process (including seed)
+        shell: bash
+        env:
+          PYTHONPATH: server
+          EXPECTED_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+        run: |
+          set -euo pipefail
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$EXPECTED_SHA"
+          timeout --signal=TERM --kill-after=15s 720s \
+            python -m pytest -q -ra -o xfail_strict=true --maxfail=1 \
+              server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
+              server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 \
+              server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 \
+              server/tests_v83 server/tests_v85 server/tests \
+              --ignore=server/tests_v71/test_postgres_native.py \
+              --ignore=server/tests_v78/test_postgres_native_v78.py \
+              --ignore=server/tests_v8/test_postgres_native_boundary_v8.py \
+              --ignore=server/tests_v81/test_pg_graph_freeze_native_v81.py \
+              --ignore=server/tests/test_browser.py \
+              --junitxml=/tmp/v85-monolithic-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v85-monolithic-junit.xml \
+            --shard v85-all-python-single-process \
+            --min-passed 378 --max-skipped 4 \
+            --actual-sha "$actual" --expected-sha "$EXPECTED_SHA" \
+            --require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed \
+            --require-case test_instantaneous_rated_peak_over_110_mw_not_approved \
+            --require-case test_independent_role_sessions_forecast_to_cascade_without_financial_post \
+            --require-case test_revocation_invalidates_existing_sessions_without_harming_other_role \
+            --require-case test_peak_violation_cannot_enter_money_or_dispatch_in_any_role
+
   javascript:
     needs: provenance-and-parser
     runs-on: ubuntu-latest
@@ -173,7 +218,7 @@ jobs:
 
   final-check:
     if: always()
-    needs: [provenance-and-parser, python-regression, javascript, engineering-synthetic]
+    needs: [provenance-and-parser, python-regression, monolithic-python-order-probe, javascript, engineering-synthetic]
     runs-on: ubuntu-latest
     timeout-minutes: 3
     steps:
@@ -181,12 +226,13 @@ jobs:
         env:
           SOURCE: ${{ needs.provenance-and-parser.result }}
           PYTHON: ${{ needs.python-regression.result }}
+          MONOLITHIC: ${{ needs.monolithic-python-order-probe.result }}
           JS: ${{ needs.javascript.result }}
           ENGINEERING: ${{ needs.engineering-synthetic.result }}
         run: |
           set -eu
-          for result in "$SOURCE" "$PYTHON" "$JS" "$ENGINEERING"; do
+          for result in "$SOURCE" "$PYTHON" "$MONOLITHIC" "$JS" "$ENGINEERING"; do
             test "$result" = success || { echo 'V84_QA_HOLD'; exit 1; }
           done
-          echo 'V84_SPLIT_SYNTHETIC_QA_PASS_ONLY'
-          echo 'Not native PostgreSQL17 RLS, monolithic pytest, real browser roles, field hydrology or production.'
+          echo 'V85_SPLIT_AND_SINGLE_PROCESS_SYNTHETIC_QA_PASS_ONLY'
+          echo 'Not native PostgreSQL17 RLS, real browser roles, field hydrology or production.'
