@@ -91,8 +91,8 @@ jobs:
                     --ignore=server/tests_v78/test_postgres_native_v78.py)
               ;;
             v79-v832)
-              min=167; skips=2
-              args=(server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests_v83 server/tests
+              min=170; skips=2
+              args=(server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests_v83 server/tests_v85 server/tests
                     --ignore=server/tests_v8/test_postgres_native_boundary_v8.py
                     --ignore=server/tests_v81/test_pg_graph_freeze_native_v81.py
                     --ignore=server/tests/test_browser.py
@@ -110,6 +110,9 @@ jobs:
           if test "$SHARD" = "v79-v832"; then
             required+=(--require-case test_instantaneous_rated_peak_over_110_mw_not_approved)
             required+=(--require-case test_v832_peak_capacity_failure_does_not_claim_financial_energy)
+            required+=(--require-case test_independent_role_sessions_forecast_to_cascade_without_financial_post)
+            required+=(--require-case test_revocation_invalidates_existing_sessions_without_harming_other_role)
+            required+=(--require-case test_peak_violation_cannot_enter_money_or_dispatch_in_any_role)
           fi
           if test "$SHARD" = "legacy-seed"; then
             required+=(--require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed)
