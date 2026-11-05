@@ -91,7 +91,7 @@ jobs:
                     --ignore=server/tests_v78/test_postgres_native_v78.py)
               ;;
             v79-v832)
-              min=171; skips=2
+              min=172; skips=2
               args=(server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests_v83 server/tests_v85 server/tests
                     --ignore=server/tests_v8/test_postgres_native_boundary_v8.py
                     --ignore=server/tests_v81/test_pg_graph_freeze_native_v81.py
@@ -114,6 +114,7 @@ jobs:
             required+=(--require-case test_revocation_invalidates_existing_sessions_without_harming_other_role)
             required+=(--require-case test_peak_violation_cannot_enter_money_or_dispatch_in_any_role)
             required+=(--require-case test_v85_demo_seed_provides_two_realistically_named_synthetic_reservoir_assets)
+            required+=(--require-case test_local_seed_rejects_partial_existing_user_database)
           fi
           if test "$SHARD" = "legacy-seed"; then
             required+=(--require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed)
@@ -159,14 +160,15 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v85-monolithic-junit.xml \
             --shard v85-all-python-single-process \
-            --min-passed 379 --max-skipped 4 \
+            --min-passed 380 --max-skipped 4 \
             --actual-sha "$actual" --expected-sha "$EXPECTED_SHA" \
             --require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed \
             --require-case test_instantaneous_rated_peak_over_110_mw_not_approved \
             --require-case test_independent_role_sessions_forecast_to_cascade_without_financial_post \
             --require-case test_revocation_invalidates_existing_sessions_without_harming_other_role \
             --require-case test_peak_violation_cannot_enter_money_or_dispatch_in_any_role \
-            --require-case test_v85_demo_seed_provides_two_realistically_named_synthetic_reservoir_assets
+            --require-case test_v85_demo_seed_provides_two_realistically_named_synthetic_reservoir_assets \
+            --require-case test_local_seed_rejects_partial_existing_user_database
 
   javascript:
     needs: provenance-and-parser
