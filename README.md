@@ -70,6 +70,7 @@ node --check server/ui/ui.js
 - [V8.4: CI, JUnit и точный SHA](docs/V84_CI_TEST_EVIDENCE_AND_RELEASE_GATES.md)
 - [V8.5: сквозная матрица отдельных инженерных и аудиторских сессий](docs/V85_ROLE_JOURNEY_AND_EVIDENCE_MATRIX.md)
 - [V8.5: исходник ролевых HTTP-тестов](server/tests_v85/test_role_journey_v85.py)
+- [V8.5: безопасный запуск локальной учебной демоверсии](docs/V85_LOCAL_DEMO_START_RU.md)
 - [Fail-closed validator JUnit](scripts/v84_junit_gate.py)
 
 **Новые V8.5 тесты находятся в Draft PR #13 и требуют реального исполнения CI.** Это не принятие PostgreSQL17, не авторизованный браузерный E2E и не промышленная эксплуатация. Последние GitHub Actions до начала шагов возвращали ошибку назначения runner. Для обсуждения инфраструктуры — [Issue #6](https://github.com/PetrFedin/magadan/issues/6).
