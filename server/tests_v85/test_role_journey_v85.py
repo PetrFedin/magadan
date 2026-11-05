@@ -40,12 +40,12 @@ def test_independent_role_sessions_forecast_to_cascade_without_financial_post(ro
     """Engineer/auditor can reproduce while finance/viewer/other org cannot."""
     env = role_lab
     assert len({env['tokens'][name] for name in
-                ('lead', 'audit', 'finance', 'viewer', 'other')}) == 5
+                ('lead', 'audit', 'finance', 'viewer', 'manager', 'other')}) == 6
     body = cascade_case_v83()
     baseline = stored_counts(env)
     with ExitStack() as stack:
         clients = {name: stack.enter_context(TestClient(env['app'])) for name in
-                   ('lead', 'audit', 'finance', 'viewer', 'other', 'anonymous')}
+                   ('lead', 'audit', 'finance', 'viewer', 'manager', 'other', 'anonymous')}
 
         def post(name, path, data):
             headers = {} if name == 'anonymous' else env['h'](name)
@@ -77,6 +77,7 @@ def test_independent_role_sessions_forecast_to_cascade_without_financial_post(ro
 
         assert post('finance', CASCADE, body).status_code == 403
         assert post('viewer', CASCADE, body).status_code == 403
+        assert post('manager', CASCADE, body).status_code == 403
         assert post('anonymous', CASCADE, body).status_code == 401
         assert post('other', CASCADE, body).status_code == 404
         assert post('lead', OTHER_CASCADE, body).status_code == 404
