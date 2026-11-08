@@ -41,7 +41,8 @@
 
 ## Главные HOLD
 
-- **GitHub Actions**: GitHub Check annotation из прямого запроса GitHub API сообщает: 'The job was not started because recent account payments have failed or your spending limit needs to be increased.' Github-hosted runner_id=0, steps=[]. Не менять платёжные лимиты без пользователя. Issue #6: https://github.com/PetrFedin/magadan/issues/6
+- **GitHub Actions (история и фактическая проверка)**: раньше GitHub Check выдавал 'The job was not started because recent account payments have failed or your spending limit needs to be increased.' (runner_id=0, steps=[]). Но **8 ноября 2026** runner действительно выделен и исполнял шаги на SHA b09e3e8: HydroForecast #42427800422 SUCCESS, Cascade #42427800363 SUCCESS. Основная workflow #42427800365 выполнила тесты, но не прошла два задания из-за отсутствующей криптографической зависимости в GitHub CI; исправлено использование requirements-v71.txt. Native PG17 manual workflow #42428020706 обнаружила некорректное quoting в Docker healthcheck; теперь используется --health-cmd=pg_isready. Результаты новых CI запусков после исправлений нужно проверять на новом точном SHA. Статус billing НЕ считать доказанно решённым навсегда; платежи автоматически не менять. Issue #6: https://github.com/PetrFedin/magadan/issues/6
+- **Real Chromium GitHub check**: добавлен отдельный browser-lab job на Ubuntu 24.04 с Playwright и четырьмя разрешениями; входит в обязательную агрегирующую проверку без ложного GREEN. Это не корпоративный PostgreSQL + OIDC staging.
 - **Корпоративный staging**: не подтверждены browser+PG17 вместе с реальным OIDC/MFA, внешним WORM, полноценным backup/restore и независимым ревью.
 - **Инженерия**: отсутствуют разрешённые реальные суточные данные, калиброванные curves, независимая гидравлическая экспертиза, корректная подтверждённая экономия.
 
