@@ -1,6 +1,10 @@
 -- V7.7 candidate for an EMPTY, isolated PostgreSQL 17 acceptance database.
 -- DO NOT MARK NATIVE PASS until tests_v71/test_postgres_native.py runs with real PG17.
 -- This is a record of UNATTESTED lab comparisons, not a certified engineering report.
+-- PostgreSQL requires an exact unique composite key for the tenant-scoped FK below.
+-- The existing (org_id,id) key does not qualify for (org_id,asset_id,id).
+ALTER TABLE public.study_runs
+  ADD CONSTRAINT study_runs_tenant_asset_identity_v77 UNIQUE (org_id,asset_id,id);
 CREATE TABLE public.grid_reference_comparisons_v77 (
     id varchar PRIMARY KEY,
     org_id varchar NOT NULL REFERENCES public.organizations(id),

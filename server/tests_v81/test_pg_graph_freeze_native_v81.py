@@ -17,7 +17,7 @@ if not os.environ.get('HYDRO_NATIVE_CONFIG'):
 
 from sqlalchemy import text
 from sqlalchemy.exc import DBAPIError
-from tests_v71.test_postgres_native import n  # noqa: F401: native fixture
+from tests_v71.test_postgres_native import n, native  # noqa: F401: pytest fixture dependencies
 
 pytestmark = pytest.mark.native_pg
 LOCK_PREFIX='hk:v81:boundary-claim:org:'

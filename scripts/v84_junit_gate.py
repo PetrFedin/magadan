@@ -40,7 +40,11 @@ def collect_verified_cases(root: ET.Element) -> list[ET.Element]:
                 declared = int(node.attrib[key])
             except (ValueError, TypeError) as exc:
                 raise EvidenceError("JUNIT_INVALID_DECLARED_OUTCOME") from exc
-            if declared < 0 or declared != actual:
+            if declared < 0:
+                raise EvidenceError("JUNIT_DECLARED_OUTCOME_MISMATCH:" + key)
+            if declared != actual:
+                if key == "tests" and node.tag == "testsuite":
+                    raise EvidenceError("JUNIT_TEST_COUNT_MISMATCH")
                 raise EvidenceError("JUNIT_DECLARED_OUTCOME_MISMATCH:" + key)
 
     def counters(cases: list[ET.Element]) -> dict[str, int]:
@@ -82,7 +86,7 @@ def collect_verified_cases(root: ET.Element) -> list[ET.Element]:
                for child in case):
             raise EvidenceError("JUNIT_UNEXPECTED_CASE_CHILD")
     if not cases:
-        raise EvidenceError("JUNIT_NO_EXECUTED_CASES")
+        raise EvidenceError("INSUFFICIENT_PASS_COUNT")
     return cases
 
 
