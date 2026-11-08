@@ -25,6 +25,10 @@
 
 Эти результаты НЕ являются source-pinned релизной приёмкой: перед записью коммита рабочее дерево изменялось.
 
+## Отдельная browser race из настоящего GitHub Linux runner
+
+В полном GitHub Actions V8.6 на SHA 92e99c1 (run #42428245707) все Python-группы, монолитный Python, исходники и JS завершились успешно, но реальный Linux Chromium поймал гонку UI: результат расчёта уже появился, а tenant-список run-list ещё не обновился; преждевременное нажатие Create Initiative не создавало запись. Исправлено: create-initiative отключена до наличия подтверждённой серверной записи Run; браузерный тест ждёт реальный option и проверяет disabled/enabled state. Две повторные локальные проверки Chromium прошли без изменения Content Security Policy. Обновлённый GitHub E2E должен быть исполнен заново на новом SHA.
+
 ## Новый единый source-pinned скрипт
 
 Файл scripts/run_v86_local_ci.sh требует чистое рабочее дерево, точный 40-символьный SHA, активную виртуальную среду .venv, путь HYDRO_NATIVE_CONFIG к НОВОЙ подготовленной PG17 базе и установленный Chromium (через HYDRO_BROWSER_EXECUTABLE). Выполняет исходный исторический SHA манифест 452/452, unit JUnit, 63 JS, 256 synthetic integral, 438 hourly route, 60 cascade branches, 380 Python, 40 PG17 native, браузерный E2E и создаёт JUnit SHA256 receipt.

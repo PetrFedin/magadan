@@ -19,6 +19,7 @@ async function api(path,method='GET',body=null){
 function selected(id){return el(id).value}
 function choices(id,items,toTitle,choose){const sel=el(id),prior=sel.value;sel.replaceChildren();for(const row of items){let op=document.createElement('option');op.value=row.id;op.textContent=toTitle(row);sel.append(op)}if(items.some(v=>v.id===prior))sel.value=prior;else if(choose)sel.value=choose;}
 function own(){if(!org)throw Error('Укажите организацию');return '/v7/orgs/'+encodeURIComponent(org)}
+el('create-initiative').disabled=true;
 const sample={source_voltage_kv_ll:20,load_p_mw:5,load_q_mvar:2,line_r_ohm_per_phase:.3,line_x_ohm_per_phase:.4,period_hours:100,reference_name:'Synthetic Magadan research feeder — NOT physical network'};
 async function refresh(){
   if(!org)return;const base=own(), requestOrg=org, generation=++refreshGeneration;
@@ -31,6 +32,7 @@ async function refresh(){
   choices('attached-evidence',evidences.filter(x=>x.status==='accepted'),x=>x.kind+' — '+x.id.slice(0,8));
   choices('model-list',models,x=>x.algorithm+' — '+x.status+' — '+x.id.slice(0,8));
   choices('run-list',runs,x=>x.reference_name+' — '+x.id.slice(0,8));
+  el('create-initiative').disabled=runs.length===0;
   choices('initiative-list',initiatives,x=>x.title+' — '+x.state);
   updateTransition();
   await refreshStudies();
@@ -66,6 +68,7 @@ el('verify-audit').addEventListener('click',()=>perform(async()=>{const x=await 
 function clearTenantView(){
   refreshGeneration++;
   assets=[];evidences=[];models=[];runs=[];initiatives=[];
+  el('create-initiative').disabled=true;
   studyRuns=[];radialRuns=[];radialDossiers=[];researchProgrammes=[];researchHandoffs=[];assurancePacks=[];annualDossiers78=[];
   for(const id of ['handoff-left','handoff-right','handoff-programme','handoff-list','programme-study-ids','programme-finance-ids','programme-list','radial-asset','radial-baseline','radial-alternative','radial-dossier-list'])el(id).replaceChildren();
   for(const id of ['study-run-list','study-left','study-right','study-asset'])el(id).replaceChildren();

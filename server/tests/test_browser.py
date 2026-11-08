@@ -38,6 +38,7 @@ def test_real_browser_login_workflow_and_mobile(env):
                     page.locator('#logout').click()
                     page.locator('#auth-card').wait_for(state='visible')
                 login('lead')
+                expect(page.locator('#create-initiative')).to_be_disabled()
                 assert page.locator('#asset').input_value()=='feeder-a'
                 # First synthetic evidence; audit role must review it.
                 page.locator('#create-evidence').click()
@@ -58,6 +59,10 @@ def test_real_browser_login_workflow_and_mobile(env):
                 page.locator('#calculate').click()
                 expect(page.locator('#calc-result')).to_contain_text('line_loss_p_mw')
                 assert '0.022004055' in page.locator('#calc-result').inner_text()
+                # The result JSON can arrive before refresh publishes the new run
+                # to the tenant-scoped selector. Never click early.
+                page.locator('#run-list option').first.wait_for(state='attached')
+                expect(page.locator('#create-initiative')).to_be_enabled()
                 page.locator('#create-initiative').click()
                 page.locator('#initiative-list option').first.wait_for(state='attached')
                 page.locator('#transition').click()
