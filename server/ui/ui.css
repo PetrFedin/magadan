@@ -55,3 +55,15 @@
 .cascade-v83-workspace .programme-output{max-height:520px;overflow:auto;overflow-wrap:anywhere}
 .cascade-v83-workspace .study-grid{align-items:start}
 @media(max-width:600px){.cascade-v83-workspace .forecast-v82-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* V8.8: informational research tables, no investment dispatch controls. */
+.regional-v88-workspace{border-top:4px solid #967a4e;background:#fffdfa}
+.regional-v88-workspace .study-grid{align-items:start}
+.regional-v88-workspace textarea{min-height:270px;font-size:11px}
+.v88-scroll{overflow-x:auto;margin:12px 0 18px;border:1px solid #d9e2e5;border-radius:10px}
+.v88-results{border-collapse:collapse;min-width:510px;width:100%;font-size:12px;text-align:left}
+.v88-results th{background:#eff3f4;color:#33586b;font-size:11px;font-weight:750}
+.v88-results th,.v88-results td{padding:11px 12px;border-bottom:1px solid #e2e9eb;vertical-align:middle}
+.v88-results tr:last-child td{border-bottom:0}
+.regional-v88-workspace .result{max-height:510px}
+@media(max-width:760px){.regional-v88-workspace .forecast-v82-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}

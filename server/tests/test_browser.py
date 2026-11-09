@@ -67,6 +67,16 @@ def test_real_browser_login_workflow_and_mobile(env):
                 page.locator('#initiative-list option').first.wait_for(state='attached')
                 page.locator('#transition').click()
                 expect(page.locator('#initiative-list')).to_contain_text('engineering_review')
+                # V8.8 real browser exercises the new synthetic 3-scenario
+                # regional module without recognizing available real MW or NPV.
+                page.locator('#v88-load-mw').select_option('150')
+                page.locator('#v88-sample').click()
+                page.locator('#v88-run').click()
+                expect(page.locator('#v88-scenario-rows tr')).to_have_count(3)
+                expect(page.locator('#v88-passes')).to_have_text('1 / 3')
+                expect(page.locator('#v88-decision')).to_have_text('HOLD')
+                expect(page.locator('#v88-assessment')).to_contain_text('НЕ признана')
+                expect(page.locator('#v88-output')).to_contain_text('financial_ledger_updated')
                 page.screenshot(path=str(savedir/'v7-desktop.png'),full_page=True)
                 assert not errors,errors
                 ctx=browser.new_context(viewport={'width':375,'height':812},device_scale_factor=1,is_mobile=True,has_touch=True)
@@ -106,6 +116,15 @@ def test_real_browser_login_workflow_and_mobile(env):
                         role_page.locator('#fill-sample').click()
                         role_page.locator('#create-evidence').click()
                         expect(role_page.locator('#notice')).to_contain_text('403')
+                        role_page.locator('#v88-sample').click()
+                        role_page.locator('#v88-run').click()
+                        if username == 'audit':
+                            # Auditors may independently recompute this read-only lab model.
+                            expect(role_page.locator('#v88-scenario-rows tr')).to_have_count(3)
+                            expect(role_page.locator('#notice')).to_contain_text('Проверено три синтетических')
+                        else:
+                            expect(role_page.locator('#notice')).to_contain_text('403')
+                        expect(role_page.locator('#v88-decision')).to_have_text('HOLD')
                     role_page.screenshot(path=str(savedir/f'v85-role-{username}.png'), full_page=True)
                     isolated.close()
 
@@ -133,7 +152,9 @@ def test_real_browser_login_workflow_and_mobile(env):
                 browser.close()
                 (savedir/'browser_result.json').write_text(json.dumps({'browser':'Chromium','desktop':'1440','mobile':'375','login':True,
                     'evidence_review':True,'model_review':True,'physical_solver':True,'initiative_state':True,
-                    'audit_verified':True,'horizontal_overflow':False,'console_pageerrors':errors},ensure_ascii=False,indent=2))
+                    'audit_verified':True,'regional_energy_3_scenarios':True,
+                    'investment_approval':'HOLD','horizontal_overflow':False,
+                    'console_pageerrors':errors},ensure_ascii=False,indent=2))
         finally:
             server.should_exit=True;t.join(timeout=10)
             assert not t.is_alive(), 'HTTP server did not shut down'

@@ -50,7 +50,7 @@ async function refresh(){
 function updateTransition(){const i=initiatives.find(x=>x.id===selected('initiative-list'));const s=el('next-state');s.replaceChildren();if(i&&follow[i.state]){const op=document.createElement('option');op.value=follow[i.state];op.textContent=follow[i.state]+' · revision '+i.revision;s.append(op)}}
 async function perform(fn){try{await fn();await refresh()}catch(e){info(e.message,true)}}
 el('login-form').addEventListener('submit',async e=>{e.preventDefault();try{const fd=new FormData(e.target);const t=await api('/v7/auth/login','POST',{email:fd.get('email'),password:fd.get('password')});token=t.access_token;who=await api('/v7/me');el('identity').textContent=who.email;el('auth-card').hidden=true;el('session').hidden=false;el('login-result').textContent='';const sel=el('org');sel.replaceChildren();for(const m of who.organizations){const opt=document.createElement('option');opt.value=m.org_id;opt.textContent=m.org_id+' ('+m.role+')';sel.append(opt)}org=sel.value;el('role-info').textContent='Серверные роли: '+who.organizations.map(x=>x.org_id+':'+x.role).join(', ');el('payload').value=JSON.stringify(sample,null,2);await refresh();el('lab').hidden=false;info('Подключено к серверу. Лабораторные входные данные синтетические.')}catch(e){token=null;info(e.message,true)}});
-el('logout').addEventListener('click',async()=>{try{if(token || authMode==='oidc')await api('/v7/auth/logout','POST',{})}catch(e){info(e.message,true);return;}token=null;who=null;org=null;el('lab').hidden=true;el('session').hidden=true;el('auth-card').hidden=false;el('login-form').reset();info('Выход выполнен. Для новой роли нужен новый вход с отдельной учётной записью.')});
+el('logout').addEventListener('click',async()=>{try{if(token || authMode==='oidc')await api('/v7/auth/logout','POST',{})}catch(e){info(e.message,true);return;}token=null;who=null;org=null;el('v88-case').value='';resetV88Result();el('lab').hidden=true;el('session').hidden=true;el('auth-card').hidden=false;el('login-form').reset();info('Выход выполнен. Для новой роли нужен новый вход с отдельной учётной записью.')});
 el('org').addEventListener('change',()=>perform(async()=>{org=el('org').value;clearTenantView();await refresh();info('Контекст переключён на '+org+'; права проверяются сервером')}));
 el('fill-sample').addEventListener('click',()=>{el('kind').value='grid_input';el('source_ref').value='SYNTHETIC-REFERENCE-CASE-2026';el('payload').value=JSON.stringify(sample,null,2);info('Загружен только синтетический эталон; реальные параметры сетей отсутствуют.')});
 el('create-evidence').addEventListener('click',()=>perform(async()=>{const body={asset_id:selected('asset'),kind:selected('kind'),source_ref:el('source_ref').value,payload:JSON.parse(el('payload').value)};const x=await api(own()+'/evidence','POST',body);info('Документ добавлен: '+x.id+'. Статус: '+x.status)}));
@@ -83,6 +83,7 @@ function clearTenantView(){
   el('v79-output').textContent='';el('v79-mv-output').textContent='';
   for(const id of ['v8-boundary-asset','v8-boundary-map','v8-overlap-a','v8-overlap-b','v8-parent'])el(id).replaceChildren();
   el('v8-boundary-output').textContent='';
+  el('v88-case').value='';resetV88Result();
   el('v82-plot').replaceChildren();
   el('v82-output').textContent='';
   el('v82-assessment').textContent='Новый контекст: исходные расчёты очищены.';
@@ -819,4 +820,98 @@ el('v83-run').addEventListener('click',()=>perform(async()=>{
       scenario_energy_span_mwh:r.scenario_energy_span_mwh,
       risk:r.hydrology_report,scenarios:r.scenarios,limitations:r.limitations,proof:response.proof},null,2);
   info('Проверен лабораторный баланс по двум водохранилищам; никакого решения о режиме или экономии не принято.');
+}));
+
+// V8.8 - regional energy balance / conditional investment laboratory.
+// All values generated here are intentionally invented and never field data.
+const V88_YEAR=2031;
+function syntheticRegionV88(){
+  const mw=Number(selected('v88-load-mw'));
+  const utilization=Number(el('v88-utilization').value);
+  if(!Number.isFinite(mw)||!Number.isFinite(utilization)||utilization<0||utilization>1)
+    throw Error('Некорректная синтетическая мощность или загрузка');
+  const source='SYNTHETIC-REGIONAL-V88-EXAMPLE-NOT-FIELD-VALUES';
+  const scenario=code=>({
+    code,source_ref:'SYNTHETIC-V88-'+code,
+    months:Array.from({length:12},(_,i)=>({
+      month:i+1,
+      hydro_deliverable_energy_mwh:code==='LOW_WATER'?215000:285000,
+      thermal_deliverable_energy_mwh:35000,
+      existing_demand_energy_mwh:200000,
+      existing_coincident_peak_mw:470,
+      firm_generation_peak_mw:1000,
+      regional_network_deliverable_peak_mw:code==='NETWORK_CONTINGENCY'?560:840,
+      firm_operating_reserve_mw:90,
+    })),
+  });
+  return {
+    year:V88_YEAR,source_ref:source,original_data_origin:'SYNTHETIC_ONLY',
+    real_source_attested:false,corporate_financial_approval:false,
+    independent_engineering_approval:false,discount_rate_fraction:'0.10',
+    investment_horizon_years:12,
+    projects:[{
+      project_id:'synthetic-regional-load-'+String(mw),
+      title:'SYNTHETIC consumer '+mw+' MW - NOT an operating facility',
+      sector:selected('v88-sector'),rated_mw:mw,utilization_fraction:utilization,
+      capex_rub:'1500000000',annual_fixed_opex_rub:'40000000',
+      gross_value_rub_per_mwh:'12000',electricity_cost_rub_per_mwh:'5500',
+    }],
+    scenarios:['NORMAL','LOW_WATER','NETWORK_CONTINGENCY'].map(scenario),
+  };
+}
+function resetV88Result(){
+  for(const id of ['v88-peak','v88-energy','v88-passes'])el(id).textContent='—';
+  el('v88-decision').textContent='HOLD';
+  el('v88-assessment').textContent='Нет нового расчёта. Результаты предыдущей организации или входных параметров недействительны.';
+  el('v88-output').textContent='Нет текущего серверного подтверждения.';
+  for(const id of ['v88-scenario-rows','v88-finance-rows'])el(id).replaceChildren();
+}
+el('v88-sample').addEventListener('click',()=>{
+  try{
+    el('v88-case').value=JSON.stringify(syntheticRegionV88(),null,2);
+    resetV88Result();
+    info('Подготовлены 36 синтетических месяцев; все цены, режимы и нагрузки искусственные.');
+  }catch(e){info(e.message,true)}
+});
+el('v88-case').addEventListener('input',resetV88Result);
+function appendV88Row(tbody,values){
+  const tr=document.createElement('tr');
+  for(const val of values){const td=document.createElement('td');td.textContent=String(val);tr.append(td)}
+  tbody.append(tr);
+}
+const v88Caption={NORMAL:'Обычный',LOW_WATER:'Маловодный',NETWORK_CONTINGENCY:'Сетевое ограничение'};
+function renderRegionalV88(response){
+  const report=response.report;
+  el('v88-peak').textContent=report.portfolio_conservative_coincident_peak_mw.toFixed(1)+' МВт';
+  el('v88-energy').textContent=(report.annual_requested_new_energy_mwh/1000).toFixed(1);
+  const passed=report.scenarios.filter(s=>s.all_months_feasible).length;
+  el('v88-passes').textContent=passed+' / '+report.scenarios.length;
+  el('v88-decision').textContent='HOLD';
+  el('v88-assessment').textContent=report.synthetic_all_scenarios_adequate
+    ?'Три искусственных сценария обеспечены по месячной энергии и консервативному пику. Это не N−1, не почасовая доступность и не инвестиционное одобрение.'
+    :'Есть ограничения энергии или мощности. Дополнительная нагрузка НЕ признана обеспеченной. Промышленное и инвестиционное решение — HOLD.';
+  const sbody=el('v88-scenario-rows');sbody.replaceChildren();
+  for(const item of report.scenarios)
+    appendV88Row(sbody,[v88Caption[item.code]||item.code,
+      (item.incremental_energy_shortfall_mwh/1000).toFixed(2),
+      item.maximum_coincident_peak_shortfall_mw.toFixed(1),
+      item.all_months_feasible?'Условно проходит':'НЕ проходит']);
+  const fbody=el('v88-finance-rows');fbody.replaceChildren();
+  for(const p of report.conditional_project_economics)
+    appendV88Row(fbody,[p.project_id,
+      (Number(p.annual_net_cashflow_if_fully_supplied_rub)/1000000).toFixed(1),
+      (Number(p.conditional_npv_if_fully_supplied_rub)/1000000).toFixed(1)]);
+  el('v88-output').textContent=JSON.stringify({
+    source_ref:report.source_ref,feasibility:report.modelled_operational_adequacy,
+    limitations:report.limitations,monthly_scenarios:report.scenarios,
+    economics:report.conditional_project_economics,proof:response.proof,
+  },null,2);
+}
+el('v88-run').addEventListener('click',()=>perform(async()=>{
+  resetV88Result();
+  if(!org)throw Error('Для расчёта войдите в отдельную тестовую учётную запись');
+  const body=JSON.parse(el('v88-case').value);
+  const response=await api('/v88/orgs/'+encodeURIComponent(org)+'/regional-energy/evaluate','POST',body);
+  renderRegionalV88(response);
+  info('Проверено три синтетических энергобаланса. Все NPV условные; решение всегда HOLD.');
 }));

@@ -351,5 +351,49 @@
     </div>
   </div>
 </section>
+<section class="card regional-v88-workspace" id="regional-v88-workspace">
+ <div class="studies-title"><div>
+  <h2>16. Energy Availability 360 · V8.8</h2>
+  <p class="hint">Региональный энергобаланс и инвестиционные сценарии: ГЭС + ТЭС → существующий спрос → новые потребители → сеть и резерв → условная экономика.</p>
+ </div><span class="study-notice">ТОЛЬКО СИНТЕТИЧЕСКАЯ ЛАБОРАТОРИЯ</span></div>
+ <div class="programme-help"><strong>Принцип:</strong> установленная мощность ≠ доступная энергия. Проверяются 12 месяцев × 3 сценария (обычный, маловодный, сетевое ограничение). Дополнительная нагрузка учитывается по годовому коэффициенту использования, а при проверке пиковой нагрузки используется вся заявленная мощность. Это <strong>не</strong> доказательство доступности конкретного присоединения или N−1.</div>
+ <div class="study-grid">
+  <div>
+   <h3>А. Новый потребитель и сценарные данные</h3>
+   <label>Пример новой нагрузки<select id="v88-load-mw"><option value="10">10 МВт · малая площадка</option><option value="50" selected>50 МВт · средняя площадка</option><option value="150">150 МВт · крупная площадка</option></select></label>
+   <label>Категория потребителя<select id="v88-sector"><option value="data_processing" selected>Вычислительные мощности</option><option value="industrial_processing">Промышленная переработка</option><option value="mining">Горнорудные предприятия</option><option value="municipal">Коммунальная инфраструктура</option><option value="other">Другое</option></select></label>
+   <label>Коэффициент использования, доля<input id="v88-utilization" type="number" min="0" max="1" step="0.05" value="0.85"></label>
+   <div class="actions"><button class="secondary" id="v88-sample">Сформировать 36 учебных месяцев</button><button class="primary" id="v88-run">Проверить энергобаланс</button></div>
+   <label>Портфель, месячные ограничения и экономика (строго JSON)<textarea id="v88-case" rows="13" spellcheck="false" placeholder="Нажмите «Сформировать 36 учебных месяцев»"></textarea></label>
+   <p class="hint">Числа и цены вымышлены, не отражают фактические режимы Колымской ГЭС, Усть-Среднеканской ГЭС, тарифы или доступную мощность в Оротукане. Только engineer / auditor могут запустить серверный расчёт.</p>
+  </div>
+  <div>
+   <h3>Б. Надёжность и решение</h3>
+   <div class="forecast-v82-kpis" aria-live="polite">
+    <div><small>Новая пиковая нагрузка</small><strong id="v88-peak">—</strong></div>
+    <div><small>Годовой запрос, ГВт·ч</small><strong id="v88-energy">—</strong></div>
+    <div><small>Сценариев без нарушений</small><strong id="v88-passes">—</strong></div>
+    <div><small>Инвестиционный допуск</small><strong id="v88-decision">HOLD</strong></div>
+   </div>
+   <div id="v88-assessment" class="programme-help" role="status">Нет расчёта. Ни один сценарий не подтверждает фактическую доступность энергии.</div>
+   <div class="v88-scroll">
+    <table class="v88-results" aria-label="Синтетический энергобаланс">
+     <thead><tr><th>Сценарий</th><th>Дефицит нового спроса, ГВт·ч</th><th>Пик, МВт</th><th>Проверка</th></tr></thead>
+     <tbody id="v88-scenario-rows"><tr><td colspan="4">Запустите расчёт для сравнения.</td></tr></tbody>
+    </table>
+   </div>
+   <h3>Условная экономика потребителей</h3>
+   <div class="v88-scroll">
+    <table class="v88-results" aria-label="Сценарная NPV">
+     <thead><tr><th>Потребитель</th><th>Годовой поток, млн ₽</th><th>NPV, млн ₽</th></tr></thead>
+     <tbody id="v88-finance-rows"><tr><td colspan="3">Нужны проверенные синтетические входные допущения.</td></tr></tbody>
+    </table>
+   </div>
+   <pre class="result programme-output" id="v88-output">Никаких команд диспетчеризации, финансовых проводок и подтверждённого эффекта. SHA входа и результата появятся после расчёта.</pre>
+   <dl class="readiness"><dt>Почасовая нагрузка и узлы подключения</dt><dd>НЕ ПРОВЕРЕНЫ</dd><dt>Надёжность N−1</dt><dd>НЕ РАССЧИТАНА</dd><dt>Водные режимы и правила эксплуатации</dt><dd>НЕ ПОДТВЕРЖДЕНЫ</dd><dt>Тарифы, CAPEX, выручка и налоги</dt><dd>СИНТЕТИКА</dd><dt>Инвестиционное решение / production</dt><dd>HOLD</dd></dl>
+  </div>
+ </div>
+</section>
+
 </main><footer>ГИДРОКОНТУР 360 — МАГАДАН · V8.3.2 LAB · Только синтетические данные. Нет доступа к технологическому управлению, SCADA, генерации, диспетчеризации и корпоративным сетям.</footer>
 <script type="module" src="/lab-assets/ui.js"></script></body></html>

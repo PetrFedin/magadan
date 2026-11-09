@@ -29,6 +29,7 @@ from sqlalchemy.orm import sessionmaker
 from hydro_api.identity import AuthStore, IdentityMapping, OidcConfig, OidcService, b64url
 from hydro_api.main import create_app
 from hydro_api.storage import Asset, Membership, Organization, User
+from tests_v88.fixture import synthetic_region_v88
 
 CFG_PATH = os.environ.get("HYDRO_NATIVE_CONFIG")
 if not CFG_PATH:
@@ -291,6 +292,46 @@ def test_v87_real_pg17_oidc_http_chromium_roles_and_audit(unified):
                 page.locator("#fill-sample").click()
                 page.locator("#create-evidence").click()
                 expect(page.locator("#notice")).to_contain_text("403")
+
+            # V8.8 must also respect real PostgreSQL tenant and OIDC-cookie RBAC.
+            # Read-only screening must NOT write to a financial or industrial ledger.
+            screen = env["origin"] + "/v88/orgs/" + env["org"] + "/regional-energy/evaluate"
+            case = synthetic_region_v88(150)
+            def regional_screen(subject, endpoint=screen):
+                context = contexts[subject][0]
+                csrf = {x["name"]: x["value"] for x in context.cookies()}["hk_lab_csrf"]
+                return context.request.post(
+                    endpoint, data=json.dumps(case), headers={
+                        "Content-Type": "application/json",
+                        "Origin": env["origin"], "X-CSRF-Token": csrf,
+                    },
+                )
+            engineer_screen = regional_screen("engineer")
+            auditor_screen = regional_screen("auditor")
+            assert engineer_screen.status == 200, engineer_screen.text()[:300]
+            assert auditor_screen.status == 200, auditor_screen.text()[:300]
+            assert engineer_screen.json() == auditor_screen.json()
+            report = engineer_screen.json()["report"]
+            proof = engineer_screen.json()["proof"]
+            assert proof["stateful_record_saved"] is False
+            assert proof["financial_ledger_updated"] is False
+            assert proof["dispatch_recommendation"] is None
+            assert report["investment_decision"] == "HOLD"
+            assert report["financial_ledger_eligible"] is False
+            assert report["production_dispatch_eligible"] is False
+            assert len(report["scenarios"]) == 3
+            assert not report["synthetic_all_scenarios_adequate"]
+            for restricted in ("economist", "manager", "viewer"):
+                assert regional_screen(restricted).status == 403
+            assert regional_screen("other").status == 404
+            assert contexts["engineer"][0].request.post(
+                screen, data=json.dumps(case), headers={"Content-Type": "application/json"}
+            ).status == 403
+            engineer.locator("#v88-load-mw").select_option("150")
+            engineer.locator("#v88-sample").click()
+            engineer.locator("#v88-run").click()
+            expect(engineer.locator("#v88-scenario-rows tr")).to_have_count(3)
+            expect(engineer.locator("#v88-decision")).to_have_text("HOLD")
 
             # Revocation of one browser session must not revoke another role's cookies.
             engineer.locator("#logout").click()

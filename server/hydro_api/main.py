@@ -296,6 +296,11 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
     from .cascade_api_v83 import install_cascade_v83_routes
     install_cascade_v83_routes(app,get_db,current_user,access,asset,sha,canonical)
 
+    # V8.8 three synthetic regional energy scenarios, conditional investment NPV.
+    # Stateless research only; no real connectivity or financial recognition.
+    from .regional_energy_api_v88 import install_regional_energy_v88_routes
+    install_regional_energy_v88_routes(app,get_db,current_user,access,sha,canonical)
+
     @app.get('/health')
     def health():return {'service':'hydrokontur-v75-lab','status':'ok','production_ready':False}
 

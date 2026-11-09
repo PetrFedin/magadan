@@ -10,6 +10,7 @@ on:
       - 'server/migrations/**'
       - 'server/ui/**'
       - 'server/tests_v87/**'
+      - 'server/tests_v88/**'
       - 'server/tests_v71/test_postgres_native.py'
       - 'server/tests_v78/test_postgres_native_v78.py'
       - 'server/tests_v8/test_postgres_native_boundary_v8.py'
