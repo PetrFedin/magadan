@@ -72,6 +72,7 @@ node --check server/ui/ui.js
 - [V8.5: исходник ролевых HTTP-тестов](server/tests_v85/test_role_journey_v85.py)
 - [V8.5: безопасный запуск локальной учебной демоверсии](docs/V85_LOCAL_DEMO_START_RU.md)
 - [V8.6: реальная локальная PostgreSQL17 / Chromium QA и source-pinned скрипт](docs/V86_NATIVE_BROWSER_SOURCE_PINNED_ACCEPTANCE_RU.md)
+- [V8.7: единая PostgreSQL17 / OIDC / Chromium / recovery лаборатория](docs/V87_UNIFIED_STAGING_ACCEPTANCE_RU.md)
 - [V8.6: reproducible one-SHA local CI runner](scripts/run_v86_local_ci.sh)
 - [Fail-closed validator JUnit](scripts/v84_junit_gate.py)
 
