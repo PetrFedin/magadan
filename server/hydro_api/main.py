@@ -301,6 +301,11 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
     from .regional_energy_api_v88 import install_regional_energy_v88_routes
     install_regional_energy_v88_routes(app,get_db,current_user,access,sha,canonical)
 
+    # V8.9 provenance and anti-double-counting preflight.
+    # Only synthetic numerical series, real metadata quarantined; NO approvals.
+    from .data_admission_api_v89 import install_data_admission_v89_routes
+    install_data_admission_v89_routes(app,get_db,current_user,access,sha,canonical)
+
     @app.get('/health')
     def health():return {'service':'hydrokontur-v75-lab','status':'ok','production_ready':False}
 
