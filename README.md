@@ -74,6 +74,8 @@ node --check server/ui/ui.js
 - [V8.6: реальная локальная PostgreSQL17 / Chromium QA и source-pinned скрипт](docs/V86_NATIVE_BROWSER_SOURCE_PINNED_ACCEPTANCE_RU.md)
 - [V8.7: единая PostgreSQL17 / OIDC / Chromium / recovery лаборатория](docs/V87_UNIFIED_STAGING_ACCEPTANCE_RU.md)
 - [V8.8: региональный баланс Магадана, новые нагрузки и условная NPV](docs/V88_MAGADAN_ENERGY_AVAILABILITY_INVESTMENT_RU.md)
+- [V8.9: контроль происхождения, почасовой полноты и двойного учёта](docs/V89_MAGADAN_DATA_ADMISSION_RU.md)
+- [V8.9: матрица запросов разрешений владельцев источников](docs/V89_OWNER_DATA_REQUESTS_RU.md)
 - [V8.6: reproducible one-SHA local CI runner](scripts/run_v86_local_ci.sh)
 - [Fail-closed validator JUnit](scripts/v84_junit_gate.py)
 
