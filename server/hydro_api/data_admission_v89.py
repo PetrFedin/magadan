@@ -13,7 +13,7 @@ import json
 import re
 from collections import Counter, defaultdict
 from datetime import datetime, timedelta, timezone
-from decimal import Decimal, InvalidOperation
+from decimal import Decimal
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
@@ -22,12 +22,6 @@ VERSION = "V89-SYNTHETIC-SOURCE-CONTRACT-2026-11"
 DATASET_PATTERN = r"^(SYNTHETIC|PUBLIC)-[A-Za-z0-9_.-]{3,70}$"
 IDENTIFIER_PATTERN = r"^[A-Za-z][A-Za-z0-9_.-]{2,79}$"
 DIGEST_PATTERN = r"^[a-f0-9]{64}$"
-DECIMAL_FIELDS = {
-    "firm_n1_limit_mw", "baseline_coincident_peak_mw", "operating_reserve_mw",
-    "rated_mw", "utilization_fraction", "supply_mwh", "baseline_load_mwh",
-}
-
-
 class Contract(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False, str_strip_whitespace=True)
 
@@ -215,7 +209,11 @@ def assess_v89(data: MonthlyIntake) -> dict:
             if not project.baseline_reconciliation_ref or not project.baseline_reconciliation_ref.startswith("SYNTHETIC-"):
                 issues.append(_issue("ADDITIONAL_PROJECT_MISSING_BASELINE_RECONCILIATION", "CRITICAL"))
             incremental[project.node_id] += project.rated_mw
-        # IN_BASELINE contributes ZERO incremental new load by design.
+        elif project.baseline_inclusion == "IN_BASELINE":
+            # Never silently trust an assertion that the load was already counted.
+            if not project.baseline_reconciliation_ref or not project.baseline_reconciliation_ref.startswith("SYNTHETIC-"):
+                issues.append(_issue("IN_BASELINE_PROJECT_MISSING_RECONCILIATION", "CRITICAL"))
+        # IN_BASELINE contributes ZERO incremental new load *only with evidence*.
     if unknown:
         issues.append(_issue("UNKNOWN_BASELINE_INCLUSION_REQUIRES_OWNER_RECONCILIATION", "CRITICAL", len(unknown)))
 
