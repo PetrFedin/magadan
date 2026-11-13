@@ -50,12 +50,15 @@ jobs:
             server/tests_v89 --junitxml=/tmp/v89-junit.xml
           python scripts/v84_junit_gate.py \
             --junit /tmp/v89-junit.xml --shard v89-source-admission \
-            --min-passed 23 --max-skipped 0 \
+            --min-passed 49 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_clean_synthetic_month_is_quality_pass_but_not_approved \
             --require-case test_in_baseline_without_proof_is_blocked_not_silently_excluded \
             --require-case test_public_reference_metadata_is_quarantined_even_when_stated_permission_public \
-            --require-case test_real_route_model_processing_local_only
+            --require-case test_real_route_model_processing_local_only \
+            --require-case test_valid_partial_counts_only_the_20_synthetic_mw_not_the_50 \
+            --require-case test_two_real_separate_supply_points_require_shared_allocation_reference \
+            --require-case test_http_read_only_reconciliation_and_separate_tenants
           sha256sum /tmp/v89-junit.xml
       - name: Static production/HOLD invariants
         shell: bash
@@ -72,6 +75,8 @@ jobs:
           assert "SOURCE" in model
           assert "'financial_ledger_updated': False" in api
           assert "install_data_admission_v89_routes(app,get_db,current_user,access,sha,canonical)" in main
+          assert "install_baseline_reconciliation_v89_routes(app,get_db,current_user,access,sha,canonical)" in main
+          assert "'actual_available_capacity_mw': None" in (root/'baseline_reconcile_v89.py').read_text() || '"actual_available_capacity_mw": None' in (root/'baseline_reconcile_v89.py').read_text()
           print('V89_SYNTHETIC_DATA_ADMISSION_NOT_PRODUCTION')
           PY
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
