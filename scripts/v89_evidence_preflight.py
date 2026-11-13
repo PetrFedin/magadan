@@ -12,6 +12,7 @@ import hmac
 import json
 import os
 import re
+import stat
 import sys
 from pathlib import Path
 
@@ -24,13 +25,30 @@ from hydro_api.evidence_integrity_v89 import (  # noqa: E402
 )
 
 
-def _json_manifest(path: Path) -> dict:
-    if not path.is_file() or path.is_symlink() or path.stat().st_size > 128 * 1024:
-        raise ValueError("V89_CLAIM_OR_POLICY_FILE_UNSAFE")
-    data = json.loads(path.read_text(encoding="utf-8"))
+def _json_manifest(path: Path) -> tuple[dict, bytes]:
+    # Parse and hash EXACTLY the same bytes from a single file descriptor.
+    flags = os.O_RDONLY | os.O_NOFOLLOW | os.O_NONBLOCK
+    fd = os.open(path, flags)
+    try:
+        before = os.fstat(fd)
+        if not stat.S_ISREG(before.st_mode) or before.st_nlink != 1:
+            raise ValueError("V89_MANIFEST_MUST_BE_PLAIN_SINGLE_LINK_FILE")
+        if not 0 < before.st_size <= 128 * 1024:
+            raise ValueError("V89_MANIFEST_TOO_LARGE_OR_EMPTY")
+        raw = os.read(fd, 128 * 1024 + 1)
+        after = os.fstat(fd)
+        if (before.st_size, before.st_ino, before.st_dev, before.st_mtime_ns,
+                before.st_ctime_ns) != (after.st_size, after.st_ino, after.st_dev,
+                                          after.st_mtime_ns, after.st_ctime_ns):
+            raise ValueError("V89_MANIFEST_CHANGED_WHILE_READING")
+        if len(raw) != before.st_size:
+            raise ValueError("V89_MANIFEST_SIZE_CHANGED")
+    finally:
+        os.close(fd)
+    data = json.loads(raw.decode("utf-8"))
     if not isinstance(data, dict):
         raise ValueError("V89_EXPECTED_TOP_LEVEL_OBJECT")
-    return data
+    return data, raw
 
 
 def main() -> int:
@@ -45,11 +63,12 @@ def main() -> int:
         if not re.fullmatch(r"[0-9a-f]{64}", pinned):
             raise ValueError("PINNED_EXTERNAL_TRUST_DIGEST_REQUIRED")
         trust_path = Path(args.pinned_trust_policy)
-        trust_data = _json_manifest(trust_path)
-        trust_sha = hashlib.sha256(trust_path.read_bytes()).hexdigest()
+        trust_data, trust_bytes = _json_manifest(trust_path)
+        trust_sha = hashlib.sha256(trust_bytes).hexdigest()
         if not hmac.compare_digest(pinned, trust_sha):
             raise ValueError("EXTERNAL_TRUST_DIGEST_MISMATCH")
-        envelope = SignedEvidence.model_validate(_json_manifest(Path(args.signed_manifest)))
+        manifest_data, _ = _json_manifest(Path(args.signed_manifest))
+        envelope = SignedEvidence.model_validate(manifest_data)
         trust = PinnedTrustPolicy.model_validate(trust_data)
         receipt = verify_synthetic_evidence(envelope, trust, Path(args.synthetic_data_dir))
         dest = Path(args.receipt)
@@ -61,7 +80,7 @@ def main() -> int:
             out.write("\n")
         print("V89_SYNTHETIC_SIGNED_BYTES_PASS; OWNER_RIGHTS_AND_REAL_N1_HOLD")
         return 0
-    except (ValidationError, ValueError, OSError, json.JSONDecodeError):
+    except (ValidationError, ValueError, OSError, UnicodeError, json.JSONDecodeError):
         print("V89_EVIDENCE_PREFLIGHT_REJECTED; RIGHTS_AND_PRODUCTION_HOLD", file=sys.stderr)
         return 2
 
