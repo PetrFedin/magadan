@@ -306,6 +306,11 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
     from .data_admission_api_v89 import install_data_admission_v89_routes
     install_data_admission_v89_routes(app,get_db,current_user,access,sha,canonical)
 
+    # Strict V8.9 synthetic forecast-load reconciliation: separate source
+    # snapshots and contracts; never issues N-1 or investment authorization.
+    from .baseline_reconciliation_api_v89 import install_baseline_reconciliation_v89_routes
+    install_baseline_reconciliation_v89_routes(app,get_db,current_user,access,sha,canonical)
+
     @app.get('/health')
     def health():return {'service':'hydrokontur-v75-lab','status':'ok','production_ready':False}
 
