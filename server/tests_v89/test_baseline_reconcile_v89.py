@@ -144,11 +144,14 @@ def test_duplicate_supply_point_fails_even_with_allocation_ref():
     assert "DUPLICATE_SUPPLY_POINT" in issues(data)
 
 
-def test_permission_or_engineering_claim_cannot_be_supplied_by_caller():
+def test_owner_permission_claim_cannot_be_supplied_by_caller():
     data = sample()
     data["source_owner_permission_independently_verified"] = True
     with pytest.raises(ValidationError):
         BaselineReconcileCase.model_validate(data)
+
+
+def test_independent_engineer_approval_cannot_be_supplied_by_caller():
     data = sample()
     data["independent_engineer_approved"] = True
     with pytest.raises(ValidationError):
