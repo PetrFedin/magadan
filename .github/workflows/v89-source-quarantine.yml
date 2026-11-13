@@ -7,6 +7,8 @@ on:
       - 'server/hydro_api/data_admission_v89.py'
       - 'server/hydro_api/data_admission_api_v89.py'
       - 'server/hydro_api/main.py'
+      - 'server/hydro_api/evidence_integrity_v89.py'
+      - 'scripts/v89_evidence_preflight.py'
       - 'server/tests_v89/**'
       - 'server/requirements-v71.txt'
   workflow_dispatch:
@@ -50,7 +52,7 @@ jobs:
             server/tests_v89 --junitxml=/tmp/v89-junit.xml
           python scripts/v84_junit_gate.py \
             --junit /tmp/v89-junit.xml --shard v89-source-admission \
-            --min-passed 49 --max-skipped 0 \
+            --min-passed 76 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_clean_synthetic_month_is_quality_pass_but_not_approved \
             --require-case test_in_baseline_without_proof_is_blocked_not_silently_excluded \
@@ -58,7 +60,10 @@ jobs:
             --require-case test_real_route_model_processing_local_only \
             --require-case test_valid_partial_counts_only_the_20_synthetic_mw_not_the_50 \
             --require-case test_two_real_separate_supply_points_require_shared_allocation_reference \
-            --require-case test_http_read_only_reconciliation_and_separate_tenants
+            --require-case test_http_read_only_reconciliation_and_separate_tenants \
+            --require-case test_synthetic_integrity_proof_never_grants_rights_or_capacity \
+            --require-case test_signed_synthetic_cli_generates_private_receipt_and_refuses_overwrite \
+            --require-case test_cli_missing_external_trust_anchor_fails_closed
           sha256sum /tmp/v89-junit.xml
       - name: Static production/HOLD invariants
         shell: bash
@@ -76,6 +81,12 @@ jobs:
           assert "'financial_ledger_updated': False" in api
           assert "install_data_admission_v89_routes(app,get_db,current_user,access,sha,canonical)" in main
           assert "install_baseline_reconciliation_v89_routes(app,get_db,current_user,access,sha,canonical)" in main
+          evidence = (root/'evidence_integrity_v89.py').read_text()
+          cli = Path('scripts/v89_evidence_preflight.py').read_text()
+          assert 'OWNER_DOMAIN' in evidence and 'REVIEWER_DOMAIN' in evidence
+          assert 'HYDRO_V89_PINNED_TRUST_SHA256' in cli
+          assert '"real_source_rights_verified": False' in evidence
+          assert '"production_ready": False' in evidence
           assert "'actual_available_capacity_mw': None" in (root/'baseline_reconcile_v89.py').read_text() || '"actual_available_capacity_mw": None' in (root/'baseline_reconcile_v89.py').read_text()
           print('V89_SYNTHETIC_DATA_ADMISSION_NOT_PRODUCTION')
           PY
