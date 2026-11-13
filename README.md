@@ -79,6 +79,7 @@ node --check server/ui/ui.js
 - [V8.9: официальные источники, актуальность СиПР и ограничения использования](docs/V89_OFFICIAL_SOURCE_AND_RIGHTS_REGISTER_2026-11-10_RU.md)
 - [V8.9: три проекта писем владельцам данных, без отправки](docs/V89_DRAFT_REQUESTS_TO_DATA_OWNERS_RU.md)
 - [V8.9: независимый протокол проверки баланса, двойного учёта и N−1](docs/V89_INDEPENDENT_N1_AND_BALANCE_ACCEPTANCE_PROTOCOL_RU.md)
+- [V8.9: строгая пообъектная сверка нагрузки с версией прогноза (синтетический контроль)](docs/V89_STRICT_BASELINE_RECONCILIATION_RU.md)
 - [V8.6: reproducible one-SHA local CI runner](scripts/run_v86_local_ci.sh)
 - [Fail-closed validator JUnit](scripts/v84_junit_gate.py)
 
