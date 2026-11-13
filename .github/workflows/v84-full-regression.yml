@@ -91,8 +91,8 @@ jobs:
                     --ignore=server/tests_v78/test_postgres_native_v78.py)
               ;;
             v79-v832)
-              min=196; skips=2
-              args=(server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests_v83 server/tests_v85 server/tests_v88 server/tests
+              min=245; skips=2
+              args=(server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 server/tests_v83 server/tests_v85 server/tests_v88 server/tests_v89 server/tests
                     --ignore=server/tests_v8/test_postgres_native_boundary_v8.py
                     --ignore=server/tests_v81/test_pg_graph_freeze_native_v81.py
                     --ignore=server/tests/test_browser.py
@@ -117,6 +117,8 @@ jobs:
             required+=(--require-case test_local_seed_rejects_partial_existing_user_database)
             required+=(--require-case test_deficit_and_coincident_peak_are_separate_and_never_dispatch)
             required+=(--require-case test_http_roles_tenants_deterministic_proof_and_immutability)
+            required+=(--require-case test_valid_partial_counts_only_the_20_synthetic_mw_not_the_50)
+            required+=(--require-case test_in_baseline_without_proof_is_blocked_not_silently_excluded)
           fi
           if test "$SHARD" = "legacy-seed"; then
             required+=(--require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed)
@@ -152,7 +154,7 @@ jobs:
               server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
               server/tests_v75 server/tests_v76 server/tests_v77 server/tests_v78 \
               server/tests_v79 server/tests_v8 server/tests_v81 server/tests_v82 \
-              server/tests_v83 server/tests_v85 server/tests_v88 server/tests \
+              server/tests_v83 server/tests_v85 server/tests_v88 server/tests_v89 server/tests \
               --ignore=server/tests_v71/test_postgres_native.py \
               --ignore=server/tests_v78/test_postgres_native_v78.py \
               --ignore=server/tests_v8/test_postgres_native_boundary_v8.py \
@@ -162,7 +164,7 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v85-monolithic-junit.xml \
             --shard v85-all-python-single-process \
-            --min-passed 404 --max-skipped 4 \
+            --min-passed 453 --max-skipped 4 \
             --actual-sha "$actual" --expected-sha "$EXPECTED_SHA" \
             --require-case test_local_seed_runs_from_empty_database_and_refuses_second_seed \
             --require-case test_instantaneous_rated_peak_over_110_mw_not_approved \
@@ -172,7 +174,9 @@ jobs:
             --require-case test_v85_demo_seed_provides_two_realistically_named_synthetic_reservoir_assets \
             --require-case test_local_seed_rejects_partial_existing_user_database \
             --require-case test_deficit_and_coincident_peak_are_separate_and_never_dispatch \
-            --require-case test_http_roles_tenants_deterministic_proof_and_immutability
+            --require-case test_http_roles_tenants_deterministic_proof_and_immutability \
+            --require-case test_valid_partial_counts_only_the_20_synthetic_mw_not_the_50 \
+            --require-case test_in_baseline_without_proof_is_blocked_not_silently_excluded
 
   javascript:
     needs: provenance-and-parser
