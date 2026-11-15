@@ -53,7 +53,7 @@ python -m unittest discover -s scripts/tests -p 'test_v894_hosted_ci_evidence.py
 python -m unittest discover -s scripts/tests -p 'test_v89_inline_workflow_python.py' -v
 ```
 
-В независимом Python 3.13 контейнере проверены **18/18** синтетических тестов auditor gate и отдельно прежние **4/4** inline-Python теста. Среди отрицательных сценариев: `runner_id=0`, нет steps, skipped step, отсутствующий shard, чужой SHA, неправильный branch, новый PR HEAD, PR уже merged, retarget PR на `main`, дубликат job ID, отсутствие обязательного test-step, усечённые ответы. Проверка реального GitHub API этим результатом **не подтверждена**.
+В независимом Python 3.13 контейнере проверены **20/20** синтетических тестов auditor gate и отдельно прежние **4/4** inline-Python теста. Среди отрицательных сценариев: `runner_id=0`, нет steps, skipped step, отсутствующий shard, чужой или отсутствующий SHA/job run_id, неправильный branch, новый PR HEAD, PR уже merged, retarget PR на `main`, дубликат job ID, отсутствие обязательного test-step, усечённые ответы. Проверка реального GitHub API этим результатом **не подтверждена**.
 
 ## 5. Фактический CI и доступность Mac
 
