@@ -82,9 +82,12 @@ node --check server/ui/ui.js
 - [V8.9: строгая пообъектная сверка нагрузки с версией прогноза (синтетический контроль)](docs/V89_STRICT_BASELINE_RECONCILIATION_RU.md)
 - [V8.9.2: независимая криптографическая проверка синтетических доказательств, SHA-256 и Ed25519](docs/V89_EVIDENCE_INTEGRITY_RU.md)
 - [V8.9.3: подтверждённый CI runner/HOLD, синтаксический preflight и корпоративные staging gates](docs/V893_CI_RECOVERY_AND_STAGING_GATES_RU.md)
+- [V8.9.4: доказательства реального CI на одном SHA + текущий Draft PR HEAD](docs/V894_HOSTED_CI_EVIDENCE_AND_DRAFT_HEAD_RU.md)
 - [V8.6: reproducible one-SHA local CI runner](scripts/run_v86_local_ci.sh)
 - [Fail-closed validator JUnit](scripts/v84_junit_gate.py)
 
 **V8.7 локальная интеграция доказана на SHA c11d852, но не корпоративное SSO/MFA. V8.8 находится в Draft PR #13 и требует нового полного исполняемого CI PASS.** Ветка main и production остаются без изменений; статус GitHub-hosted runner/billing проверяется отдельно в [Issue #6](https://github.com/PetrFedin/magadan/issues/6).
 
 **V8.9.3 (16.11.2026, Draft PR #15):** обнаружен и исправлен shell-оператор `||` в Python-блоке CI; добавлена проверка синтаксиса embedded Python в обоих workflow. Фактические GitHub Actions на новом коде возвращают `runner_id=0`, `steps=0` (runner не выделен, регрессия не запускалась). Локально проверены 4 изолированных unittest-кейса нового preflight; это НЕ full app/PG17/OIDC/MFA/Chromium PASS. [Доказательства и следующий рубеж](docs/V893_CI_RECOVERY_AND_STAGING_GATES_RU.md). `main`/production не изменены, corporate staging и права на реальные данные — HOLD.
+
+**V8.9.4 (16.11.2026, только Draft):** добавлен read-only `scripts/v894_hosted_ci_evidence.py`: проверка текущего PR HEAD и трёх GitHub Actions workflows на одном SHA, полной матрицы jobs, runner ID, обязательных фактически выполненных steps. Синтетические отрицательные тесты **18/18 PASS локально в контейнере**, но GitHub-hosted CI на текущем SHA и корпоративный staging не приняты. V8.9 workflow теперь отслеживает изменения baseline reconciliation API/модели. Подробности: [V8.9.4 protocol](docs/V894_HOSTED_CI_EVIDENCE_AND_DRAFT_HEAD_RU.md). `main` и production HOLD.
