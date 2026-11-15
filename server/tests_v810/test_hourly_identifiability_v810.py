@@ -275,6 +275,7 @@ def test_post_validation_real_permission_mutation_fails_closed():
     with pytest.raises(ValidationError):
         evaluate_synthetic_month(case)
 
+
 def test_all_six_resource_permutations_bound_deterministic_shortfall_without_probability():
     from itertools import permutations
 
