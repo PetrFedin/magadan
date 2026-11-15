@@ -52,6 +52,8 @@ jobs:
           PY
       - name: JUnit parser unit regression
         run: PYTHONPATH=. python -m unittest discover -s scripts/tests -p 'test_v84_junit_gate.py' -v
+      - name: Embedded release workflow Python compile gate
+        run: python -m unittest discover -s scripts/tests -p 'test_v89_inline_workflow_python.py' -v
 
   python-regression:
     needs: provenance-and-parser
