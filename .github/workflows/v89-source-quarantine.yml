@@ -6,10 +6,16 @@ on:
       - '.github/workflows/v89-source-quarantine.yml'
       - 'server/hydro_api/data_admission_v89.py'
       - 'server/hydro_api/data_admission_api_v89.py'
+      - 'server/hydro_api/baseline_reconcile_v89.py'
+      - 'server/hydro_api/baseline_reconciliation_api_v89.py'
       - 'server/hydro_api/main.py'
       - 'server/hydro_api/evidence_integrity_v89.py'
       - 'scripts/v89_evidence_preflight.py'
       - 'scripts/tests/test_v89_inline_workflow_python.py'
+      - 'scripts/v894_hosted_ci_evidence.py'
+      - 'scripts/tests/test_v894_hosted_ci_evidence.py'
+      - 'scripts/v84_junit_gate.py'
+      - '.github/workflows/v87-unified-staging.yml'
       - '.github/workflows/v84-full-regression.yml'
       - 'server/tests_v89/**'
       - 'server/requirements-v71.txt'
@@ -44,6 +50,8 @@ jobs:
           echo "V89_EXACT_SOURCE_SHA=$SOURCE_SHA"
       - name: Validate embedded Python syntax in both CI release gates
         run: python -m unittest discover -s scripts/tests -p 'test_v89_inline_workflow_python.py' -v
+      - name: Verify hosted CI metadata gate with negative synthetic fixtures
+        run: python -m unittest discover -s scripts/tests -p 'test_v894_hosted_ci_evidence.py' -v
       - name: Install application test dependencies
         run: |
           python -m pip install -r server/requirements-v71.txt
