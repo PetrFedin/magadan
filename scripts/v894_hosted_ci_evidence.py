@@ -32,6 +32,7 @@ POLICY = {
             "Execute source quarantine and load dedup regression",
             "Static production/HOLD invariants",
             "Validate embedded Python syntax in both CI release gates",
+            "Verify hosted CI metadata gate with negative synthetic fixtures",
         ),
     },
     "full": {
@@ -48,6 +49,7 @@ POLICY = {
         "steps": (
             "Original immutable 452-file baseline and exact checkout",
             "Embedded release workflow Python compile gate",
+            "Hosted evidence gate negative fixture regression",
             "Execute synthetic shard with timeout and fail-closed JUnit gate",
             "All non-native Python tests in ONE pytest process (including seed)",
             "Legacy JS and current UI syntax",
@@ -153,7 +155,7 @@ def inspect_hosted_runs(fetch, repo: str, sha: str, branch: str, run_ids: dict[s
             if job_id in seen_job_ids:
                 raise AuditRejected(f"{scope}:DUPLICATE_JOB_ID")
             seen_job_ids.add(job_id)
-            if job.get("run_id", run_id) != run_id or job.get("head_sha", sha) != sha:
+            if job.get("run_id") != run_id or job.get("head_sha") != sha:
                 raise AuditRejected(f"{scope}:JOB_SOURCE_MISMATCH")
             group = _group(str(job.get("name", "")), policy["jobs"])
             if group is None:
