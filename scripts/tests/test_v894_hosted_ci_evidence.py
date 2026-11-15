@@ -13,7 +13,13 @@ IDS = {"v89": 101, "full": 102, "unified": 103}
 
 
 def fixture():
-    snapshots = {}
+    snapshots = {
+        f"/repos/{REPO}/pulls/15": {
+            "number": 15, "state": "open", "draft": True, "merged": False,
+            "head": {"sha": SHA, "ref": BRANCH, "repo": {"full_name": REPO}},
+            "base": {"ref": "feature/v84-full-regression-gates"},
+        }
+    }
     for scope, policy in POLICY.items():
         run_id = IDS[scope]
         url = f"/repos/{REPO}/actions/runs/{run_id}"
@@ -58,6 +64,21 @@ class HostedCIFailClosedTest(unittest.TestCase):
         self.assertFalse(result["corporate_oidc_mfa_verified"])
         self.assertEqual(result["receipt_sha256"], self.audit(fixture())["receipt_sha256"])
 
+    def test_not_ready_if_pr_head_moved_to_new_commit(self):
+        snapshots = fixture()
+        snapshots[f"/repos/{REPO}/pulls/15"]["head"]["sha"] = "8" * 40
+        self.reject(snapshots, "PR_HEAD_BASE_OR_DRAFT_CHANGED")
+
+    def test_not_ready_if_pr_is_merged(self):
+        snapshots = fixture()
+        snapshots[f"/repos/{REPO}/pulls/15"]["merged"] = True
+        self.reject(snapshots, "PR_HEAD_BASE_OR_DRAFT_CHANGED")
+
+    def test_not_ready_if_pr_retargeted(self):
+        snapshots = fixture()
+        snapshots[f"/repos/{REPO}/pulls/15"]["base"]["ref"] = "main"
+        self.reject(snapshots, "PR_HEAD_BASE_OR_DRAFT_CHANGED")
+
     def test_not_ready_if_runner_never_started(self):
         snapshots = fixture()
         snapshots[self.job_url("v89")]["jobs"][0]["runner_id"] = 0
@@ -91,7 +112,7 @@ class HostedCIFailClosedTest(unittest.TestCase):
         self.reject(snapshots, "RUN_SOURCE_OR_WORKFLOW_MISMATCH")
 
     def test_not_ready_if_wrong_branch(self):
-        self.reject(fixture(), "RUN_SOURCE_OR_WORKFLOW_MISMATCH", branch="main")
+        self.reject(fixture(), "PR_HEAD_BASE_OR_DRAFT_CHANGED", branch="main")
 
     def test_not_ready_if_missing_mandatory_test_action(self):
         snapshots = fixture()
