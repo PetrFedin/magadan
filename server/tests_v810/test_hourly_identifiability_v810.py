@@ -274,3 +274,22 @@ def test_post_validation_real_permission_mutation_fails_closed():
     case.real_source_rights_verified = True
     with pytest.raises(ValidationError):
         evaluate_synthetic_month(case)
+
+def test_all_six_resource_permutations_bound_deterministic_shortfall_without_probability():
+    from itertools import permutations
+
+    unique_orders = sorted(set(permutations((90, 90, 50, 50))))
+    assert len(unique_orders) == 6
+    shortage = []
+    for index, order in enumerate(unique_orders):
+        case = scenario('stressed')
+        case.case_id = f'SYNTHETIC-CASE-permutation-{index}'
+        for hour_index, available in enumerate(order):
+            case.hours[hour_index].usable_generation_mw = Decimal(available)
+        result = evaluate_synthetic_month(case)
+        assert result['complete_utc_hour_count'] == 744
+        assert result['capacity_hour_envelope_mwh_not_actual_generation'] == '37280'
+        assert result['combined_demand_mwh'] == '29800'
+        assert result['probabilistic_lole_or_eens_calculated'] is False
+        shortage.append(Decimal(result['combined_deterministic_shortfall_mwh']))
+    assert sorted(shortage) == [Decimal(x) for x in (0, 10, 10, 30, 30, 40)]
