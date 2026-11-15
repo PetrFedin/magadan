@@ -83,6 +83,7 @@ node --check server/ui/ui.js
 - [V8.9.2: независимая криптографическая проверка синтетических доказательств, SHA-256 и Ed25519](docs/V89_EVIDENCE_INTEGRITY_RU.md)
 - [V8.9.3: подтверждённый CI runner/HOLD, синтаксический preflight и корпоративные staging gates](docs/V893_CI_RECOVERY_AND_STAGING_GATES_RU.md)
 - [V8.9.4: доказательства реального CI на одном SHA + текущий Draft PR HEAD](docs/V894_HOSTED_CI_EVIDENCE_AND_DRAFT_HEAD_RU.md)
+- [V8.10: почасовая неидентифицируемость обеспеченности по месячному агрегату, 29 синтетических тестов](docs/V810_HOURLY_ADEQUACY_IDENTIFIABILITY_RESEARCH_RU.md)
 - [V8.6: reproducible one-SHA local CI runner](scripts/run_v86_local_ci.sh)
 - [Fail-closed validator JUnit](scripts/v84_junit_gate.py)
 
@@ -91,3 +92,5 @@ node --check server/ui/ui.js
 **V8.9.3 (16.11.2026, Draft PR #15):** обнаружен и исправлен shell-оператор `||` в Python-блоке CI; добавлена проверка синтаксиса embedded Python в обоих workflow. Фактические GitHub Actions на новом коде возвращают `runner_id=0`, `steps=0` (runner не выделен, регрессия не запускалась). Локально проверены 4 изолированных unittest-кейса нового preflight; это НЕ full app/PG17/OIDC/MFA/Chromium PASS. [Доказательства и следующий рубеж](docs/V893_CI_RECOVERY_AND_STAGING_GATES_RU.md). `main`/production не изменены, corporate staging и права на реальные данные — HOLD.
 
 **V8.9.4 (16.11.2026, только Draft):** добавлен read-only `scripts/v894_hosted_ci_evidence.py`: проверка текущего PR HEAD и трёх GitHub Actions workflows на одном SHA, полной матрицы jobs, runner ID, обязательных фактически выполненных steps. Синтетические отрицательные тесты **20/20 PASS локально в контейнере**, но GitHub-hosted CI на текущем SHA и корпоративный staging не приняты. V8.9 workflow теперь отслеживает изменения baseline reconciliation API/модели. Подробности: [V8.9.4 protocol](docs/V894_HOSTED_CI_EVIDENCE_AND_DRAFT_HEAD_RU.md). `main` и production HOLD.
+
+**V8.10 (исследование, 16.11.2026):** построен и локально проверен строгий 744-часовой синтетический контрпример. Одинаковые месячные суммы спроса и лимитов (29 800 и 37 280 МВт·ч), одинаковые максимумы 80/90 МВт, но разный детерминированный недостаток 0 против 30 МВт·ч из-за почасового распределения ресурсов. **29/29 локальных тестов PASS**, не GitHub-hosted CI и не реальная оценка Магадана. Код: `server/hydro_api/hourly_identifiability_v810.py`, тесты `server/tests_v810/`, методика `docs/V810_HOURLY_ADEQUACY_IDENTIFIABILITY_RESEARCH_RU.md`. Выпуск/корпоративный staging/независимый N−1 — HOLD. Исследовательская ветка отделена от Draft PR #15, `main` не изменён.
