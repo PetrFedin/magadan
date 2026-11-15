@@ -254,3 +254,23 @@ def test_roundtrip_from_json_contract():
     case = scenario()
     copy = SyntheticMonth.model_validate_json(case.model_dump_json())
     assert evaluate_synthetic_month(copy) == evaluate_synthetic_month(case)
+
+def test_post_validation_utc_axis_mutation_is_rejected_on_evaluation():
+    case = scenario()
+    case.hours[2].hour_utc = case.hours[1].hour_utc
+    with pytest.raises(ValidationError, match='OUT_OF_ORDER_DUPLICATE_OR_MISSING_UTC_HOUR'):
+        evaluate_synthetic_month(case)
+
+
+def test_post_validation_invalid_reserve_mutation_is_rejected():
+    case = scenario()
+    case.hours[0].held_operating_reserve_mw = Decimal('1000')
+    with pytest.raises(ValidationError, match='RESERVE_EXCEEDS_INSTANTANEOUS_ENVELOPE'):
+        evaluate_synthetic_month(case)
+
+
+def test_post_validation_real_permission_mutation_fails_closed():
+    case = scenario()
+    case.real_source_rights_verified = True
+    with pytest.raises(ValidationError):
+        evaluate_synthetic_month(case)
