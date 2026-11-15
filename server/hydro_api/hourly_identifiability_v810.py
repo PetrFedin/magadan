@@ -102,6 +102,8 @@ def _cap(hour: HourlyState) -> Decimal:
 
 def evaluate_synthetic_month(case: SyntheticMonth) -> dict:
     """Deterministic hourly residuals; not a probabilistic reliability study."""
+    # Snapshot and revalidate: callers may have mutated Pydantic objects.
+    case = SyntheticMonth.model_validate(case.model_dump(mode="python"))
     envelope = existing = additional = baseline_ens = combined_ens = ZERO
     baseline_hours = loss_hours = additional_caused_hours = 0
     max_deficit = ZERO
@@ -171,6 +173,9 @@ def compare_permuted_synthetic_months(adequate: SyntheticMonth, stressed: Synthe
     aggregates, not the physically stronger premise of independently confirmed
     firm deliverability at every hour. Nothing is learned about real likelihoods.
     """
+    # Revalidate both cases before comparing their UTC axes and marginals.
+    adequate = SyntheticMonth.model_validate(adequate.model_dump(mode="python"))
+    stressed = SyntheticMonth.model_validate(stressed.model_dump(mode="python"))
     if adequate.case_id == stressed.case_id:
         raise ValueError("DISTINCT_SYNTHETIC_CASE_IDS_REQUIRED")
     if len(adequate.hours) != len(stressed.hours):
