@@ -106,6 +106,16 @@ class HostedCIFailClosedTest(unittest.TestCase):
         snapshots[self.job_url("v89")]["jobs"][0]["head_sha"] = "8" * 40
         self.reject(snapshots, "JOB_SOURCE_MISMATCH")
 
+    def test_not_ready_if_job_omits_sha(self):
+        snapshots = fixture()
+        snapshots[self.job_url("v89")]["jobs"][0].pop("head_sha")
+        self.reject(snapshots, "JOB_SOURCE_MISMATCH")
+
+    def test_not_ready_if_job_omits_run_id(self):
+        snapshots = fixture()
+        snapshots[self.job_url("full")]["jobs"][0].pop("run_id")
+        self.reject(snapshots, "JOB_SOURCE_MISMATCH")
+
     def test_not_ready_if_run_has_mismatched_sha(self):
         snapshots = fixture()
         snapshots[self.run_url("unified")]["head_sha"] = "8" * 40
