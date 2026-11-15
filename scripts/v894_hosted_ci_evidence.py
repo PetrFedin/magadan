@@ -83,10 +83,27 @@ def _group(name: str, required: dict[str, int]) -> str | None:
     return None
 
 
-def inspect_hosted_runs(fetch, repo: str, sha: str, branch: str, run_ids: dict[str, int]) -> dict:
+def inspect_hosted_runs(fetch, repo: str, sha: str, branch: str, run_ids: dict[str, int], pr_number: int = 15) -> dict:
     """Verify *live API metadata* on one exact commit, not underlying artifacts."""
     if not REPO_RE.fullmatch(repo) or not SHA_RE.fullmatch(sha) or not branch.strip():
         raise AuditRejected("INVALID_REPOSITORY_COMMIT_OR_BRANCH")
+    if not _positive_id(pr_number):
+        raise AuditRejected("INVALID_PR_NUMBER")
+
+    def verify_pr_head() -> None:
+        pr = fetch(f"/repos/{repo}/pulls/{pr_number}")
+        if not isinstance(pr, dict) or pr.get("number") != pr_number:
+            raise AuditRejected("PR_ID_MISMATCH")
+        head = pr.get("head") or {}
+        base = pr.get("base") or {}
+        if (pr.get("state") != "open" or pr.get("draft") is not True
+                or pr.get("merged") is not False
+                or head.get("sha") != sha or head.get("ref") != branch
+                or (head.get("repo") or {}).get("full_name") != repo
+                or base.get("ref") != "feature/v84-full-regression-gates"):
+            raise AuditRejected("PR_HEAD_BASE_OR_DRAFT_CHANGED")
+
+    verify_pr_head()
     if set(run_ids) != set(POLICY) or len(set(run_ids.values())) != len(POLICY):
         raise AuditRejected("EXACTLY_THREE_DISTINCT_RUNS_REQUIRED")
     if not all(_positive_id(x) for x in run_ids.values()):
@@ -168,8 +185,10 @@ def inspect_hosted_runs(fetch, repo: str, sha: str, branch: str, run_ids: dict[s
             "executed_step_count": step_count,
             "run_url": f"https://github.com/{repo}/actions/runs/{run_id}",
         })
+    verify_pr_head()  # Fail if the draft PR advanced during the audit.
     report = {
         "status": "GITHUB_HOSTED_METADATA_SUCCESS_ONLY",
+        "draft_pr_number": pr_number,
         "repository": repo,
         "source_sha": sha,
         "source_branch": branch,
@@ -214,6 +233,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--repo", default="PetrFedin/magadan")
     parser.add_argument("--sha", required=True)
     parser.add_argument("--branch", default="feature/v89-provenance-and-load-reconciliation")
+    parser.add_argument("--pr", type=int, default=15)
     parser.add_argument("--run", action="append", default=[], help="scope=run_id (v89/full/unified)")
     parser.add_argument("--out", type=Path)
     args = parser.parse_args(argv)
@@ -225,7 +245,7 @@ def main(argv: list[str] | None = None) -> int:
                 raise AuditRejected("INVALID_OR_DUPLICATE_RUN_ARGUMENT")
             ids[name] = int(value)
         token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN", "")
-        report = inspect_hosted_runs(github_fetcher(token), args.repo, args.sha, args.branch, ids)
+        report = inspect_hosted_runs(github_fetcher(token), args.repo, args.sha, args.branch, ids, args.pr)
         payload = json.dumps(report, sort_keys=True, indent=2) + "\n"
         if args.out:
             args.out.parent.mkdir(parents=True, exist_ok=True)
