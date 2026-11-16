@@ -1,0 +1,81 @@
+{
+  "artifact": "RARCTICNET-TREND-ADAPTIVE-BACKTEST-V9-1",
+  "artifact_sha256": "b1a624b6dee816a1717352e09f68df4772b08489579a3098e7ae1a95455ff756",
+  "input_file": "data/r-arcticnet/kolyma_ust_srednekan_5858_monthly_m3s.tsv",
+  "input_sha256": "d514cf2eec647db759fd55f256ce004ef5a965204f222272d2cacfaccd64194c",
+  "model": "trend-adaptive climatology (Theil-Sen log-slope, Sen CI inflation, m=20) + EMOS original_scale, строго причинно",
+  "note_ru": "Тренд-адаптивная климатология на реальном ряде R-ArcticNET v4.0 — ответ на структурный дефицит покрытия V9.3. Оценка 1973-2000, тот же набор случаев, что у EMOS-бэктеста V9.3. НЕ production-допуск.",
+  "report": {
+    "decomposition_trend_emos": {
+      "reliability": 70.89529250147453,
+      "resolution": 250.68408932361044,
+      "uncertainty": 449.9673165056954
+    },
+    "ensemble_size": 20,
+    "n_cases": 333,
+    "n_emos_fits": 333,
+    "nominal_coverage": {
+      "80": 0.8,
+      "95": 0.95
+    },
+    "period": [
+      1973,
+      2000
+    ],
+    "persistence_crps": 403.6376276276276,
+    "rank_histogram_trend_emos": [
+      22,
+      20,
+      17,
+      19,
+      16,
+      13,
+      9,
+      14,
+      10,
+      16,
+      13,
+      16,
+      14,
+      18,
+      11,
+      10,
+      11,
+      13,
+      15,
+      18,
+      38
+    ],
+    "raw_climatology": {
+      "coverage_80": 0.5105105105105106,
+      "coverage_95": 0.7357357357357357,
+      "crps": 247.1672966216216,
+      "crps_skill_vs_persistence": 0.3876505070294297,
+      "crps_skill_vs_raw": 0.0,
+      "pit_mean": 0.6572072072072072
+    },
+    "trend_adaptive": {
+      "coverage_80": 0.6726726726726727,
+      "coverage_95": 0.8228228228228228,
+      "crps": 254.9332422043098,
+      "crps_skill_vs_persistence": 0.3684106120069255,
+      "crps_skill_vs_raw": -0.031419794159001535,
+      "pit_mean": 0.5534534534534535
+    },
+    "trend_diagnostics": {
+      "max_slope_log_per_year": 0.2618384026850141,
+      "mean_pred_var_log": 0.058005016769153976,
+      "mean_slope_log_per_year": 0.03936361306277869,
+      "min_slope_log_per_year": -0.05914869762061206
+    },
+    "trend_emos_original_scale": {
+      "coverage_80": 0.6186186186186187,
+      "coverage_95": 0.7657657657657657,
+      "crps": 270.1785196835595,
+      "crps_skill_vs_persistence": 0.33064089869042046,
+      "crps_skill_vs_raw": -0.09309978859041723,
+      "pit_mean": 0.51006006006006
+    }
+  },
+  "station": "Kolyma at Ust'-Srednekan (R-ArcticNET 5858, Roshydromet code 1010)"
+}
