@@ -1,0 +1,240 @@
+{
+  "dataset_id": "OPEN-PUBLISHED-KOLYMA-MAGADAN-REFERENCE-1",
+  "version": "1.0.0",
+  "created_utc": "2026-11-16",
+  "data_class": "OPEN-PUBLISHED-REFERENCE",
+  "measured_field_data": false,
+  "usable_for_production_decisions": false,
+  "disclaimer_ru": "Опорные параметры, собранные из открытых опубликованных источников (энциклопедии, отраслевые справочники, официальные обосновывающие материалы СО ЕЭС, тарифные приказы, рецензируемые статьи). Это НЕ натурные измерения и НЕ первичные телеметрические данные. Значения предназначены для калибровки порядков величин и перекрёстных проверок синтетических сценариев. Любое инвестиционное или эксплуатационное решение требует первичных данных владельца актива.",
+  "provenance_policy": {
+    "rule": "Каждое числовое поле снабжено source_ref; источники перечислены в разделе sources с URL и датой обращения.",
+    "conflict_rule": "При расхождении источников приоритет: официальный документ (СО ЕЭС, тарифный приказ) > отраслевой справочник > энциклопедия. Расхождения фиксируются в поле notes_ru, значение не усредняется молча.",
+    "fail_closed": "Если параметр отсутствует в открытых источниках — поле null, а не экспертная оценка."
+  },
+  "sources": [
+    {
+      "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024",
+      "title_ru": "Обосновывающие материалы. Схема и программа развития электроэнергетической системы Магаданской области на 2025-2030 годы",
+      "publisher": "АО «СО ЕЭС»",
+      "url": "https://www.so-ups.ru/fileadmin/files/company/future_plan/public_discussion/support_materials/2024/84_TITEHS_Magadan.pdf",
+      "published": "2024-08-30",
+      "accessed": "2026-11-16",
+      "class": "OFFICIAL-PLANNING-DOCUMENT"
+    },
+    {
+      "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP",
+      "title_ru": "Колымская ГЭС — Википедия",
+      "publisher": "Wikipedia",
+      "url": "https://ru.wikipedia.org/wiki/Колымская_ГЭС",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "ENCYCLOPEDIA"
+    },
+    {
+      "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP",
+      "title_ru": "Усть-Среднеканская ГЭС — Википедия",
+      "publisher": "Wikipedia",
+      "url": "https://ru.wikipedia.org/wiki/Усть-Среднеканская_ГЭС",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "ENCYCLOPEDIA"
+    },
+    {
+      "source_ref": "SRC-HYDROPOWER-RU",
+      "title_ru": "Справочные материалы по гидроэлектростанциям России",
+      "publisher": "hydropower.ru",
+      "url": "https://hydropower.ru/",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "INDUSTRY-REFERENCE"
+    },
+    {
+      "source_ref": "SRC-ENERGYBASE-RU",
+      "title_ru": "Колымская ГЭС / Усть-Среднеканская ГЭС — Energybase.ru",
+      "publisher": "energybase.ru",
+      "url": "https://energybase.ru/",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "INDUSTRY-REFERENCE"
+    },
+    {
+      "source_ref": "SRC-MAGADAN-TARIFF-ORDER-2026",
+      "title_ru": "Приказ Департамента цен и тарифов Магаданской области от 29.12.2025 № 43-7/э: цены (тарифы) на электрическую энергию ПАО «Магаданэнерго» для прочих потребителей на 2026 год",
+      "publisher": "Департамент цен и тарифов Магаданской области / Гарант",
+      "url": "https://base.garant.ru/413388402/53f89421bbdaf741eb2d1ecc4ddb4c33/",
+      "published": "2025-12-29",
+      "accessed": "2026-11-16",
+      "class": "OFFICIAL-TARIFF-ORDER"
+    },
+    {
+      "source_ref": "SRC-RUSCABLE-TARIFF-2025",
+      "title_ru": "Тарифы на электроэнергию в Магадане и Магаданской области с 1 июля 2025 года",
+      "publisher": "RusCable.ru",
+      "url": "https://www.ruscable.ru/articles/tarifs/_na_elektroenergiu_na_2025_god_vtoraya_p/_na_elektroenergiu_v_magadane_i_magadans_2",
+      "published": "2025-07-28",
+      "accessed": "2026-11-16",
+      "class": "INDUSTRY-MEDIA"
+    },
+    {
+      "source_ref": "SRC-RUWIKI-MAGADAN-ENERGY",
+      "title_ru": "Энергетика Магаданской области — Рувики",
+      "publisher": "Ruwiki",
+      "url": "https://ru.ruwiki.ru/wiki/Энергетика_Магаданской_области",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "ENCYCLOPEDIA"
+    },
+    {
+      "source_ref": "SRC-RARCTICNET-5858",
+      "title_ru": "R-ArcticNET / ArcticRIMS, станция 5858 (р. Колыма — Усть-Среднекан), месячный сток 1936-01..1988-12",
+      "publisher": "University of New Hampshire, ArcticRIMS",
+      "url": "https://rims.unh.edu/data/station/station.cgi?station=5858",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "RESEARCH-DATA-PORTAL"
+    },
+    {
+      "source_ref": "SRC-PMC-ARCTICGRO-KOLYMA",
+      "title_ru": "Degrading permafrost river catchments and their impact on Arctic Ocean (Kolyma discharge trends, ArcticGRO)",
+      "publisher": "PMC / Wiley",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7375038/",
+      "published": "2011-07-11",
+      "accessed": "2026-11-16",
+      "class": "PEER-REVIEWED"
+    },
+    {
+      "source_ref": "SRC-MDPI-RS-2021-KOLYMA-PERMAFROST",
+      "title_ru": "Effect of Permafrost Thawing on Discharge of the Kolyma River, Northeastern Siberia",
+      "publisher": "MDPI Remote Sensing 13(21):4389",
+      "url": "https://www.mdpi.com/2072-4292/13/21/4389",
+      "published": "2021-10-31",
+      "accessed": "2026-11-16",
+      "class": "PEER-REVIEWED"
+    },
+    {
+      "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025",
+      "title_ru": "Климат Магадана: среднегодовая температура, нормы июля, обзор лета-2025",
+      "publisher": "MagadanMedia",
+      "url": "https://magadanmedia.ru/news/2144265/",
+      "published": "2025-07-08",
+      "accessed": "2026-11-16",
+      "class": "REGIONAL-MEDIA"
+    },
+    {
+      "source_ref": "SRC-POGODAIKLIMAT-25913",
+      "title_ru": "Метеостанция Магадан (WMO 25913): климатический монитор и архив среднемесячных значений",
+      "publisher": "pogodaiklimat.ru",
+      "url": "http://www.pogodaiklimat.ru/history/25913.htm",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "CLIMATE-ARCHIVE-AGGREGATOR"
+    }
+  ],
+  "kolyma_hpp": {
+    "name_ru": "Колымская ГЭС",
+    "river": "Колыма",
+    "parameters": {
+      "installed_capacity_mw": {"value": 900, "unit": "МВт", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "units_count": {"value": 5, "unit": "шт", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "unit_capacity_mw": {"value": 180, "unit": "МВт", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "turbine_types": {"value": "4 диагональных ПЛД-45-2256В-420 + 1 радиально-осевой РО-868М-В-410", "unit": null, "source_ref": "SRC-HYDROPOWER-RU"},
+      "design_head_m": {"value": 108, "unit": "м", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "guaranteed_capacity_mw": {"value": 224, "unit": "МВт", "source_ref": "SRC-HYDROPOWER-RU"},
+      "design_annual_generation_gwh": {"value": 3325, "unit": "ГВт·ч", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "actual_generation_2024_gwh": {"value": 2002, "unit": "ГВт·ч", "source_ref": "SRC-ENERGYBASE-RU", "notes_ru": "Фактическая выработка 2024 г. существенно ниже проектной (60%); отражает маловодность и/или ограничения спроса изолированной системы."},
+      "reservoir_area_km2": {"value": 454.6, "unit": "км²", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "reservoir_full_volume_km3": {"value": 15.08, "unit": "км³", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "reservoir_useful_volume_km3": {"value": 7.24, "unit": "км³", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "normal_pool_level_m": {"value": 451.5, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "flood_pool_level_m": {"value": 457.6, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "dead_storage_level_m": {"value": 432.0, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "seasonal_regulation_coefficient": {"value": 0.7, "unit": "доля", "source_ref": "SRC-HYDROPOWER-RU"},
+      "dam_height_m": {"value": 134.5, "unit": "м", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP", "notes_ru": "Высочайшая грунтовая плотина России."},
+      "dam_crest_length_m": {"value": 683, "unit": "м", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "spillway_capacity_npu_m3s": {"value": 8000, "unit": "м³/с", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "spillway_capacity_fpu_m3s": {"value": 11500, "unit": "м³/с", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
+      "penstocks": {"value": "5 деривационных трубопроводов Ø6 м, длина 262 м", "unit": null, "source_ref": "SRC-HYDROPOWER-RU"},
+      "share_of_magadan_system_supply_pct": {"value": 95, "unit": "%", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP", "notes_ru": "До 95% снабжения изолированной энергосистемы Магаданской области (вместе с Усть-Среднеканской ГЭС как каскад)."}
+    }
+  },
+  "ust_srednekan_hpp": {
+    "name_ru": "Усть-Среднеканская ГЭС",
+    "river": "Колыма",
+    "parameters": {
+      "installed_capacity_mw": {"value": 570, "unit": "МВт", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "units_count": {"value": 4, "unit": "шт", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "unit_capacity_mw": {"value": 142.5, "unit": "МВт", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "design_head_m": {"value": 58.4, "unit": "м", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "guaranteed_capacity_mw": {"value": 132, "unit": "МВт", "source_ref": "SRC-HYDROPOWER-RU"},
+      "design_annual_generation_gwh": {"value": 2555, "unit": "ГВт·ч", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "reservoir_area_km2": {"value": 265, "unit": "км²", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "reservoir_full_volume_km3": {"value": 5.4, "unit": "км³", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "reservoir_useful_volume_km3": {"value": 2.57, "unit": "км³", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "normal_pool_level_m": {"value": 290, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "flood_pool_level_m": {"value": 292.3, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "dead_storage_level_m": {"value": 278, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
+      "construction_completed": {"value": "2024-12", "unit": null, "source_ref": "SRC-ENERGYBASE-RU", "notes_ru": "Строительство завершено в декабре 2024 г.; условия площадки — многолетняя мерзлота до 300 м, температуры до −60°C."}
+    }
+  },
+  "magadan_power_system": {
+    "name_ru": "Электроэнергетическая система Магаданской области (технологически изолированная)",
+    "isolated": {"value": true, "unit": null, "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024"},
+    "parameters": {
+      "installed_capacity_total_mw": {"value": 1790, "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024"},
+      "installed_capacity_hydro_mw": {"value": 1470, "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024", "notes_ru": "Совпадает с суммой Колымской (900) и Усть-Среднеканской (570) ГЭС — перекрёстная проверка пройдена."},
+      "installed_capacity_thermal_mw": {"value": 320, "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024"},
+      "max_load_2023_mw": {"value": 460, "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024", "notes_ru": "Рост 2019-2023 на 67 МВт (среднегодовой темп 3,20%), обусловлен вводом предприятий золотодобывающего сектора."},
+      "max_load_forecast_2025_2030_mw": {"value": [564, 569, 571, 572, 573, 574], "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024", "notes_ru": "Табличные значения по годам 2025-2030. В текстовой части обосновывающих материалов встречается оценка 546 МВт к 2030 г. (вероятно, иной сценарий); расхождение зафиксировано, усреднение не выполнялось."},
+      "consumption_forecast_2030_gwh": {"value": 3633, "unit": "ГВт·ч", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024"},
+      "peak_load_utilization_hours_per_year": {"value": [6140, 6673], "unit": "ч/год", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024", "notes_ru": "Прогнозный диапазон числа часов использования максимума нагрузки 2025-2030."},
+      "capacity_restrictions_mw": {"value": 213, "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024"},
+      "surplus_with_largest_unit_outage_2025_mw": {"value": 832.1, "unit": "МВт", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024", "notes_ru": "Дефицит(-)/избыток(+) покрытия с учётом останова наибольшего генерирующего объекта; система резервирована с большим запасом."},
+      "thermal_fuel_gas_share_pct": {"value": [99.7, 99.8], "unit": "%", "source_ref": "SRC-SO-UPS-SIPR-MAGADAN-2024"},
+      "gold_mining_share_of_consumption_pct": {"value": 44, "unit": "%", "source_ref": "SRC-RUWIKI-MAGADAN-ENERGY", "notes_ru": "По итогам 2018 года."}
+    }
+  },
+  "electricity_tariffs": {
+    "name_ru": "Тарифы на электрическую энергию, Магаданская область",
+    "parameters": {
+      "industrial_single_rate_2026_h1_vn_rub_kwh": {"value": 7.1198, "unit": "руб/кВт·ч без НДС", "source_ref": "SRC-MAGADAN-TARIFF-ORDER-2026", "notes_ru": "ВН, 01.01-30.09.2026; СН-I 7,3445; СН-II 8,5971; НН 10,1044."},
+      "industrial_single_rate_2026_h2_vn_rub_kwh": {"value": 9.6587, "unit": "руб/кВт·ч без НДС", "source_ref": "SRC-MAGADAN-TARIFF-ORDER-2026"},
+      "industrial_lowest_in_dfo_2025_rub_kwh": {"value": 7.16, "unit": "руб/кВт·ч без НДС", "source_ref": "SRC-RUSCABLE-TARIFF-2025", "notes_ru": "Наименьший тариф для юрлиц в ДФО на 2025 г."},
+      "residential_city_2025_h2_rub_kwh": {"value": 7.49, "unit": "руб/кВт·ч с НДС", "source_ref": "SRC-RUSCABLE-TARIFF-2025"},
+      "residential_rural_2025_h2_rub_kwh": {"value": 5.24, "unit": "руб/кВт·ч с НДС", "source_ref": "SRC-RUSCABLE-TARIFF-2025"}
+    }
+  },
+  "climate_magadan": {
+    "name_ru": "Климат Магадана (субарктический с чертами морского муссонного)",
+    "wmo_station": {"value": "25913", "unit": null, "source_ref": "SRC-POGODAIKLIMAT-25913"},
+    "parameters": {
+      "mean_annual_temperature_c": {"value": -2.7, "unit": "°C", "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025"},
+      "coldest_month_january_mean_c": {"value": -16.4, "unit": "°C", "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025"},
+      "warmest_month_august_mean_c": {"value": 12.0, "unit": "°C", "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025"},
+      "july_temperature_norm_c": {"value": 12.1, "unit": "°C", "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025"},
+      "july_precipitation_norm_mm": {"value": 66, "unit": "мм/мес", "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025"},
+      "november_temperature_norm_c": {"value": -9.5, "unit": "°C", "source_ref": "SRC-POGODAIKLIMAT-25913"},
+      "november_precipitation_norm_mm": {"value": 61, "unit": "мм/мес", "source_ref": "SRC-POGODAIKLIMAT-25913"},
+      "stable_negative_temperature_from": {"value": "11 октября (средняя дата перехода суточной температуры через 0°C)", "unit": null, "source_ref": "SRC-MAGADANMEDIA-CLIMATE-2025"}
+    }
+  },
+  "hydrology_kolyma": {
+    "name_ru": "Гидрология р. Колыма — открытые ряды и научные оценки",
+    "gauging_station_ust_srednekan": {
+      "rarcticnet_station_id": {"value": "5858", "unit": null, "source_ref": "SRC-RARCTICNET-5858"},
+      "coordinates": {"value": "62.43N, 152.3E", "unit": null, "source_ref": "SRC-RARCTICNET-5858"},
+      "drainage_area_km2": {"value": 99400, "unit": "км²", "source_ref": "SRC-RARCTICNET-5858"},
+      "record_monthly": {"value": "1936-01..1988-12", "unit": null, "source_ref": "SRC-RARCTICNET-5858"},
+      "mean_annual_discharge_m3s": {"value": 556, "unit": "м³/с", "source_ref": "SRC-RARCTICNET-5858", "notes_ru": "Вычислено как среднее из климатологии среднемесячных расходов R-ArcticNET; производная величина, не прямая публикация."},
+      "mean_annual_runoff_km3": {"value": 17.5, "unit": "км³/год", "source_ref": "SRC-RARCTICNET-5858", "notes_ru": "Производная: 556 м³/с × 31,536 млн с."}
+    },
+    "basin_scale_findings": {
+      "mean_annual_discharge_at_kolymskoe_baseline_1971_2000_km3": {"value": 94.6, "unit": "км³/год", "source_ref": "SRC-PMC-ARCTICGRO-KOLYMA"},
+      "mean_annual_discharge_at_kolymskoe_2010_2020_km3": {"value": 120.7, "unit": "км³/год", "source_ref": "SRC-PMC-ARCTICGRO-KOLYMA", "notes_ru": "Рост на 27,7% относительно базовой линии 1971-2000; рост зимнего стока и более ранняя весна."},
+      "runoff_projection_end_of_century_pct": {"value": "+50 ± 25", "unit": "%", "source_ref": "SRC-PMC-ARCTICGRO-KOLYMA", "notes_ru": "Климатические проекции (Arnell 2005; Shiklomanov et al. 2013; van Vliet et al. 2013; Koirala et al. 2014)."},
+      "summer_discharge_trend": {"value": "снижение с середины 1990-х при росте толщины деятельного слоя мерзлоты (ALT): увеличение ёмкости бассейна и эвапотранспирации", "unit": null, "source_ref": "SRC-MDPI-RS-2021-KOLYMA-PERMAFROST"},
+      "winter_discharge_trend": {"value": "рост, преимущественно объясняется зарегулированием (попуски ГЭС в межень)", "unit": null, "source_ref": "SRC-MDPI-RS-2021-KOLYMA-PERMAFROST"},
+      "permafrost_coverage": {"value": "бассейн Колымы целиком в зоне сплошной многолетней мерзлоты", "unit": null, "source_ref": "SRC-MDPI-RS-2021-KOLYMA-PERMAFROST"},
+      "precipitation_et_lag_years": {"value": 2, "unit": "год", "source_ref": "SRC-MDPI-RS-2021-KOLYMA-PERMAFROST", "notes_ru": "Климатическая память: осадки → TWSA (лаг 1 год) → эвапотранспирация (лаг ещё 1 год)."}
+    }
+  }
+}
