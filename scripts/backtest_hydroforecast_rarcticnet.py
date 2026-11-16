@@ -1,106 +1,101 @@
 #!/usr/bin/env python3
-"""V9.2 — бэктест HydroForecast на реальном ряде R-ArcticNET v4.0.
+"""Бэктест HydroForecast на реальном ряде R-ArcticNET (створ 5858, Колыма — Усть-Среднекан).
 
-Створ: 5858, р. Колыма — Усть-Среднекан (R-ArcticNET v4.0, PointID 5858,
-код станции 1010; Lammers et al., 2001, JGR 106(D4)) — 67 полных лет
-месячного стока, 1933–1999 (2000-й неполный, исключён из оценки).
+Читает зафиксированное в репозитории подмножество R-ArcticNET v4.0
+`data/r-arcticnet/kolyma_ust_srednekan_5858_monthly_m3s.tsv`
+(извлечено из полного файла `Anadyr_and_Kolyma_Data_m3_s.txt`, SHA-256
+полного файла c2cad85039b3163fa59bea51ce2ca8ac026aa4ffaf62f1610a6a43f73a4ce4f0),
+гоняет rolling-origin бэктест климатологического ансамбля (скользящее окно
+20 лет, строго без будущего) и пишет квитанцию с SHA-256 в
+`artifacts_v9/rarcticnet_backtest_v9.json`.
 
-Вход: data/r-arcticnet/kolyma_ust_srednekan_5858_monthly_m3s.tsv
-(подмножество полного файла; полный файл получается scripts/fetch_open_hydro_data.py).
-Выход: artifacts_v9/rarcticnet_backtest_v9.json с SHA-256 входа и артефакта.
+Запуск:
+    PYTHONPATH=server python3 scripts/backtest_hydroforecast_rarcticnet.py
 
-Метод: rolling-origin, строго причинно. Окно климатологии 20 лет
-(window_years == min_history == 20 — единый размер ансамбля m=20, иначе
-ранговая верификация и декомпозиция CRPS недопустимы). Оценка 1953–2000:
-годы с неполными данными пропускаются самим движком без интерполяции.
+Fail-closed: файл должен существовать и содержать створ целиком; хэш входа
+фиксируется в артефакте. Это верификация БАЗОВОЙ климатологической модели
+на реальных данных, а не production-допуск.
 """
-
 from __future__ import annotations
 
+import csv
 import hashlib
 import json
+import sys
 from pathlib import Path
 
-REPO = Path(__file__).resolve().parents[1]
-INPUT = REPO / "data" / "r-arcticnet" / "kolyma_ust_srednekan_5858_monthly_m3s.tsv"
-OUTPUT = REPO / "artifacts_v9" / "rarcticnet_backtest_v9.json"
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "server"))
 
-STATION = "Kolyma at Ust'-Srednekan (R-ArcticNET v4.0 PointID 5858, code 1010)"
-POINT_ID = "5858"
+from hydro_api.backtest_v9 import run_monthly_backtest  # noqa: E402
 
+STATION_POINT_ID = "5858"
+STATION_NAME = "Kolyma at Ust'-Srednekan (R-ArcticNET 5858, Roshydromet code 1010)"
+WINDOW = 20
+MIN_HISTORY = 20
 
-def read_series(path: Path):
-    series = {}
-    with open(path, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("#"):
-                continue
-            pid, year, month, q = line.split("\t")
-            if pid != POINT_ID:
-                continue
-            q = float(q)
-            if q < 0:  # пропуски в R-ArcticNET кодируются отрицательными
-                continue
-            series[(int(year), int(month))] = q
-    if not series:
-        raise ArithmeticError("RARCTICNET_EMPTY_SERIES: нет данных по створу " + POINT_ID)
-    return series
+INPUT = ROOT / "data" / "r-arcticnet" / "kolyma_ust_srednekan_5858_monthly_m3s.tsv"
+OUTPUT = ROOT / "artifacts_v9" / "rarcticnet_backtest_v9.json"
+
+MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
+          "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
 def main() -> int:
-    import sys
-    sys.path.insert(0, str(REPO / "server"))
-    from hydro_api.backtest_v9 import run_monthly_backtest
-
+    if not INPUT.is_file():
+        print(f"FAIL: входной файл не найден: {INPUT}", file=sys.stderr)
+        return 2
     raw = INPUT.read_bytes()
     input_sha = hashlib.sha256(raw).hexdigest()
-    series = read_series(INPUT)
 
+    series = {}
+    with INPUT.open(newline="") as f:
+        for row in csv.DictReader(f, delimiter="\t"):
+            if row["PointID"] != STATION_POINT_ID:
+                continue
+            year = int(row["Year"])
+            for i, m in enumerate(MONTHS, start=1):
+                v = row[m].strip()
+                if v:  # пропуски не интерполируются (fail-closed)
+                    series[(year, i)] = float(v)
+    if not series:
+        print(f"FAIL: створ {STATION_POINT_ID} не найден во входном файле", file=sys.stderr)
+        return 3
     years = sorted({y for y, _ in series})
-    months_per_year = {}
-    for (y, m) in series:
-        months_per_year.setdefault(y, set()).add(m)
-    full_years = [y for y in years if len(months_per_year[y]) == 12]
+    print(f"Створ {STATION_POINT_ID}: {len(series)} месяцев, годы {years[0]}..{years[-1]}")
 
     report = run_monthly_backtest(
-        series,
-        station=STATION,
-        year_start=1953,
-        year_end=2000,
-        min_history=20,
-        window_years=20,
-    )
+        series, STATION_NAME,
+        year_start=years[0] + WINDOW, year_end=years[-1],
+        min_history=MIN_HISTORY, window_years=WINDOW)
 
-    out = {
-        "artifact": "V9.2 реальный бэктест HydroForecast — R-ArcticNET v4.0, створ 5858",
-        "engine_id": report.engine_id,
-        "input_file": str(INPUT.relative_to(REPO)),
+    artifact = {
+        "artifact": "RARCTICNET-BACKTEST-V9-1",
+        "benchmark_model": "climatology (rolling 20-year window, strictly causal)",
+        "input_file": str(INPUT.relative_to(ROOT)),
         "input_sha256": input_sha,
-        "series_span": {
-            "first": min(series), "last": max(series),
-            "full_years_count": len(full_years),
-            "full_years_range": [min(full_years), max(full_years)],
-        },
+        "station": STATION_NAME,
         "report": json.loads(report.model_dump_json()),
+        "note_ru": (
+            "Верификация базовой климатологической модели HydroForecast на реальном "
+            "измерительном ряде R-ArcticNET v4.0. НЕ production-допуск: прогнозная "
+            "модель — климатология, а не гидрологическая модель притока."
+        ),
     }
-    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
-    payload = json.dumps(out, ensure_ascii=False, indent=2, sort_keys=True)
-    OUTPUT.write_text(payload + "\n", encoding="utf-8")
+    blob = json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True).encode()
+    artifact["artifact_sha256"] = hashlib.sha256(blob).hexdigest()
 
-    artifact_sha = hashlib.sha256((payload + "\n").encode("utf-8")).hexdigest()
-    # вшиваем хэш артефакта отдельной строкой-комментарием рядом (сам файл не меняем)
-    print(json.dumps({
-        "cases_evaluated": report.cases_evaluated,
-        "crps_climatology": round(report.crps_climatology, 3),
-        "crps_persistence": round(report.crps_persistence, 3),
-        "crps_skill_vs_persistence": round(report.crps_skill_vs_persistence, 4),
-        "coverage_80": round(report.coverage_80, 4),
-        "coverage_95": round(report.coverage_95, 4),
-        "input_sha256": input_sha,
-        "artifact_sha256": artifact_sha,
-        "output": str(OUTPUT.relative_to(REPO)),
-    }, ensure_ascii=False, indent=2))
+    OUTPUT.parent.mkdir(parents=True, exist_ok=True)
+    OUTPUT.write_text(json.dumps(artifact, ensure_ascii=False, indent=2, sort_keys=True))
+    print(f"OK: {OUTPUT}")
+    print(f"  cases={report.n_cases}, CRPS_clim={report.crps_climatology:.1f} m3/s, "
+          f"CRPS_pers={report.crps_persistence:.1f} m3/s, "
+          f"skill={report.crps_skill_vs_persistence:+.3f}")
+    print(f"  coverage80={report.coverage_80:.3f} (номинал 0.80), "
+          f"coverage95={report.coverage_95:.3f} (номинал 0.95)")
+    print(f"  REL={report.decomposition_reliability:.2f}, "
+          f"RES={report.decomposition_resolution:.2f}, "
+          f"UNC={report.decomposition_uncertainty:.2f}")
     return 0
 
 
