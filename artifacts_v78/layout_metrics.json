@@ -1,0 +1,28 @@
+{
+  "metrics": [
+    {
+      "viewport": 1440,
+      "body": 1440,
+      "block": 1200,
+      "blockClient": 1200,
+      "fields": 5
+    },
+    {
+      "viewport": 768,
+      "body": 768,
+      "block": 718,
+      "blockClient": 718,
+      "fields": 5
+    },
+    {
+      "viewport": 375,
+      "body": 375,
+      "block": 343,
+      "blockClient": 343,
+      "fields": 5
+    }
+  ],
+  "dom_ids": 140,
+  "unknown_js_ids": [],
+  "authenticated_e2e": false
+}

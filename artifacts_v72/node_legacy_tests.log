@@ -1,0 +1,388 @@
+TAP version 13
+# Subtest: V6 forecast MAE bias RMSE WAPE with temporal provenance
+ok 1 - V6 forecast MAE bias RMSE WAPE with temporal provenance
+  ---
+  duration_ms: 1.461533
+  type: 'test'
+  ...
+# Subtest: V6 forecast feature leakage blocks
+ok 2 - V6 forecast feature leakage blocks
+  ---
+  duration_ms: 0.409736
+  type: 'test'
+  ...
+# Subtest: V6 issue after target blocks
+ok 3 - V6 issue after target blocks
+  ---
+  duration_ms: 0.138765
+  type: 'test'
+  ...
+# Subtest: V6 availability later than evaluation blocks
+ok 4 - V6 availability later than evaluation blocks
+  ---
+  duration_ms: 0.226846
+  type: 'test'
+  ...
+# Subtest: V6 forecast duplicate id blocks
+ok 5 - V6 forecast duplicate id blocks
+  ---
+  duration_ms: 0.152736
+  type: 'test'
+  ...
+# Subtest: V6 forecast no denominator WAPE is undefined rather than 0
+ok 6 - V6 forecast no denominator WAPE is undefined rather than 0
+  ---
+  duration_ms: 0.1349
+  type: 'test'
+  ...
+# Subtest: V6 forecast wrong unit blocks
+ok 7 - V6 forecast wrong unit blocks
+  ---
+  duration_ms: 0.117894
+  type: 'test'
+  ...
+# Subtest: V6 quality accepts physically valid zero measurement
+ok 8 - V6 quality accepts physically valid zero measurement
+  ---
+  duration_ms: 0.381034
+  type: 'test'
+  ...
+# Subtest: V6 quality rejects missing without coercing it to zero
+ok 9 - V6 quality rejects missing without coercing it to zero
+  ---
+  duration_ms: 1.657183
+  type: 'test'
+  ...
+# Subtest: V6 quality rejects duplicate measurement
+ok 10 - V6 quality rejects duplicate measurement
+  ---
+  duration_ms: 0.353554
+  type: 'test'
+  ...
+# Subtest: V6 quality rejects tenant data
+ok 11 - V6 quality rejects tenant data
+  ---
+  duration_ms: 1.027041
+  type: 'test'
+  ...
+# Subtest: V6 quality rejects future observation
+ok 12 - V6 quality rejects future observation
+  ---
+  duration_ms: 0.166536
+  type: 'test'
+  ...
+# Subtest: V6 quality rejects unit mismatch and rejected quality
+ok 13 - V6 quality rejects unit mismatch and rejected quality
+  ---
+  duration_ms: 0.707207
+  type: 'test'
+  ...
+# Subtest: V6 scenario delta NPV is based on identical baselines
+ok 14 - V6 scenario delta NPV is based on identical baselines
+  ---
+  duration_ms: 0.286373
+  type: 'test'
+  ...
+# Subtest: V6 scenario differing asset blocks comparison
+ok 15 - V6 scenario differing asset blocks comparison
+  ---
+  duration_ms: 0.238694
+  type: 'test'
+  ...
+# Subtest: V6 scenario differing constraint set blocks comparison
+ok 16 - V6 scenario differing constraint set blocks comparison
+  ---
+  duration_ms: 0.131304
+  type: 'test'
+  ...
+# Subtest: V6 scenario hard failure prevents monetized decision
+ok 17 - V6 scenario hard failure prevents monetized decision
+  ---
+  duration_ms: 0.0949
+  type: 'test'
+  ...
+# Subtest: V6 scenario no constraint evidence blocks
+ok 18 - V6 scenario no constraint evidence blocks
+  ---
+  duration_ms: 0.137844
+  type: 'test'
+  ...
+# Subtest: V6 scenario horizons must match
+ok 19 - V6 scenario horizons must match
+  ---
+  duration_ms: 0.139076
+  type: 'test'
+  ...
+# Subtest: V6 portfolio valid mandatory+dependency case
+ok 20 - V6 portfolio valid mandatory+dependency case
+  ---
+  duration_ms: 0.437558
+  type: 'test'
+  ...
+# Subtest: V6 portfolio mandatory cannot be skipped for NPV
+ok 21 - V6 portfolio mandatory cannot be skipped for NPV
+  ---
+  duration_ms: 0.097574
+  type: 'test'
+  ...
+# Subtest: V6 portfolio missing dependency blocks
+ok 22 - V6 portfolio missing dependency blocks
+  ---
+  duration_ms: 0.102902
+  type: 'test'
+  ...
+# Subtest: V6 portfolio mutually exclusive blocked
+ok 23 - V6 portfolio mutually exclusive blocked
+  ---
+  duration_ms: 0.112787
+  type: 'test'
+  ...
+# Subtest: V6 portfolio annual budget gate blocks
+ok 24 - V6 portfolio annual budget gate blocks
+  ---
+  duration_ms: 0.223941
+  type: 'test'
+  ...
+# Subtest: V6 portfolio undefined budget year is a blocker
+ok 25 - V6 portfolio undefined budget year is a blocker
+  ---
+  duration_ms: 0.125395
+  type: 'test'
+  ...
+# Subtest: V6 reconciliation counts same-org duplicated effect once
+ok 26 - V6 reconciliation counts same-org duplicated effect once
+  ---
+  duration_ms: 0.239285
+  type: 'test'
+  ...
+# Subtest: V6 reconciliation different org same benefit key are distinct
+ok 27 - V6 reconciliation different org same benefit key are distinct
+  ---
+  duration_ms: 0.081842
+  type: 'test'
+  ...
+# Subtest: V6 reconciliation conflict excluded until verified
+ok 28 - V6 reconciliation conflict excluded until verified
+  ---
+  duration_ms: 0.075672
+  type: 'test'
+  ...
+# Subtest: V6 reconciliation missing documentary basis blocked
+ok 29 - V6 reconciliation missing documentary basis blocked
+  ---
+  duration_ms: 0.187558
+  type: 'test'
+  ...
+# Subtest: V6 quality policy validated rejects review-only records
+ok 30 - V6 quality policy validated rejects review-only records
+  ---
+  duration_ms: 0.135751
+  type: 'test'
+  ...
+# Subtest: V6 quality invalid object stays in rejected batch
+ok 31 - V6 quality invalid object stays in rejected batch
+  ---
+  duration_ms: 0.10135
+  type: 'test'
+  ...
+# Subtest: V6 scenario missing baseline key rejected even if both missing
+ok 32 - V6 scenario missing baseline key rejected even if both missing
+  ---
+  duration_ms: 0.099337
+  type: 'test'
+  ...
+# Subtest: V6 portfolio cyclic dependencies are invalid
+ok 33 - V6 portfolio cyclic dependencies are invalid
+  ---
+  duration_ms: 0.183391
+  type: 'test'
+  ...
+# Subtest: V6 portfolio unknown referenced dependency blocks
+ok 34 - V6 portfolio unknown referenced dependency blocks
+  ---
+  duration_ms: 0.110474
+  type: 'test'
+  ...
+# Subtest: six modules and distinct asset orgs
+ok 35 - six modules and distinct asset orgs
+  ---
+  duration_ms: 0.796039
+  type: 'test'
+  ...
+# Subtest: NPV formula matches independent annuity
+ok 36 - NPV formula matches independent annuity
+  ---
+  duration_ms: 0.286013
+  type: 'test'
+  ...
+# Subtest: NPV zero rate & zero benefit
+ok 37 - NPV zero rate & zero benefit
+  ---
+  duration_ms: 0.107129
+  type: 'test'
+  ...
+# Subtest: NPV invalid negative CAPEX rejected
+ok 38 - NPV invalid negative CAPEX rejected
+  ---
+  duration_ms: 0.346883
+  type: 'test'
+  ...
+# Subtest: NPV invalid horizon rejected
+ok 39 - NPV invalid horizon rejected
+  ---
+  duration_ms: 0.177062
+  type: 'test'
+  ...
+# Subtest: grid balance preserves units and no fraud inference
+ok 40 - grid balance preserves units and no fraud inference
+  ---
+  duration_ms: 0.156242
+  type: 'test'
+  ...
+# Subtest: negative balance blocks model
+ok 41 - negative balance blocks model
+  ---
+  duration_ms: 0.15491
+  type: 'test'
+  ...
+# Subtest: technical loss above observed flags inconsistency
+ok 42 - technical loss above observed flags inconsistency
+  ---
+  duration_ms: 0.162381
+  type: 'test'
+  ...
+# Subtest: hydro balance obeys mass balance
+ok 43 - hydro balance obeys mass balance
+  ---
+  duration_ms: 0.296198
+  type: 'test'
+  ...
+# Subtest: hydro balance flags bound violation
+ok 44 - hydro balance flags bound violation
+  ---
+  duration_ms: 0.354334
+  type: 'test'
+  ...
+# Subtest: hydropower zero flow
+ok 45 - hydropower zero flow
+  ---
+  duration_ms: 0.226235
+  type: 'test'
+  ...
+# Subtest: hydropower detects rated capacity overrun
+ok 46 - hydropower detects rated capacity overrun
+  ---
+  duration_ms: 0.112016
+  type: 'test'
+  ...
+# Subtest: heat calculation dimension MW
+ok 47 - heat calculation dimension MW
+  ---
+  duration_ms: 0.885631
+  type: 'test'
+  ...
+# Subtest: heat wrong regime rejects
+ok 48 - heat wrong regime rejects
+  ---
+  duration_ms: 0.110653
+  type: 'test'
+  ...
+# Subtest: condition anomaly not failure probability
+ok 49 - condition anomaly not failure probability
+  ---
+  duration_ms: 0.120749
+  type: 'test'
+  ...
+# Subtest: condition anomaly incomparable regime no risk score
+ok 50 - condition anomaly incomparable regime no risk score
+  ---
+  duration_ms: 0.072707
+  type: 'test'
+  ...
+# Subtest: MAE correct
+ok 51 - MAE correct
+  ---
+  duration_ms: 0.110083
+  type: 'test'
+  ...
+# Subtest: MAE rejects mismatched length
+ok 52 - MAE rejects mismatched length
+  ---
+  duration_ms: 0.079027
+  type: 'test'
+  ...
+# Subtest: org separation disallows creating initiative
+ok 53 - org separation disallows creating initiative
+  ---
+  duration_ms: 0.205684
+  type: 'test'
+  ...
+# Subtest: wrong asset-module relationship disallows initiative
+ok 54 - wrong asset-module relationship disallows initiative
+  ---
+  duration_ms: 0.096483
+  type: 'test'
+  ...
+# Subtest: creation enforces documentary provenance
+ok 55 - creation enforces documentary provenance
+  ---
+  duration_ms: 0.103393
+  type: 'test'
+  ...
+# Subtest: only analysts create
+ok 56 - only analysts create
+  ---
+  duration_ms: 0.088641
+  type: 'test'
+  ...
+# Subtest: invalid transition draft direct approve blocked
+ok 57 - invalid transition draft direct approve blocked
+  ---
+  duration_ms: 0.224692
+  type: 'test'
+  ...
+# Subtest: four-eyes controls and transitions require evidence
+ok 58 - four-eyes controls and transitions require evidence
+  ---
+  duration_ms: 0.677333
+  type: 'test'
+  ...
+# Subtest: full multi-role decision lifecycle reaches verification
+ok 59 - full multi-role decision lifecycle reaches verification
+  ---
+  duration_ms: 0.168379
+  type: 'test'
+  ...
+# Subtest: auditor cannot verify without completion evidence
+ok 60 - auditor cannot verify without completion evidence
+  ---
+  duration_ms: 0.131224
+  type: 'test'
+  ...
+# Subtest: benefit IDs are not double counted for repeated modules
+ok 61 - benefit IDs are not double counted for repeated modules
+  ---
+  duration_ms: 0.241467
+  type: 'test'
+  ...
+# Subtest: conflicting benefit amount excluded for review
+ok 62 - conflicting benefit amount excluded for review
+  ---
+  duration_ms: 0.18896
+  type: 'test'
+  ...
+# Subtest: audit chain integrity detects modification
+ok 63 - audit chain integrity detects modification
+  ---
+  duration_ms: 18.416651
+  type: 'test'
+  ...
+1..63
+# tests 63
+# suites 0
+# pass 63
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 81.743757

@@ -1,0 +1,46 @@
+{
+  "project": "HydroKontur 360 - Magadan",
+  "date": "2026-10-27",
+  "release": "RECOVERY_TOOLING_V6_MANIFEST_BINDING",
+  "scope": "synthetic recovery fixture tests only",
+  "python_version": "3.13.5",
+  "clean_isolated_git_test": true,
+  "command": "python -m compileall -q tools && python -m unittest discover -s tests -p test_*.py -v && git diff --check",
+  "tests_completed": 42,
+  "passed": 42,
+  "failed": 0,
+  "proof_features": [
+    "archive SHA256 pin",
+    "external manifest SHA256 pin",
+    "reject forged source+manifest",
+    "closed migration sequence",
+    "symlink/ZIP bomb/LFS/secret rejection"
+  ],
+  "source_gate_with_actual_archive": "SOURCE_IMPORT_BLOCKED",
+  "source_gate_missing_tree_exit_code": 2,
+  "github_actions_latest_observed": {
+    "run_id": 40534656681,
+    "head_sha": "c0a04f63a77049b71dd80e5166a66348c3aa466e",
+    "runner_id": 0,
+    "steps": 0,
+    "conclusion": "failure",
+    "runner_error_cause": "unknown"
+  },
+  "original_v79_bytes_available": false,
+  "original_v79_independent_hash_verified": false,
+  "github_app_ci_green": false,
+  "native_postgres17_rls_passed": false,
+  "corporate_sso_mfa_accepted": false,
+  "production_ready": false,
+  "file_sha256": {
+    "tools/import_v79_snapshot.py": "0aeb58c758468ce4a328f70f6e31cd998ac089978914444efd82ef02abe3743d",
+    "tools/check_source_admission.py": "aaf696c3347b157243e4df5eff669f6c2d85e18788184d9e839498281ebc820b",
+    "tests/test_manifest_binding.py": "77721b6970fce3e1e7ac088ea1757e80e1612ed161d4a153b682c0c3d4b40c62",
+    "tests/test_ci_contract.py": "5de401df55922183e7d6d54dfc9f32d7a17906a9ca83d0e8ed0cd5d482511a0a",
+    ".github/workflows/recovery-admission.yml": "441e7a27fa1de53a7f13856e854cd1c8ccb7c00331997a16f1dc5350ae66ceee",
+    "docs/SOURCE_IMPORT_GATES.md": "70b5ff4ee340372374103c47315bc68e0c666dfbab3500ea8c39113924134f80",
+    "docs/RECOVERY_PRIORITIES.md": "23bb401479303720711b3d410593056ff7fa6ca85d4656ad8ea1d20475ba6c26",
+    "docs/CI_RUNNER_INCIDENT_2026-10-27.md": "50b7e0a66d7ecb18b4f663580994c4a8914d07946158759b7d2e7782934ac983"
+  },
+  "note": "GitHub blob transport and CI runner verification are separate from this local evidence file."
+}

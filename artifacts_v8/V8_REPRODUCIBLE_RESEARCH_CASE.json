@@ -1,0 +1,712 @@
+{
+  "release": "V8.0-LAB",
+  "dataset": "SYNTHETIC-MAGADAN-MV-DEMONSTRATION-ONLY",
+  "source_sha256": "07fd1f501e705fef1a6af66648185f16bf5c15eeee76c747c1bf9798deeff70d",
+  "model_source_sha256": "3c65bda523d4adb5e34462b53ae71b6040d088361cf36ba612f9f8baa72e530f",
+  "quality_engine_source_sha256": "b8191a1f6d892d49adb0a61f4cf9a6b12888fc97df94c3e7859adcf4779a513d",
+  "python": "3.13.5",
+  "data": {
+    "scope": "SYNTHETIC_MV_RESEARCH_NO_REALIZED_SAVINGS",
+    "asset_id": "feeder-a",
+    "commissioned_at": "2027-03-07T00:00:00Z",
+    "report_as_of": "2027-04-01T00:00:00Z",
+    "baseline": [
+      {
+        "started_at": "2027-01-01T00:00:00Z",
+        "available_at": "2027-01-01T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": -17.0,
+        "metered_loss_kwh": 6.010000000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-0"
+      },
+      {
+        "started_at": "2027-01-02T00:00:00Z",
+        "available_at": "2027-01-02T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": -8.0,
+        "metered_loss_kwh": 8.121295,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-1"
+      },
+      {
+        "started_at": "2027-01-03T00:00:00Z",
+        "available_at": "2027-01-03T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": 1.0,
+        "metered_loss_kwh": 10.383180000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-2"
+      },
+      {
+        "started_at": "2027-01-04T00:00:00Z",
+        "available_at": "2027-01-04T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": -12.0,
+        "metered_loss_kwh": 10.815655,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-3"
+      },
+      {
+        "started_at": "2027-01-05T00:00:00Z",
+        "available_at": "2027-01-05T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": -3.0,
+        "metered_loss_kwh": 13.378720000000003,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-4"
+      },
+      {
+        "started_at": "2027-01-06T00:00:00Z",
+        "available_at": "2027-01-06T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": -16.0,
+        "metered_loss_kwh": 14.087375,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-5"
+      },
+      {
+        "started_at": "2027-01-07T00:00:00Z",
+        "available_at": "2027-01-07T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.22,
+        "mean_ambient_temperature_c": -7.0,
+        "metered_loss_kwh": 16.951620000000002,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-6"
+      },
+      {
+        "started_at": "2027-01-08T00:00:00Z",
+        "available_at": "2027-01-08T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": 2.0,
+        "metered_loss_kwh": 7.73,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-7"
+      },
+      {
+        "started_at": "2027-01-09T00:00:00Z",
+        "available_at": "2027-01-09T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": -11.0,
+        "metered_loss_kwh": 7.861295000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-8"
+      },
+      {
+        "started_at": "2027-01-10T00:00:00Z",
+        "available_at": "2027-01-10T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": -2.0,
+        "metered_loss_kwh": 10.123180000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-9"
+      },
+      {
+        "started_at": "2027-01-11T00:00:00Z",
+        "available_at": "2027-01-11T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": -15.0,
+        "metered_loss_kwh": 10.530655,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-10"
+      },
+      {
+        "started_at": "2027-01-12T00:00:00Z",
+        "available_at": "2027-01-12T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": -6.0,
+        "metered_loss_kwh": 13.093720000000003,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-11"
+      },
+      {
+        "started_at": "2027-01-13T00:00:00Z",
+        "available_at": "2027-01-13T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": 3.0,
+        "metered_loss_kwh": 15.807374999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-12"
+      },
+      {
+        "started_at": "2027-01-14T00:00:00Z",
+        "available_at": "2027-01-14T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.22,
+        "mean_ambient_temperature_c": -10.0,
+        "metered_loss_kwh": 16.69162,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-13"
+      },
+      {
+        "started_at": "2027-01-15T00:00:00Z",
+        "available_at": "2027-01-15T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": -1.0,
+        "metered_loss_kwh": 7.470000000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-14"
+      },
+      {
+        "started_at": "2027-01-16T00:00:00Z",
+        "available_at": "2027-01-16T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": -14.0,
+        "metered_loss_kwh": 7.576295000000002,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-15"
+      },
+      {
+        "started_at": "2027-01-17T00:00:00Z",
+        "available_at": "2027-01-17T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": -5.0,
+        "metered_loss_kwh": 9.838180000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-16"
+      },
+      {
+        "started_at": "2027-01-18T00:00:00Z",
+        "available_at": "2027-01-18T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": 4.0,
+        "metered_loss_kwh": 12.250654999999998,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-17"
+      },
+      {
+        "started_at": "2027-01-19T00:00:00Z",
+        "available_at": "2027-01-19T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": -9.0,
+        "metered_loss_kwh": 12.833720000000003,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-18"
+      },
+      {
+        "started_at": "2027-01-20T00:00:00Z",
+        "available_at": "2027-01-20T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": 0.0,
+        "metered_loss_kwh": 15.547374999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-19"
+      },
+      {
+        "started_at": "2027-01-21T00:00:00Z",
+        "available_at": "2027-01-21T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.22,
+        "mean_ambient_temperature_c": -13.0,
+        "metered_loss_kwh": 16.40662,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-20"
+      },
+      {
+        "started_at": "2027-01-22T00:00:00Z",
+        "available_at": "2027-01-22T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": -4.0,
+        "metered_loss_kwh": 7.1850000000000005,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-21"
+      },
+      {
+        "started_at": "2027-01-23T00:00:00Z",
+        "available_at": "2027-01-23T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": -17.0,
+        "metered_loss_kwh": 7.316295000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-22"
+      },
+      {
+        "started_at": "2027-01-24T00:00:00Z",
+        "available_at": "2027-01-24T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": -8.0,
+        "metered_loss_kwh": 9.578180000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-23"
+      },
+      {
+        "started_at": "2027-01-25T00:00:00Z",
+        "available_at": "2027-01-25T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": 1.0,
+        "metered_loss_kwh": 11.990654999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-24"
+      },
+      {
+        "started_at": "2027-01-26T00:00:00Z",
+        "available_at": "2027-01-26T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": -12.0,
+        "metered_loss_kwh": 12.548720000000003,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-25"
+      },
+      {
+        "started_at": "2027-01-27T00:00:00Z",
+        "available_at": "2027-01-27T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": -3.0,
+        "metered_loss_kwh": 15.262374999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-26"
+      },
+      {
+        "started_at": "2027-01-28T00:00:00Z",
+        "available_at": "2027-01-28T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.22,
+        "mean_ambient_temperature_c": -16.0,
+        "metered_loss_kwh": 16.14662,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-27"
+      },
+      {
+        "started_at": "2027-01-29T00:00:00Z",
+        "available_at": "2027-01-29T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": -7.0,
+        "metered_loss_kwh": 6.925000000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-28"
+      },
+      {
+        "started_at": "2027-01-30T00:00:00Z",
+        "available_at": "2027-01-30T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": 2.0,
+        "metered_loss_kwh": 9.036295,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-29"
+      },
+      {
+        "started_at": "2027-01-31T00:00:00Z",
+        "available_at": "2027-01-31T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": -11.0,
+        "metered_loss_kwh": 9.293180000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-30"
+      },
+      {
+        "started_at": "2027-02-01T00:00:00Z",
+        "available_at": "2027-02-01T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": -2.0,
+        "metered_loss_kwh": 11.705654999999998,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-31"
+      },
+      {
+        "started_at": "2027-02-02T00:00:00Z",
+        "available_at": "2027-02-02T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": -15.0,
+        "metered_loss_kwh": 12.288720000000003,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-32"
+      },
+      {
+        "started_at": "2027-02-03T00:00:00Z",
+        "available_at": "2027-02-03T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": -6.0,
+        "metered_loss_kwh": 15.002374999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-33"
+      },
+      {
+        "started_at": "2027-02-04T00:00:00Z",
+        "available_at": "2027-02-04T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.22,
+        "mean_ambient_temperature_c": 3.0,
+        "metered_loss_kwh": 17.86662,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-34"
+      },
+      {
+        "started_at": "2027-02-05T00:00:00Z",
+        "available_at": "2027-02-05T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": -10.0,
+        "metered_loss_kwh": 6.640000000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-35"
+      },
+      {
+        "started_at": "2027-02-06T00:00:00Z",
+        "available_at": "2027-02-06T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": -1.0,
+        "metered_loss_kwh": 8.751295,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-36"
+      },
+      {
+        "started_at": "2027-02-07T00:00:00Z",
+        "available_at": "2027-02-07T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": -14.0,
+        "metered_loss_kwh": 9.033180000000002,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-37"
+      },
+      {
+        "started_at": "2027-02-08T00:00:00Z",
+        "available_at": "2027-02-08T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": -5.0,
+        "metered_loss_kwh": 11.445655,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-38"
+      },
+      {
+        "started_at": "2027-02-09T00:00:00Z",
+        "available_at": "2027-02-09T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": 4.0,
+        "metered_loss_kwh": 14.008720000000002,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-39"
+      },
+      {
+        "started_at": "2027-02-10T00:00:00Z",
+        "available_at": "2027-02-10T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": -9.0,
+        "metered_loss_kwh": 14.717374999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-40"
+      },
+      {
+        "started_at": "2027-02-11T00:00:00Z",
+        "available_at": "2027-02-11T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.22,
+        "mean_ambient_temperature_c": 0.0,
+        "metered_loss_kwh": 17.58162,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-41"
+      },
+      {
+        "started_at": "2027-02-12T00:00:00Z",
+        "available_at": "2027-02-12T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.0,
+        "mean_ambient_temperature_c": -13.0,
+        "metered_loss_kwh": 6.380000000000001,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-42"
+      },
+      {
+        "started_at": "2027-02-13T00:00:00Z",
+        "available_at": "2027-02-13T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.37,
+        "mean_ambient_temperature_c": -4.0,
+        "metered_loss_kwh": 8.491295000000003,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-43"
+      },
+      {
+        "started_at": "2027-02-14T00:00:00Z",
+        "available_at": "2027-02-14T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.74,
+        "mean_ambient_temperature_c": -17.0,
+        "metered_loss_kwh": 8.773180000000002,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-44"
+      },
+      {
+        "started_at": "2027-02-15T00:00:00Z",
+        "available_at": "2027-02-15T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.109999999999999,
+        "mean_ambient_temperature_c": -8.0,
+        "metered_loss_kwh": 11.160654999999998,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-45"
+      },
+      {
+        "started_at": "2027-02-16T00:00:00Z",
+        "available_at": "2027-02-16T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.48,
+        "mean_ambient_temperature_c": 1.0,
+        "metered_loss_kwh": 13.723720000000002,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-46"
+      },
+      {
+        "started_at": "2027-02-17T00:00:00Z",
+        "available_at": "2027-02-17T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.85,
+        "mean_ambient_temperature_c": -12.0,
+        "metered_loss_kwh": 14.457374999999999,
+        "source_ref": "SYNTHETIC-MV-BASELINE-OBS-47"
+      }
+    ],
+    "post": [
+      {
+        "started_at": "2027-03-08T00:00:00Z",
+        "available_at": "2027-03-08T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.1,
+        "mean_ambient_temperature_c": -16.0,
+        "metered_loss_kwh": 5.345500000000001,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-0"
+      },
+      {
+        "started_at": "2027-03-09T00:00:00Z",
+        "available_at": "2027-03-09T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.49,
+        "mean_ambient_temperature_c": -9.0,
+        "metered_loss_kwh": 7.389055000000001,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-1"
+      },
+      {
+        "started_at": "2027-03-10T00:00:00Z",
+        "available_at": "2027-03-10T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.88,
+        "mean_ambient_temperature_c": -2.0,
+        "metered_loss_kwh": 9.59992,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-2"
+      },
+      {
+        "started_at": "2027-03-11T00:00:00Z",
+        "available_at": "2027-03-11T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.27,
+        "mean_ambient_temperature_c": -15.0,
+        "metered_loss_kwh": 10.178094999999999,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-3"
+      },
+      {
+        "started_at": "2027-03-12T00:00:00Z",
+        "available_at": "2027-03-12T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.66,
+        "mean_ambient_temperature_c": -8.0,
+        "metered_loss_kwh": 12.72358,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-4"
+      },
+      {
+        "started_at": "2027-03-13T00:00:00Z",
+        "available_at": "2027-03-13T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.050000000000001,
+        "mean_ambient_temperature_c": -1.0,
+        "metered_loss_kwh": 15.436375000000007,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-5"
+      },
+      {
+        "started_at": "2027-03-14T00:00:00Z",
+        "available_at": "2027-03-14T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.1,
+        "mean_ambient_temperature_c": -14.0,
+        "metered_loss_kwh": 5.525500000000001,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-6"
+      },
+      {
+        "started_at": "2027-03-15T00:00:00Z",
+        "available_at": "2027-03-15T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.49,
+        "mean_ambient_temperature_c": -7.0,
+        "metered_loss_kwh": 7.5690550000000005,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-7"
+      },
+      {
+        "started_at": "2027-03-16T00:00:00Z",
+        "available_at": "2027-03-16T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 3.88,
+        "mean_ambient_temperature_c": 0.0,
+        "metered_loss_kwh": 9.779919999999999,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-8"
+      },
+      {
+        "started_at": "2027-03-17T00:00:00Z",
+        "available_at": "2027-03-17T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.27,
+        "mean_ambient_temperature_c": -13.0,
+        "metered_loss_kwh": 10.358094999999999,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-9"
+      },
+      {
+        "started_at": "2027-03-18T00:00:00Z",
+        "available_at": "2027-03-18T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 4.66,
+        "mean_ambient_temperature_c": -6.0,
+        "metered_loss_kwh": 12.90358,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-10"
+      },
+      {
+        "started_at": "2027-03-19T00:00:00Z",
+        "available_at": "2027-03-19T02:00:00Z",
+        "duration_hours": 1.0,
+        "mean_delivered_load_mw": 5.050000000000001,
+        "mean_ambient_temperature_c": 1.0,
+        "metered_loss_kwh": 15.616375000000007,
+        "source_ref": "SYNTHETIC-MV-AFTER-OBS-11"
+      }
+    ],
+    "measurement_boundary_ref": "SYNTHETIC-MV-BOUNDARY-MAGADAN-001",
+    "adjustment_description": "Synthetic post-project counterfactual uses pre-project load, load squared and air temperature, chronologically held-out baseline, no actual measurements or expert assessment."
+  },
+  "baseline_report": {
+    "status": "SYNTHETIC_COUNTERFACTUAL_RESEARCH_ONLY",
+    "model": "CHRONOLOGICAL_OLS_HOURLY_LOSS_KW_ON_LOAD_LOAD_SQUARED_TEMPERATURE",
+    "input_measurement_boundary_ref": "SYNTHETIC-MV-BOUNDARY-MAGADAN-001",
+    "train_observations": 36,
+    "holdout_observations": 12,
+    "post_observations": 12,
+    "temporal_leakage_guard": "BASELINE_ONLY_PRE_COMMISSIONING",
+    "design_rank": 4,
+    "design_condition_number": 304.30098,
+    "coefficients_kw": [
+      2.59869178,
+      0.019166238,
+      54.983888733,
+      2.71777485
+    ],
+    "holdout_mae_kw": 0.007097657,
+    "holdout_rmse_kw": 0.008014172,
+    "holdout_bias_kw": 0.000343176,
+    "covered_post_hours": 12.0,
+    "counterfactual_baseline_loss_kwh": 135.616788,
+    "observed_synthetic_post_loss_kwh": 122.42505,
+    "signed_normalized_difference_kwh": 13.191738,
+    "post_windows": [
+      {
+        "started_at_utc": "2027-03-08T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 6.439105,
+        "metered_synthetic_loss_kwh": 5.3455,
+        "signed_difference_kwh": 1.093605
+      },
+      {
+        "started_at_utc": "2027-03-09T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 8.487141,
+        "metered_synthetic_loss_kwh": 7.389055,
+        "signed_difference_kwh": 1.098086
+      },
+      {
+        "started_at_utc": "2027-03-10T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 10.702438,
+        "metered_synthetic_loss_kwh": 9.59992,
+        "signed_difference_kwh": 1.102518
+      },
+      {
+        "started_at_utc": "2027-03-11T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 11.273146,
+        "metered_synthetic_loss_kwh": 10.178095,
+        "signed_difference_kwh": 1.095051
+      },
+      {
+        "started_at_utc": "2027-03-12T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 13.822965,
+        "metered_synthetic_loss_kwh": 12.72358,
+        "signed_difference_kwh": 1.099385
+      },
+      {
+        "started_at_utc": "2027-03-13T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 16.540044,
+        "metered_synthetic_loss_kwh": 15.436375,
+        "signed_difference_kwh": 1.103669
+      },
+      {
+        "started_at_utc": "2027-03-14T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 6.62029,
+        "metered_synthetic_loss_kwh": 5.5255,
+        "signed_difference_kwh": 1.09479
+      },
+      {
+        "started_at_utc": "2027-03-15T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 8.668326,
+        "metered_synthetic_loss_kwh": 7.569055,
+        "signed_difference_kwh": 1.099271
+      },
+      {
+        "started_at_utc": "2027-03-16T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 10.883623,
+        "metered_synthetic_loss_kwh": 9.77992,
+        "signed_difference_kwh": 1.103703
+      },
+      {
+        "started_at_utc": "2027-03-17T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 11.454331,
+        "metered_synthetic_loss_kwh": 10.358095,
+        "signed_difference_kwh": 1.096236
+      },
+      {
+        "started_at_utc": "2027-03-18T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 14.00415,
+        "metered_synthetic_loss_kwh": 12.90358,
+        "signed_difference_kwh": 1.10057
+      },
+      {
+        "started_at_utc": "2027-03-19T00:00:00+00:00",
+        "hours": 1.0,
+        "baseline_counterfactual_kwh": 16.721229,
+        "metered_synthetic_loss_kwh": 15.616375,
+        "signed_difference_kwh": 1.104854
+      }
+    ],
+    "confidence_interval": "NOT_CERTIFIED_SERIAL_CORRELATION_AND_METER_ERROR_NOT_MODELED",
+    "verified_actual_savings": false,
+    "benefit_recognition_eligible": false,
+    "industrial_approval_eligible": false,
+    "limitations": [
+      "Synthetic inputs only",
+      "No independent meter traceability",
+      "OLS baseline does not establish causality or structural stability",
+      "Weather/load model cannot be extrapolated to unobserved conditions",
+      "No approved M&V method, third party review, tariff or tax valuation"
+    ]
+  },
+  "quality_diagnostic": {
+    "status": "RESEARCH_DIAGNOSTIC_NOT_CONFIDENCE_INTERVAL",
+    "source_scope": "SYNTHETIC_MV_RESEARCH_NO_REALIZED_SAVINGS",
+    "joint_covariate_support": "MEASURABLE_2D_CONVEX_HULL",
+    "post_windows_outside_joint_support": [],
+    "post_joint_support_fraction": 1.0,
+    "held_out_bias_kw": -0.000343176,
+    "held_out_abs_error_p95_kw": 0.012710153,
+    "held_out_lag1_residual_correlation": 0.003379,
+    "observed_signed_difference_kwh": 13.191738,
+    "bias_adjusted_research_difference_kwh": 13.195856,
+    "error_envelope_kwh": 0.152522,
+    "indicative_lower_kwh": 13.039216,
+    "indicative_upper_kwh": 13.34426,
+    "envelope_kind": "DESCRIPTIVE_HOLDOUT_95TH_ABSOLUTE_ERROR_TIMES_POST_HOURS_NOT_PROBABILISTIC",
+    "limitations": [
+      "NO_CAUSAL_ATTRIBUTION",
+      "NO_REAL_METER_VERIFICATION",
+      "NO_APPROVED_MV_PROTOCOL"
+    ],
+    "certified_realized_savings": false,
+    "industrial_approval_eligible": false,
+    "requires_independent_engineering_signoff": true
+  },
+  "no_real_measurements": true,
+  "no_verified_savings": true,
+  "no_operational_approval": true,
+  "sources": {
+    "ipmvp": "https://evo-world.org/en/products-services-mainmenu-en/protocols/ipmvp",
+    "postgres_rls": "https://www.postgresql.org/docs/17/ddl-rowsecurity.html"
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "release": "V7.8",
+  "as_of": "2026-10-25",
+  "research_scope": "SYNTHETIC_LAB_ONLY",
+  "industrial_approval_eligible": false,
+  "production_ready": false,
+  "tests": {
+    "python_pass": 241,
+    "javascript_pass": 63,
+    "extra_synthetic_grid_cases": 64,
+    "native_postgres_suites_skipped": 2,
+    "browser_network_e2e_deselected": 1,
+    "native_pg_required_exit_nonzero": true,
+    "native_pg_required_message": "NATIVE_ACCEPTANCE_BLOCKED"
+  },
+  "numerics": {
+    "engineering_case_type": "SYNTHETIC_20KV_RADIAL_AC_3_LOAD_NODES",
+    "loss_baseline_full_cycle_mwh": "2.399290916",
+    "loss_proposed_full_cycle_mwh": "1.349564646",
+    "annual_case_modeled_hours": 7200,
+    "synthetic_wbs_rub": "2300000.00",
+    "npv_scenarios_rub": {
+      "low": "-1753573.76",
+      "base": "-1668884.89",
+      "high": "-1584196.03"
+    },
+    "independent_arithmetic_checks": {
+      "low": {
+        "own_recalculated_npv_rub": "-1753573.76",
+        "difference_before_rounding_rub": "0.00080220132422502528708276313440827",
+        "within_5_kopeck_tolerance": true
+      },
+      "base": {
+        "own_recalculated_npv_rub": "-1668884.89",
+        "difference_before_rounding_rub": "0.00220749085667430237401082882132446",
+        "within_5_kopeck_tolerance": true
+      },
+      "high": {
+        "own_recalculated_npv_rub": "-1584196.03",
+        "difference_before_rounding_rub": "0.00478281696242636996489557922294281",
+        "within_5_kopeck_tolerance": true
+      }
+    }
+  },
+  "interface": {
+    "widths_checked_px": [
+      375,
+      768,
+      1440
+    ],
+    "horizontal_overflow": false,
+    "unknown_js_dom_ids": 0,
+    "authenticated_browser_e2e": false
+  },
+  "api": {
+    "documented_operations": 70,
+    "new_operations": 5
+  },
+  "blockers": [
+    "PG17_RLS_NATIVE",
+    "GLOBAL_ATOMIC_BENEFIT_REGISTRY",
+    "CORPORATE_SSO_MFA",
+    "EXTERNAL_WORM_AUDIT",
+    "INDEPENDENT_GRID_SOLVER",
+    "MAGADAN_AUTHORIZED_DATA",
+    "INDEPENDENT_ENGINEER",
+    "APPROVED_COST_AND_TARIFF_METHOD",
+    "FIELD_POST_PROJECT_MV"
+  ]
+}

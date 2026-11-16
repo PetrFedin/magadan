@@ -1,0 +1,48 @@
+{
+  "project": "HydroKontur 360 - Magadan",
+  "as_of": "2026-10-27",
+  "artifact": "RECOVERY_TOOLING_V5_LOCAL_PROOF",
+  "test_scope": "offline recovery tooling on synthetic fixtures ONLY",
+  "command": "python -m compileall -q tools && python -m unittest discover -s tests -p test_*.py -v && git diff --check",
+  "clean_isolated_git_replay": true,
+  "python": "3.13.5",
+  "git": "git version 2.47.3",
+  "tests_completed": 36,
+  "tests_passed": 36,
+  "tests_failed": 0,
+  "workflow_yaml_static_jobs": [
+    "recovery-tool-tests",
+    "source-tree-admission",
+    "application-regression"
+  ],
+  "source_admission_required_test_exit_code": 2,
+  "source_admission_status": "SOURCE_IMPORT_BLOCKED",
+  "original_archive_bytes_accessible": false,
+  "original_archive_independent_sha256_verified": false,
+  "github_project_tests_executed": false,
+  "github_latest_observed_run": {
+    "run_id": 40529740608,
+    "run_url": "https://github.com/PetrFedin/magadan/actions/runs/40529740608",
+    "head_sha": "0ab0b31e99e3997b229302a3b07cf8afa3a0d6d2",
+    "first_job_conclusion": "failure",
+    "first_job_runner_id": 0,
+    "steps_completed": 0,
+    "job_started_at": "2026-10-27T15:18:58Z",
+    "job_completed_at": "2026-10-27T15:19:00Z",
+    "test_code_executed": false,
+    "cause": "NOT_DETERMINED_ACCOUNT_RUNNER_OR_INFRASTRUCTURE_GATE"
+  },
+  "production_ready": false,
+  "industrial_approval_eligible": false,
+  "file_sha256": {
+    "tools/import_v79_snapshot.py": "b84c5282099605255e1eb0cfc284aa7335ec8b614bb9de4349e4b335af1e2eca",
+    "tools/check_source_admission.py": "bf29c2fd7b2f476e9062edab76c343585091b3b80bd572d6f2e03c2628434c22",
+    "tests/test_import_v79_snapshot.py": "15c2bc46397ec7785dc44ba67a34fde70b9a4eef13995fd7b3ed779a6d86213a",
+    "tests/test_source_admission.py": "3d28da63752d3f40247003eb1ff80e5a6509539da5ff73687861f31e1ac3c3f4",
+    "tests/test_ci_contract.py": "d4058576bb3d2393f4dc03a4a6ee80edb64636580e29efa03c4c9e4587d2fb5a",
+    ".github/workflows/recovery-admission.yml": "5fab499aca9bf49d9fd2326e8f728e1999185aaf11253bf67b770cf1685802e8",
+    "docs/SOURCE_IMPORT_GATES.md": "ebe1d5e021d532dd89f9c6241aee5dfd437946e908c2c6e559e6fa3f598ba020",
+    "docs/CI_RUNNER_INCIDENT_2026-10-27.md": "35360a8ce58565b8c3334f71a1b2642bd54a5771f9280623c926a425389cf8bf",
+    "docs/RECOVERY_PRIORITIES.md": "a11c2a750484db6c4a738c474c9cf811c3bd8dbb4543818edd8b1fe8b99e0057"
+  }
+}

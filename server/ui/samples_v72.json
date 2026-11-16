@@ -1,0 +1,206 @@
+{
+  "hydroforecast": {
+    "issued_at": "2026-10-01T09:00:00+03:00",
+    "training": [
+      {
+        "observed_at": "2026-09-01T09:00:00+03:00",
+        "available_at": "2026-09-01T10:00:00+03:00",
+        "flow_cms": 91.0
+      },
+      {
+        "observed_at": "2026-09-02T09:00:00+03:00",
+        "available_at": "2026-09-02T10:00:00+03:00",
+        "flow_cms": 92.0
+      },
+      {
+        "observed_at": "2026-09-03T09:00:00+03:00",
+        "available_at": "2026-09-03T10:00:00+03:00",
+        "flow_cms": 93.0
+      },
+      {
+        "observed_at": "2026-09-04T09:00:00+03:00",
+        "available_at": "2026-09-04T10:00:00+03:00",
+        "flow_cms": 94.0
+      }
+    ],
+    "targets": [
+      {
+        "target_at": "2026-10-02T09:00:00+03:00",
+        "truth_available_at": "2026-10-02T12:00:00+03:00",
+        "actual_cms": 102.0,
+        "predicted_cms": 103.0,
+        "lower_cms": 97.0,
+        "upper_cms": 107.0
+      },
+      {
+        "target_at": "2026-10-03T09:00:00+03:00",
+        "truth_available_at": "2026-10-03T12:00:00+03:00",
+        "actual_cms": 103.0,
+        "predicted_cms": 104.0,
+        "lower_cms": 98.0,
+        "upper_cms": 108.0
+      },
+      {
+        "target_at": "2026-10-04T09:00:00+03:00",
+        "truth_available_at": "2026-10-04T12:00:00+03:00",
+        "actual_cms": 104.0,
+        "predicted_cms": 105.0,
+        "lower_cms": 99.0,
+        "upper_cms": 109.0
+      }
+    ]
+  },
+  "cascade": {
+    "period_hours": 24,
+    "upper": {
+      "name": "upstream",
+      "initial_storage_m3": 700000000,
+      "min_storage_m3": 600000000,
+      "max_storage_m3": 800000000,
+      "local_inflow_cms": 60,
+      "turbine_release_cms": 55,
+      "spill_release_cms": 5,
+      "other_losses_cms": 0,
+      "min_total_release_cms": 10,
+      "head_m": 100,
+      "efficiency": 0.9,
+      "rated_capacity_mw": 200
+    },
+    "lower": {
+      "name": "downstream",
+      "initial_storage_m3": 700000000,
+      "min_storage_m3": 600000000,
+      "max_storage_m3": 800000000,
+      "local_inflow_cms": 60,
+      "turbine_release_cms": 55,
+      "spill_release_cms": 5,
+      "other_losses_cms": 0,
+      "min_total_release_cms": 10,
+      "head_m": 100,
+      "efficiency": 0.9,
+      "rated_capacity_mw": 200
+    },
+    "assumption": "instantaneous_upstream_release_no_travel_time"
+  },
+  "turbine": {
+    "reference_load_mw": 100,
+    "comparable_band_percent": 10,
+    "baseline": [
+      {
+        "observed_at": "2026-09-01T10:00:00+03:00",
+        "load_mw": 100,
+        "vibration_mm_s": 2.0
+      },
+      {
+        "observed_at": "2026-09-02T10:00:00+03:00",
+        "load_mw": 100,
+        "vibration_mm_s": 2.1
+      },
+      {
+        "observed_at": "2026-09-03T10:00:00+03:00",
+        "load_mw": 100,
+        "vibration_mm_s": 1.9
+      },
+      {
+        "observed_at": "2026-09-04T10:00:00+03:00",
+        "load_mw": 100,
+        "vibration_mm_s": 2.2
+      },
+      {
+        "observed_at": "2026-09-05T10:00:00+03:00",
+        "load_mw": 100,
+        "vibration_mm_s": 1.8
+      },
+      {
+        "observed_at": "2026-09-06T10:00:00+03:00",
+        "load_mw": 100,
+        "vibration_mm_s": 2.05
+      }
+    ],
+    "recent": [
+      {
+        "observed_at": "2026-10-01T10:00:00+03:00",
+        "load_mw": 99,
+        "vibration_mm_s": 3.5
+      },
+      {
+        "observed_at": "2026-10-02T10:00:00+03:00",
+        "load_mw": 99,
+        "vibration_mm_s": 3.6
+      },
+      {
+        "observed_at": "2026-10-03T10:00:00+03:00",
+        "load_mw": 99,
+        "vibration_mm_s": 3.7
+      }
+    ]
+  },
+  "gridloss": {
+    "reference_name": "Synthetic network, never Magadan field evidence",
+    "source_voltage_kv_ll": 20,
+    "load_p_mw": 5,
+    "load_q_mvar": 2,
+    "line_r_ohm_per_phase": 0.3,
+    "line_x_ohm_per_phase": 0.4,
+    "period_hours": 100
+  },
+  "heatnet": {
+    "mass_flow_kg_s": 10,
+    "supply_temp_c": 90,
+    "return_temp_c": 60,
+    "ambient_temp_c": -5,
+    "cp_j_kg_k": 4200,
+    "length_m": 1000,
+    "overall_u_w_m_k": 2
+  },
+  "hydrocapex": {
+    "discount_rate": "0.12",
+    "annual_budgets_rub": [
+      "40",
+      "10",
+      "10"
+    ],
+    "projects": [
+      {
+        "project_id": "required",
+        "benefit_key": "safety",
+        "mandatory": true,
+        "costs_by_year_rub": [
+          "20",
+          "0",
+          "0"
+        ],
+        "net_benefits_by_year_rub": [
+          "0",
+          "0"
+        ]
+      },
+      {
+        "project_id": "economical",
+        "benefit_key": "benefit-a",
+        "costs_by_year_rub": [
+          "20",
+          "0",
+          "0"
+        ],
+        "net_benefits_by_year_rub": [
+          "30",
+          "30"
+        ]
+      },
+      {
+        "project_id": "oversized",
+        "benefit_key": "benefit-b",
+        "costs_by_year_rub": [
+          "30",
+          "0",
+          "0"
+        ],
+        "net_benefits_by_year_rub": [
+          "60",
+          "60"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+# Manual diagnostic only: avoids a redundant runner job on every PR.
+# Minimal runner admission probe. Does NOT validate HydroKontur application.
+name: Magadan Runner Allocation Probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  runner-probe:
+    name: Runner allocation only - no dependencies
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+    steps:
+      - name: Prove a runner started
+        run: |
+          echo "RUNNER_ASSIGNED"
+          printf 'os=%s\n' "$RUNNER_OS"
+          printf 'repository=%s\n' "$GITHUB_REPOSITORY"

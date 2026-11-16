@@ -1,0 +1,61 @@
+{
+  "release": "V8.0-LAB",
+  "date": "2026-10-25",
+  "python_test_groups": [
+    {
+      "name": "legacy_early_A",
+      "file": "legacy_tests_early1.log",
+      "passed": 90,
+      "skipped": 2,
+      "duration_seconds": 22.71
+    },
+    {
+      "name": "legacy_early_B",
+      "file": "legacy_tests_early2.log",
+      "passed": 101,
+      "skipped": 0,
+      "duration_seconds": 18.45
+    },
+    {
+      "name": "late_versions_and_v8",
+      "file": "legacy_tests_b_final.log",
+      "passed": 90,
+      "skipped": 1,
+      "duration_seconds": 16.05
+    }
+  ],
+  "python_passed": 281,
+  "python_skipped": 3,
+  "javascript_passed": 63,
+  "javascript_failed": 0,
+  "postgres17_rls_native": "BLOCKED_NOT_EXECUTED",
+  "corporate_sso_mfa": "NOT_CONNECTED",
+  "externally_anchored_immutable_audit": "NOT_CONNECTED",
+  "external_independent_grid_solver": "NOT_EXECUTED",
+  "magadan_field_measurements": "NOT_RECEIVED",
+  "field_technical_signoff": "NOT_RECEIVED",
+  "browser_live_end_to_end": "NOT_EXECUTED",
+  "visual_layout_test": "NOT_CERTIFIED_BROWSER_RENDER",
+  "verified_annual_savings_rub": null,
+  "synthetic_signed_difference_kwh": 13.191738,
+  "descriptive_holdout_error_envelope_kwh": 0.152522,
+  "synthetic_joint_support_fraction": 1.0,
+  "synthetic_case_file": "artifacts_v8/V8_REPRODUCIBLE_RESEARCH_CASE.json",
+  "feature_scope": [
+    "canonical_metering_boundaries",
+    "nested_and_explicit_conflicts",
+    "sqlite_transactional_benefit_collision_guard",
+    "legacy_dossier_inventory_only",
+    "joint_covariate_mv_diagnostic",
+    "PG17_migration_candidate_only"
+  ],
+  "release_status": "LAB_PASS_PRODUCTION_HOLD",
+  "allowed_claim": "synthetic lab calculations and completed automated tests only",
+  "prohibited_claims": [
+    "industrial safety passed",
+    "PG RLS passed",
+    "actual RusHydro savings",
+    "real Magadan load profile",
+    "independent professional engineering signoff"
+  ]
+}

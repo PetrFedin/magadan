@@ -1,0 +1,857 @@
+{
+  "release": "v7.4",
+  "scope": "SYNTHETIC_LAB_ONLY",
+  "real_magadan_asset_data": false,
+  "industrial_validation": false,
+  "programme_snapshot_sha256": "886fc818b4a988f4e7818d186f3cb68db7f80b803a0954622110fdf7bd0ca611",
+  "api_reproduction": {
+    "id": "7252b335-a8f8-47a0-8835-77351dc56b20",
+    "reproduced": true,
+    "engineering_models_reexecuted": true,
+    "financial_dossiers_recalculated": true,
+    "source_count": 10,
+    "financial_dossier_count": 1,
+    "programme_sha256": "886fc818b4a988f4e7818d186f3cb68db7f80b803a0954622110fdf7bd0ca611",
+    "independent_engineering_validation": false,
+    "industrial_approval_eligible": false
+  },
+  "readiness": {
+    "programme_status": "LAB_SCREENING_WITHOUT_COMPUTATIONAL_BLOCKERS",
+    "scope": "SYNTHETIC_MAGADAN_RESEARCH_ONLY",
+    "field_ready": false,
+    "eligible_for_industrial_approval": false,
+    "calculation_count": 10,
+    "represented_modules": [
+      "cascade",
+      "gridloss",
+      "heatnet",
+      "hydrocapex",
+      "hydroforecast",
+      "turbine"
+    ],
+    "study_quality": [
+      {
+        "study_id": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+        "module": "hydroforecast",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "real_hydrometeorological_data_licensed",
+          "historical_leakage_free_backtest",
+          "independent_hydrology_validation"
+        ]
+      },
+      {
+        "study_id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+        "module": "cascade",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "water_use_rules_in_force",
+          "reservoir_characteristics_verified",
+          "independent_cascade_model_validation"
+        ]
+      },
+      {
+        "study_id": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+        "module": "turbine",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "diagnostic_event_labels_verified",
+          "maintenance_history_authenticated",
+          "competent_technical_signoff"
+        ]
+      },
+      {
+        "study_id": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+        "module": "gridloss",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "actual_as_built_topology_accepted",
+          "measurement_boundaries_validated",
+          "external_powerflow_reference"
+        ]
+      },
+      {
+        "study_id": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+        "module": "heatnet",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "pipeline_as_built_and_instruments_verified",
+          "hydraulic_calibration",
+          "independent_thermohydraulic_reference"
+        ]
+      },
+      {
+        "study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "module": "hydrocapex",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "source_of_funds_verified",
+          "owner_approved_baseline",
+          "independent_cost_estimate"
+        ]
+      },
+      {
+        "study_id": "02941988-c456-487d-a3a2-8ef4424c72e7",
+        "module": "gridloss",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "actual_as_built_topology_accepted",
+          "measurement_boundaries_validated",
+          "external_powerflow_reference"
+        ]
+      },
+      {
+        "study_id": "c99f353a-887f-4a4a-bc72-d61accee5d17",
+        "module": "gridloss",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "actual_as_built_topology_accepted",
+          "measurement_boundaries_validated",
+          "external_powerflow_reference"
+        ]
+      },
+      {
+        "study_id": "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+        "module": "heatnet",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "pipeline_as_built_and_instruments_verified",
+          "hydraulic_calibration",
+          "independent_thermohydraulic_reference"
+        ]
+      },
+      {
+        "study_id": "7d2e5efc-b868-4685-b887-09f64aad1bfc",
+        "module": "heatnet",
+        "asset_id": "synthetic-asset",
+        "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+        "warnings": [],
+        "field_approval_eligible": false,
+        "required_field_evidence": [
+          "pipeline_as_built_and_instruments_verified",
+          "hydraulic_calibration",
+          "independent_thermohydraulic_reference"
+        ]
+      }
+    ],
+    "semantic_links": [
+      {
+        "from": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+        "to": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+        "relationship": "forecast_context_for_cascade",
+        "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+        "cross_asset": false
+      },
+      {
+        "from": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+        "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "cascade_context_for_capex",
+        "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+        "cross_asset": false
+      },
+      {
+        "from": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+        "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "diagnostics_context_for_capex",
+        "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+        "cross_asset": false
+      },
+      {
+        "from": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+        "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "grid_context_for_capex",
+        "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+        "cross_asset": false
+      },
+      {
+        "from": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+        "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "heat_context_for_capex",
+        "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+        "cross_asset": false
+      }
+    ],
+    "financial_dossiers": [
+      {
+        "id": "29c37487-2864-4a0a-ac4d-06e376d7773e",
+        "benefit_key": "synthetic_grid_2027",
+        "scenario_pair": [
+          "02941988-c456-487d-a3a2-8ef4424c72e7",
+          "c99f353a-887f-4a4a-bc72-d61accee5d17"
+        ],
+        "npv_by_price_scenario_rub": {
+          "low": "-2023679.77",
+          "base": "-1762946.67",
+          "high": "-1241480.47"
+        },
+        "monetary_effect_approved": false
+      }
+    ],
+    "heat_economic_screenings": [
+      {
+        "benefit_key": "synthetic_heat_2027",
+        "scenario_pair": [
+          "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+          "7d2e5efc-b868-4685-b887-09f64aad1bfc"
+        ],
+        "research_result": {
+          "physical_assumption": "STEADY_STATE_IDENTICAL_LOADS_AND_TEMPERATURES_U_ONLY",
+          "baseline_loss_mw": "0.16",
+          "proposed_loss_mw": "0.08",
+          "annual_synthetic_savings_kwh": "400000.000000",
+          "modelled_hours_per_year": "5000",
+          "capital_cost_rub": "1000000",
+          "prices": {
+            "low": {
+              "assumed_value_rub_per_kwh": "2",
+              "gross_annual_rub": "800000.00",
+              "net_annual_rub": "700000.00",
+              "npv_rub": "2477347.84"
+            },
+            "base": {
+              "assumed_value_rub_per_kwh": "3",
+              "gross_annual_rub": "1200000.00",
+              "net_annual_rub": "1100000.00",
+              "npv_rub": "4464403.74"
+            },
+            "high": {
+              "assumed_value_rub_per_kwh": "5",
+              "gross_annual_rub": "2000000.00",
+              "net_annual_rub": "1900000.00",
+              "npv_rub": "8438515.56"
+            }
+          },
+          "field_ready": false,
+          "industrial_finance_eligible": false,
+          "limitations": [
+            "No heat tariff, climate normalisation, hydraulic calibration, seasonality, leak investigation or independent engineer signoff",
+            "No actual M&V baseline, taxes, funding, price escalation, grant or construction estimate"
+          ]
+        },
+        "monetary_effect_approved": false
+      }
+    ],
+    "capital_budget_screen": {
+      "status": "SYNTHETIC_WBS_WITHIN_ASSUMED_CAPS",
+      "cash_schedule": {
+        "2027": {
+          "raw_rub": "500000.00",
+          "with_contingency_rub": "500000.00",
+          "cap_rub": "500000.00",
+          "over_cap_rub": "0.00",
+          "within_cap": true
+        },
+        "2028": {
+          "raw_rub": "1500000.00",
+          "with_contingency_rub": "1500000.00",
+          "cap_rub": "1500000.00",
+          "over_cap_rub": "0.00",
+          "within_cap": true
+        },
+        "2029": {
+          "raw_rub": "800000.00",
+          "with_contingency_rub": "800000.00",
+          "cap_rub": "800000.00",
+          "over_cap_rub": "0.00",
+          "within_cap": true
+        }
+      },
+      "total_synthetic_cost_rub": "2800000.00",
+      "contingency_percent": "0",
+      "categories_rub": {
+        "survey": "200000.00",
+        "design": "300000.00",
+        "equipment": "1500000.00",
+        "civil_works": "0.00",
+        "logistics": "0.00",
+        "commissioning": "800000.00",
+        "contingency": "0.00",
+        "other": "0.00"
+      },
+      "missing_project_stages": [],
+      "scope": "SYNTHETIC_NON_AUTHORITATIVE_NO_CONSTRUCTION_ESTIMATE",
+      "limitations": [
+        "Prices not confirmed by suppliers or estimate norms",
+        "No permitting, geocryology, geotechnical surveys, VAT, escalation, contracts, commissioning or cost assurance",
+        "A compliant WBS is not permission to construct"
+      ]
+    },
+    "computational_blockers": [],
+    "external_mandatory_gates": [
+      "ASSET_OWNER_DATA_PERMISSION",
+      "NATIVE_POSTGRESQL_RLS_ACCEPTANCE",
+      "CORPORATE_IDP_AND_MFA",
+      "INDEPENDENT_ENGINEERING_REFERENCE",
+      "CONTRACTUAL_FINANCIAL_BASELINE",
+      "REGULATORY_AND_CONSTRUCTION_PERMITS_IF_APPLICABLE",
+      "EXTERNAL_IMMUTABLE_AUDIT_ACCEPTANCE",
+      "DOCUMENTED_ENGINEERING_SIGNOFF",
+      "MEASUREMENT_AND_VERIFICATION_PLAN"
+    ],
+    "economic_consolidation_status": "NO_CROSS_EFFECT_NPV_SUMMATION_OR_CAUSAL_ATTRIBUTION",
+    "reason": "No field rights, industrial model validation, signed technical acceptance, or approved tariffs/costs"
+  },
+  "links": [
+    {
+      "from_study_id": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+      "to_study_id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+      "relationship": "forecast_context_for_cascade"
+    },
+    {
+      "from_study_id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+      "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+      "relationship": "cascade_context_for_capex"
+    },
+    {
+      "from_study_id": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+      "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+      "relationship": "diagnostics_context_for_capex"
+    },
+    {
+      "from_study_id": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+      "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+      "relationship": "grid_context_for_capex"
+    },
+    {
+      "from_study_id": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+      "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+      "relationship": "heat_context_for_capex"
+    }
+  ],
+  "programme_snapshot": {
+    "release": "7.4-LAB_ONLY",
+    "reference_code": "LAB-MAGADAN-REGION-V74",
+    "title": "Magadan synthetic interdisciplinary energy research",
+    "purpose": "Reproducible research case linking six engineering domains, one electrical loss alternative, one thermal loss alternative and the synthetic multi-year capital budget.",
+    "study_ids": [
+      "fd6271dc-91d1-461a-903c-1da0c11e6062",
+      "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+      "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+      "b4ed0346-566f-4b40-a1ab-095183340d0d",
+      "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+      "a0280666-822b-40e4-9904-aa4a1eb3442f",
+      "02941988-c456-487d-a3a2-8ef4424c72e7",
+      "c99f353a-887f-4a4a-bc72-d61accee5d17",
+      "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+      "7d2e5efc-b868-4685-b887-09f64aad1bfc"
+    ],
+    "financial_dossier_ids": [
+      "29c37487-2864-4a0a-ac4d-06e376d7773e"
+    ],
+    "links": [
+      {
+        "from_study_id": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+        "to_study_id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+        "relationship": "forecast_context_for_cascade"
+      },
+      {
+        "from_study_id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+        "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "cascade_context_for_capex"
+      },
+      {
+        "from_study_id": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+        "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "diagnostics_context_for_capex"
+      },
+      {
+        "from_study_id": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+        "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "grid_context_for_capex"
+      },
+      {
+        "from_study_id": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+        "to_study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+        "relationship": "heat_context_for_capex"
+      }
+    ],
+    "heat_screenings": [
+      {
+        "baseline_study_id": "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+        "proposed_study_id": "7d2e5efc-b868-4685-b887-09f64aad1bfc",
+        "benefit_key": "synthetic_heat_2027",
+        "finance": {
+          "scope": "SYNTHETIC_HEAT_NOT_TARIFF",
+          "hours_per_year": "5000",
+          "value_rub_per_kwh": {
+            "low": "2",
+            "base": "3",
+            "high": "5"
+          },
+          "capital_cost_rub": "1000000",
+          "annual_opex_delta_rub": "100000",
+          "discount_rate": "0.12",
+          "years": 8,
+          "notes": "Synthetic heat assumption; no actual tariff or asset valuation."
+        }
+      }
+    ],
+    "capital": {
+      "currency": "RUB",
+      "tax_basis": "EXCL_VAT_SYNTHETIC",
+      "title": "Synthetic multi-year WBS — NOT a construction estimate",
+      "annual_caps_rub": {
+        "2027": "500000",
+        "2028": "1500000",
+        "2029": "800000"
+      },
+      "lines": [
+        {
+          "code": "01",
+          "title": "Synthetic baseline survey",
+          "category": "survey",
+          "year": 2027,
+          "quantity": "1",
+          "unit": "lot",
+          "unit_price_rub": "200000",
+          "price_source_ref": "SYNTHETIC-WBS-SURVEY",
+          "predecessors": []
+        },
+        {
+          "code": "02",
+          "title": "Synthetic design review",
+          "category": "design",
+          "year": 2027,
+          "quantity": "1",
+          "unit": "lot",
+          "unit_price_rub": "300000",
+          "price_source_ref": "SYNTHETIC-WBS-DESIGN",
+          "predecessors": [
+            "01"
+          ]
+        },
+        {
+          "code": "03",
+          "title": "Synthetic equipment and deliveries",
+          "category": "equipment",
+          "year": 2028,
+          "quantity": "1",
+          "unit": "lot",
+          "unit_price_rub": "1500000",
+          "price_source_ref": "SYNTHETIC-WBS-EQUIPMENT",
+          "predecessors": [
+            "02"
+          ]
+        },
+        {
+          "code": "04",
+          "title": "Synthetic commissioning work",
+          "category": "commissioning",
+          "year": 2029,
+          "quantity": "1",
+          "unit": "lot",
+          "unit_price_rub": "800000",
+          "price_source_ref": "SYNTHETIC-WBS-COMMISSION",
+          "predecessors": [
+            "03"
+          ]
+        }
+      ],
+      "contingency_percent": "0"
+    },
+    "pinned_programme_engine_sha256": "76b34c3877f8efd723b7e09dc8ca0fc476d43b1d7418f5b1a1b2a8d3f7ec95a1",
+    "source_versions": {
+      "studies": [
+        {
+          "id": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+          "input_sha256": "73fe77c10e9a88c475c55c9431149692e4b3a53a31ba5e1a8494655d9a77cde1",
+          "result_sha256": "85a24ce490bc98df2542e5a720aa33730a003d773d2bfddddc1a3b90bb51da6a",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+          "input_sha256": "19d01b281c328132fd199848d76aaa28e70673cc1d8b8094ebb632510b7eb69f",
+          "result_sha256": "15339c565325ee51e62dac906ea7d9b7a871ee5dc1f9d5289520dd2a4c5edad3",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+          "input_sha256": "c557ef8f19ae95f1e4e0a4814d007d54ced3bdf1c8dbd4f2eabafada6d588bc6",
+          "result_sha256": "a39a8feae484acb7ccd44e3b297688478bcf77011e5cc7953fad5a0301bf9d40",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+          "input_sha256": "2bf975a1f2e94c1eecff5acf0940676d8f9f57e9609409811b9a78467c5ec3bf",
+          "result_sha256": "951ac2ef2d9175f583e2df783f751910ed521c684698b63a507408bcbeaf9657",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+          "input_sha256": "65845ffc6d0b7b944a1694e299ed577d097eac8c351a0da8a89ece9ebce3883e",
+          "result_sha256": "4e71ee781ba2d1edca738c9d1cc9ba45254ea04d12cc78fe4332c13bc1a85028",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+          "input_sha256": "181bad3c60cc6221bedf4bea77cd23c2ead70579bfa402a9511a57075ed8b53a",
+          "result_sha256": "b14fea6df52314cc1477bf233bfd49285bc2891b3cfe62db18e042de38ba926a",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "02941988-c456-487d-a3a2-8ef4424c72e7",
+          "input_sha256": "cdf811025e1dd18098c2340e58bcfa88ae86b1c402dfe81ffa82f309fd62a7b3",
+          "result_sha256": "f34c7c1f2a0a21922607275a300e3e6cf8f2319b3517c1e20eb64362598d026c",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "c99f353a-887f-4a4a-bc72-d61accee5d17",
+          "input_sha256": "67c1d4466a4454a48aaae70146e724d871c509e937de70f472a931a6002c951b",
+          "result_sha256": "1cc26c5a08d512298cb3b07a71e211fd9dd44ec8d4feb7a554397d5fd52d5483",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+          "input_sha256": "dbe94ffb6bb871d57d37b81f45927774b12f537b50d74f85b46ebb22548fdf88",
+          "result_sha256": "4e71ee781ba2d1edca738c9d1cc9ba45254ea04d12cc78fe4332c13bc1a85028",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        },
+        {
+          "id": "7d2e5efc-b868-4685-b887-09f64aad1bfc",
+          "input_sha256": "3779bdf48a1f8032e58e694a1022421066e8a2de43984655d2ec5f53410bd4d3",
+          "result_sha256": "4823447c6ba1a5dfdb4d29d0f837160b79c73463817da60bd0b0f50b89fa1576",
+          "engine_sha256": "fe0b9533937f6ae6fc67c83b8ccfdecf4f65037befa400f17552c521e000375f"
+        }
+      ],
+      "financial_dossiers": [
+        {
+          "id": "29c37487-2864-4a0a-ac4d-06e376d7773e",
+          "result_sha256": "3dbd588e53ad66922138b3e0ee5300deedf25a82dabde031e4557f498a29cb96"
+        }
+      ]
+    },
+    "screening": {
+      "programme_status": "LAB_SCREENING_WITHOUT_COMPUTATIONAL_BLOCKERS",
+      "scope": "SYNTHETIC_MAGADAN_RESEARCH_ONLY",
+      "field_ready": false,
+      "eligible_for_industrial_approval": false,
+      "calculation_count": 10,
+      "represented_modules": [
+        "cascade",
+        "gridloss",
+        "heatnet",
+        "hydrocapex",
+        "hydroforecast",
+        "turbine"
+      ],
+      "study_quality": [
+        {
+          "study_id": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+          "module": "hydroforecast",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "real_hydrometeorological_data_licensed",
+            "historical_leakage_free_backtest",
+            "independent_hydrology_validation"
+          ]
+        },
+        {
+          "study_id": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+          "module": "cascade",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "water_use_rules_in_force",
+            "reservoir_characteristics_verified",
+            "independent_cascade_model_validation"
+          ]
+        },
+        {
+          "study_id": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+          "module": "turbine",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "diagnostic_event_labels_verified",
+            "maintenance_history_authenticated",
+            "competent_technical_signoff"
+          ]
+        },
+        {
+          "study_id": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+          "module": "gridloss",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "actual_as_built_topology_accepted",
+            "measurement_boundaries_validated",
+            "external_powerflow_reference"
+          ]
+        },
+        {
+          "study_id": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+          "module": "heatnet",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "pipeline_as_built_and_instruments_verified",
+            "hydraulic_calibration",
+            "independent_thermohydraulic_reference"
+          ]
+        },
+        {
+          "study_id": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+          "module": "hydrocapex",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "source_of_funds_verified",
+            "owner_approved_baseline",
+            "independent_cost_estimate"
+          ]
+        },
+        {
+          "study_id": "02941988-c456-487d-a3a2-8ef4424c72e7",
+          "module": "gridloss",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "actual_as_built_topology_accepted",
+            "measurement_boundaries_validated",
+            "external_powerflow_reference"
+          ]
+        },
+        {
+          "study_id": "c99f353a-887f-4a4a-bc72-d61accee5d17",
+          "module": "gridloss",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "actual_as_built_topology_accepted",
+            "measurement_boundaries_validated",
+            "external_powerflow_reference"
+          ]
+        },
+        {
+          "study_id": "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+          "module": "heatnet",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "pipeline_as_built_and_instruments_verified",
+            "hydraulic_calibration",
+            "independent_thermohydraulic_reference"
+          ]
+        },
+        {
+          "study_id": "7d2e5efc-b868-4685-b887-09f64aad1bfc",
+          "module": "heatnet",
+          "asset_id": "synthetic-asset",
+          "model_status": "LAB_CALCULATED_NOT_FIELD_VALIDATED",
+          "warnings": [],
+          "field_approval_eligible": false,
+          "required_field_evidence": [
+            "pipeline_as_built_and_instruments_verified",
+            "hydraulic_calibration",
+            "independent_thermohydraulic_reference"
+          ]
+        }
+      ],
+      "semantic_links": [
+        {
+          "from": "fd6271dc-91d1-461a-903c-1da0c11e6062",
+          "to": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+          "relationship": "forecast_context_for_cascade",
+          "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+          "cross_asset": false
+        },
+        {
+          "from": "00bf4777-13ef-4037-8e3c-b77a79ccfd32",
+          "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+          "relationship": "cascade_context_for_capex",
+          "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+          "cross_asset": false
+        },
+        {
+          "from": "9d8381cf-1c82-4428-bad9-4fbcc9d8b39c",
+          "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+          "relationship": "diagnostics_context_for_capex",
+          "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+          "cross_asset": false
+        },
+        {
+          "from": "b4ed0346-566f-4b40-a1ab-095183340d0d",
+          "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+          "relationship": "grid_context_for_capex",
+          "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+          "cross_asset": false
+        },
+        {
+          "from": "7a968844-09e2-4cb6-8aa7-43338c0cb683",
+          "to": "a0280666-822b-40e4-9904-aa4a1eb3442f",
+          "relationship": "heat_context_for_capex",
+          "meaning": "SEMANTIC_LINK_NO_VERIFIED_NUMERIC_TRANSFER",
+          "cross_asset": false
+        }
+      ],
+      "financial_dossiers": [
+        {
+          "id": "29c37487-2864-4a0a-ac4d-06e376d7773e",
+          "benefit_key": "synthetic_grid_2027",
+          "scenario_pair": [
+            "02941988-c456-487d-a3a2-8ef4424c72e7",
+            "c99f353a-887f-4a4a-bc72-d61accee5d17"
+          ],
+          "npv_by_price_scenario_rub": {
+            "low": "-2023679.77",
+            "base": "-1762946.67",
+            "high": "-1241480.47"
+          },
+          "monetary_effect_approved": false
+        }
+      ],
+      "heat_economic_screenings": [
+        {
+          "benefit_key": "synthetic_heat_2027",
+          "scenario_pair": [
+            "7cd839b2-0bbe-41a7-b595-8395f0db1151",
+            "7d2e5efc-b868-4685-b887-09f64aad1bfc"
+          ],
+          "research_result": {
+            "physical_assumption": "STEADY_STATE_IDENTICAL_LOADS_AND_TEMPERATURES_U_ONLY",
+            "baseline_loss_mw": "0.16",
+            "proposed_loss_mw": "0.08",
+            "annual_synthetic_savings_kwh": "400000.000000",
+            "modelled_hours_per_year": "5000",
+            "capital_cost_rub": "1000000",
+            "prices": {
+              "low": {
+                "assumed_value_rub_per_kwh": "2",
+                "gross_annual_rub": "800000.00",
+                "net_annual_rub": "700000.00",
+                "npv_rub": "2477347.84"
+              },
+              "base": {
+                "assumed_value_rub_per_kwh": "3",
+                "gross_annual_rub": "1200000.00",
+                "net_annual_rub": "1100000.00",
+                "npv_rub": "4464403.74"
+              },
+              "high": {
+                "assumed_value_rub_per_kwh": "5",
+                "gross_annual_rub": "2000000.00",
+                "net_annual_rub": "1900000.00",
+                "npv_rub": "8438515.56"
+              }
+            },
+            "field_ready": false,
+            "industrial_finance_eligible": false,
+            "limitations": [
+              "No heat tariff, climate normalisation, hydraulic calibration, seasonality, leak investigation or independent engineer signoff",
+              "No actual M&V baseline, taxes, funding, price escalation, grant or construction estimate"
+            ]
+          },
+          "monetary_effect_approved": false
+        }
+      ],
+      "capital_budget_screen": {
+        "status": "SYNTHETIC_WBS_WITHIN_ASSUMED_CAPS",
+        "cash_schedule": {
+          "2027": {
+            "raw_rub": "500000.00",
+            "with_contingency_rub": "500000.00",
+            "cap_rub": "500000.00",
+            "over_cap_rub": "0.00",
+            "within_cap": true
+          },
+          "2028": {
+            "raw_rub": "1500000.00",
+            "with_contingency_rub": "1500000.00",
+            "cap_rub": "1500000.00",
+            "over_cap_rub": "0.00",
+            "within_cap": true
+          },
+          "2029": {
+            "raw_rub": "800000.00",
+            "with_contingency_rub": "800000.00",
+            "cap_rub": "800000.00",
+            "over_cap_rub": "0.00",
+            "within_cap": true
+          }
+        },
+        "total_synthetic_cost_rub": "2800000.00",
+        "contingency_percent": "0",
+        "categories_rub": {
+          "survey": "200000.00",
+          "design": "300000.00",
+          "equipment": "1500000.00",
+          "civil_works": "0.00",
+          "logistics": "0.00",
+          "commissioning": "800000.00",
+          "contingency": "0.00",
+          "other": "0.00"
+        },
+        "missing_project_stages": [],
+        "scope": "SYNTHETIC_NON_AUTHORITATIVE_NO_CONSTRUCTION_ESTIMATE",
+        "limitations": [
+          "Prices not confirmed by suppliers or estimate norms",
+          "No permitting, geocryology, geotechnical surveys, VAT, escalation, contracts, commissioning or cost assurance",
+          "A compliant WBS is not permission to construct"
+        ]
+      },
+      "computational_blockers": [],
+      "external_mandatory_gates": [
+        "ASSET_OWNER_DATA_PERMISSION",
+        "NATIVE_POSTGRESQL_RLS_ACCEPTANCE",
+        "CORPORATE_IDP_AND_MFA",
+        "INDEPENDENT_ENGINEERING_REFERENCE",
+        "CONTRACTUAL_FINANCIAL_BASELINE",
+        "REGULATORY_AND_CONSTRUCTION_PERMITS_IF_APPLICABLE",
+        "EXTERNAL_IMMUTABLE_AUDIT_ACCEPTANCE",
+        "DOCUMENTED_ENGINEERING_SIGNOFF",
+        "MEASUREMENT_AND_VERIFICATION_PLAN"
+      ],
+      "economic_consolidation_status": "NO_CROSS_EFFECT_NPV_SUMMATION_OR_CAUSAL_ATTRIBUTION",
+      "reason": "No field rights, industrial model validation, signed technical acceptance, or approved tariffs/costs"
+    },
+    "cannot_be_used_for_field_approval": true
+  },
+  "source_digest_sha256": "87b03c32d635a205d021bf1f64a0ab4c1594a5e57151ee368a4ec03ef9e1fb2a",
+  "demo_notes": "IDs generated at runtime; pinned hashes allow replay within this lab database; not bitwise reproducibility across fresh databases."
+}

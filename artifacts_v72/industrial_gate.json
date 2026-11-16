@@ -1,0 +1,24 @@
+{
+  "gate": "industrial",
+  "passed": false,
+  "requirements": {
+    "python_test_report": true,
+    "node_test_report": true,
+    "static_layout": true,
+    "synthetic_classification": true,
+    "postgres_rls_native": false,
+    "corporate_idp": false,
+    "external_worm": false,
+    "field_engineering": false,
+    "browser_network_e2e": false,
+    "industrial_readiness": false
+  },
+  "missing": [
+    "postgres_rls_native",
+    "corporate_idp",
+    "external_worm",
+    "field_engineering",
+    "browser_network_e2e",
+    "industrial_readiness"
+  ]
+}

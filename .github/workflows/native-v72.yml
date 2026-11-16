@@ -1,0 +1,53 @@
+name: HydroKontur V7.2 native PostgreSQL acceptance
+on: [workflow_dispatch]
+permissions:
+  contents: read
+jobs:
+  native-postgres:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: hydrokontur_v72_acceptance
+          # Ephemeral CI service on an isolated runner only. No production data.
+          POSTGRES_PASSWORD: hydro-ci-ephemeral-only
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s --health-timeout 5s --health-retries 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: pip install -r server/requirements-v71.txt
+      - name: Migrate fresh database (never production)
+        env:
+          HYDRO_PG_ADMIN_URL: postgresql://postgres:hydro-ci-ephemeral-only@127.0.0.1:5432/hydrokontur_v72_acceptance
+        run: python scripts/bootstrap_native.py --out /tmp/hydro-native-credentials.json
+      - name: Synthetic server regression suite
+        env:
+          PYTHONPATH: server
+        run: >-
+          pytest -q server/tests server/tests_v71 server/tests_v72
+          --ignore=server/tests/test_browser.py
+          --ignore=server/tests_v71/test_postgres_native.py
+      - name: Legacy deterministic calculation regression
+        run: node --test v6-client/tests/domain.test.mjs v6-client/tests/assurance.test.mjs
+      - name: Native RLS and transactional acceptance (missing database is an error)
+        env:
+          HYDRO_NATIVE_TESTS_REQUIRED: '1'
+          HYDRO_NATIVE_CONFIG: /tmp/hydro-native-credentials.json
+          PYTHONPATH: server
+        run: pytest -q server/tests_v71/test_postgres_native.py --junitxml=/tmp/native-junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: native-postgresql-test-report
+          path: /tmp/native-junit.xml
+          if-no-files-found: error
+      - name: Remove ephemeral credentials
+        if: always()
+        run: rm -f /tmp/hydro-native-credentials.json

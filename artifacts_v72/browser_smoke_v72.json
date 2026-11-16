@@ -1,0 +1,6 @@
+{
+  "status": "BROWSER_SMOKE_FAIL",
+  "field_data": "NONE",
+  "environment": "localhost synthetic",
+  "error": "Error: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:47129/lab\nCall log:\n  - navigating to \"http://127.0.0.1:47129/lab\", waiting until \"networkidle\"\n"
+}

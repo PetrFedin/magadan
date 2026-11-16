@@ -1,0 +1,27 @@
+Requirement,Expected_behavior,Implementation,Test_evidence,Status,Blocking_gap
+SEC-001,Passwords are Argon2id hashed,server/hydro_api/main.py,test_auth_login_logout_and_revoke,LAB_PASS,Corporate SSO MFA absent
+SEC-002,JWT verifies issuer audience expiry version,server/hydro_api/main.py,test_invalid_jwt_expiration_and_audience,LAB_PASS,No distributed rate limiting
+SEC-003,Access to another organization's objects denied,server/hydro_api/main.py,test_tenant_lists_scoped_and_role_from_database,LAB_PASS,Postgres RLS untested
+SEC-004,Role always loaded from DB membership,server/hydro_api/main.py,test_token_tamper_and_role_revocation,LAB_PASS,External identity provider absent
+SEC-005,Author cannot independently verify own evidence,server/hydro_api/main.py,test_model_evidence_need_independent_review,LAB_PASS,External signature provenance unverified
+SEC-006,Data and models are versioned and hashed,server/hydro_api/main.py,test_model_run_reproducible_and_tenant_isolated,LAB_PASS,External WORM absent
+SEC-007,Immutable audit attempts denied by triggers,server/hydro_api/storage.py,test_append_only_triggers_and_detect_changed_head,LAB_PASS,DB administrator can disable triggers
+SEC-008,Audit detects admin tampering without HMAC key,server/hydro_api/main.py,test_detection_after_privileged_db_tampering,LAB_PASS,External signed anchor absent
+SEC-009,Invalid evidence schemas rejected,server/hydro_api/evidence_schemas.py,test_api_lists_and_strict_provenance,LAB_PASS,Real source authenticity not checked
+ENG-001,Nodal physical equations solved,server/hydro_api/engineering.py,test_grid_physical_equations_and_independent_root,LAB_PASS,No field case
+ENG-002,Independent analytic formula confirms root,server/hydro_api/engineering.py,test_physical_solver_parameter_grid,LAB_PASS,No independent industry expert
+ENG-003,Infeasible high-voltage case rejected,server/hydro_api/engineering.py,test_grid_physical_equations_and_independent_root,LAB_PASS,No N-1 or voltage-control checks
+ENG-004,Only independently accepted model and evidence permit calculation,server/hydro_api/main.py,test_model_evidence_need_independent_review,LAB_PASS,Real data onboarding absent
+FIN-001,Financial NPV computed server-side from structured synthetic inputs,server/hydro_api/evidence_schemas.py,test_financial_npv_is_server_calculated,LAB_PASS,No taxes indexation cost regulation
+FIN-002,Same-org effect key duplicate blocked,server/hydro_api/main.py,test_effect_key_is_per_tenant,LAB_PASS,Portfolio anti double count not complete
+WF-001,Seven transitions with strict sequence and revision,server/hydro_api/main.py,test_workflow_evidence_review_sod_dossier_and_stale,LAB_PASS,Corporate authority registry missing
+WF-002,Engineering and finance decisions require separate people,server/hydro_api/main.py,test_workflow_evidence_review_sod_dossier_and_stale,LAB_PASS,Separation of external roles unproven
+WF-003,Supporting document tied to exact run,server/hydro_api/main.py,test_foreign_run_document_cannot_attach,LAB_PASS,Actual signature checking absent
+WF-004,Outcome author cannot self certify,server/hydro_api/main.py,test_workflow_evidence_review_sod_dossier_and_stale,LAB_PASS,Independent technical acceptance absent
+UI-001,Responsive 1440 and 375 layouts,server/ui,artifacts/v7-layout-desktop.png + mobile.png,STATIC_PASS,Network browser E2E blocked by administrator
+UI-002,Login browser -> real HTTP -> decision workflow,server/ui/tests,test_browser.test_real_browser_login_workflow_and_mobile,SKIPPED,ERR_BLOCKED_BY_ADMINISTRATOR
+OPS-001,Postgres row level security in active runtime,server/sql/POSTGRES_RLS_BLUEPRINT_NOT_APPLIED.sql,Not executed,PENDING,Production gate
+OPS-002,External tamper proof WORM audit receipts,docs/SECURITY_ARCHITECTURE_V7.md,Not built,PENDING,Production gate
+OPS-003,Real Magadan data used with documented permission,docs/MAGADAN_GRID_PILOT_V7.md,Not obtained,PENDING,Production gate
+OPS-004,Industry solver and independent engineer acceptance,docs/MAGADAN_GRID_PILOT_V7.md,Not performed,PENDING,Production gate
+OPS-005,Corporate SSO MFA secrets vault TLS and backups,docs/SECURITY_ARCHITECTURE_V7.md,Not implemented,PENDING,Production gate

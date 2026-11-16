@@ -1,0 +1,50 @@
+{
+  "checks": [
+    {
+      "name": "forecast-good",
+      "passed": true,
+      "blocked": false
+    },
+    {
+      "name": "forecast-bad",
+      "passed": true,
+      "blocked": true
+    },
+    {
+      "name": "scenario-good",
+      "passed": true,
+      "blocked": false
+    },
+    {
+      "name": "scenario-bad",
+      "passed": true,
+      "blocked": true
+    },
+    {
+      "name": "portfolio-good",
+      "passed": true,
+      "blocked": false
+    },
+    {
+      "name": "portfolio-bad",
+      "passed": true,
+      "blocked": false
+    },
+    {
+      "name": "quality-good",
+      "passed": true,
+      "blocked": false
+    },
+    {
+      "name": "quality-bad",
+      "passed": true,
+      "blocked": false
+    }
+  ],
+  "console_errors": [],
+  "page_errors": [],
+  "mobile": {
+    "view": 375,
+    "scroll": 375
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "scope": "STATIC_LAYOUT_ONLY",
+  "app_http_e2e_pass": false,
+  "widths": {
+    "1440": {
+      "overflow": false,
+      "six_domain_panel_visible": true,
+      "page_errors": []
+    },
+    "768": {
+      "overflow": false,
+      "six_domain_panel_visible": true,
+      "page_errors": []
+    },
+    "375": {
+      "overflow": false,
+      "six_domain_panel_visible": true,
+      "page_errors": []
+    }
+  },
+  "status": "STATIC_LAYOUT_PASS"
+}

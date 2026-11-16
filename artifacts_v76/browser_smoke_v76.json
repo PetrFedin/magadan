@@ -1,0 +1,23 @@
+{
+  "scope": "SYNTHETIC_LOCAL_BROWSER_SMOKE",
+  "live_http": "SERVER_HEALTH_200",
+  "network_e2e": "BROWSER_BLOCKED_OR_FAILED",
+  "widths_tested": [
+    {
+      "width": 1440,
+      "overflow": false,
+      "mode": "STATIC_RENDER_ONLY"
+    },
+    {
+      "width": 768,
+      "overflow": false,
+      "mode": "STATIC_RENDER_ONLY"
+    },
+    {
+      "width": 375,
+      "overflow": false,
+      "mode": "STATIC_RENDER_ONLY"
+    }
+  ],
+  "reason": "Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:8767/lab\nCall log:\n  - navigating to \"http://127.0.0.1:8767/lab\", waiting until \"domcontentloaded\"\n"
+}

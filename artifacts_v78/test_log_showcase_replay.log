@@ -1,0 +1,28 @@
+{
+  "trace": "/mnt/data/hydro_v78/hydrokontur-v78/artifacts_v78/showcase_trace_v78.json",
+  "baseline_mwh": 2.399290916,
+  "proposed_mwh": 1.349564646,
+  "npv": {
+    "low": "-1753573.76",
+    "base": "-1668884.89",
+    "high": "-1584196.03"
+  },
+  "wbs_rub": "2300000.00",
+  "independent_crosscheck": {
+    "low": {
+      "own_recalculated_npv_rub": "-1753573.76",
+      "difference_before_rounding_rub": "0.00080220132422502528708276313440827",
+      "within_5_kopeck_tolerance": true
+    },
+    "base": {
+      "own_recalculated_npv_rub": "-1668884.89",
+      "difference_before_rounding_rub": "0.00220749085667430237401082882132446",
+      "within_5_kopeck_tolerance": true
+    },
+    "high": {
+      "own_recalculated_npv_rub": "-1584196.03",
+      "difference_before_rounding_rub": "0.00478281696242636996489557922294281",
+      "within_5_kopeck_tolerance": true
+    }
+  }
+}

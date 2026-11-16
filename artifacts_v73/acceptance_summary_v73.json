@@ -1,0 +1,64 @@
+{
+  "release": "V7.3",
+  "as_of": "2026-10-23",
+  "scope": "ISOLATED_SYNTHETIC_LAB",
+  "production_ready": false,
+  "server_python_tests": {
+    "status": "PASS",
+    "count": 145,
+    "log": "artifacts_v73/regression_python.log"
+  },
+  "legacy_js_tests": {
+    "status": "PASS",
+    "count": 63,
+    "log": "artifacts_v73/regression_js.log"
+  },
+  "randomized_synthetic_network_checks": {
+    "status": "PASS",
+    "count": 64,
+    "seed": 20261023,
+    "max_active_balance_error_mw": 9.210714051732794e-11,
+    "max_nodal_solver_difference_v": 3.277416044233312e-09,
+    "artifact": "artifacts_v73/stress_radial_v73.json"
+  },
+  "frontend_layout": {
+    "status": "STATIC_ONLY_PASS",
+    "widths": [
+      375,
+      768,
+      1440
+    ],
+    "authenticated_server_browser_E2E": false,
+    "artifact": "artifacts_v73/layout_qa_v73.json"
+  },
+  "native_postgresql17_rls": {
+    "status": "BLOCKED_NOT_EXECUTED",
+    "failure_code": "NATIVE_ACCEPTANCE_BLOCKED",
+    "artifact": "artifacts_v73/native_pg17_acceptance.log"
+  },
+  "real_corporate_oidc": {
+    "status": "NOT_CONNECTED"
+  },
+  "compliant_external_worm": {
+    "status": "NOT_VALIDATED"
+  },
+  "independent_engineering_benchmark": {
+    "status": "NOT_COMPLETED"
+  },
+  "authorized_magadan_network_data": {
+    "status": "NOT_AVAILABLE"
+  },
+  "source_requirements": {
+    "count": 91,
+    "status_counts": {
+      "LAB_IMPLEMENTED": 40,
+      "NOT_ACCEPTED": 13,
+      "PLANNED": 37,
+      "DESIGNED_UNACCEPTED": 1
+    },
+    "industrial_accepted_count": 0
+  },
+  "http_operations_documented": 41,
+  "engineering_finance_showcase": "artifacts_v73/showcase_trace_v73.json",
+  "production_hold": true
+}

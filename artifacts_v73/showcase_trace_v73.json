@@ -1,0 +1,365 @@
+{
+  "release": "V7.3",
+  "name": "GridLoss → HydroCAPEX synthetic evidence demonstration",
+  "scope": "SYNTHETIC_ONLY_NOT_RUSHYDRO_NOT_MAGADAN_REAL_DATA",
+  "input_sha256": {
+    "baseline": "33796d0d162b7ddc9540b231ee1d97a1b74eb0a3f3ce93113ddfd91bf0b11035",
+    "alternative": "633a07d0d3e2cd98e79c32fe5d9a368697510e48dd14c518e15b3dd54f50565f",
+    "finance": "b0dc5ef20f26a2b1d4f2651addee034fb631f6233387d9585d08230c817dde96"
+  },
+  "source_code_sha256": {
+    "radial_grid.py": "4f6effb5e321e56b89b9b050a8e26d3d13d88ae98d59eea818e3d7a8d5f948ef",
+    "finance_evidence.py": "e1dc22ea2fa9ce2f43ef77f891cfc6bdf7b57bca4137752dff2be5394319d45e"
+  },
+  "physical_comparability": {
+    "accepted": true,
+    "reasons": []
+  },
+  "baseline": {
+    "input": {
+      "model_kind": "radial_ac_v73",
+      "reference_name": "SYNTHETIC_MAGADAN_REFERENCE_ONLY",
+      "source_voltage_kv_ll": 20,
+      "min_voltage_pu": 0.9,
+      "nodes": [
+        {
+          "node_id": "n1",
+          "parent_id": "SOURCE",
+          "r_ohm_per_phase": 0.25,
+          "x_ohm_per_phase": 0.3,
+          "load_p_mw": 2,
+          "load_q_mvar": 0.6,
+          "ampacity_a": 1000
+        },
+        {
+          "node_id": "n2",
+          "parent_id": "n1",
+          "r_ohm_per_phase": 0.17,
+          "x_ohm_per_phase": 0.22,
+          "load_p_mw": 1.5,
+          "load_q_mvar": 0.55,
+          "ampacity_a": 1000
+        },
+        {
+          "node_id": "n3",
+          "parent_id": "n1",
+          "r_ohm_per_phase": 0.12,
+          "x_ohm_per_phase": 0.15,
+          "load_p_mw": 1,
+          "load_q_mvar": 0.3,
+          "ampacity_a": 1000
+        }
+      ],
+      "windows": [
+        {
+          "name": "normal",
+          "scale": 1,
+          "hours": 120
+        },
+        {
+          "name": "winter_peak",
+          "scale": 1.2,
+          "hours": 24
+        }
+      ]
+    },
+    "output": {
+      "status": "LAB_ENGINEERING_LIMITS_MET",
+      "total_line_energy_loss_mwh": 2.399290916,
+      "modelled_hours": 144.0,
+      "maximum_line_loss_p_mw": 0.022384287,
+      "minimum_receiving_voltage_pu": 0.994155256,
+      "constraint_violations": [],
+      "windows": [
+        {
+          "line_loss_p_mw": 0.015517233611538478,
+          "line_loss_q_mvar": 0.018740273843240923,
+          "min_voltage_pu": 0.9951345326042327,
+          "max_kcl_discrepancy_v": 2.528492457505252e-10,
+          "power_balance_residual_mw": 1.1224703484913334e-11,
+          "power_balance_residual_mvar": 1.3557262718677521e-11,
+          "sweep_iterations": 5,
+          "thermal_violations": [],
+          "voltage_violations": [],
+          "nodes": [
+            {
+              "node_id": "n1",
+              "parent_id": "SOURCE",
+              "voltage_pu": 0.996079306,
+              "current_a": 137.073867,
+              "line_loss_p_mw": 0.014091934,
+              "line_loss_q_mvar": 0.01691032
+            },
+            {
+              "node_id": "n2",
+              "parent_id": "n1",
+              "voltage_pu": 0.995134533,
+              "current_a": 46.345808,
+              "line_loss_p_mw": 0.001095446,
+              "line_loss_q_mvar": 0.001417636
+            },
+            {
+              "node_id": "n3",
+              "parent_id": "n1",
+              "voltage_pu": 0.995664969,
+              "current_a": 30.269789,
+              "line_loss_p_mw": 0.000329854,
+              "line_loss_q_mvar": 0.000412317
+            }
+          ],
+          "window": "normal",
+          "scale": 1.0,
+          "hours": 120.0
+        },
+        {
+          "line_loss_p_mw": 0.022384286788560456,
+          "line_loss_q_mvar": 0.02703369310730182,
+          "min_voltage_pu": 0.9941552557083032,
+          "max_kcl_discrepancy_v": 7.676173075506799e-10,
+          "power_balance_residual_mw": 3.3757656638044866e-11,
+          "power_balance_residual_mvar": 4.077002813573927e-11,
+          "sweep_iterations": 5,
+          "thermal_violations": [],
+          "voltage_violations": [],
+          "nodes": [
+            {
+              "node_id": "n1",
+              "parent_id": "SOURCE",
+              "voltage_pu": 0.995290143,
+              "current_a": 164.632569,
+              "line_loss_p_mw": 0.020327912,
+              "line_loss_q_mvar": 0.024393495
+            },
+            {
+              "node_id": "n2",
+              "parent_id": "n1",
+              "voltage_pu": 0.994155256,
+              "current_a": 55.669752,
+              "line_loss_p_mw": 0.001580552,
+              "line_loss_q_mvar": 0.00204542
+            },
+            {
+              "node_id": "n3",
+              "parent_id": "n1",
+              "voltage_pu": 0.994792493,
+              "current_a": 36.355605,
+              "line_loss_p_mw": 0.000475823,
+              "line_loss_q_mvar": 0.000594778
+            }
+          ],
+          "window": "winter_peak",
+          "scale": 1.2,
+          "hours": 24.0
+        }
+      ],
+      "limitation": "Synthetic balanced radial constant-PQ network only; no neutral, unbalanced phases, shunts, transformers, protection, N-1, regulatory calibration or field signoff",
+      "independent_validation": "Separate nodal KCL numerical root; not external engineering validation",
+      "industrial_decision_eligible": false
+    }
+  },
+  "alternative": {
+    "input": {
+      "model_kind": "radial_ac_v73",
+      "reference_name": "SYNTHETIC_MAGADAN_REFERENCE_ONLY",
+      "source_voltage_kv_ll": 20,
+      "min_voltage_pu": 0.9,
+      "nodes": [
+        {
+          "node_id": "n1",
+          "parent_id": "SOURCE",
+          "r_ohm_per_phase": 0.13,
+          "x_ohm_per_phase": 0.3,
+          "load_p_mw": 2,
+          "load_q_mvar": 0.6,
+          "ampacity_a": 1000
+        },
+        {
+          "node_id": "n2",
+          "parent_id": "n1",
+          "r_ohm_per_phase": 0.17,
+          "x_ohm_per_phase": 0.22,
+          "load_p_mw": 1.5,
+          "load_q_mvar": 0.55,
+          "ampacity_a": 1000
+        },
+        {
+          "node_id": "n3",
+          "parent_id": "n1",
+          "r_ohm_per_phase": 0.12,
+          "x_ohm_per_phase": 0.15,
+          "load_p_mw": 1,
+          "load_q_mvar": 0.3,
+          "ampacity_a": 1000
+        }
+      ],
+      "windows": [
+        {
+          "name": "normal",
+          "scale": 1,
+          "hours": 120
+        },
+        {
+          "name": "winter_peak",
+          "scale": 1.2,
+          "hours": 24
+        }
+      ]
+    },
+    "output": {
+      "status": "LAB_ENGINEERING_LIMITS_MET",
+      "total_line_energy_loss_mwh": 1.349564646,
+      "modelled_hours": 144.0,
+      "maximum_line_loss_p_mw": 0.012585543,
+      "minimum_receiving_voltage_pu": 0.995788768,
+      "constraint_violations": [],
+      "windows": [
+        {
+          "line_loss_p_mw": 0.008729263406019233,
+          "line_loss_q_mvar": 0.018689231128441446,
+          "min_voltage_pu": 0.9964938903538741,
+          "max_kcl_discrepancy_v": 9.826592433716185e-11,
+          "power_balance_residual_mw": 3.3253290894208477e-12,
+          "power_balance_residual_mvar": 7.1137183113023636e-12,
+          "sweep_iterations": 5,
+          "thermal_violations": [],
+          "voltage_violations": [],
+          "nodes": [
+            {
+              "node_id": "n1",
+              "parent_id": "SOURCE",
+              "voltage_pu": 0.997437374,
+              "current_a": 136.887081,
+              "line_loss_p_mw": 0.007307848,
+              "line_loss_q_mvar": 0.016864266
+            },
+            {
+              "node_id": "n2",
+              "parent_id": "n1",
+              "voltage_pu": 0.99649389,
+              "current_a": 46.282585,
+              "line_loss_p_mw": 0.00109246,
+              "line_loss_q_mvar": 0.001413771
+            },
+            {
+              "node_id": "n3",
+              "parent_id": "n1",
+              "voltage_pu": 0.997023602,
+              "current_a": 30.228541,
+              "line_loss_p_mw": 0.000328955,
+              "line_loss_q_mvar": 0.000411194
+            }
+          ],
+          "window": "normal",
+          "scale": 1.0,
+          "hours": 120.0
+        },
+        {
+          "line_loss_p_mw": 0.012585543233917515,
+          "line_loss_q_mvar": 0.026945179210508388,
+          "min_voltage_pu": 0.9957887678606037,
+          "max_kcl_discrepancy_v": 2.947883753915147e-10,
+          "power_balance_residual_mw": 9.982335541280918e-12,
+          "power_balance_residual_mvar": 2.134536043740809e-11,
+          "sweep_iterations": 5,
+          "thermal_violations": [],
+          "voltage_violations": [],
+          "nodes": [
+            {
+              "node_id": "n1",
+              "parent_id": "SOURCE",
+              "voltage_pu": 0.996921793,
+              "current_a": 164.362855,
+              "line_loss_p_mw": 0.010535908,
+              "line_loss_q_mvar": 0.024313633
+            },
+            {
+              "node_id": "n2",
+              "parent_id": "n1",
+              "voltage_pu": 0.995788768,
+              "current_a": 55.57843,
+              "line_loss_p_mw": 0.001575371,
+              "line_loss_q_mvar": 0.002038715
+            },
+            {
+              "node_id": "n3",
+              "parent_id": "n1",
+              "voltage_pu": 0.996424958,
+              "current_a": 36.296043,
+              "line_loss_p_mw": 0.000474265,
+              "line_loss_q_mvar": 0.000592831
+            }
+          ],
+          "window": "winter_peak",
+          "scale": 1.2,
+          "hours": 24.0
+        }
+      ],
+      "limitation": "Synthetic balanced radial constant-PQ network only; no neutral, unbalanced phases, shunts, transformers, protection, N-1, regulatory calibration or field signoff",
+      "independent_validation": "Separate nodal KCL numerical root; not external engineering validation",
+      "industrial_decision_eligible": false
+    }
+  },
+  "finance": {
+    "input": {
+      "scope": "SYNTHETIC_NOT_A_TARIFF",
+      "capital_cost_rub": "1800000",
+      "annual_opex_delta_rub": "150000",
+      "value_per_kwh_rub": {
+        "low": "2",
+        "base": "3",
+        "high": "5"
+      },
+      "discount_rate": "0.12",
+      "years": 8,
+      "annual_repeat_count": "50",
+      "notes": "Synthetic unit economics solely for deterministic testing."
+    },
+    "output": {
+      "comparison_status": "MATCHED_SYNTHETIC_INVARIANTS_NOT_CAUSAL_EVIDENCE",
+      "assurance_status": "RESEARCH_ONLY_NO_INDUSTRIAL_SIGNOFF",
+      "baseline_loss_mwh": "2.399290916",
+      "proposed_loss_mwh": "1.349564646",
+      "window_savings_mwh": "1.049726270",
+      "modelled_window_hours": "144.0",
+      "annual_repeat_count": "50",
+      "assumed_annual_hours": "7200.0",
+      "annual_energy_savings_kwh": "52486.313500",
+      "construction_cost_rub": "1800000",
+      "annual_opex_delta_rub": "150000",
+      "discount_rate": "0.12",
+      "years": 8,
+      "annuity_factor": "4.967639766839",
+      "price_scenarios": {
+        "low": {
+          "unit_value_rub_per_kwh": "2",
+          "gross_annual_value_rub": "104972.63",
+          "net_annual_value_rub": "-45027.37",
+          "npv_rub": "-2023679.77"
+        },
+        "base": {
+          "unit_value_rub_per_kwh": "3",
+          "gross_annual_value_rub": "157458.94",
+          "net_annual_value_rub": "7458.94",
+          "npv_rub": "-1762946.67"
+        },
+        "high": {
+          "unit_value_rub_per_kwh": "5",
+          "gross_annual_value_rub": "262431.57",
+          "net_annual_value_rub": "112431.57",
+          "npv_rub": "-1241480.47"
+        }
+      },
+      "break_even_unit_value_rub_per_kwh": "9.76150",
+      "baseline_has_constraint_violations": false,
+      "limitations": "Assumed constant annual net benefit for all years, synthetic network, no actual tariff, taxes, replacement life, depreciation, degradation, M&V, grant, construction estimate or engineering approval. Counterfactual benefits remain unproven.",
+      "industrial_investment_eligible": false
+    }
+  },
+  "guards": {
+    "automatic_real_site_approval": false,
+    "native_pg17_accepted": false,
+    "licensed_magadan_data_used": false,
+    "independent_field_signoff": false
+  },
+  "formula": "CF_year=(P_loss_base-P_loss_proposed)[MWh]×1000×annual_repeat×unit_value[RUB/kWh]-OPEX_year; NPV=-CAPEX+Σ CF/(1+r)^t"
+}

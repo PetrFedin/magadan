@@ -1,0 +1,1 @@
+Development history only. Earlier failures, intermediate test counts and runner-timeout attempts are retained for transparency. The final counted runs are ../local_server_a.*, ../local_server_b.*, ../local_components.* and ../legacy_v6_node_tests.txt. Native acceptance was not executed.

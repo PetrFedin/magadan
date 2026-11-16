@@ -1,0 +1,17 @@
+{
+  "report_date": "2026-10-20",
+  "branch": "uncommitted isolated V7 package",
+  "status": "LAB / PRODUCTION HOLD",
+  "v7_server_tests_passed": 32,
+  "browser_e2e_skipped": 1,
+  "v6_regression_tests_passed": 63,
+  "browser_qa_reason": "Chromium ERR_BLOCKED_BY_ADMINISTRATOR for loopback HTTP; not an application validation pass",
+  "ui_static_check": "1440 and 375px layouts displayed without horizontal overflow, synthetic mock state",
+  "physical_solver": "AC two-bus scipy root crosschecked against algebraic high-voltage solution, synthetic data only",
+  "db": "SQLite lab; PostgreSQL RLS blueprint unexecuted",
+  "audit": "tamper-evident HMAC chain and local triggers, no external WORM anchors",
+  "real_magadan_field_data": false,
+  "independent_industry_expert_approval": false,
+  "production_deployed": false,
+  "server_browser_e2e_passed": false
+}

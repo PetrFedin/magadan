@@ -1,0 +1,147 @@
+[
+  {
+    "path": "/v71/auth/config",
+    "method": "GET",
+    "operationId": "config_v71_auth_config_get"
+  },
+  {
+    "path": "/v71/auth/start",
+    "method": "GET",
+    "operationId": "start_v71_auth_start_get"
+  },
+  {
+    "path": "/v71/auth/callback",
+    "method": "GET",
+    "operationId": "callback_v71_auth_callback_get"
+  },
+  {
+    "path": "/health",
+    "method": "GET",
+    "operationId": "health_health_get"
+  },
+  {
+    "path": "/v7/auth/login",
+    "method": "POST",
+    "operationId": "login_v7_auth_login_post"
+  },
+  {
+    "path": "/v7/auth/logout",
+    "method": "POST",
+    "operationId": "logout_v7_auth_logout_post"
+  },
+  {
+    "path": "/v7/me",
+    "method": "GET",
+    "operationId": "me_v7_me_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/assets",
+    "method": "GET",
+    "operationId": "assets_v7_orgs__org_id__assets_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/assets",
+    "method": "POST",
+    "operationId": "add_asset_v7_orgs__org_id__assets_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/evidence",
+    "method": "POST",
+    "operationId": "add_evidence_v7_orgs__org_id__evidence_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/evidence",
+    "method": "GET",
+    "operationId": "list_evidence_v7_orgs__org_id__evidence_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/evidence/{evidence_id}/review",
+    "method": "POST",
+    "operationId": "review_evidence_v7_orgs__org_id__evidence__evidence_id__review_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/models",
+    "method": "GET",
+    "operationId": "list_models_v7_orgs__org_id__models_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/models",
+    "method": "POST",
+    "operationId": "add_model_v7_orgs__org_id__models_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/runs",
+    "method": "GET",
+    "operationId": "list_runs_v7_orgs__org_id__runs_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/runs",
+    "method": "POST",
+    "operationId": "run_v7_orgs__org_id__runs_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/models/{model_id}/review",
+    "method": "POST",
+    "operationId": "review_model_v7_orgs__org_id__models__model_id__review_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/runs/{run_id}",
+    "method": "GET",
+    "operationId": "get_run_v7_orgs__org_id__runs__run_id__get"
+  },
+  {
+    "path": "/v71/orgs/{org_id}/runs/{run_id}/reproduce",
+    "method": "POST",
+    "operationId": "reproduce_v71_orgs__org_id__runs__run_id__reproduce_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/initiatives",
+    "method": "POST",
+    "operationId": "add_initiative_v7_orgs__org_id__initiatives_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/initiatives",
+    "method": "GET",
+    "operationId": "list_initiatives_v7_orgs__org_id__initiatives_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/initiatives/{iid}/evidence",
+    "method": "POST",
+    "operationId": "attach_v7_orgs__org_id__initiatives__iid__evidence_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/initiatives/{iid}/transition",
+    "method": "POST",
+    "operationId": "transition_v7_orgs__org_id__initiatives__iid__transition_post"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/initiatives/{iid}/dossier",
+    "method": "GET",
+    "operationId": "dossier_v7_orgs__org_id__initiatives__iid__dossier_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/audit/verify",
+    "method": "GET",
+    "operationId": "verify_audit_v7_orgs__org_id__audit_verify_get"
+  },
+  {
+    "path": "/v7/orgs/{org_id}/audit/export",
+    "method": "GET",
+    "operationId": "export_audit_v7_orgs__org_id__audit_export_get"
+  },
+  {
+    "path": "/v71/orgs/{org_id}/audit/delivery",
+    "method": "GET",
+    "operationId": "audit_delivery_v71_orgs__org_id__audit_delivery_get"
+  },
+  {
+    "path": "/v71/meta/readiness",
+    "method": "GET",
+    "operationId": "readiness_v71_meta_readiness_get"
+  },
+  {
+    "path": "/v7/meta/limitations",
+    "method": "GET",
+    "operationId": "limitations_v7_meta_limitations_get"
+  }
+]

@@ -1,0 +1,2 @@
+v7-layout-desktop.png: static layout PASS, no overflow width=1440, height=2381
+v7-layout-mobile.png: static layout PASS, no overflow width=375, height=4150

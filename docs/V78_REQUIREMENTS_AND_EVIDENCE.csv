@@ -1,0 +1,34 @@
+id,area,requirement,priority,implementation,verification,blocker
+HK78-GRD-001,GRID,Versioned radial feeder baseline and intervention,P0,LAB_IMPLEMENTED,tests_v73 and tests_v78,Actual as-built grid unavailable
+HK78-GRD-002,GRID,Preserve identical time windows voltage topology loads,P0,LAB_IMPLEMENTED,physical_comparability test,Approved comparative model missing
+HK78-GRD-003,GRID,AC KCL nodal root independent of sweep,P0,LAB_IMPLEMENTED,radial_grid numerical root,External solver pending
+HK78-GRD-004,GRID,Voltage and thermal checks on alternative,P0,LAB_IMPLEMENTED,domain and API negative tests,Field limits unavailable
+HK78-GRD-005,GRID,Third party electrical solver reference,P0,NOT_ACCEPTED,third-party adapter only,pandapower absent
+HK78-DATA-001,DATA,Exact source study input hash and engine hash,P0,LAB_IMPLEMENTED,source replay tests,Enterprise document provenance missing
+HK78-DATA-002,DATA,Only LAB_REFERENCE assets accepted,P0,LAB_IMPLEMENTED,HTTP asset classification check,Field data owner permission missing
+HK78-DATA-003,DATA,Approved time series with witnessed actual loads,P0,NOT_ACCEPTED,data request specification,No approved measurements
+HK78-DCF-001,FINANCE,Map every engineering load window to explicit synthetic cost,P0,LAB_IMPLEMENTED,missing price test,Real avoided-cost methodology pending
+HK78-DCF-002,FINANCE,Compute physical MWh per window and retained kWh,P0,LAB_IMPLEMENTED,deterministic Decimal unit test,Field validation missing
+HK78-DCF-003,FINANCE,Prevent year hour overflow and declare partial coverage,P0,LAB_IMPLEMENTED,7200 hours and leap calendar tests,Actual temporal distribution unavailable
+HK78-DCF-004,FINANCE,One version-pinned exclusive single-measure WBS,P0,LAB_IMPLEMENTED,programme source guard and unique index,Concurrent cross-module benefit registry pending
+HK78-DCF-005,FINANCE,Require commissioning before benefits,P0,LAB_IMPLEMENTED,negative commissioning tests,Real permit and commissioning proof absent
+HK78-DCF-006,FINANCE,Nominal annual net cashflows and 3 scenario NPVs,P0,LAB_IMPLEMENTED,independent Decimal recomputation,No tax and regulatory model
+HK78-DCF-007,FINANCE,Report negative economic result without forced approval,P0,LAB_IMPLEMENTED,negative base and all scenario values,No actual field business case
+HK78-DCF-008,FINANCE,Separate annual OPEX from physical energy value,P0,LAB_IMPLEMENTED,annual cashflow consistency test,Real OPEX missing
+HK78-DCF-009,FINANCE,Show CAPEX and assumed annual budget breaches,P0,LAB_IMPLEMENTED,WBS screen and test,Approved project budget missing
+HK78-DCF-010,FINANCE,Do not publish fictitious IRR or payback,P0,LAB_IMPLEMENTED,explicit NONE and no IRR outputs,Proper investment hurdle pending
+HK78-DCF-011,FINANCE,Real electricity tariff and marginal valuation by period,P0,NOT_ACCEPTED,prohibited by synthetic scope,Regulatory finance signoff missing
+HK78-DCF-012,FINANCE,Tax VAT subsidies financing and inflation,P1,PLANNED,model assumptions document,Corporate finance data missing
+HK78-DCF-013,FINANCE,Post-construction savings measurement and verification,P0,NOT_ACCEPTED,field M and V specification,No commissioning or measured results
+HK78-SEC-001,SECURITY,Current active tenant membership checked per HTTP request,P0,LAB_IMPLEMENTED,HTTP authorization tests,Corporate SSO acceptance missing
+HK78-SEC-002,SECURITY,Append-only SQLite lab dossier and HMAC audit,P0,LAB_IMPLEMENTED,update delete tamper tests,Independent WORM missing
+HK78-SEC-003,SECURITY,PostgreSQL FORCE RLS and signed session context,P0,DESIGNED_NOT_TESTED,SQL text static assertions only,Native PostgreSQL 17 missing
+HK78-SEC-004,SECURITY,Single authoritative cross-module benefit ledger,P0,PLANNED,sequential duplicate tests only,Cross transaction atomicity unresolved
+HK78-SEC-005,SECURITY,Corporate OIDC MFA identity provider,P0,NOT_ACCEPTED,synthetic IdP test in legacy code,Corporate credentials and registration missing
+HK78-SEC-006,SECURITY,External signed receipt WORM and retention,P0,NOT_ACCEPTED,SDK contract simulator only,Independent compliant storage missing
+HK78-OPS-001,OPS,Historical migration scripts frozen,P0,LAB_IMPLEMENTED,frozen script fails and preview allowed,Native migration installation untested
+HK78-OPS-002,OPS,API OpenAPI generated from running app,P1,LAB_IMPLEMENTED,docs openapi_v78.json,No production API deployment
+HK78-OPS-003,OPS,Static layout 1440 768 and 375,P1,LAB_IMPLEMENTED,layout_metrics and PNGs,Authenticated browser E2E not accepted
+HK78-MAG-001,MAGADAN,Owner-approved feeder pilot on real system,P0,NOT_ACCEPTED,pilot data request specification,Asset owner and engineer not contracted
+HK78-MAG-002,MAGADAN,Independent engineer acceptance and signoff,P0,NOT_ACCEPTED,approval matrix,No attested field evidence
+HK78-MAG-003,MAGADAN,Construction geological legal and cost dossier,P1,PLANNED,field approval document,Design surveys plans approvals pending

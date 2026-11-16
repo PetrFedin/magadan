@@ -1,0 +1,19 @@
+{
+  "release": "V7.9-LAB",
+  "region": "MAGADAN_CONCEPT_NOT_REAL_NETWORK",
+  "synthetic_source_sha256": "4d0c9be1e35890c3b087d178eb1387f53dc9acb5f948ab477fc901376f55cc82",
+  "maintenance_handoff_id": "6ed992e9-a137-465c-b80e-8be4f97a174e",
+  "benefit_reservation_id": "52d5cb5f-faaa-4381-bd43-d0fe9bd5d463",
+  "duplicate_claim_blocked_http_status": 409,
+  "benefit_lab_estimated_gross_rub": null,
+  "mv_report_id": "87d9cb9e-82ea-4373-a12d-7370cad8cf01",
+  "mv_input_sha256": "233c6afa8d676d72009f5eccd7fb4f015e8e48cdbb872563fbbf980b37509de3",
+  "mv_report_sha256": "3bdfb5dd92fdd80c10a99ecf52140396639fa5d00cdd60143c2f1d023e550447",
+  "auditor_recomputed_from_source": true,
+  "local_hmac_audit_valid": true,
+  "external_worm_attestation": false,
+  "postgresql_native_rls_passed": false,
+  "actual_savings_confirmed": false,
+  "industrial_approval_eligible": false
+}
+signed_difference_kwh 13.191738

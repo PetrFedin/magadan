@@ -1,0 +1,85 @@
+name: HydroKontur V8 Native PostgreSQL 17 (ISOLATED LAB - NOT PRODUCTION)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'server/tests_v8/test_postgres_native_boundary_v8.py'
+      - '.github/workflows/v8-native-pg17.yml'
+      - 'server/migrations/**'
+      - 'scripts/bootstrap_native.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: hydro-v8-native-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  isolated-postgres17:
+    name: Native PG17/RLS/transaction tests (synthetic only)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 18
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: hydrokontur_v72_v8_native_lab
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: local-ci-ephemeral-pg17-only
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres -d hydrokontur_v72_v8_native_lab"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 15
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install native test dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+
+      - name: Reject nonempty target and apply migrations 001-150
+        env:
+          HYDRO_PG_ADMIN_URL: postgresql://postgres:local-ci-ephemeral-pg17-only@127.0.0.1:5432/hydrokontur_v72_v8_native_lab
+        run: |
+          python scripts/bootstrap_native.py --out /tmp/hydro-v8-native-config.json
+          test -s /tmp/hydro-v8-native-config.json
+          chmod 600 /tmp/hydro-v8-native-config.json
+
+      - name: Actual PostgreSQL 17, RLS, session revocation and physical-boundary concurrency
+        env:
+          HYDRO_NATIVE_TESTS_REQUIRED: '1'
+          HYDRO_NATIVE_CONFIG: /tmp/hydro-v8-native-config.json
+          PYTHONPATH: server
+        run: |
+          python -m pytest -q -ra \
+            server/tests_v71/test_postgres_native.py \
+            server/tests_v78/test_postgres_native_v78.py \
+            server/tests_v8/test_postgres_native_boundary_v8.py \
+            --junitxml=/tmp/hydro-v8-native-junit.xml
+
+      - name: Upload native acceptance artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: hydro-v8-native-postgres17-${{ github.run_id }}
+          path: /tmp/hydro-v8-native-junit.xml
+          if-no-files-found: warn
+          retention-days: 7
+
+      - name: Destroy ephemeral credentials
+        if: always()
+        run: rm -f /tmp/hydro-v8-native-config.json
+
+      - name: Explicit industrial and source-provenance HOLD
+        run: |
+          echo 'This test runs ONLY on a temporary GitHub Actions PostgreSQL 17 service.'
+          echo 'Independent DBA, IdP, WORM, external solver, consented Magadan data and field M&V are NOT certified.'
+          echo 'The source archive still requires independent attestation. PRODUCTION HOLD.'

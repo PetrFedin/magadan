@@ -1,0 +1,89 @@
+name: HydroKontur V8.0 Synthetic Lab Regression (NOT production admission)
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'server/**'
+      - 'v6-client/**'
+      - 'scripts/**'
+      - 'MANIFEST_SHA256_V8.json'
+      - 'SOURCE_RECOVERY_MANIFEST.json'
+      - '.github/workflows/v8-lab-regression.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: v8-synthetic-lab-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  synthetic-lab-only:
+    name: Code, tests and internal file integrity (NO field approval)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verify immutable original V8 import baseline and current code scope
+        run: |
+          python - <<'PY'
+          import hashlib, json, pathlib, subprocess
+          original='eab0d0b1e418558914a448a21cf496982ac10a1d'
+          subprocess.run(['git','merge-base','--is-ancestor',original,'HEAD'],check=True)
+          def source_at(rel):
+              return subprocess.run(['git','show',f'{original}:{rel}'],
+                 check=True,capture_output=True).stdout
+          raw=source_at('MANIFEST_SHA256_V8.json')
+          assert hashlib.sha256(raw).hexdigest()=='c8d248cb351aa57de315edb370f3143da6b0fe1954df48fabf618d12e55146d3'
+          man=json.loads(raw)
+          assert man['file_count']==452 and len(man['files'])==452
+          for name,claimed in man['files'].items():
+              assert hashlib.sha256(source_at(name)).hexdigest()==claimed,name
+          receipt=source_at('SOURCE_RECOVERY_MANIFEST.json')
+          assert hashlib.sha256(receipt).hexdigest()=='0160a155eb8f60fb0a243a8fb197f4fff170f1366742e6b2067e41d306fbc4e1'
+          report=json.loads(receipt)
+          assert report['source_release']=='v8.0'
+          assert report['archive_sha256']=='17caa474d9ba583d477511b7734565888b7740457fbff4214d6359046ded7e19'
+          assert report['production_ready'] is False
+          for path in ('server/hydro_api/main.py','server/hydro_api/boundary_v8.py',
+                       'server/tests_v8/test_boundary_graph.py',
+                       'server/migrations/150_boundary_graph_v8.sql'):
+              assert pathlib.Path(path).is_file(),path
+          print('Historical immutable source baseline matches 452/452 SHA256 files.')
+          print('Current working tree is separately tested and MAY contain reviewed changes.')
+          print('THIS DOES NOT ESTABLISH independent external provenance or production approval.')
+          PY
+      - name: Install synthetic lab test dependencies
+        run: |
+          python -m pip install -r server/requirements.txt
+      - name: Python earlier modules (synthetic only)
+        env:
+          PYTHONPATH: server
+        run: |
+          python -m pytest -q server/tests_v71 server/tests_v72 server/tests_v73 server/tests_v74 \
+            --ignore=server/tests_v71/test_postgres_native.py -m 'not native_pg'
+      - name: Python newer modules (synthetic only)
+        env:
+          PYTHONPATH: server
+        run: |
+          python -m pytest -q server/tests_v75 server/tests_v76 server/tests_v77 \
+            server/tests_v78 server/tests_v79 server/tests_v8 server/tests \
+            --ignore=server/tests_v78/test_postgres_native_v78.py \
+            --ignore=server/tests/test_browser.py -m 'not native_pg'
+      - name: JavaScript unit tests
+        working-directory: v6-client
+        run: npm test
+      - name: Explicit release boundary
+        run: |
+          echo 'Synthetic tests only; NO native PostgreSQL RLS, independent power flow, SSO, WORM or actual Magadan data acceptance.'
+          echo 'PRODUCTION HOLD. Source provenance admission is a separate independent gate.'

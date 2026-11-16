@@ -1,0 +1,50 @@
+{
+  "audit_chain_verified": true,
+  "data_classification": "100_PERCENT_SYNTHETIC",
+  "field_data_used": false,
+  "handoff_count": 2,
+  "hydrological_handoff": {
+    "constraint_violations": [],
+    "energy_mwh": 6992.568,
+    "id": "696e962f-82ec-48a3-b830-3d9e213ca0e8",
+    "n_steps": 3,
+    "reproduced": true
+  },
+  "independent_engineer": "NOT_AVAILABLE",
+  "industrial_approval_eligible": false,
+  "maintenance_handoff": {
+    "auto_recommendation": null,
+    "failure_probability": null,
+    "id": "c4805db5-0e6f-4c52-8a98-d03a7de3960a",
+    "options": [
+      {
+        "action": "inspection",
+        "assumed_downtime_cost_rub": "6000.00",
+        "direct_expenditure_rub": "50000.00",
+        "lead_time_days": 7,
+        "option_id": "inspection",
+        "source_ref": "SYNTHETIC-INSPECTION-PRICE-V75",
+        "total_direct_plus_downtime_rub": "56000.00"
+      },
+      {
+        "action": "repair",
+        "assumed_downtime_cost_rub": "42000.00",
+        "direct_expenditure_rub": "230000.00",
+        "lead_time_days": 45,
+        "option_id": "repair",
+        "source_ref": "SYNTHETIC-REPAIR-PRICE-V75",
+        "total_direct_plus_downtime_rub": "272000.00"
+      }
+    ],
+    "reproduced": true
+  },
+  "parent_models_reproduced": true,
+  "postgresql_rls_native_test": "NOT_EXECUTED",
+  "programme_id": "8307e0e2-e077-493e-8d67-f2db3f936028",
+  "programme_sha256": "1657f31af8e73c3d737e894859f22d504459b8da5ef4fabbb4ded29ad262afb9",
+  "real_idp_and_worm": "NOT_CONNECTED",
+  "region": "MAGADAN_CANDIDATE_ONLY",
+  "release": "V7.5-LAB",
+  "six_modules_saved": 6,
+  "wbs_synthetic_total_rub": "1600000.00"
+}

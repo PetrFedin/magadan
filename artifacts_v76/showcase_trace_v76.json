@@ -1,0 +1,50 @@
+{
+  "release": "V7.6",
+  "all_source_data": "SYNTHETIC",
+  "six_product_sources": "THREE_STUDIES_AND_TWO_HANDOFFS_IN_THIS_DEMO",
+  "programme_id": "d9bab4a1-d01a-4f4b-a165-d5e2f845c7f8",
+  "handoff_ids": [
+    "466bfd5d-be8a-49a4-b21c-e290fa87b721",
+    "312b9052-c122-471c-a4b5-5a6c808fbaff"
+  ],
+  "assurance_pack_id": "50368b8b-1451-4cb0-8765-71c51dc47432",
+  "assurance_sha256": "7c36cc45356fd898e9c4ed0bdc15cdead1ab471ca26818dec45cdd7dc9ab1033",
+  "reproduced": true,
+  "source_handoffs_recomputed": 2,
+  "audit_chain": {
+    "valid": true,
+    "checked": 7,
+    "tip": "4f1cab18e7efb247877401113114dc3e84a7c9280525f6525cf0a5bd3665ada2",
+    "property": "HMAC tamper-evident; NOT externally anchored WORM"
+  },
+  "routed_scenario_status": "SYNTHETIC_MASS_BALANCE_OK",
+  "routing_details": {
+    "scenario_kind": "UNCALIBRATED_INTERVAL_NOT_PROBABILITIES",
+    "step_count": 3,
+    "point_end_upper_storage_m3": 726956800.0
+  },
+  "finance": {
+    "low": {
+      "npv_rub": "-2221610.95",
+      "positive_npv": false
+    },
+    "base": {
+      "npv_rub": "-1655991.73",
+      "positive_npv": false
+    },
+    "high": {
+      "npv_rub": "-1090372.50",
+      "positive_npv": false
+    }
+  },
+  "wbs_cost_rub": "3050000.00",
+  "industrial_approval_eligible": false,
+  "gates_not_closed": [
+    "NATIVE_POSTGRESQL_RLS_NOT_ACCEPTED",
+    "EXTERNAL_AUDIT_WORM_NOT_ACCEPTED",
+    "CORPORATE_IDP_MFA_NOT_ACCEPTED",
+    "REAL_MAGADAN_DATA_NOT_AUTHORIZED",
+    "INDEPENDENT_ENGINEER_AND_FINANCE_NOT_ACCEPTED",
+    "SITE_SPECIFIC_PERMITS_AND_COST_ESTIMATE_NOT_ACCEPTED"
+  ]
+}

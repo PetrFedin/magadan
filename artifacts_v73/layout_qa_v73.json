@@ -1,0 +1,25 @@
+{
+  "scope": "STATIC_LAYOUT_ONLY",
+  "server_http_e2e_accepted": false,
+  "widths": {
+    "1440": {
+      "horizontal_overflow": false,
+      "radial_panel_visible": true,
+      "metric_cards": 3,
+      "page_errors": []
+    },
+    "768": {
+      "horizontal_overflow": false,
+      "radial_panel_visible": true,
+      "metric_cards": 3,
+      "page_errors": []
+    },
+    "375": {
+      "horizontal_overflow": false,
+      "radial_panel_visible": true,
+      "metric_cards": 3,
+      "page_errors": []
+    }
+  },
+  "status": "STATIC_LAYOUT_PASS"
+}

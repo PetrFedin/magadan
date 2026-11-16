@@ -1,0 +1,55 @@
+..............................F.                                         [100%]
+=================================== FAILURES ===================================
+_____________ test_real_field_data_unsupported_and_postgres_gated ______________
+
+env = {'app': <fastapi.applications.FastAPI object at 0x7f6381049a90>, 'client': <starlette.testclient.TestClient object at ...data_unsupport0/v7.db), autoflush=True, expire_on_commit=False), 'h': <function env.<locals>.h at 0x7f6380cc7100>, ...}
+
+    def test_real_field_data_unsupported_and_postgres_gated(env):
+        from fastapi.testclient import TestClient
+        body=env['client'].get('/v7/meta/limitations').json()
+        assert body['field_data']=='not connected'
+        with pytest.raises(RuntimeError,match='PostgreSQL/RLS deployment blocked'):
+>           create_app(database_url='postgresql+psycopg://postgres@127.0.0.1/hydro',
+                       jwt_secret='valid-jwt-secret-at-least-32-characters-123',
+                       audit_secret='valid-audit-secret-at-least-32-characters-456')
+
+server/tests/test_server.py:279: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+database_url = 'postgresql+psycopg://postgres@127.0.0.1/hydro'
+jwt_secret = 'valid-jwt-secret-at-least-32-characters-123'
+audit_secret = 'valid-audit-secret-at-least-32-characters-456'
+
+    def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_service=None, allow_test_bearer=False):
+        db_url=database_url or os.environ.get('HYDRO_DATABASE_URL','sqlite:///./hydro_v7_lab.db')
+        jwt_secret=jwt_secret or os.environ.get('HYDRO_JWT_SECRET')
+        audit_secret=audit_secret or os.environ.get('HYDRO_AUDIT_SECRET')
+        is_pg = db_url.startswith('postgresql+psycopg://')
+        if not is_pg and not db_url.startswith('sqlite'):
+            raise RuntimeError('Unsupported database backend')
+        if is_pg and oidc_service is None:
+>           raise RuntimeError('PostgreSQL requires the OIDC session boundary; local password login is disabled')
+E           RuntimeError: PostgreSQL requires the OIDC session boundary; local password login is disabled
+
+server/hydro_api/main.py:136: RuntimeError
+
+During handling of the above exception, another exception occurred:
+
+env = {'app': <fastapi.applications.FastAPI object at 0x7f6381049a90>, 'client': <starlette.testclient.TestClient object at ...data_unsupport0/v7.db), autoflush=True, expire_on_commit=False), 'h': <function env.<locals>.h at 0x7f6380cc7100>, ...}
+
+    def test_real_field_data_unsupported_and_postgres_gated(env):
+        from fastapi.testclient import TestClient
+        body=env['client'].get('/v7/meta/limitations').json()
+        assert body['field_data']=='not connected'
+>       with pytest.raises(RuntimeError,match='PostgreSQL/RLS deployment blocked'):
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E       AssertionError: Regex pattern did not match.
+E         Expected regex: 'PostgreSQL/RLS deployment blocked'
+E         Actual message: 'PostgreSQL requires the OIDC session boundary; local password login is disabled'
+
+server/tests/test_server.py:278: AssertionError
+=========================== short test summary info ============================
+FAILED server/tests/test_server.py::test_real_field_data_unsupported_and_postgres_gated - AssertionError: Regex pattern did not match.
+  Expected regex: 'PostgreSQL/RLS deployment blocked'
+  Actual message: 'PostgreSQL requires the OIDC session boundary; local password login is disabled'
+1 failed, 31 passed in 25.41s

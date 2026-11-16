@@ -1,0 +1,44 @@
+lane,requirement,priority,status,verification_or_blocker
+CORE,Org isolation on each assurance API request,P0,LAB_TESTED,test_full_http_pack_review_and_role_isolation
+CORE,Prevent cross-tenant handoff references,P0,LAB_TESTED,test_unknown_handoff_wrong_reference_and_wrong_routing_kind
+CORE,Research-only asset status required,P0,LAB_TESTED,test_full_http_pack_review_and_role_isolation
+CORE,Parent programme immutable WBS required,P0,LAB_TESTED,test_parent_missing_capex_refused
+CORE,Parent programme data integrity verified,P0,LAB_TESTED,test_source_mutation_detected_in_child_replay
+CORE,Input and output engine SHA-256 pinning,P0,LAB_TESTED,test_sqlite_append_only_and_snapshot_tamper_detection
+CORE,Append-only research finance snapshots,P0,LAB_TESTED,test_sqlite_append_only_and_snapshot_tamper_detection
+CORE,Unique benefit key per organization,P0,LAB_TESTED,test_full_http_pack_review_and_role_isolation
+CORE,Unique handoff source bundle per organization and programme,P0,LAB_TESTED,test_full_http_pack_review_and_role_isolation
+CORE,Auditor-only independent replay permission,P0,LAB_TESTED,test_full_http_pack_review_and_role_isolation
+HYDRO,Uncalibrated lower-point-upper forecast envelope,P0,LAB_TESTED,test_routed_ensemble_is_uncalibrated_and_does_not_optimise_production
+HYDRO,No future actuals enter flow calculation,P0,LAB_TESTED,test_hydrological_actuals_cannot_leak_into_routing
+HYDRO,Enforce contiguous UTC time steps,P0,LAB_TESTED,test_routing_forecast_requires_contiguous_timeline
+HYDRO,Mass-conserving linear routing tank,P0,LAB_TESTED,test_routing_mass_conservation_and_physical_bounds
+HYDRO,Scientific routing and reservoir-curve calibration,P0,FIELD_DATA_BLOCKED,Requires authorized river data and hydrological expertise
+HYDRO,Actual water-use regulations and ecology gates,P0,FIELD_DATA_BLOCKED,Requires documents from operating company
+CASCADE,Apply cascade release and storage limits per timestep,P0,LAB_TESTED,test_routed_ensemble_is_uncalibrated_and_does_not_optimise_production
+CASCADE,Use physical station characteristics and restrictions,P0,FIELD_DATA_BLOCKED,Needs certified curves and independent expert
+TURBINE,Retain technical anomaly separate from risk probability,P0,LAB_TESTED,test_full_http_pack_review_and_role_isolation
+TURBINE,Confirm real defects and maintenance events,P0,FIELD_DATA_BLOCKED,Needs licensed maintenance data
+TURBINE,Actual labor-and-logistics supplier quote evidence,P1,FIELD_DATA_BLOCKED,Requires real invoices and procurement timelines
+GRID,Reproduce synthetic AC feeder losses,P0,INHERITED_LAB_TESTED,test_radial_and_finance.py
+GRID,Compare with external industrial network solver,P0,FIELD_DATA_BLOCKED,Independent electric engineer and site data
+HEAT,Reproduce synthetic steady-state heat loss and costs,P1,INHERITED_LAB_TESTED,test_programme.py
+HEAT,Calibrate genuine heat network hydraulic model,P0,FIELD_DATA_BLOCKED,Owner schematic and licensed flow data
+CAPEX,Single WBS capital outflow source,P0,LAB_TESTED,test_financial_wbs_only_one_capex_source_and_no_grant_income
+CAPEX,Annual cash flow model with independent assumptions,P0,LAB_TESTED,test_financial_wbs_only_one_capex_source_and_no_grant_income
+CAPEX,Three ordered financial sensitivities,P0,LAB_TESTED,test_finance_blocks_bad_annual_assumptions_and_budget_breaches
+CAPEX,Negative NPV is returned without artificial positivity,P0,LAB_TESTED,test_financial_wbs_only_one_capex_source_and_no_grant_income
+CAPEX,Yearly capital budget and dependency checks,P0,LAB_TESTED,test_finance_blocks_bad_annual_assumptions_and_budget_breaches
+CAPEX,No zeroing out annual cost when benefits absent,P0,LAB_TESTED,test_expenses_in_zero_revenue_years_are_not_dropped
+CAPEX,Tariff regulated cash flows and independent construction estimates,P0,FIELD_DATA_BLOCKED,Finance and legal owner signoff required
+CONSTRUCTION,Site geocryology and geotechnical permits mapping,P0,DESIGNED_ONLY,No permitted site-specific surveys
+CONSTRUCTION,Link design drawings and as-built WBS,P1,DESIGNED_ONLY,"CAD/BIM rights, source engineering documents"
+SECURITY,PostgreSQL 17 RLS migration 100,P0,DESIGNED_NOT_NATIVE_TESTED,server/migrations/100_assurance_pack_v76.sql
+SECURITY,PostgreSQL restore and concurrent transaction QA,P0,NOT_ACCEPTED,server/tests_v71/test_postgres_native.py
+SECURITY,Production OIDC IdP and MFA,P0,NOT_CONNECTED,Needs customer-approved identity provider
+SECURITY,WORM external audited retention and receipts,P0,NOT_CONNECTED,Needs permitted object store and legal policy
+UI,V76 analyst dossier creation and auditor replay screen,P1,STATIC_TESTED_ONLY,scripts/qa_browser_v76.py; browser HTTP blocked
+UI,End-to-end browser login and walkthrough,P0,NOT_ACCEPTED,ERR_BLOCKED_BY_ADMINISTRATOR
+REGULATORY,Determine applicability of 117-FZ 187-FZ and construction norms,P0,LEGAL_REVIEW_REQUIRED,Owner counsel and engineering approval
+PILOT,"Confirm Magadan site, owner and data authorization",P0,FIELD_DATA_BLOCKED,No direct access to corporate assets
+PILOT,Independent engineering/finance signoff,P0,FIELD_DATA_BLOCKED,Independent domain specialists required

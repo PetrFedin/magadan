@@ -1,0 +1,106 @@
+{
+  "release": "V7.5-LAB",
+  "date": "2026-10-23",
+  "production_status": "HOLD",
+  "environment": {
+    "database_backend_tested": "SQLite laboratory",
+    "postgresql17_available": false,
+    "real_oidc_idp_connected": false,
+    "external_worm_connected": false,
+    "real_magadan_field_data": false,
+    "independent_engineer_signed_off": false
+  },
+  "tests": {
+    "python_regression": {
+      "status": "PASS",
+      "passed": 191,
+      "excluded_native_postgres": true,
+      "excluded_browser_e2e": true,
+      "log": "artifacts_v75/python_results.txt"
+    },
+    "javascript_regression": {
+      "status": "PASS",
+      "passed": 63,
+      "log": "artifacts_v75/node_results.txt"
+    },
+    "http_synthetic_showcase": {
+      "status": "PASS",
+      "original_modules": 6,
+      "numerical_handoffs": 2,
+      "hydrology_replay": true,
+      "maintenance_replay": true,
+      "parent_models_replay": true,
+      "audit_chain_verified": true,
+      "file": "artifacts_v75/showcase_v75.json"
+    },
+    "static_visual": {
+      "status": "PASS",
+      "widths": [
+        1440,
+        768,
+        375
+      ],
+      "horizontal_overflow": false,
+      "browser_api_e2e": "NOT_TESTED"
+    },
+    "native_postgres": {
+      "status": "BLOCKED",
+      "raw_marker": "NATIVE_ACCEPTANCE_BLOCKED",
+      "error_collection_exit_code": 2,
+      "log": "artifacts_v75/native_pg_results.txt"
+    }
+  },
+  "features": {
+    "total": 149,
+    "by_status": {
+      "LAB_IMPLEMENTED": 80,
+      "NOT_ACCEPTED": 20,
+      "PLANNED": 40,
+      "DESIGNED_UNACCEPTED": 3,
+      "BLOCKED_NOT_CONNECTED": 2,
+      "BLOCKED_FIELD_DATA": 3,
+      "BLOCKED_NOT_ACCEPTED": 1
+    },
+    "industrial_accepted": 0
+  },
+  "api": {
+    "paths": 44,
+    "operations": 54,
+    "lab_only": true
+  },
+  "calculated_laboratory_example": {
+    "hydrology_energy_mwh": 6992.568,
+    "wbs_rub": "1600000.00",
+    "maintenance_options": [
+      {
+        "action": "inspection",
+        "assumed_downtime_cost_rub": "6000.00",
+        "direct_expenditure_rub": "50000.00",
+        "lead_time_days": 7,
+        "option_id": "inspection",
+        "source_ref": "SYNTHETIC-INSPECTION-PRICE-V75",
+        "total_direct_plus_downtime_rub": "56000.00"
+      },
+      {
+        "action": "repair",
+        "assumed_downtime_cost_rub": "42000.00",
+        "direct_expenditure_rub": "230000.00",
+        "lead_time_days": 45,
+        "option_id": "repair",
+        "source_ref": "SYNTHETIC-REPAIR-PRICE-V75",
+        "total_direct_plus_downtime_rub": "272000.00"
+      }
+    ],
+    "currency": "RUB",
+    "source": "SYNTHETIC"
+  },
+  "gates": {
+    "NATIVE_PG_RLS": "BLOCKED",
+    "CORPORATE_OIDC_MFA": "NOT_CONNECTED",
+    "EXTERNAL_WORM": "NOT_CONNECTED",
+    "INDEPENDENT_ENGINEERING": "NOT_DONE",
+    "FIELD_DATA_RIGHTS": "NOT_GRANTED",
+    "BROWSER_E2E": "NOT_ACCEPTED",
+    "PRODUCTION_RELEASE": "HOLD"
+  }
+}

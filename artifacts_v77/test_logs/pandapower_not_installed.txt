@@ -1,0 +1,1 @@
+PANDAPOWER_NOT_INSTALLED: use a separate approved engineering environment; no external result created
