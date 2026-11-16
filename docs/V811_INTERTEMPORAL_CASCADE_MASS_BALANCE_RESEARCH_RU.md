@@ -89,7 +89,7 @@
 ## 6. Код, тесты и воспроизведение
 
 - `server/hydro_api/intertemporal_cascade_v811.py`: модель `SyntheticCascade`, `HourlyPlan`, `Reservoir`, функции `simulate_synthetic_cascade` и `compare_synthetic_travel_delays`.
-- `server/tests_v811/test_intertemporal_cascade_v811.py`: **39/39 PASS**, Python 3.13 / Pydantic 2 / pytest; негативные тесты на будущую воду, повторное списание, срок прибытия, лимиты запаса, неверные подписи источников и временные отметки, сохранение массы при разной продолжительности.
+- `server/tests_v811/test_intertemporal_cascade_v811.py`: **39/39 PASS**, Python 3.13 / Pydantic 2 / pytest; негативные тесты на будущую воду, повторное списание, срок прибытия, лимиты запаса, недопустимые статусы подтверждения прав и неверные временные отметки, сохранение массы при разной продолжительности.
 - `.github/workflows/v811-intertemporal-cascade.yml`: source-pinned workflow с требованием **39 PASS / 0 SKIP** и поимёнными контрольными кейсами.
 
 ```bash
