@@ -1,0 +1,79 @@
+name: HydroKontur V8.11 Causal Two-Reservoir Water Balance (SYNTHETIC ONLY)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/v811-intertemporal-cascade.yml'
+      - 'server/hydro_api/intertemporal_cascade_v811.py'
+      - 'server/tests_v811/**'
+      - 'server/requirements-v71.txt'
+      - 'scripts/v84_junit_gate.py'
+      - 'docs/V811_INTERTEMPORAL_CASCADE_MASS_BALANCE_RESEARCH_RU.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v811-exact-sha-synthetic-mass-conservation:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact source SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check exact checkout before test
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Install synthetic QA dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Execute 39 synthetic intertemporal mass balance regression cases
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 420s \
+            python -m pytest -q -ra -o xfail_strict=true --maxfail=1 \
+            server/tests_v811 --junitxml=/tmp/v811-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v811-junit.xml \
+            --shard v811-synthetic-intertemporal-cascade \
+            --min-passed 39 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_instant_and_delayed_same_total_energy_but_different_first_hour \
+            --require-case test_impossible_early_release_of_future_upstream_water_is_rejected \
+            --require-case test_pipeline_mass_remains_at_horizon_boundary \
+            --require-case test_historical_in_transit_water_is_counted_as_initial_state \
+            --require-case test_post_validation_hack_cannot_bypass_real_rights \
+            --require-case test_full_contract_never_approves_grid_or_hydraulic_calibration
+          sha256sum /tmp/v811-junit.xml
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Explicit research-only integrity and release boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          source = Path('server/hydro_api/intertemporal_cascade_v811.py').read_text()
+          for assertion in (
+              '"real_available_capacity_mw": None',
+              '"production_ready": False',
+              '"real_travel_time_calibrated": False',
+              '"probabilistic_lole_or_eens_calculated": False',
+              '"independently_certified_n1": False',
+          ):
+              assert assertion in source, assertion
+          print('SYNTHETIC_MASS_BALANCE_ONLY; NO_REAL_OPERATOR_OR_CAPACITY_CLAIMS')
+          PY
