@@ -94,6 +94,15 @@
       "class": "RESEARCH-DATA-PORTAL"
     },
     {
+      "source_ref": "SRC-RARCTICNET-V40-ALLDATA",
+      "title_ru": "R-ArcticNET v4.0 AllData: Anadyr_and_Kolyma_Data_m3_s.txt — месячный сток, файл с SHA-256 c2cad85039b3163fa59bea51ce2ca8ac026aa4ffaf62f1610a6a43f73a4ce4f0 хранится в data/r-arcticnet/",
+      "publisher": "University of New Hampshire, Water Systems Analysis Group (первичные данные: Росгидромет/СГИ)",
+      "url": "https://www.r-arcticnet.sr.unh.edu/v4.0/AllData/Anadyr_and_Kolyma_Data_m3_s.txt",
+      "published": null,
+      "accessed": "2026-11-16",
+      "class": "RESEARCH-DATA-PORTAL"
+    },
+    {
       "source_ref": "SRC-PMC-ARCTICGRO-KOLYMA",
       "title_ru": "Degrading permafrost river catchments and their impact on Arctic Ocean (Kolyma discharge trends, ArcticGRO)",
       "publisher": "PMC / Wiley",
@@ -223,9 +232,13 @@
       "rarcticnet_station_id": {"value": "5858", "unit": null, "source_ref": "SRC-RARCTICNET-5858"},
       "coordinates": {"value": "62.43N, 152.3E", "unit": null, "source_ref": "SRC-RARCTICNET-5858"},
       "drainage_area_km2": {"value": 99400, "unit": "км²", "source_ref": "SRC-RARCTICNET-5858"},
-      "record_monthly": {"value": "1936-01..1988-12", "unit": null, "source_ref": "SRC-RARCTICNET-5858"},
-      "mean_annual_discharge_m3s": {"value": 556, "unit": "м³/с", "source_ref": "SRC-RARCTICNET-5858", "notes_ru": "Вычислено как среднее из климатологии среднемесячных расходов R-ArcticNET; производная величина, не прямая публикация."},
-      "mean_annual_runoff_km3": {"value": 17.5, "unit": "км³/год", "source_ref": "SRC-RARCTICNET-5858", "notes_ru": "Производная: 556 м³/с × 31,536 млн с."}
+      "record_monthly": {"value": "1933-01..2000-09 (файл v4.0; 2000 неполный; полных лет 67: 1933-1999)", "unit": null, "source_ref": "SRC-RARCTICNET-V40-ALLDATA", "notes_ru": "Расхождение портала зафиксировано, не усреднено: station.cgi указывает архив 1936-01..1988-12, климатологический график подписан 1936-2000, файл v4.0 содержит 1933-2000. Рабочим считается файл v4.0 с зафиксированным SHA-256."},
+      "mean_annual_discharge_m3s": {"value": 728.2, "unit": "м³/с", "source_ref": "SRC-RARCTICNET-V40-ALLDATA", "notes_ru": "Производная: среднее годовых значений 67 полных лет 1933-1999 из файла v4.0. Согласуется с климатологическим графиком станции (~731 м³/с за 1936-2000). Ранее зафиксированная оценка 556 м³/с была ошибочной (неверное чтение графика) и исправлена в V9.2."},
+      "mean_annual_runoff_km3": {"value": 23.0, "unit": "км³/год", "source_ref": "SRC-RARCTICNET-V40-ALLDATA", "notes_ru": "Производная: 728,2 м³/с × 31,536 млн с."},
+      "annual_discharge_min_m3s": {"value": 351.9, "unit": "м³/с (1949)", "source_ref": "SRC-RARCTICNET-V40-ALLDATA"},
+      "annual_discharge_max_m3s": {"value": 1092.7, "unit": "м³/с (1978)", "source_ref": "SRC-RARCTICNET-V40-ALLDATA"},
+      "annual_discharge_cv": {"value": 0.226, "unit": "доля", "source_ref": "SRC-RARCTICNET-V40-ALLDATA", "notes_ru": "Коэффициент вариации годового стока, 1933-1999."},
+      "monthly_climatology_m3s": {"value": [62.0, 62.2, 54.9, 48.4, 965.0, 2967.0, 1634.6, 1441.1, 1028.5, 268.7, 120.6, 85.5], "unit": "м³/с, янв..дек", "source_ref": "SRC-RARCTICNET-V40-ALLDATA", "notes_ru": "Производная: среднемесячные по 67 полным годам 1933-1999. Июньский пик ~2967 м³/с, межень ~50-90 м³/с."}
     },
     "basin_scale_findings": {
       "mean_annual_discharge_at_kolymskoe_baseline_1971_2000_km3": {"value": 94.6, "unit": "км³/год", "source_ref": "SRC-PMC-ARCTICGRO-KOLYMA"},

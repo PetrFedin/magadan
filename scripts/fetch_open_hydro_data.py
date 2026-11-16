@@ -27,14 +27,25 @@ UA = {"User-Agent": "magadan-hydrokontur-research/9.0 (scientific, non-commercia
 # Верифицированные станции Колымы (R-ArcticNET / ArcticRIMS)
 STATIONS = [
     {"rims_id": "5858", "code": "1010", "name": "Kolyma at Ust'-Srednekan",
-     "note": "створ у Колымского каскада; месячный архив 1936-01..1988-12"},
+     "note": "створ у Колымского каскада; в файле v4.0 ряд 1933-01..2000-09 (67 полных лет)"},
     {"rims_id": "5855", "code": None, "name": "Kolyma at Orotuk",
      "note": "следующий апстрим-створ"},
     {"rims_id": "5951", "code": None, "name": "Kolyma downstream of Ust'-Srednekan",
      "note": "следующий даунстрим-створ"},
 ]
 
-# Кандидаты прямых файловых URL (структура ArcticRIMS может меняться;
+# ТОЧНО верифицированные файлы (URL + ожидаемый SHA-256, скачано и сверено 16.11.2026).
+# Несовпадение хэша => отказ (fail-closed), а не тихое использование.
+VERIFIED_DOWNLOADS = [
+    {
+        "url": "https://www.r-arcticnet.sr.unh.edu/v4.0/AllData/Anadyr_and_Kolyma_Data_m3_s.txt",
+        "filename": "Anadyr_and_Kolyma_Data_m3_s.txt",
+        "sha256": "c2cad85039b3163fa59bea51ce2ca8ac026aa4ffaf62f1610a6a43f73a4ce4f0",
+        "note": "R-ArcticNET v4.0: месячный сток всех постов бассейнов Анадыря и Колымы (включая створ 5858 Усть-Среднекан)",
+    },
+]
+
+# Кандидаты прямых файловых URL постов (структура ArcticRIMS может меняться;
 # скрипт перебирает и честно сообщает, что сработало)
 MONTHLY_URL_CANDIDATES = [
     "https://rims.unh.edu/data/station/monthly/{sid}.txt",
@@ -70,6 +81,32 @@ def main() -> int:
         "files": [],
         "failed": [],
     }
+    for vd in VERIFIED_DOWNLOADS:
+        url = vd["url"]
+        print(f"[..] проверенный файл: {url}")
+        got = _try_download(url)
+        if got is None:
+            manifest["failed"].append({"url": url, "instruction": "повторите вручную; файл также индексируется с https://www.r-arcticnet.sr.unh.edu/v4.0/AllData/index.html"})
+            print("[FAIL] недоступен")
+            continue
+        digest = hashlib.sha256(got).hexdigest()
+        if digest != vd["sha256"]:
+            manifest["failed"].append({"url": url, "sha256_actual": digest,
+                                       "instruction": "SHA-256 не совпал с зафиксированным — файл НЕ используется (fail-closed)"})
+            print(f"[FAIL-CLOSED] SHA-256 {digest[:12]}… != ожидаемого; файл отклонён")
+            continue
+        (out / vd["filename"]).write_bytes(got)
+        manifest["files"].append({
+            "source_id": "OPEN-RARCTICNET-V40-ANADYR-KOLYMA-MONTHLY",
+            "url": url,
+            "filename": vd["filename"],
+            "sha256": digest,
+            "bytes": len(got),
+            "note": vd["note"],
+            "license": "научное использование с цитированием R-ArcticNET (Lammers et al., 2001, JGR)",
+        })
+        print(f"[OK] {len(got):>10} байт -> {vd['filename']} (SHA-256 совпал)")
+
     for st in STATIONS:
         sid = st["rims_id"]
         got = None
