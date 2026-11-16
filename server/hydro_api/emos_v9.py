@@ -51,6 +51,14 @@ _MAX_ITER = 4000
 _FTOL = 1e-10
 _XTOL = 1e-8
 _SIGMA_FLOOR = 1e-6  # защита от вырождения в лог-шкале
+_LOG_FLOOR = -700.0  # exp(-700) ~ 1e-304 > 0: конструктивная положительность
+                     # c,d при глубоко отрицательных g0,g1 (почти детерминированный
+                     # остаток) — иначе exp() андерфлоу в 0.0 и pydantic gt=0 падает;
+                     # на сходимость не влияет: sigma всё равно ограничена снизу.
+
+
+def _exp_pos(x: float) -> float:
+    return math.exp(max(x, _LOG_FLOOR))
 
 
 class EMOSFit(BaseModel):
@@ -161,7 +169,7 @@ def _quantiles_from_theta(theta: List[float], mb: float, s2: float, m: int) -> L
     """m равновероятных квантилей логнормали на исходной шкале (м³/с)."""
     a, b, g0, g1 = theta
     mu = a + b * mb
-    sigma = math.sqrt(math.exp(g0) + math.exp(g1) * s2)
+    sigma = math.sqrt(_exp_pos(g0) + _exp_pos(g1) * s2)
     dist = NormalDist(mu=mu, sigma=sigma)
     return [math.exp(dist.inv_cdf((i + 0.5) / m)) for i in range(m)]
 
@@ -206,7 +214,7 @@ def fit_emos_log(
     if objective == "log":
         def objective_fn(theta: List[float]) -> float:
             a, b, g0, g1 = theta
-            c, d = math.exp(g0), math.exp(g1)
+            c, d = _exp_pos(g0), _exp_pos(g1)
             total = 0.0
             for y, (mb, s2) in zip(y_log, stats):
                 sigma2 = c + d * s2
@@ -231,7 +239,7 @@ def fit_emos_log(
     a, b, g0, g1 = best
     return EMOSFit(
         objective=objective,
-        a=a, b=b, c=math.exp(g0), d=math.exp(g1),
+        a=a, b=b, c=_exp_pos(g0), d=_exp_pos(g1),
         n_pairs=len(train_obs), train_mean_crps=f_best,
         converged=True, n_iterations=n_iter,
     )
