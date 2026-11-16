@@ -1,7 +1,7 @@
 # ГИДРОКОНТУР 360 — МАГАДАН
 
 **Статус: SYNTHETIC RESEARCH LAB · PRODUCTION HOLD.**
-**Версия: 8.11.0 (SemVer, см. [CHANGELOG.md](CHANGELOG.md)).**
+**Версия: 9.0.0 (SemVer, см. [CHANGELOG.md](CHANGELOG.md)).**
 
 ГИДРОКОНТУР 360 — воспроизводимая инженерно-экономическая исследовательская платформа для задач энергетики Магаданской области и возможного обсуждения НИОКР с Группой «РусГидро». Упоминание «РусГидро» **не означает** согласования, финансирования, партнёрства или доступа к данным компании. Все данные в репозитории синтетические; реальные измерения, права на данные, независимая инженерная экспертиза и production-допуск — на статусе HOLD (см. issues #1–#4, #6, #18).
 
@@ -9,10 +9,10 @@
 
 | Модуль | Содержание | Зрелость* |
 |---|---|---|
-| HydroForecast | Суточный прогноз стока, rolling-origin backtest, полоса неопределённости, контроль утечки будущего | 2 |
+| HydroForecast | Суточный прогноз стока, rolling-origin backtest, полоса неопределённости, контроль утечки будущего; русловая трансформация Маскингама—Кунджа; вероятностная верификация (CRPS, PIT, покрытие) | 3 |
 | CascadeEconomics | Водный баланс двух водохранилищ, лаг добегания, кривые уровней/КПД, точный интеграл энергии | 2 |
-| TurbineReliability | Контракт (аномалии, экономика обслуживания); кодовое ядро не реализовано | 0 |
-| GridLoss Planner | Двухузловая AC-модель с двойным численным/алгебраическим контролем, потери I²R | 2 |
+| TurbineReliability | Зоны вибрации ISO 20816-5, Weibull MLE с цензурированием, экономика обслуживания E[C] с принудительным HOLD | 2 |
+| GridLoss Planner | Двухузловая AC-модель с двойным контролем + многоузловой Newton–Raphson с внешним бенчмарком pandapower на IEEE 33-bus | 4 |
 | HeatNet Economics | Тепловой баланс Q̇=ṁ·cp·ΔT | 1 |
 | HydroCAPEX | WBS/CBS, CAPEX/OPEX, NPV, реестр эффектов с защитой от двойного учёта по физическим границам | 2 |
 
@@ -21,6 +21,8 @@
 ## Навигация
 
 - **[Технический аудит и программа развития (16.11.2026)](docs/TECH_AUDIT_2026-11-16_RU.md)** — что есть, чего нет, что развивать
+- [V9: открытые научные модули — методология и верификация](docs/V9_OPEN_SCIENCE_MODULES_RU.md)
+- [Досье открытых данных Колымы (R-ArcticNET/GRDC/GSIM/ArcticGRO/ERA5-Land)](docs/V9_OPEN_DATA_DOSSIER_RU.md)
 - [Карта всей документации](docs/INDEX.md)
 - [Архитектура](docs/ARCHITECTURE.md) · [Математика и финансы](docs/MATHEMATICS_FINANCE.md) · [Гейты приёмки](docs/ACCEPTANCE_GATES.md) · [Правила GitHub](docs/GOVERNANCE.md)
 - [План консолидации (issue #19)](https://github.com/PetrFedin/magadan/issues/19)
@@ -31,6 +33,7 @@
 ```bash
 python -m pip install -r server/requirements.txt
 PYTHONPATH=server python -m pytest -q server/tests_v83        # пример: регресс каскада
+PYTHONPATH=server python -m pytest -q server/tests_v9         # V9: NR-сети, Маскингам, CRPS/PIT, Weibull
 python scripts/reproduce_v83.py                                # воспроизведение сценариев
 node --check server/ui/ui.js && (cd v6-client && npm test)     # JS-часть
 ```
