@@ -261,4 +261,3 @@ def compare_synthetic_travel_delays(instant: SyntheticCascade,
         "investment_decision": "HOLD",
         "production_ready": False,
     }
-
