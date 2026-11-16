@@ -29,8 +29,8 @@ def test_sql_tenant_rls_schema_and_research_only_gates():
 
 def test_migration_order_and_native_acceptance_blocked_by_default():
     paths=sorted((ROOT/'migrations').glob('[0-9]*.sql'))
-    assert paths[-1].name=='150_boundary_graph_v8.sql'
-    assert [p.name.split('_')[0] for p in paths]==['001','010','020','030','040','050','060','070','080','090','100','110','120','130','140','150']
+    assert paths[-1].name=='160_boundary_claim_serialization_v81.sql'
+    assert [p.name.split('_')[0] for p in paths]==['001','010','020','030','040','050','060','070','080','090','100','110','120','130','140','150','160']
     native=(ROOT/'tests_v71'/'test_postgres_native.py').read_text()
     assert 'NATIVE_ACCEPTANCE_BLOCKED' in native
     assert 'test_v76_native_assurance' in native

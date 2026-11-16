@@ -8,15 +8,15 @@ INSERT INTO hk_private.policy(singleton,require_compliance) VALUES(true,true);
 
 CREATE FUNCTION hk_security.audit_ready(p_org text) RETURNS boolean
 LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path=pg_catalog AS $$
-DECLARE strict boolean;
+DECLARE v_require_compliance boolean;
 BEGIN
  IF NOT hk_security.allowed(p_org) THEN RETURN false; END IF;
- SELECT require_compliance INTO strict FROM hk_private.policy WHERE singleton;
+ SELECT require_compliance INTO v_require_compliance FROM hk_private.policy WHERE singleton;
  RETURN EXISTS(SELECT 1 FROM public.audit_events WHERE org_id=p_org) AND NOT EXISTS (
   SELECT 1 FROM public.audit_events e LEFT JOIN public.audit_outbox q ON q.event_id=e.id
   LEFT JOIN public.audit_receipts r ON r.event_id=e.id
   WHERE e.org_id=p_org AND (q.delivered_at IS NULL OR r.event_id IS NULL OR r.event_hash<>e.event_hash
-    OR (strict AND (r.receipt->'receipt'->>'retention_mode') IS DISTINCT FROM 'COMPLIANCE')
+    OR (v_require_compliance AND (r.receipt->'receipt'->>'retention_mode') IS DISTINCT FROM 'COMPLIANCE')
     OR (r.receipt->'receipt'->>'retention_until')::timestamptz<=statement_timestamp())
  );
 END $$;

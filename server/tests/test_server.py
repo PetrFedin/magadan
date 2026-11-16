@@ -289,14 +289,49 @@ def test_local_seed_runs_from_empty_database_and_refuses_second_seed(tmp_path):
     db_path=tmp_path/'new-lab-seed.db'
     environment={**os.environ,'HYDRO_ALLOW_DEMO_SEED':'YES','HYDRO_DATABASE_URL':'sqlite:///'+str(db_path),
                  'PYTHONPATH':str(root)}
-    p=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True)
+    p=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True,timeout=60)
     assert p.returncode==0,p.stderr
     eng,Factory=setup_engine('sqlite:///'+str(db_path))
     with Factory() as db:
         assert db.scalar(select(func.count()).select_from(Organization))==1
-        assert db.scalar(select(func.count()).select_from(Asset))==1
+        assert db.scalar(select(func.count()).select_from(Asset))==3
+        assert set(db.scalars(select(Asset.id)).all())=={
+            'synthetic-feeder-a',
+            'synthetic-cascade-upper',
+            'synthetic-cascade-lower',
+        }
         assert db.scalar(select(func.count()).select_from(User))==7
         assert db.scalar(select(func.count()).select_from(Membership))==7
     eng.dispose()
-    rerun=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True)
+    rerun=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],cwd=root,env=environment,capture_output=True,text=True,timeout=60)
     assert rerun.returncode==2 and 'not empty' in rerun.stderr
+
+
+def test_local_seed_rejects_partial_existing_user_database(tmp_path):
+    """A nonempty user table must block seed even if the org table is empty."""
+    import os, subprocess, sys
+    from pathlib import Path
+    from sqlalchemy import func
+    from hydro_api.storage import setup_engine, User, Organization, Asset
+    root=Path(__file__).resolve().parents[1]
+    filename=tmp_path/'partial-seed-v85.db'
+    url='sqlite:///'+str(filename)
+    eng,Factory=setup_engine(url)
+    with Factory() as db:
+        db.add(User(email='partial-user@lab.invalid',
+                    password_hash='SYNTHETIC-BLOCKER-NOT-A-REAL-HASH'))
+        db.commit()
+    eng.dispose()
+    environment={**os.environ,'HYDRO_ALLOW_DEMO_SEED':'YES',
+                 'HYDRO_DATABASE_URL':url,'PYTHONPATH':str(root)}
+    process=subprocess.run([sys.executable,'-m','hydro_api.seed_lab'],
+                           cwd=root,env=environment,
+                           capture_output=True,text=True,timeout=60)
+    assert process.returncode==2,process.stdout+process.stderr
+    assert 'not empty' in process.stderr
+    eng,Factory=setup_engine(url)
+    with Factory() as db:
+        assert db.scalar(select(func.count()).select_from(User))==1
+        assert db.scalar(select(func.count()).select_from(Organization))==0
+        assert db.scalar(select(func.count()).select_from(Asset))==0
+    eng.dispose()

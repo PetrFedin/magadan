@@ -14,6 +14,6 @@ def test_studies_table_protected_by_native_policy_and_immutable_trigger():
 
 def test_migrations_are_monotonically_ordered_and_no_drop_statements():
     paths=sorted(ROOT.glob('[0-9]*.sql'))
-    assert paths[-1].name=='150_boundary_graph_v8.sql'
+    assert paths[-1].name=='160_boundary_claim_serialization_v81.sql'
     for p in paths:
         assert 'DROP TABLE' not in p.read_text().upper()

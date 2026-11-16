@@ -19,6 +19,7 @@ async function api(path,method='GET',body=null){
 function selected(id){return el(id).value}
 function choices(id,items,toTitle,choose){const sel=el(id),prior=sel.value;sel.replaceChildren();for(const row of items){let op=document.createElement('option');op.value=row.id;op.textContent=toTitle(row);sel.append(op)}if(items.some(v=>v.id===prior))sel.value=prior;else if(choose)sel.value=choose;}
 function own(){if(!org)throw Error('Укажите организацию');return '/v7/orgs/'+encodeURIComponent(org)}
+el('create-initiative').disabled=true;
 const sample={source_voltage_kv_ll:20,load_p_mw:5,load_q_mvar:2,line_r_ohm_per_phase:.3,line_x_ohm_per_phase:.4,period_hours:100,reference_name:'Synthetic Magadan research feeder — NOT physical network'};
 async function refresh(){
   if(!org)return;const base=own(), requestOrg=org, generation=++refreshGeneration;
@@ -31,6 +32,7 @@ async function refresh(){
   choices('attached-evidence',evidences.filter(x=>x.status==='accepted'),x=>x.kind+' — '+x.id.slice(0,8));
   choices('model-list',models,x=>x.algorithm+' — '+x.status+' — '+x.id.slice(0,8));
   choices('run-list',runs,x=>x.reference_name+' — '+x.id.slice(0,8));
+  el('create-initiative').disabled=runs.length===0;
   choices('initiative-list',initiatives,x=>x.title+' — '+x.state);
   updateTransition();
   await refreshStudies();
@@ -42,11 +44,13 @@ async function refresh(){
   await refreshV78();
   await refreshV79();
   await refreshV8();
+  refreshV82();
+  refreshV83();
 }
 function updateTransition(){const i=initiatives.find(x=>x.id===selected('initiative-list'));const s=el('next-state');s.replaceChildren();if(i&&follow[i.state]){const op=document.createElement('option');op.value=follow[i.state];op.textContent=follow[i.state]+' · revision '+i.revision;s.append(op)}}
 async function perform(fn){try{await fn();await refresh()}catch(e){info(e.message,true)}}
-el('login-form').addEventListener('submit',async e=>{e.preventDefault();try{const fd=new FormData(e.target);const t=await api('/v7/auth/login','POST',{email:fd.get('email'),password:fd.get('password')});token=t.access_token;who=await api('/v7/me');el('identity').textContent=who.email;el('auth-card').hidden=true;el('session').hidden=false;el('lab').hidden=false;el('login-result').textContent='';const sel=el('org');sel.replaceChildren();for(const m of who.organizations){const opt=document.createElement('option');opt.value=m.org_id;opt.textContent=m.org_id+' ('+m.role+')';sel.append(opt)}org=sel.value;el('role-info').textContent='Серверные роли: '+who.organizations.map(x=>x.org_id+':'+x.role).join(', ');el('payload').value=JSON.stringify(sample,null,2);await refresh();info('Подключено к серверу. Лабораторные входные данные синтетические.')}catch(e){token=null;info(e.message,true)}});
-el('logout').addEventListener('click',async()=>{try{if(token || authMode==='oidc')await api('/v7/auth/logout','POST',{})}catch(e){info(e.message,true);return;}token=null;who=null;org=null;el('lab').hidden=true;el('session').hidden=true;el('auth-card').hidden=false;el('login-form').reset();info('Выход выполнен. Для новой роли нужен новый вход с отдельной учётной записью.')});
+el('login-form').addEventListener('submit',async e=>{e.preventDefault();try{const fd=new FormData(e.target);const t=await api('/v7/auth/login','POST',{email:fd.get('email'),password:fd.get('password')});token=t.access_token;who=await api('/v7/me');el('identity').textContent=who.email;el('auth-card').hidden=true;el('session').hidden=false;el('login-result').textContent='';const sel=el('org');sel.replaceChildren();for(const m of who.organizations){const opt=document.createElement('option');opt.value=m.org_id;opt.textContent=m.org_id+' ('+m.role+')';sel.append(opt)}org=sel.value;el('role-info').textContent='Серверные роли: '+who.organizations.map(x=>x.org_id+':'+x.role).join(', ');el('payload').value=JSON.stringify(sample,null,2);await refresh();el('lab').hidden=false;info('Подключено к серверу. Лабораторные входные данные синтетические.')}catch(e){token=null;info(e.message,true)}});
+el('logout').addEventListener('click',async()=>{try{if(token || authMode==='oidc')await api('/v7/auth/logout','POST',{})}catch(e){info(e.message,true);return;}token=null;who=null;org=null;el('v88-case').value='';resetV88Result();el('lab').hidden=true;el('session').hidden=true;el('auth-card').hidden=false;el('login-form').reset();info('Выход выполнен. Для новой роли нужен новый вход с отдельной учётной записью.')});
 el('org').addEventListener('change',()=>perform(async()=>{org=el('org').value;clearTenantView();await refresh();info('Контекст переключён на '+org+'; права проверяются сервером')}));
 el('fill-sample').addEventListener('click',()=>{el('kind').value='grid_input';el('source_ref').value='SYNTHETIC-REFERENCE-CASE-2026';el('payload').value=JSON.stringify(sample,null,2);info('Загружен только синтетический эталон; реальные параметры сетей отсутствуют.')});
 el('create-evidence').addEventListener('click',()=>perform(async()=>{const body={asset_id:selected('asset'),kind:selected('kind'),source_ref:el('source_ref').value,payload:JSON.parse(el('payload').value)};const x=await api(own()+'/evidence','POST',body);info('Документ добавлен: '+x.id+'. Статус: '+x.status)}));
@@ -64,6 +68,7 @@ el('verify-audit').addEventListener('click',()=>perform(async()=>{const x=await 
 function clearTenantView(){
   refreshGeneration++;
   assets=[];evidences=[];models=[];runs=[];initiatives=[];
+  el('create-initiative').disabled=true;
   studyRuns=[];radialRuns=[];radialDossiers=[];researchProgrammes=[];researchHandoffs=[];assurancePacks=[];annualDossiers78=[];
   for(const id of ['handoff-left','handoff-right','handoff-programme','handoff-list','programme-study-ids','programme-finance-ids','programme-list','radial-asset','radial-baseline','radial-alternative','radial-dossier-list'])el(id).replaceChildren();
   for(const id of ['study-run-list','study-left','study-right','study-asset'])el(id).replaceChildren();
@@ -78,6 +83,12 @@ function clearTenantView(){
   el('v79-output').textContent='';el('v79-mv-output').textContent='';
   for(const id of ['v8-boundary-asset','v8-boundary-map','v8-overlap-a','v8-overlap-b','v8-parent'])el(id).replaceChildren();
   el('v8-boundary-output').textContent='';
+  el('v88-case').value='';resetV88Result();
+  el('v82-plot').replaceChildren();
+  el('v82-output').textContent='';
+  el('v82-assessment').textContent='Новый контекст: исходные расчёты очищены.';
+  for(const id of ['v82-mae','v82-rmse','v82-coverage','v82-point'])el(id).textContent='—';
+  el('v82-case').value='';
 async function restoreCorporateSession(){
   who=await api('/v7/me');
   el('identity').textContent=who.email;
@@ -662,4 +673,245 @@ el('v8-mv-quality').addEventListener('click',()=>perform(async()=>{
   const res=await api(v8Root()+'/measurement-screens/'+encodeURIComponent(id)+'/quality');
   el('v79-mv-output').textContent=JSON.stringify(res,null,2);
   info('Качество и совместная область условий рассчитаны; это не подтверждение экономии');
+}));
+
+
+// V8.2 synthetic hydrological research. A plotting aid only; no SCADA.
+function refreshV82(){
+  choices('v82-asset',assets.filter(x=>x.classification==='LAB_REFERENCE'),x=>x.name+' / '+x.id);
+}
+function syntheticDailyFlowV82(){
+  const n=168, horizon=Number(selected('v82-horizon'));
+  const shift=Number(selected('v82-regime'));
+  const origin=Date.UTC(2026,0,1);
+  const daily=86400000;
+  const observations=Array.from({length:n},(_,i)=>{
+     const t=origin+i*daily;
+     const q=160+0.16*i+15*Math.sin(2*Math.PI*i/32)+5*Math.sin(2*Math.PI*i/8)+4*Math.cos(2.1*i)+(i>=n-28?shift:0);
+     return {observed_at:new Date(t).toISOString(),
+       available_at:new Date(t+6*3600000).toISOString(),mean_flow_cms:Number(Math.max(0,q).toFixed(7)),
+       source_ref:'SYNTHETIC-MAGADAN-LAB-DAILY-Q-'+String(i).padStart(4,'0')};
+  });
+  return {asset_id:selected('v82-asset'),as_of:new Date(origin+(n-1)*daily+10*3600000).toISOString(),
+    horizon_days:horizon,miscoverage_alpha:0.1,
+    monitor_threshold_cms:Number(el('v82-threshold').value),observations};
+}
+const v82NS='http://www.w3.org/2000/svg';
+function plotForecastV82(rows){
+  const host=el('v82-plot');host.replaceChildren();
+  if(!rows?.length)return;
+  const svg=document.createElementNS(v82NS,'svg');svg.setAttribute('viewBox','0 0 820 260');
+  svg.setAttribute('role','img');svg.setAttribute('aria-label','28 прогнозов: факт, точечная оценка и эмпирическая полоса, м³/с');
+  const values=rows.flatMap(r=>[r.actual_cms,r.lower_cms,r.upper_cms]);
+  const min=Math.max(0,Math.min(...values)-5),max=Math.max(...values)+5;
+  const X=i=>48+i*(754/(rows.length-1));
+  const Y=v=>218-(v-min)*172/(max-min||1);
+  function path(points,color,width,fill='none'){
+    const node=document.createElementNS(v82NS,'path');node.setAttribute('d',points);node.setAttribute('stroke',color);
+    node.setAttribute('stroke-width',width);node.setAttribute('fill',fill);svg.append(node);
+  }
+  function title(t,x,y,color){const node=document.createElementNS(v82NS,'text');node.setAttribute('x',x);node.setAttribute('y',y);node.setAttribute('font-size','12');node.setAttribute('fill',color);node.textContent=t;svg.append(node)}
+  for(let i=0;i<4;i++){
+    const v=min+i*(max-min)/3, y=Y(v);
+    path(`M48 ${y} H802`,'#e2eaee',1);title(v.toFixed(1),5,y+4,'#587481');
+  }
+  const poly=rows.map((r,i)=>`${X(i)},${Y(r.upper_cms)}`).concat(rows.slice().reverse().map((r,i)=>`${X(rows.length-1-i)},${Y(r.lower_cms)}`)).join(' L');
+  path('M'+poly+' Z','none',0,'#d5e9e1');
+  path('M'+rows.map((r,i)=>`${X(i)},${Y(r.point_cms)}`).join(' L'),'#c47d44',2.4);
+  path('M'+rows.map((r,i)=>`${X(i)},${Y(r.actual_cms)}`).join(' L'),'#0e4659',2.4);
+  title('Факт',520,22,'#0e4659');title('Прогноз',578,22,'#c47d44');title('Полоса ошибок',660,22,'#41846b');
+  title('Дни независимой проверки →',576,249,'#617986');
+  host.append(svg);
+}
+el('v82-sample').addEventListener('click',()=>{
+  if(!selected('v82-asset')){info('Сначала войдите и выберите синтетический объект',true);return}
+  el('v82-case').value=JSON.stringify(syntheticDailyFlowV82(),null,2);
+  info('Учебные 168 суток созданы; это не архив гидропостов Магаданской области.');
+});
+el('v82-run').addEventListener('click',()=>perform(async()=>{
+  const input=JSON.parse(el('v82-case').value);
+  const resp=await api('/v82/orgs/'+encodeURIComponent(org)+'/hydroforecast/evaluate','POST',input);
+  const r=resp.report,stats=r.holdout,output=el('v82-output');
+  el('v82-mae').textContent=stats.mae_cms.toFixed(2);
+  el('v82-rmse').textContent=stats.rmse_cms.toFixed(2);
+  el('v82-coverage').textContent=(100*stats.interval_empirical_coverage_fraction).toFixed(1)+' %';
+  el('v82-point').textContent=r.forecast.point_cms.toFixed(2);
+  plotForecastV82(r.holdout_rows);
+  el('v82-assessment').textContent='Модель: '+r.selected_model+' · Исторический период: '+stats.count+' суток · Эмпирический радиус: '+r.calibration.absolute_error_radius_cms.toFixed(2)+' м³/с · Ограничения: '+r.risk_flags.join(', ');
+  output.textContent=JSON.stringify({split:r.split,model_selection_mae_cms:r.model_selection_mae_cms,
+    calibration:r.calibration,holdout:r.holdout,persistence_holdout:r.persistence_holdout,
+    forecast:r.forecast,proof:resp.proof},null,2);
+  info('Исследовательский прогноз рассчитан и проверен на независимом историческом периоде; промышленное применение запрещено.');
+}));
+
+
+// V8.3: strict lab-only coupling: one predicted UTC day, two distinct assets.
+function refreshV83(){
+  const lab=assets.filter(a=>a.classification==='LAB_REFERENCE');
+  const preferredUpper=lab.find(a=>a.id==='synthetic-cascade-upper')?.id;
+  choices('v83-upper',lab,x=>x.name+' / '+x.id,preferredUpper);
+  const lowerPool=lab.filter(a=>a.id!==selected('v83-upper'));
+  const preferredLower=lowerPool.find(a=>a.id==='synthetic-cascade-lower')?.id
+    ||lowerPool.find(a=>a.id==='synthetic-cascade-upper')?.id
+    ||lowerPool[0]?.id;
+  choices('v83-lower',lab.filter(a=>a.id!==selected('v83-upper')),x=>x.name+' / '+x.id,preferredLower);
+}
+el('v83-upper').addEventListener('change',refreshV83);
+function syntheticCascadeV83(){
+  const upperAsset=selected('v83-upper'),lowerAsset=selected('v83-lower');
+  if(!upperAsset||!lowerAsset||upperAsset===lowerAsset)
+    throw Error('Нужны два разных LAB_REFERENCE объекта в одной организации');
+  let forecast;
+  if(el('v82-case').value.trim()) forecast=JSON.parse(el('v82-case').value);
+  else forecast=syntheticDailyFlowV82();
+  forecast.asset_id=upperAsset;
+  forecast.horizon_days=2; // one FULL day begins after the 10:00 UTC issue.
+  const common=(asset_id,name,start,min,max,elevationLow,elevationHigh,tailLow,tailHigh,limitQ,turbineQ,spillQ,ratedMW)=>({
+    asset_id,name,source_ref:'SYNTHETIC-CASCADE-V83-CURVES-EXAMPLE-2026',
+    start_volume_m3:start,min_volume_m3:min,max_volume_m3:max,
+    storage_curve:[{volume_m3:min,upstream_elevation_m:elevationLow},
+                   {volume_m3:start,upstream_elevation_m:(elevationLow+elevationHigh)/2},
+                   {volume_m3:max,upstream_elevation_m:elevationHigh}],
+    tailwater_curve:[{discharge_cms:0,elevation_m:tailLow},
+                     {discharge_cms:250,elevation_m:(tailLow+tailHigh)/2},
+                     {discharge_cms:500,elevation_m:tailHigh}],
+    efficiency_curve:[{turbine_flow_fraction:0,efficiency:0},
+                      {turbine_flow_fraction:.5,efficiency:.9},
+                      {turbine_flow_fraction:1,efficiency:.93}],
+    turbine_capacity_cms:limitQ,turbine_release_cms:turbineQ,spill_release_cms:spillQ,
+    other_losses_cms:0,minimum_release_cms:20,
+    previous_release_cms:turbineQ+spillQ,max_daily_ramp_cms:80,
+    hydraulic_head_loss_m:1,rated_capacity_mw:ratedMW});
+  const delay=Number(selected('v83-delay'));
+  return {forecast,daily_observation_semantics:'UTC_DAILY_MEAN_PERIOD_END_AT_OBSERVED_AT',
+    target_start_state_and_prior_release_basis:'SYNTHETIC_CONDITIONAL_FUTURE_ASSUMPTIONS_NOT_KNOWN_AT_FORECAST_ISSUE',
+    initial_storage_state_ref:'SYNTHETIC-CASCADE-TARGET-DAY-START-STORAGE-2026',
+    upper:common(upperAsset,'SYNTHETIC-UPPER-STATION',1e9,9e8,1.1e9,380,410,300,310,250,125,25,120),
+    lower:common(lowerAsset,'SYNTHETIC-LOWER-STATION',5e8,4e8,6e8,300,330,220,232,200,145,30,150),
+    route:{delay_hours:delay,previous_daily_releases_cms:Array(Math.ceil(delay/24)).fill(150),
+      source_ref:'SYNTHETIC-DAILY-RELEASE-ROUTING-2026'},
+    hydrological_mapping_ref:'SYNTHETIC-UPSTREAM-FLOW-TO-RESERVOIR-2026',
+    lower_local_inflow_cms:45,lower_local_inflow_ref:'SYNTHETIC-DOWNSTREAM-LOCAL-INFLOW-2026',
+    water_density_kg_m3:1000};
+}
+el('v83-sample').addEventListener('click',()=>{
+  try{
+    el('v83-case').value=JSON.stringify(syntheticCascadeV83(),null,2);
+    info('Создан учебный связанный сценарий: расход, две кривые объёма, задержка, КПД, три варианта');
+  }catch(e){info(e.message,true)}
+});
+el('v83-run').addEventListener('click',()=>perform(async()=>{
+  const body=JSON.parse(el('v83-case').value);
+  const response=await api('/v83/orgs/'+encodeURIComponent(org)+'/cascade/forecast-screen','POST',body);
+  const r=response.report;
+  for(const [id,name] of [['v83-dry','dry'],['v83-central','central'],['v83-wet','wet']]){
+    const item=r.scenarios.find(x=>x.name===name);
+    el(id).textContent=item.upper_forecast_inflow_cms.toFixed(2);
+  }
+  el('v83-balance').textContent=r.scenarios.every(x=>Math.abs(x.global_mass_balance_residual_m3)<1e-3)?'Баланс сведён':'Проверить';
+  const peakWarning=r.scenarios.some(s=>s.violations.some(v=>v.includes('ELECTRICAL_RATED_CAPACITY_EXCEEDED')));
+  el('v83-assessment').textContent='Класс: '+r.qualification+
+    (peakWarning?' · ПРЕВЫШЕН синтетический предел мгновенной мощности: энергия не признаётся':' · Пиковая мощность проверена на обеих границах суток')+
+    ' · Сценарии с нарушениями: '+r.scenarios.filter(s=>!s.feasible_under_synthetic_constraints).length+
+    ' · Важные статистические замечания: '+r.calibration_and_stationarity_risk_flags.join(', ')+
+    ' · Финансовый эффект: НЕ ПРИЗНАН';
+  el('v83-output').textContent=JSON.stringify({target_start:r.target_day_start_utc,
+      target_end:r.target_day_end_utc,lead_to_start_hours:r.forecast_actual_lead_to_target_day_start_hours,
+      scenario_energy_span_mwh:r.scenario_energy_span_mwh,
+      risk:r.hydrology_report,scenarios:r.scenarios,limitations:r.limitations,proof:response.proof},null,2);
+  info('Проверен лабораторный баланс по двум водохранилищам; никакого решения о режиме или экономии не принято.');
+}));
+
+// V8.8 - regional energy balance / conditional investment laboratory.
+// All values generated here are intentionally invented and never field data.
+const V88_YEAR=2031;
+function syntheticRegionV88(){
+  const mw=Number(selected('v88-load-mw'));
+  const utilization=Number(el('v88-utilization').value);
+  if(!Number.isFinite(mw)||!Number.isFinite(utilization)||utilization<0||utilization>1)
+    throw Error('Некорректная синтетическая мощность или загрузка');
+  const source='SYNTHETIC-REGIONAL-V88-EXAMPLE-NOT-FIELD-VALUES';
+  const scenario=code=>({
+    code,source_ref:'SYNTHETIC-V88-'+code,
+    months:Array.from({length:12},(_,i)=>({
+      month:i+1,
+      hydro_deliverable_energy_mwh:code==='LOW_WATER'?215000:285000,
+      thermal_deliverable_energy_mwh:35000,
+      existing_demand_energy_mwh:200000,
+      existing_coincident_peak_mw:470,
+      firm_generation_peak_mw:1000,
+      regional_network_deliverable_peak_mw:code==='NETWORK_CONTINGENCY'?560:840,
+      firm_operating_reserve_mw:90,
+    })),
+  });
+  return {
+    year:V88_YEAR,source_ref:source,original_data_origin:'SYNTHETIC_ONLY',
+    real_source_attested:false,corporate_financial_approval:false,
+    independent_engineering_approval:false,discount_rate_fraction:'0.10',
+    investment_horizon_years:12,
+    projects:[{
+      project_id:'synthetic-regional-load-'+String(mw),
+      title:'SYNTHETIC consumer '+mw+' MW - NOT an operating facility',
+      sector:selected('v88-sector'),rated_mw:mw,utilization_fraction:utilization,
+      capex_rub:'1500000000',annual_fixed_opex_rub:'40000000',
+      gross_value_rub_per_mwh:'12000',electricity_cost_rub_per_mwh:'5500',
+    }],
+    scenarios:['NORMAL','LOW_WATER','NETWORK_CONTINGENCY'].map(scenario),
+  };
+}
+function resetV88Result(){
+  for(const id of ['v88-peak','v88-energy','v88-passes'])el(id).textContent='—';
+  el('v88-decision').textContent='HOLD';
+  el('v88-assessment').textContent='Нет нового расчёта. Результаты предыдущей организации или входных параметров недействительны.';
+  el('v88-output').textContent='Нет текущего серверного подтверждения.';
+  for(const id of ['v88-scenario-rows','v88-finance-rows'])el(id).replaceChildren();
+}
+el('v88-sample').addEventListener('click',()=>{
+  try{
+    el('v88-case').value=JSON.stringify(syntheticRegionV88(),null,2);
+    resetV88Result();
+    info('Подготовлены 36 синтетических месяцев; все цены, режимы и нагрузки искусственные.');
+  }catch(e){info(e.message,true)}
+});
+el('v88-case').addEventListener('input',resetV88Result);
+function appendV88Row(tbody,values){
+  const tr=document.createElement('tr');
+  for(const val of values){const td=document.createElement('td');td.textContent=String(val);tr.append(td)}
+  tbody.append(tr);
+}
+const v88Caption={NORMAL:'Обычный',LOW_WATER:'Маловодный',NETWORK_CONTINGENCY:'Сетевое ограничение'};
+function renderRegionalV88(response){
+  const report=response.report;
+  el('v88-peak').textContent=report.portfolio_conservative_coincident_peak_mw.toFixed(1)+' МВт';
+  el('v88-energy').textContent=(report.annual_requested_new_energy_mwh/1000).toFixed(1);
+  const passed=report.scenarios.filter(s=>s.all_months_feasible).length;
+  el('v88-passes').textContent=passed+' / '+report.scenarios.length;
+  el('v88-decision').textContent='HOLD';
+  el('v88-assessment').textContent=report.synthetic_all_scenarios_adequate
+    ?'Три искусственных сценария обеспечены по месячной энергии и консервативному пику. Это не N−1, не почасовая доступность и не инвестиционное одобрение.'
+    :'Есть ограничения энергии или мощности. Дополнительная нагрузка НЕ признана обеспеченной. Промышленное и инвестиционное решение — HOLD.';
+  const sbody=el('v88-scenario-rows');sbody.replaceChildren();
+  for(const item of report.scenarios)
+    appendV88Row(sbody,[v88Caption[item.code]||item.code,
+      (item.incremental_energy_shortfall_mwh/1000).toFixed(2),
+      item.maximum_coincident_peak_shortfall_mw.toFixed(1),
+      item.all_months_feasible?'Условно проходит':'НЕ проходит']);
+  const fbody=el('v88-finance-rows');fbody.replaceChildren();
+  for(const p of report.conditional_project_economics)
+    appendV88Row(fbody,[p.project_id,
+      (Number(p.annual_net_cashflow_if_fully_supplied_rub)/1000000).toFixed(1),
+      (Number(p.conditional_npv_if_fully_supplied_rub)/1000000).toFixed(1)]);
+  el('v88-output').textContent=JSON.stringify({
+    source_ref:report.source_ref,feasibility:report.modelled_operational_adequacy,
+    limitations:report.limitations,monthly_scenarios:report.scenarios,
+    economics:report.conditional_project_economics,proof:response.proof,
+  },null,2);
+}
+el('v88-run').addEventListener('click',()=>perform(async()=>{
+  resetV88Result();
+  if(!org)throw Error('Для расчёта войдите в отдельную тестовую учётную запись');
+  const body=JSON.parse(el('v88-case').value);
+  const response=await api('/v88/orgs/'+encodeURIComponent(org)+'/regional-energy/evaluate','POST',body);
+  renderRegionalV88(response);
+  info('Проверено три синтетических энергобаланса. Все NPV условные; решение всегда HOLD.');
 }));

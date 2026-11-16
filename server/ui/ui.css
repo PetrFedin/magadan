@@ -39,3 +39,31 @@
 .assurance-workspace select[multiple]{min-height:140px}
 .assurance-workspace .readiness{padding:12px;background:#f2f5f7;border-radius:9px}
 @media(max-width:760px){.assurance-workspace .actions button{flex-grow:1}}
+
+/* V8.2 empirical forecast verification: scientific plotting, not a dispatching UI. */
+.forecast-v82-workspace{border-top:4px solid #25675f;background:#fcfdfc}
+.forecast-v82-kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin:12px 0}
+.forecast-v82-kpis>div{border:1px solid #d5e3e0;background:#f2f7f5;padding:12px 13px;border-radius:6px;display:flex;flex-direction:column;min-width:0}
+.forecast-v82-kpis small{font-size:11px;letter-spacing:.04em;color:#4d7470}
+.forecast-v82-kpis strong{font-size:24px;color:#16394a;line-height:1.3;font-variant-numeric:tabular-nums}
+.forecast-v82-plot{border:1px solid #d2dde2;background:#fff;min-height:170px;border-radius:8px;overflow:hidden;margin:12px 0 16px}
+.forecast-v82-plot svg{display:block;width:100%;height:auto}
+.forecast-v82-workspace #v82-case{min-height:200px;font-size:11px}
+@media(max-width:760px){.forecast-v82-kpis strong{font-size:20px}.forecast-v82-workspace .actions button{flex-grow:1}}
+
+/* V8.3 keeps source evidence readable, not a decorative dashboard. */
+.cascade-v83-workspace .programme-output{max-height:520px;overflow:auto;overflow-wrap:anywhere}
+.cascade-v83-workspace .study-grid{align-items:start}
+@media(max-width:600px){.cascade-v83-workspace .forecast-v82-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+/* V8.8: informational research tables, no investment dispatch controls. */
+.regional-v88-workspace{border-top:4px solid #967a4e;background:#fffdfa}
+.regional-v88-workspace .study-grid{align-items:start}
+.regional-v88-workspace textarea{min-height:270px;font-size:11px}
+.v88-scroll{overflow-x:auto;margin:12px 0 18px;border:1px solid #d9e2e5;border-radius:10px}
+.v88-results{border-collapse:collapse;min-width:510px;width:100%;font-size:12px;text-align:left}
+.v88-results th{background:#eff3f4;color:#33586b;font-size:11px;font-weight:750}
+.v88-results th,.v88-results td{padding:11px 12px;border-bottom:1px solid #e2e9eb;vertical-align:middle}
+.v88-results tr:last-child td{border-bottom:0}
+.regional-v88-workspace .result{max-height:510px}
+@media(max-width:760px){.regional-v88-workspace .forecast-v82-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}

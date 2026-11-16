@@ -1,0 +1,9 @@
+{
+  "status": "BROWSER_E2E_BLOCKED_OR_FAILED",
+  "client": "chromium",
+  "synthetic_only": true,
+  "actual_rushydro_data_used": false,
+  "industrial_approval_eligible": false,
+  "viewports": {},
+  "error": "Error: Page.goto: net::ERR_BLOCKED_BY_ADMINISTRATOR at http://127.0.0.1:48409/lab\nCall log:\n  - navigating to \"http://127.0.0.1:48409/lab\", waiting until \"domcontentloaded\"\n"
+}

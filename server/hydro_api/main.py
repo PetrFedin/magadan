@@ -159,7 +159,7 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
         engine,SessionLocal=setup_postgres(db_url)
     else:
         engine,SessionLocal=setup_engine(db_url)
-    app=FastAPI(title='HydroKontur Magadan V8.0 / controlled engineering lab',version='0.8.0-lab',
+    app=FastAPI(title='HydroKontur Magadan V8.3.2 / controlled engineering lab',version='0.8.3.2-lab',
                 description='No industrial connections, not a production authorization or SCADA system')
     app.state.engine=engine;app.state.SessionLocal=SessionLocal
     app.mount('/lab-assets',StaticFiles(directory=str(Path(__file__).parent.parent/'ui')),name='lab-assets')
@@ -287,6 +287,29 @@ def create_app(database_url=None,jwt_secret=None,audit_secret=None, *, oidc_serv
     # V8.0 canonical laboratory measurement boundaries; no corporate recognition.
     from .boundary_api_v8 import install_boundary_routes
     install_boundary_routes(app,get_db,current_user,access,asset,record_audit,audit_secret)
+
+    from .forecast_api_v82 import install_forecast_v82_routes
+    install_forecast_v82_routes(app,get_db,current_user,access,asset,sha,canonical)
+
+    # V8.3 1-day forecast -> two-reservoir water balance and stage/efficiency.
+    # No operational/financial actions; both lab assets require tenant RBAC.
+    from .cascade_api_v83 import install_cascade_v83_routes
+    install_cascade_v83_routes(app,get_db,current_user,access,asset,sha,canonical)
+
+    # V8.8 three synthetic regional energy scenarios, conditional investment NPV.
+    # Stateless research only; no real connectivity or financial recognition.
+    from .regional_energy_api_v88 import install_regional_energy_v88_routes
+    install_regional_energy_v88_routes(app,get_db,current_user,access,sha,canonical)
+
+    # V8.9 provenance and anti-double-counting preflight.
+    # Only synthetic numerical series, real metadata quarantined; NO approvals.
+    from .data_admission_api_v89 import install_data_admission_v89_routes
+    install_data_admission_v89_routes(app,get_db,current_user,access,sha,canonical)
+
+    # Strict V8.9 synthetic forecast-load reconciliation: separate source
+    # snapshots and contracts; never issues N-1 or investment authorization.
+    from .baseline_reconciliation_api_v89 import install_baseline_reconciliation_v89_routes
+    install_baseline_reconciliation_v89_routes(app,get_db,current_user,access,sha,canonical)
 
     @app.get('/health')
     def health():return {'service':'hydrokontur-v75-lab','status':'ok','production_ready':False}

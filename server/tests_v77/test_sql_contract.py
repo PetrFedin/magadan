@@ -21,7 +21,7 @@ def test_v77_sql_requires_tenant_and_unattested_flags():
 
 def test_last_migration_and_actual_native_gate():
     scripts=sorted((ROOT/'migrations').glob('[0-9]*.sql'))
-    assert scripts[-1].name=='150_boundary_graph_v8.sql'
+    assert scripts[-1].name=='160_boundary_claim_serialization_v81.sql'
     native=(ROOT/'tests_v71'/'test_postgres_native.py').read_text()
     assert 'NATIVE_ACCEPTANCE_BLOCKED' in native
     assert 'test_v77_native_grid_reference' in native

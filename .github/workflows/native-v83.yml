@@ -1,0 +1,118 @@
+name: V8.3.2 Cascade Forecast Synthetic / PG17 Acceptance Gate
+
+on:
+  pull_request:
+    paths:
+      - 'server/hydro_api/cascade_v83.py'
+      - 'server/hydro_api/cascade_api_v83.py'
+      - 'server/tests_v83/**'
+      - 'scripts/verify_energy_integral_v832.py'
+      - 'docs/V832_ENERGY_INTEGRATION_RU.md'
+      - 'server/hydro_api/forecast_v82.py'
+      - 'server/hydro_api/main.py'
+      - 'server/ui/**'
+      - '.github/workflows/native-v83.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  synthetic-cascade:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install declared API dependencies
+        run: python -m pip install -r server/requirements.txt
+      - name: Test V8.2 + V8.3 domains, RBAC and UI contracts
+        env:
+          PYTHONPATH: server
+        run: |
+          python -m pytest -q server/tests_v82 server/tests_v83
+          node --check server/ui/ui.js
+          npm test --prefix v6-client
+      - name: Verify deterministic synthetic scenario matrix and absence of money
+        run: |
+          python scripts/reproduce_v83.py --out /tmp/hydro-v83-synthetic
+          python scripts/verify_route_independent_v83.py
+          python scripts/verify_energy_integral_v832.py
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          j=json.loads(Path('/tmp/hydro-v83-synthetic/cascade_scenario_index_v83.json').read_text())
+          assert j['summary']['all_normal_scenarios_mass_balance'] is True
+          assert j['summary']['all_energy_values_nonfinance'] is True
+          assert j['summary']['daily_branch_evaluations']==60
+          route=json.loads(Path('artifacts_v83/independent_hourly_route_v83.json').read_text())
+          assert route['scenarios']==438 and route['conservation_check_passed'] is True
+          integral=json.loads(Path('artifacts_v832/independent_energy_quadrature_v832.json').read_text())
+          assert integral['cases']==256 and integral['all_256_reference_checks_pass'] is True
+          assert integral['max_abs_reference_error_mwh']<0.002
+          assert integral['external_hydraulic_solver_verified'] is False
+          assert route['external_hydraulic_solver_executed'] is False
+          assert j['summary']['source_data_attested'] is False
+          PY
+      - name: Scope disclosure
+        run: echo 'V8.3 CI is only synthetic laboratory evidence; PG17, OIDC, real reservoir curves, pilot and industrial approval are NOT certified.'
+
+  native-postgres17-manual-only:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_DB: hydrokontur_v72_acceptance_v83
+          POSTGRES_PASSWORD: lab-temporary-postgres-only
+        ports: ['5432:5432']
+        options: >-
+          --health-cmd=pg_isready
+          --health-interval=5s --health-timeout=5s --health-retries=15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Install declared native test dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Bootstrap isolated EMPTY PostgreSQL17; never production
+        env:
+          HYDRO_PG_ADMIN_URL: postgresql://postgres:lab-temporary-postgres-only@127.0.0.1:5432/hydrokontur_v72_acceptance_v83
+        run: python scripts/bootstrap_native.py --out /tmp/hydro-native-v83.json
+      - name: REQUIRED actual PostgreSQL17 RLS / V8.1 graph-claim serialization
+        env:
+          HYDRO_NATIVE_TESTS_REQUIRED: '1'
+          HYDRO_NATIVE_CONFIG: /tmp/hydro-native-v83.json
+          PYTHONPATH: server
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=15s 1200s \
+            python -m pytest -q -ra --maxfail=1 \
+              server/tests_v71/test_postgres_native.py \
+              server/tests_v78/test_postgres_native_v78.py \
+              server/tests_v8/test_postgres_native_boundary_v8.py \
+              server/tests_v81/test_pg_graph_freeze_native_v81.py \
+              --junitxml=/tmp/native-v83-junit.xml
+      - name: Fail-closed actual PostgreSQL17 JUnit proof (no upload-artifact quota)
+        env:
+          HYDRO_NATIVE_TESTS_REQUIRED: '1'
+        run: |
+          set -e
+          actual="$(git rev-parse HEAD)"
+          test "$actual" = "$GITHUB_SHA"
+          python scripts/v84_junit_gate.py --junit /tmp/native-v83-junit.xml \
+            --shard native-postgres17 --min-passed 10 --max-skipped 0 \
+            --actual-sha "$actual" --expected-sha "$GITHUB_SHA" \
+            --require-case test_native_installed_version_and_exact_lock_contract
+          echo 'Native PG17 test receipt is in Job Summary; production remains HOLD.'
+      - name: Delete synthetic test credentials
+        if: always()
+        run: rm -f /tmp/hydro-native-v83.json

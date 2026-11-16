@@ -1,0 +1,106 @@
+name: V8.9 Data Admission Contracts — Synthetic QA Only (production HOLD)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/v89-source-quarantine.yml'
+      - 'server/hydro_api/data_admission_v89.py'
+      - 'server/hydro_api/data_admission_api_v89.py'
+      - 'server/hydro_api/baseline_reconcile_v89.py'
+      - 'server/hydro_api/baseline_reconciliation_api_v89.py'
+      - 'server/hydro_api/main.py'
+      - 'server/hydro_api/evidence_integrity_v89.py'
+      - 'scripts/v89_evidence_preflight.py'
+      - 'scripts/tests/test_v89_inline_workflow_python.py'
+      - 'scripts/v894_hosted_ci_evidence.py'
+      - 'scripts/tests/test_v894_hosted_ci_evidence.py'
+      - 'scripts/v84_junit_gate.py'
+      - '.github/workflows/v87-unified-staging.yml'
+      - '.github/workflows/v84-full-regression.yml'
+      - 'server/tests_v89/**'
+      - 'server/requirements-v71.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v89-source-rights-hourly-grain-dedup:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact source commit
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify immutable exact SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+          echo "V89_EXACT_SOURCE_SHA=$SOURCE_SHA"
+      - name: Validate embedded Python syntax in both CI release gates
+        run: python -m unittest discover -s scripts/tests -p 'test_v89_inline_workflow_python.py' -v
+      - name: Verify hosted CI metadata gate with negative synthetic fixtures
+        run: python -m unittest discover -s scripts/tests -p 'test_v894_hosted_ci_evidence.py' -v
+      - name: Install application test dependencies
+        run: |
+          python -m pip install -r server/requirements-v71.txt
+      - name: Execute source quarantine and load dedup regression
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 420s \
+            python -m pytest -q -ra -o xfail_strict=true --maxfail=1 \
+            server/tests_v89 --junitxml=/tmp/v89-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v89-junit.xml --shard v89-source-admission \
+            --min-passed 76 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_clean_synthetic_month_is_quality_pass_but_not_approved \
+            --require-case test_in_baseline_without_proof_is_blocked_not_silently_excluded \
+            --require-case test_public_reference_metadata_is_quarantined_even_when_stated_permission_public \
+            --require-case test_real_route_model_processing_local_only \
+            --require-case test_valid_partial_counts_only_the_20_synthetic_mw_not_the_50 \
+            --require-case test_two_real_separate_supply_points_require_shared_allocation_reference \
+            --require-case test_http_read_only_reconciliation_and_separate_tenants \
+            --require-case test_synthetic_integrity_proof_never_grants_rights_or_capacity \
+            --require-case test_signed_synthetic_cli_generates_private_receipt_and_refuses_overwrite \
+            --require-case test_cli_missing_external_trust_anchor_fails_closed
+          sha256sum /tmp/v89-junit.xml
+      - name: Static production/HOLD invariants
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          root = Path('server/hydro_api')
+          model = (root/'data_admission_v89.py').read_text()
+          api = (root/'data_admission_api_v89.py').read_text()
+          main = (root/'main.py').read_text()
+          assert "real_available_capacity_mw" in model
+          assert "'production_ready': False" in model
+          assert "SOURCE" in model
+          assert "'financial_ledger_updated': False" in api
+          assert "install_data_admission_v89_routes(app,get_db,current_user,access,sha,canonical)" in main
+          assert "install_baseline_reconciliation_v89_routes(app,get_db,current_user,access,sha,canonical)" in main
+          evidence = (root/'evidence_integrity_v89.py').read_text()
+          cli = Path('scripts/v89_evidence_preflight.py').read_text()
+          assert 'OWNER_DOMAIN' in evidence and 'REVIEWER_DOMAIN' in evidence
+          assert 'HYDRO_V89_PINNED_TRUST_SHA256' in cli
+          assert '"real_source_rights_verified": False' in evidence
+          assert '"production_ready": False' in evidence
+          assert "'actual_available_capacity_mw': None" in (root/'baseline_reconcile_v89.py').read_text() or '"actual_available_capacity_mw": None' in (root/'baseline_reconcile_v89.py').read_text()
+          print('V89_SYNTHETIC_DATA_ADMISSION_NOT_PRODUCTION')
+          PY
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"

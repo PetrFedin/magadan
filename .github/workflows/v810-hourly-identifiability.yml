@@ -1,0 +1,76 @@
+name: HydroKontur V8.10 Hourly Adequacy Identifiability (SYNTHETIC ONLY)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/v810-hourly-identifiability.yml'
+      - 'server/hydro_api/hourly_identifiability_v810.py'
+      - 'server/tests_v810/**'
+      - 'server/requirements-v71.txt'
+      - 'scripts/v84_junit_gate.py'
+      - 'docs/V810_HOURLY_ADEQUACY_IDENTIFIABILITY_RESEARCH_RU.md'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v810-source-pinned-hourly-counterexample:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact source
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Confirm exact head and clean source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+          echo "V810_SYNTHETIC_SOURCE_SHA=$SOURCE_SHA"
+      - name: Install application test dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Execute 30 strict full-month synthetic counterexample tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 420s \
+            python -m pytest -q -ra -o xfail_strict=true --maxfail=1 \
+            server/tests_v810 --junitxml=/tmp/v810-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v810-junit.xml --shard v810-hourly-identifiability \
+            --min-passed 30 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_real_month_counterexample_same_aggregate_but_thirty_unserved_mwh \
+            --require-case test_full_month_leap_february_count \
+            --require-case test_existing_baseline_shortfall_not_misattributed_to_new_load \
+            --require-case test_real_sources_cannot_be_switched_on \
+            --require-case test_post_validation_real_permission_mutation_fails_closed \
+            --require-case test_post_validation_utc_axis_mutation_is_rejected_on_evaluation \
+            --require-case test_all_six_resource_permutations_bound_deterministic_shortfall_without_probability
+          sha256sum /tmp/v810-junit.xml
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Explicit research-only acceptance boundary
+        shell: bash
+        run: |
+          set -euo pipefail
+          python - <<'PY'
+          from pathlib import Path
+          body = Path('server/hydro_api/hourly_identifiability_v810.py').read_text()
+          assert '"probabilistic_lole_or_eens_calculated": False' in body
+          assert '"formal_n_minus_one_study_performed": False' in body
+          assert '"real_available_capacity_mw": None' in body
+          assert '"production_ready": False' in body
+          print('V810_SYNTHETIC_COUNTEREXAMPLE_ONLY; FIELD_RIGHTS_N1_PRODUCTION_HOLD')
+          PY

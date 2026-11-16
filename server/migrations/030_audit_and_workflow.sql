@@ -123,8 +123,10 @@ BEGIN
     AND r.accepted AND r.actor_id<>e.created_by
     AND (v_kind NOT IN ('engineering_report','financial_report','outcome_report') OR e.payload->>'run_id'=OLD.run_id)
  ) THEN RAISE EXCEPTION 'EVIDENCE_GATE' USING ERRCODE='23514'; END IF;
- IF NEW.engineer_approver IS DISTINCT FROM CASE WHEN OLD.state='engineering_review' THEN v_actor ELSE OLD.engineer_approver END
- OR NEW.finance_approver IS DISTINCT FROM CASE WHEN OLD.state='financial_review' THEN v_actor ELSE OLD.finance_approver END
+ IF NEW.engineer_approver IS DISTINCT FROM
+    (CASE WHEN OLD.state='engineering_review' THEN v_actor ELSE OLD.engineer_approver END)
+ OR NEW.finance_approver IS DISTINCT FROM
+    (CASE WHEN OLD.state='financial_review' THEN v_actor ELSE OLD.finance_approver END)
  THEN RAISE EXCEPTION 'APPROVER_FORGERY' USING ERRCODE='42501'; END IF;
  -- Prior records must have an external receipt before approval, execution or closure.
  IF OLD.state IN ('approval_pending','approved','verification_pending') AND EXISTS(
