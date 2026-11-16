@@ -7,7 +7,7 @@
 | PostgreSQL 17 | BLOCKED | Нативные RLS, concurrent, restore, revoke tests |
 | Corporate SSO/MFA | BLOCKED | Реальный IdP, отзыв доступа и изоляция ролей |
 | External WORM audit | BLOCKED | Подписанные неизменяемые квитанции |
-| Grid external reference | BLOCKED | Реальный независимый solver и согласованные допуски |
+| Grid external reference | LAB PASS / PRODUCTION HOLD | V9.0: pandapower 3.5.6 на IEEE 33-bus, max \|ΔV\| = 4,8·10⁻¹¹ о.е.; объектная топология и независимая инженерная приёмка не подтверждены |
 | Magadan field data | BLOCKED | Разрешения владельца и проверенные измерения |
 | Real economics | BLOCKED | Подтверждённая смета, тарифная/налоговая методика |
 | Construction M&V | BLOCKED | Действительные акты и нормализованная экономия |

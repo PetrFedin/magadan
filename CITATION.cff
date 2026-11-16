@@ -5,6 +5,6 @@ authors:
   - family-names: Fedin
     given-names: Petr
 repository-code: "https://github.com/PetrFedin/magadan"
-version: 8.11.0
-date-released: "2026-11-16"
-notes: "SYNTHETIC RESEARCH LAB / PRODUCTION HOLD. Все данные синтетические; проект не связан с Группой «РусГидро» соглашением."
+version: 9.6.1
+date-released: "2026-11-17"
+notes: "RESEARCH LAB / PRODUCTION HOLD. Синтетические сценарии и открытые опубликованные данные; объектных эксплуатационных данных РусГидро нет, соглашения с Группой «РусГидро» нет."
