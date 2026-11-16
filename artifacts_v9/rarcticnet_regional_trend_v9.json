@@ -1,0 +1,815 @@
+{
+  "artifact": "RARCTICNET-REGIONAL-TREND-V9-1",
+  "artifact_sha256": "cb79734176a4d64b09148854b8994024c221535c59bf57c71282b3825dff1b16",
+  "input_file": "data/r-arcticnet/kolyma_basin_multistation_v4.tsv",
+  "input_sha256": "6df1416267dc17e67e9e2550738a21cafb2ddbf7ba81e7de11ca8547fff1c2b1",
+  "model": "Mann-Kendall + Theil-Sen (log) по 11 створам Колымы; причинный бэктест raw vs trend-adaptive (окно 20 лет, m=20)",
+  "note_ru": "Региональный перенос тренд-диагностики V9.4 на 11 створов бассейна Колымы (R-ArcticNET v4.0, >= 35 полных лет). Разделение гипотез: климат (H1) vs регулирование Колымской ГЭС с 1982 г. (H2). НЕ production-допуск.",
+  "report": {
+    "min_years": 20,
+    "n_stations": 11,
+    "pooled_backtest": {
+      "ensemble_size": 20,
+      "n_cases": 3620,
+      "raw_climatology": {
+        "coverage_80": 0.6795580110497238,
+        "coverage_95": 0.8331491712707182,
+        "crps": 138.25723469060773
+      },
+      "trend_adaptive": {
+        "coverage_80": 0.712707182320442,
+        "coverage_95": 0.8654696132596685,
+        "crps": 143.97280631401856
+      },
+      "window_years": 20
+    },
+    "regulation_group_summary": {
+      "not_below_dam": {
+        "median_winter_slope_pct_per_year": 0.8472949042536371,
+        "n_stations": 9,
+        "n_winter_positive": 7,
+        "n_winter_significant": 6,
+        "stations": [
+          "5855",
+          "5857",
+          "5859",
+          "5865",
+          "5874",
+          "5878",
+          "5884",
+          "5889",
+          "5897"
+        ]
+      },
+      "regulated_below_dam": {
+        "median_winter_slope_pct_per_year": 2.355037959958217,
+        "n_stations": 2,
+        "n_winter_positive": 2,
+        "n_winter_significant": 2,
+        "stations": [
+          "5858",
+          "5951"
+        ]
+      }
+    },
+    "regulation_onset_year": 1982,
+    "station_results": {
+      "5855": {
+        "backtest": {
+          "n_cases": 244,
+          "period": [
+            1977,
+            1997
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.7254098360655737,
+            "coverage_95": 0.8934426229508197,
+            "crps": 92.84313555327869
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7377049180327869,
+            "coverage_95": 0.9098360655737705,
+            "crps": 102.88466072918378
+          }
+        },
+        "n_years_total": 41,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.1004251743696376,
+            "mk_significant_5pct": false,
+            "mk_z": 1.6427958730600056,
+            "n_years": 40,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.3145144208217996,
+            "slope_ci95_lo_pct": -0.15842147778064586,
+            "slope_log_per_year": 0.007608693384695881,
+            "slope_pct_per_year": 0.763771304608496,
+            "target": "annual",
+            "year_from": 1957,
+            "year_to": 1996
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.010017395906806836,
+            "mk_significant_5pct": true,
+            "mk_z": 2.575228240141152,
+            "n_years": 40,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 2.2610253330301866,
+            "slope_ci95_lo_pct": 0.2933182149534419,
+            "slope_log_per_year": 0.012028598645229784,
+            "slope_pct_per_year": 1.2101233176295967,
+            "target": "winter_dec_mar",
+            "year_from": 1957,
+            "year_to": 1996
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.6570522439697444,
+            "mk_significant_5pct": false,
+            "mk_z": -0.44398663878596467,
+            "n_years": 25,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.0013060160015685,
+            "slope_ci95_lo_pct": -2.078680278306222,
+            "slope_log_per_year": -0.003699074161503223,
+            "slope_pct_per_year": -0.36922410147125495,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1957,
+            "year_to": 1981
+          }
+        }
+      },
+      "5857": {
+        "backtest": {
+          "n_cases": 24,
+          "period": [
+            1988,
+            1989
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.3333333333333333,
+            "coverage_95": 0.5416666666666666,
+            "crps": 242.3623145833333
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.4166666666666667,
+            "coverage_95": 0.625,
+            "crps": 233.5914444269055
+          }
+        },
+        "n_years_total": 38,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.7936298448235655,
+            "mk_significant_5pct": false,
+            "mk_z": -0.26159999895360003,
+            "n_years": 37,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.3784173914784583,
+            "slope_ci95_lo_pct": -0.7286513289633256,
+            "slope_log_per_year": -0.0012635358951401776,
+            "slope_pct_per_year": -0.1262737969765504,
+            "target": "annual",
+            "year_from": 1936,
+            "year_to": 1989
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.018552635298930475,
+            "mk_significant_5pct": true,
+            "mk_z": 2.3543999905824,
+            "n_years": 37,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 5.254074268890396,
+            "slope_ci95_lo_pct": 0.4443345023124934,
+            "slope_log_per_year": 0.031675108279591385,
+            "slope_pct_per_year": 3.218210340406835,
+            "target": "winter_dec_mar",
+            "year_from": 1936,
+            "year_to": 1989
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.17089348425411366,
+            "mk_significant_5pct": false,
+            "mk_z": -1.3693385141085352,
+            "n_years": 29,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.4443345023124934,
+            "slope_ci95_lo_pct": -1.970263536686434,
+            "slope_log_per_year": -0.009346906918464846,
+            "slope_pct_per_year": -0.930336036480095,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1936,
+            "year_to": 1981
+          }
+        }
+      },
+      "5858": {
+        "backtest": {
+          "n_cases": 573,
+          "period": [
+            1953,
+            2000
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.6143106457242583,
+            "coverage_95": 0.8097731239092496,
+            "crps": 219.18085972949387
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7015706806282722,
+            "coverage_95": 0.8464223385689355,
+            "crps": 227.5553175568334
+          }
+        },
+        "n_years_total": 68,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.9827302670404103,
+            "mk_significant_5pct": false,
+            "mk_z": 0.02164609073812498,
+            "n_years": 67,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.31553113321676207,
+            "slope_ci95_lo_pct": -0.3318278366459815,
+            "slope_log_per_year": 2.1390128387320896e-05,
+            "slope_pct_per_year": 0.0021390357157757833,
+            "target": "annual",
+            "year_from": 1933,
+            "year_to": 1999
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 2.2091176670180346e-05,
+            "mk_significant_5pct": true,
+            "mk_z": 4.242633784672496,
+            "n_years": 67,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 4.785973516817554,
+            "slope_ci95_lo_pct": 1.5450055367935978,
+            "slope_log_per_year": 0.030728239372315926,
+            "slope_pct_per_year": 3.120522482467125,
+            "target": "winter_dec_mar",
+            "year_from": 1933,
+            "year_to": 1999
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.07437396176910083,
+            "mk_significant_5pct": false,
+            "mk_z": -1.7843059633798912,
+            "n_years": 49,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.07878207809512983,
+            "slope_ci95_lo_pct": -1.1530052495301701,
+            "slope_log_per_year": -0.005541020294263105,
+            "slope_pct_per_year": -0.5525697156315457,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1933,
+            "year_to": 1981
+          }
+        }
+      },
+      "5859": {
+        "backtest": {
+          "n_cases": 208,
+          "period": [
+            1971,
+            1988
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.7163461538461539,
+            "coverage_95": 0.8653846153846154,
+            "crps": 21.963985576923076
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7451923076923077,
+            "coverage_95": 0.8557692307692307,
+            "crps": 23.190402046730636
+          }
+        },
+        "n_years_total": 38,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.6284436367082953,
+            "mk_significant_5pct": false,
+            "mk_z": 0.4839186038889944,
+            "n_years": 37,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.117742156988344,
+            "slope_ci95_lo_pct": -0.5612873847037791,
+            "slope_log_per_year": 0.002335587773517958,
+            "slope_pct_per_year": 0.2338317383309363,
+            "target": "annual",
+            "year_from": 1952,
+            "year_to": 1988
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.03873475169887808,
+            "mk_significant_5pct": true,
+            "mk_z": 2.0669936564903257,
+            "n_years": 37,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.7024472557742643,
+            "slope_ci95_lo_pct": 0.04437542693997987,
+            "slope_log_per_year": 0.008437255090103034,
+            "slope_pct_per_year": 0.8472949042536371,
+            "target": "winter_dec_mar",
+            "year_from": 1952,
+            "year_to": 1988
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.4976606927312446,
+            "mk_significant_5pct": false,
+            "mk_z": 0.6781750772452043,
+            "n_years": 30,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.5468777559206393,
+            "slope_ci95_lo_pct": -0.8364670366776017,
+            "slope_log_per_year": 0.005030105613041464,
+            "slope_pct_per_year": 0.5042777832906076,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1952,
+            "year_to": 1981
+          }
+        }
+      },
+      "5865": {
+        "backtest": {
+          "n_cases": 396,
+          "period": [
+            1962,
+            1994
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.7424242424242424,
+            "coverage_95": 0.8914141414141414,
+            "crps": 26.024763131313133
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7373737373737373,
+            "coverage_95": 0.8863636363636364,
+            "crps": 28.652907872102954
+          }
+        },
+        "n_years_total": 53,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.4294796543065016,
+            "mk_significant_5pct": false,
+            "mk_z": 0.7900823886367513,
+            "n_years": 53,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.5685806174497765,
+            "slope_ci95_lo_pct": -0.25140443940686596,
+            "slope_log_per_year": 0.0013457282605510864,
+            "slope_pct_per_year": 0.13466341591454878,
+            "target": "annual",
+            "year_from": 1942,
+            "year_to": 1994
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.11759193677005708,
+            "mk_significant_5pct": false,
+            "mk_z": 1.5649615005190989,
+            "n_years": 53,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.2624134081782978,
+            "slope_ci95_lo_pct": -0.09630943742541254,
+            "slope_log_per_year": 0.005148499985958169,
+            "slope_pct_per_year": 0.5161776286576547,
+            "target": "winter_dec_mar",
+            "year_from": 1942,
+            "year_to": 1994
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.9721171358417333,
+            "mk_significant_5pct": false,
+            "mk_z": 0.03495310368212778,
+            "n_years": 40,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.2844575571167915,
+            "slope_ci95_lo_pct": -1.079373903421199,
+            "slope_log_per_year": 9.634078164992453e-05,
+            "slope_pct_per_year": 0.00963454225719751,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1942,
+            "year_to": 1981
+          }
+        }
+      },
+      "5874": {
+        "backtest": {
+          "n_cases": 278,
+          "period": [
+            1975,
+            2000
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.7086330935251799,
+            "coverage_95": 0.8597122302158273,
+            "crps": 11.852427104316545
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.6942446043165468,
+            "coverage_95": 0.8705035971223022,
+            "crps": 13.408683095053902
+          }
+        },
+        "n_years_total": 46,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.7694978647855906,
+            "mk_significant_5pct": false,
+            "mk_z": 0.29303177430330263,
+            "n_years": 43,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.7374150881235497,
+            "slope_ci95_lo_pct": -0.5977732073771835,
+            "slope_log_per_year": 0.0012429554774509022,
+            "slope_pct_per_year": 0.12437282667581151,
+            "target": "annual",
+            "year_from": 1957,
+            "year_to": 2000
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.0003303874274545038,
+            "mk_significant_5pct": true,
+            "mk_z": 3.5902291135823106,
+            "n_years": 43,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.4459568661303157,
+            "slope_ci95_lo_pct": 0.47657029330774314,
+            "slope_log_per_year": 0.009603506210579982,
+            "slope_pct_per_year": 0.9649767849067015,
+            "target": "winter_dec_mar",
+            "year_from": 1957,
+            "year_to": 2000
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.07566180128942324,
+            "mk_significant_5pct": false,
+            "mk_z": 1.7764316318284117,
+            "n_years": 25,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 2.4782715286182144,
+            "slope_ci95_lo_pct": -0.07420499505089717,
+            "slope_log_per_year": 0.013334915231576032,
+            "slope_pct_per_year": 1.342422173706992,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1957,
+            "year_to": 1981
+          }
+        }
+      },
+      "5878": {
+        "backtest": {
+          "n_cases": 471,
+          "period": [
+            1959,
+            1998
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.6985138004246284,
+            "coverage_95": 0.8535031847133758,
+            "crps": 34.762788391719745
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7367303609341825,
+            "coverage_95": 0.8874734607218684,
+            "crps": 36.87528202252301
+          }
+        },
+        "n_years_total": 63,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.6443465225593448,
+            "mk_significant_5pct": false,
+            "mk_z": 0.4616302155858673,
+            "n_years": 62,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.47246923003310126,
+            "slope_ci95_lo_pct": -0.27969295386791604,
+            "slope_log_per_year": 0.000876992030019024,
+            "slope_pct_per_year": 0.0877376699971899,
+            "target": "annual",
+            "year_from": 1934,
+            "year_to": 1998
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.5079153845660962,
+            "mk_significant_5pct": false,
+            "mk_z": 0.6620871282480205,
+            "n_years": 62,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.055791606549561,
+            "slope_ci95_lo_pct": -0.469297957468251,
+            "slope_log_per_year": 0.002127739844728477,
+            "slope_pct_per_year": 0.21300050894841327,
+            "target": "winter_dec_mar",
+            "year_from": 1934,
+            "year_to": 1998
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.00530409071293203,
+            "mk_significant_5pct": true,
+            "mk_z": -2.787961131853755,
+            "n_years": 45,
+            "production_ready": false,
+            "slope_ci95_hi_pct": -0.5835135567175631,
+            "slope_ci95_lo_pct": -2.6050885551090697,
+            "slope_log_per_year": -0.017227973709587716,
+            "slope_pct_per_year": -1.708042073189786,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1934,
+            "year_to": 1981
+          }
+        }
+      },
+      "5884": {
+        "backtest": {
+          "n_cases": 415,
+          "period": [
+            1958,
+            1992
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.6626506024096386,
+            "coverage_95": 0.7879518072289157,
+            "crps": 21.376020602409643
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.6698795180722892,
+            "coverage_95": 0.8240963855421687,
+            "crps": 22.939951229416973
+          }
+        },
+        "n_years_total": 55,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.1103714106689857,
+            "mk_significant_5pct": false,
+            "mk_z": -1.5965259774740894,
+            "n_years": 54,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.09079370848910084,
+            "slope_ci95_lo_pct": -0.955559878756429,
+            "slope_log_per_year": -0.00440916377268276,
+            "slope_pct_per_year": -0.43994576805854724,
+            "target": "annual",
+            "year_from": 1938,
+            "year_to": 1991
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 1.3859519210068783e-06,
+            "mk_significant_5pct": true,
+            "mk_z": -4.8270142731124075,
+            "n_years": 54,
+            "production_ready": false,
+            "slope_ci95_hi_pct": -0.6505760547421247,
+            "slope_ci95_lo_pct": -1.2489023793087473,
+            "slope_log_per_year": -0.009631353019757417,
+            "slope_pct_per_year": -0.9585120086881838,
+            "target": "winter_dec_mar",
+            "year_from": 1938,
+            "year_to": 1991
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 2.96790983789208e-06,
+            "mk_significant_5pct": true,
+            "mk_z": -4.673028209567098,
+            "n_years": 44,
+            "production_ready": false,
+            "slope_ci95_hi_pct": -0.7429514814367155,
+            "slope_ci95_lo_pct": -1.490187678855548,
+            "slope_log_per_year": -0.011357672619680686,
+            "slope_pct_per_year": -1.1293417748011292,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1938,
+            "year_to": 1981
+          }
+        }
+      },
+      "5889": {
+        "backtest": {
+          "n_cases": 165,
+          "period": [
+            1972,
+            1988
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.6909090909090909,
+            "coverage_95": 0.8181818181818182,
+            "crps": 34.033268636363644
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7212121212121212,
+            "coverage_95": 0.8606060606060606,
+            "crps": 37.02950147546473
+          }
+        },
+        "n_years_total": 37,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.028741024894388456,
+            "mk_significant_5pct": true,
+            "mk_z": 2.1870205356899173,
+            "n_years": 35,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.6803719980262644,
+            "slope_ci95_lo_pct": 0.05579634943642109,
+            "slope_log_per_year": 0.008486909403059024,
+            "slope_pct_per_year": 0.8523025317196842,
+            "target": "annual",
+            "year_from": 1952,
+            "year_to": 1988
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.03945446845857026,
+            "mk_significant_5pct": true,
+            "mk_z": 2.0594153298465288,
+            "n_years": 35,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 2.7602274953068884,
+            "slope_ci95_lo_pct": 0.10602092251572603,
+            "slope_log_per_year": 0.015205982446375938,
+            "slope_pct_per_year": 1.5322181624593867,
+            "target": "winter_dec_mar",
+            "year_from": 1952,
+            "year_to": 1988
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.9684752082512651,
+            "mk_significant_5pct": false,
+            "mk_z": -0.03952075260876219,
+            "n_years": 28,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 2.0191993402899344,
+            "slope_ci95_lo_pct": -1.8457963459916238,
+            "slope_log_per_year": -0.0005204789790524648,
+            "slope_pct_per_year": -0.05203435533650547,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1952,
+            "year_to": 1981
+          }
+        }
+      },
+      "5897": {
+        "backtest": {
+          "n_cases": 358,
+          "period": [
+            1961,
+            1993
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.7039106145251397,
+            "coverage_95": 0.840782122905028,
+            "crps": 14.331704434357544
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.6927374301675978,
+            "coverage_95": 0.8547486033519553,
+            "crps": 15.700960364083556
+          }
+        },
+        "n_years_total": 53,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.11581302923600711,
+            "mk_significant_5pct": false,
+            "mk_z": -1.5725932604084936,
+            "n_years": 50,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.06932296866797305,
+            "slope_ci95_lo_pct": -0.8157592808779923,
+            "slope_log_per_year": -0.003856189619787287,
+            "slope_pct_per_year": -0.3848764068439814,
+            "target": "annual",
+            "year_from": 1941,
+            "year_to": 1991
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.9094609801779534,
+            "mk_significant_5pct": false,
+            "mk_z": -0.1137184578673322,
+            "n_years": 51,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.7553218886566571,
+            "slope_ci95_lo_pct": -1.0353076329732258,
+            "slope_log_per_year": -0.0012769863824342695,
+            "slope_pct_per_year": -0.12761713822754261,
+            "target": "winter_dec_mar",
+            "year_from": 1941,
+            "year_to": 1992
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.7619299009086584,
+            "mk_significant_5pct": false,
+            "mk_z": 0.3029474613211811,
+            "n_years": 40,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 1.3190414994019628,
+            "slope_ci95_lo_pct": -1.0364430194503282,
+            "slope_log_per_year": 0.0012958454309786442,
+            "slope_pct_per_year": 0.12966854014540008,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1941,
+            "year_to": 1981
+          }
+        }
+      },
+      "5951": {
+        "backtest": {
+          "n_cases": 488,
+          "period": [
+            1954,
+            2000
+          ],
+          "raw_climatology": {
+            "coverage_80": 0.6413934426229508,
+            "coverage_95": 0.7868852459016393,
+            "crps": 598.914518442623
+          },
+          "trend_adaptive": {
+            "coverage_80": 0.7295081967213115,
+            "coverage_95": 0.8852459016393442,
+            "crps": 617.9618684885397
+          }
+        },
+        "n_years_total": 72,
+        "trends": {
+          "annual": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.7953446247464062,
+            "mk_significant_5pct": false,
+            "mk_z": -0.2593766749410668,
+            "n_years": 68,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.2306781815528014,
+            "slope_ci95_lo_pct": -0.351683694586169,
+            "slope_log_per_year": -0.00044129894040165023,
+            "slope_pct_per_year": -0.044120158234606244,
+            "target": "annual",
+            "year_from": 1927,
+            "year_to": 2000
+          },
+          "winter_dec_mar": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 1.0910561343280278e-10,
+            "mk_significant_5pct": true,
+            "mk_z": 6.453764294706353,
+            "n_years": 69,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 2.224121576840954,
+            "slope_ci95_lo_pct": 1.0706892182132943,
+            "slope_log_per_year": 0.015770523372354177,
+            "slope_pct_per_year": 1.5895534374493092,
+            "target": "winter_dec_mar",
+            "year_from": 1927,
+            "year_to": 2000
+          },
+          "winter_dec_mar_pre_regulation": {
+            "engine": "V9-REGIONAL-TREND-ANALYSIS-1",
+            "mk_p_two_sided": 0.19476943188593276,
+            "mk_significant_5pct": false,
+            "mk_z": 1.296598316893968,
+            "n_years": 50,
+            "production_ready": false,
+            "slope_ci95_hi_pct": 0.5301268873953102,
+            "slope_ci95_lo_pct": -0.0786838129872014,
+            "slope_log_per_year": 0.002307545898412866,
+            "slope_pct_per_year": 0.23102103314891487,
+            "target": "winter_dec_mar_pre_regulation",
+            "year_from": 1927,
+            "year_to": 1978
+          }
+        }
+      }
+    },
+    "stations": [
+      "5855",
+      "5857",
+      "5858",
+      "5859",
+      "5865",
+      "5874",
+      "5878",
+      "5884",
+      "5889",
+      "5897",
+      "5951"
+    ],
+    "winter_months": [
+      12,
+      1,
+      2,
+      3
+    ]
+  }
+}
