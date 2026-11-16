@@ -1,0 +1,42 @@
+{
+  "artifact": "grid_ieee33_benchmark_v9",
+  "created_utc": "2026-11-16T11:22:59.428555+00:00",
+  "network": "IEEE 33-bus (Baran & Wu 1989), 12.66 kV, radial",
+  "solver": {
+    "engine": "V9-RADIAL-NR-POWERFLOW-1",
+    "iterations": 5,
+    "converged": true
+  },
+  "ours": {
+    "vmin_pu": 0.9130904793610463,
+    "vmin_bus_1idx": 18,
+    "loss_kw": 202.67712645598107
+  },
+  "literature": {
+    "vmin_pu": 0.9131,
+    "vmin_bus_1idx": 18,
+    "loss_kw": 202.67
+  },
+  "literature_match": {
+    "vmin_abs_err": 9.520638953763871e-06,
+    "loss_abs_err_kw": 0.007126455981079971
+  },
+  "external_benchmark": {
+    "status": "PASS",
+    "reference_solver": "pandapower 3.5.6",
+    "pandapower": {
+      "vmin_pu": 0.9130904793610511,
+      "vmin_bus_1idx": 18,
+      "loss_kw": 202.6771264559658
+    },
+    "max_abs_voltage_diff_pu": 4.824307620054924e-11,
+    "abs_loss_diff_kw": 1.5262457964126952e-11,
+    "tolerances": {
+      "voltage_pu": 1e-06,
+      "loss_kw": 0.001
+    }
+  },
+  "benchmarked_against_external_solver": true,
+  "production_ready": false,
+  "sha256": "f87cc4f45b0d90928f7828d872a906b53467f48acff0fd721c4f847b6b6554f0"
+}
