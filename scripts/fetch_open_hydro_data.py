@@ -30,7 +30,7 @@ STATIONS = [
      "note": "створ у Колымского каскада; в файле v4.0 ряд 1933-01..2000-09 (67 полных лет)"},
     {"rims_id": "5855", "code": None, "name": "Kolyma at Orotuk",
      "note": "следующий апстрим-створ"},
-    {"rims_id": "5951", "code": None, "name": "Kolyma downstream of Ust'-Sреднекан",
+    {"rims_id": "5951", "code": None, "name": "Kolyma downstream of Ust'-Srednekan",
      "note": "следующий даунстрим-створ"},
 ]
 
