@@ -106,6 +106,15 @@ def _theil_sen_ci(x: Sequence[float], y: Sequence[float]) -> Tuple[float, float,
     return slope, slopes[m1], slopes[m2], n_pairs
 
 
+def theil_sen_ci(x: Sequence[float], y: Sequence[float]) -> Tuple[float, float, float, int]:
+    """Публичная обёртка ДИ Тейла—Сена (для регионального анализа V9.5).
+
+    Семантика и детерминизм идентичны _theil_sen_ci; вынесена в публичный
+    API, чтобы модули-«потребители» не импортировали приватное имя.
+    """
+    return _theil_sen_ci(x, y)
+
+
 def _mixture_cdf(z: float, means: Sequence[float], sd: float) -> float:
     return sum(_STD.cdf((z - mu) / sd) for mu in means) / len(means)
 
