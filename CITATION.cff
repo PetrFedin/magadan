@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "Если вы используете этот проект, пожалуйста, цитируйте его следующим образом."
+title: "ГИДРОКОНТУР 360 — МАГАДАН: воспроизводимая инженерно-экономическая исследовательская платформа"
+authors:
+  - family-names: Fedin
+    given-names: Petr
+repository-code: "https://github.com/PetrFedin/magadan"
+version: 8.11.0
+date-released: "2026-11-16"
+notes: "SYNTHETIC RESEARCH LAB / PRODUCTION HOLD. Все данные синтетические; проект не связан с Группой «РусГидро» соглашением."
