@@ -1,6 +1,6 @@
 {
   "dataset_id": "OPEN-PUBLISHED-KOLYMA-MAGADAN-REFERENCE-1",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "created_utc": "2026-11-16",
   "data_class": "OPEN-PUBLISHED-REFERENCE",
   "measured_field_data": false,
@@ -163,7 +163,8 @@
       "spillway_capacity_npu_m3s": {"value": 8000, "unit": "м³/с", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
       "spillway_capacity_fpu_m3s": {"value": 11500, "unit": "м³/с", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP"},
       "penstocks": {"value": "5 деривационных трубопроводов Ø6 м, длина 262 м", "unit": null, "source_ref": "SRC-HYDROPOWER-RU"},
-      "share_of_magadan_system_supply_pct": {"value": 95, "unit": "%", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP", "notes_ru": "До 95% снабжения изолированной энергосистемы Магаданской области (вместе с Усть-Среднеканской ГЭС как каскад)."}
+      "share_of_magadan_system_supply_pct": {"value": 95, "unit": "%", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP", "notes_ru": "До 95% снабжения изолированной энергосистемы Магаданской области (вместе с Усть-Среднеканской ГЭС как каскад)."},
+      "first_unit_commissioned_year": {"value": 1982, "unit": "год", "source_ref": "SRC-WIKIPEDIA-KOLYMA-HPP", "notes_ru": "Первый ПОСТОЯННЫЙ агрегат — июнь 1982 (акт 27.06.1982); формальный пуск 24.02.1981 аннулирован; наполнение водохранилища с 18.10.1980. Год начала регулирующего влияния на нижние створы (5858, 5951) в regional_trend_v9: KOLYMSKY_HPP_REGULATION_ONSET_YEAR=1982."}
     }
   },
   "ust_srednekan_hpp": {
@@ -182,7 +183,8 @@
       "normal_pool_level_m": {"value": 290, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
       "flood_pool_level_m": {"value": 292.3, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
       "dead_storage_level_m": {"value": 278, "unit": "м БС", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP"},
-      "construction_completed": {"value": "2024-12", "unit": null, "source_ref": "SRC-ENERGYBASE-RU", "notes_ru": "Строительство завершено в декабре 2024 г.; условия площадки — многолетняя мерзлота до 300 м, температуры до −60°C."}
+      "construction_completed": {"value": "2024-12", "unit": null, "source_ref": "SRC-ENERGYBASE-RU", "notes_ru": "Строительство завершено в декабре 2024 г.; условия площадки — многолетняя мерзлота до 300 м, температуры до −60°C."},
+      "first_unit_commissioned_year": {"value": 2013, "unit": "год", "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP", "notes_ru": "Первый агрегат — 2013 г.; вне периода рядов R-ArcticNET (до 2000 г.), на тренд-анализ V9.5 не влияет."}
     }
   },
   "magadan_power_system": {
