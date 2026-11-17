@@ -317,3 +317,17 @@ def test_spill_is_recorded_as_non_generating_outlet():
         storage_energy_gwh(step.kolyma_release_km3, KOL.head_m, ETA)
         + storage_energy_gwh(step.ust_release_km3, UST.head_m, ETA))
     assert abs(r.cascade_mass_residual_km3) < 1e-9
+
+
+def test_monthly_dispatch_is_thermal_first_and_lower_water_spills():
+    # Regress the ACTUAL order in the V9.7 engine; not an optimized dispatch
+    # recommendation. At 460 MW demand, thermal 320 MW is scheduled first.
+    r = run_balance(months=(11,), peak_load_mw=460.0,
+                    thermal_available_mw=320.0,
+                    inflow_by_month_m3s={11: 70.4})
+    step = r.months[0]
+    assert step.thermal_energy_gwh == pytest.approx(320.0 * 720 / 1000.0)
+    assert step.hydro_energy_gwh == pytest.approx((460.0 - 320.0) * 720 / 1000.0)
+    assert step.ust_release_km3 == pytest.approx(0.0)
+    assert step.ust_spill_km3 > 0.0
+    assert abs(r.cascade_mass_residual_km3) < 1e-9
