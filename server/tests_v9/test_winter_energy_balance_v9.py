@@ -237,3 +237,83 @@ def test_artifact_sha256_is_canonical_payload_receipt():
     blob = json.dumps(payload, ensure_ascii=False, indent=2,
                       sort_keys=True).encode()
     assert hashlib.sha256(blob).hexdigest() == art["artifact_sha256"]
+
+
+# --- V9.8: independent mass accounting and zero-overproduction guards --------
+
+def test_upper_overflow_reaches_lower_without_vanishing():
+    # Both reservoirs start full. No hydro energy is requested: ALL incoming
+    # water must leave as explicit upper/lower spills, not get clamped away.
+    r = run_balance(months=(11,), peak_load_mw=460.0,
+                    thermal_available_mw=460.0,
+                    inflow_by_month_m3s={11: 100.0},
+                    side_inflow_annual_km3=0.0)
+    step = r.months[0]
+    expected = 100.0 * 720 * 3600 / 1e9
+    assert step.kolyma_release_km3 == 0.0
+    assert step.ust_release_km3 == 0.0
+    assert step.kolyma_spill_km3 == pytest.approx(expected)
+    assert step.ust_inflow_km3 == pytest.approx(expected)
+    assert step.ust_spill_km3 == pytest.approx(expected)
+    assert step.hydro_energy_gwh == 0.0
+    assert step.kolyma_storage_end_km3 == pytest.approx(KOL.usable_volume_km3)
+    assert step.ust_storage_end_km3 == pytest.approx(UST.usable_volume_km3)
+    assert abs(step.cascade_mass_residual_km3) < 1e-9
+    assert abs(r.cascade_mass_residual_km3) < 1e-9
+
+
+def test_lower_lateral_overflow_is_not_attributed_to_upper_turbine():
+    r = run_balance(months=(11,), peak_load_mw=460.0,
+                    thermal_available_mw=460.0,
+                    initial_storage_fraction=0.5,
+                    inflow_by_month_m3s={11: 1000.0},
+                    side_inflow_annual_km3=17.0)
+    step = r.months[0]
+    assert step.kolyma_spill_km3 == pytest.approx(0.0)
+    assert step.ust_spill_km3 > 0
+    assert step.hydro_energy_gwh == 0
+    assert abs(r.cascade_mass_residual_km3) < 1e-9
+
+
+def test_thermal_generation_cannot_exceed_demand():
+    r = run_balance(months=(11,), peak_load_mw=460.0,
+                    thermal_available_mw=800.0,
+                    inflow_by_month_m3s={11: 0.0})
+    step = r.months[0]
+    assert step.thermal_energy_gwh == pytest.approx(step.load_energy_gwh)
+    assert step.hydro_energy_gwh == 0
+    assert step.deficit_gwh == 0
+
+
+def test_full_season_closed_mass_accounting_with_spill():
+    r = run_balance(months=(11, 12), peak_load_mw=460.0,
+                    thermal_available_mw=460.0,
+                    inflow_by_month_m3s={11: 100.0, 12: 200.0},
+                    side_inflow_annual_km3=4.5)
+    side_ratio = 4.5 / (739.0 * 31.536e6 / 1e9)
+    initial = KOL.usable_volume_km3 + UST.usable_volume_km3
+    expected_external = sum(
+        s.kolyma_inflow_km3 / (1 - side_ratio) for s in r.months)
+    expected_out = sum(
+        s.ust_release_km3 + s.ust_spill_km3 for s in r.months)
+    final = r.months[-1].kolyma_storage_end_km3 + r.months[-1].ust_storage_end_km3
+    assert initial + expected_external - expected_out == pytest.approx(final, abs=1e-9)
+    assert abs(r.cascade_mass_residual_km3) < 1e-9
+    for step in r.months:
+        assert step.kolyma_spill_km3 >= 0
+        assert step.ust_spill_km3 >= 0
+        assert abs(step.cascade_mass_residual_km3) < 1e-9
+
+
+def test_spill_is_recorded_as_non_generating_outlet():
+    r = run_balance(months=(11,), peak_load_mw=574.0,
+                    thermal_available_mw=0.0,
+                    inflow_by_month_m3s={11: 1500.0})
+    step = r.months[0]
+    assert step.kolyma_spill_km3 > 0
+    assert step.ust_spill_km3 > 0
+    # The energy is calculated only from turbine release, never spill.
+    assert step.hydro_energy_gwh == pytest.approx(
+        storage_energy_gwh(step.kolyma_release_km3, KOL.head_m, ETA)
+        + storage_energy_gwh(step.ust_release_km3, UST.head_m, ETA))
+    assert abs(r.cascade_mass_residual_km3) < 1e-9
