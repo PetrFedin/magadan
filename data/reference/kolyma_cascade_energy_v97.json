@@ -1,0 +1,91 @@
+{
+  "dataset_id": "kolyma-cascade-energy-v97",
+  "version": "1.0.0",
+  "created_utc": "2026-11-17T00:00:00Z",
+  "data_class": "OPEN-PUBLISHED-REFERENCE",
+  "measured_field_data": false,
+  "usable_for_production_decisions": false,
+  "disclaimer_ru": "Опорные параметры каскадного зимнего энергобаланса (V9.7). Не натурные измерения и не телеметрия владельца. КПД гидроагрегатов и помесячное распределение боковой приточности в открытых источниках не опубликованы — присутствуют только как явно помеченные сценарные диапазоны (ASSUMPTION), не как данные.",
+  "provenance_policy": "Каждое число несёт source_ref; расхождения не усредняются молча; отсутствующий параметр = null/ASSUMPTION, а не экспертная оценка.",
+  "cascade_hydrology": {
+    "gauge_station_id": {
+      "value": "5858",
+      "unit": null,
+      "source_ref": "SRC-RARCTICNET-5858",
+      "notes_ru": "Створ р. Колыма — Усть-Среднекан (ниже Колымской ГЭС, выше Усть-Среднеканской): измеряет приток в Усть-Среднеканское водохранилище = сброс Колымской ГЭС + боковая приточность."
+    },
+    "natural_period_for_inflow_scenarios": {
+      "value": [1933, 1981],
+      "unit": "годы",
+      "source_ref": "SRC-RARCTICNET-V40-ALLDATA",
+      "notes_ru": "До начала регулирующего влияния Колымской ГЭС (1982, KOLYMSKY_HPP_REGULATION_ONSET_YEAR): естественный режим, n=49 полных лет на каждый месяц."
+    },
+    "mean_annual_flow_ust_srednekan_m3s": {
+      "value": 739,
+      "unit": "м³/с",
+      "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP",
+      "notes_ru": "Среднемноголетний расход Колымы в районе Усть-Среднеканской ГЭС. Перекрёстная проверка: среднее по ряду R-ArcticNET 5858 за 1933-1981 = 730,7 м³/с (расхождение 1,1%)."
+    },
+    "side_inflow_annual_volume_km3": {
+      "value": 4.5,
+      "unit": "км³/год",
+      "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP",
+      "notes_ru": "Объём боковой приточности между Колымской и Усть-Среднеканской ГЭС (притоки Бохапча, Дебин, Оротукан, Таскан). Помесячное распределение не опубликовано => в балансе применяется годовая доля к каждому месяцу (ASSUMPTION)."
+    },
+    "winter_months": {
+      "value": [11, 12, 1, 2, 3, 4],
+      "unit": "месяцы",
+      "source_ref": "ASSUMPTION-V97-WINTER-SEASON",
+      "notes_ru": "Низководный зимний полугодовой период (ледостав) ноя—апр; невисокосный год, 4344 ч. Согласуется с зимней меженью дек—мар в V9.6 (расширение на плечевые месяцы)."
+    }
+  },
+  "scenario_grids_assumption_not_data": {
+    "eta_grid": {
+      "value": [0.85, 0.90, 0.95],
+      "unit": "доля",
+      "source_ref": "ASSUMPTION-ETA-GRID-NOT-DATA",
+      "notes_ru": "КПД турбина+генератор в открытых источниках не опубликован; типовой диапазон для радиально-осевых/диагональных агрегатов. НЕ данные."
+    },
+    "thermal_availability_grid": {
+      "value": [1.0, 0.9457, 0.85],
+      "unit": "доля",
+      "source_ref": "ASSUMPTION-THERMAL-AVAILABILITY-NOT-DATA",
+      "notes_ru": "Доступность ТЭС (320 МВт): 100% паспортной; 1-EFORd 5,43% (GADS hydro, SRC-GADS-2008-2012-HYDRO в hydro_for_open_stats.json — перенос классовой статистики на ТЭС является допущением); 85% консервативно. НЕ данные."
+    },
+    "initial_storage_fraction_grid": {
+      "value": [1.0, 0.75, 0.5],
+      "unit": "доля полезного объёма",
+      "source_ref": "ASSUMPTION-INITIAL-STORAGE-NOT-DATA",
+      "notes_ru": "Заполнение водохранилищ к началу зимы не опубликовано; сценарная сетка. НЕ данные."
+    }
+  },
+  "sources": [
+    {
+      "source_ref": "SRC-WIKIPEDIA-UST-SREDNEKAN-HPP",
+      "title_ru": "Усть-Среднеканская ГЭС — Википедия",
+      "publisher": "Wikipedia",
+      "url": "https://ru.wikipedia.org/wiki/Усть-Среднеканская_ГЭС",
+      "published": null,
+      "accessed": "2026-11-17",
+      "class": "ENCYCLOPEDIA"
+    },
+    {
+      "source_ref": "SRC-RARCTICNET-5858",
+      "title_ru": "R-ArcticNET / ArcticRIMS, станция 5858 (р. Колыма — Усть-Среднекан), месячный сток",
+      "publisher": "University of New Hampshire, ArcticRIMS",
+      "url": "https://rims.unh.edu/data/station/station.cgi?station=5858",
+      "published": null,
+      "accessed": "2026-11-17",
+      "class": "RESEARCH-DATA-PORTAL"
+    },
+    {
+      "source_ref": "SRC-RARCTICNET-V40-ALLDATA",
+      "title_ru": "R-ArcticNET v4.0 AllData: Anadyr_and_Kolyma_Data_m3_s.txt — месячный сток; верифицированное подмножество в data/r-arcticnet/kolyma_basin_multistation_v4.tsv",
+      "publisher": "University of New Hampshire, Water Systems Analysis Group (первичные данные: Росгидромет/СГИ)",
+      "url": "https://www.r-arcticnet.sr.unh.edu/v4.0/AllData/Anadyr_and_Kolyma_Data_m3_s.txt",
+      "published": null,
+      "accessed": "2026-11-17",
+      "class": "RESEARCH-DATA-PORTAL"
+    }
+  ]
+}
