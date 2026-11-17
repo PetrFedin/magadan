@@ -23,9 +23,9 @@ ENGINE_ID: V9-WINTER-ENERGY-BALANCE-1
     боковая приточность между плотинами (4,5 км³/год, источник в
     data/reference/kolyma_cascade_energy_v97.json) вычитается из
     притока Колымской ГЭС и добавляется Усть-Среднеканской;
-  * диспетчеризация (планировочное приближение): ГЭС несут
-    гарантированную мощность всю зиму, ТЭС покрывает остаток нагрузки
-    с явно сценарной доступностью; если запас водохранилища исчерпан,
+  * диспетчеризация (упрощённая thermal-first): ТЭС покрывают спрос первыми
+    в пределах принятой доступности; ГЭС покрывают остаток в пределах
+    гарантированной мощности и запасов; если запас исчерпан,
     выработка ГЭС ограничивается водой, дефицит фиксируется в ГВт·ч;
   * нагрузка — константа на пике (консервативно, как в V9.5/V9.6).
 
@@ -165,6 +165,9 @@ class MonthStepResult(BaseModel):
     ust_inflow_km3: float = Field(ge=0)
     ust_release_km3: float = Field(ge=0)
     ust_storage_end_km3: float = Field(ge=0)
+    kolyma_spill_km3: float = Field(ge=0, default=0.0)
+    ust_spill_km3: float = Field(ge=0, default=0.0)
+    cascade_mass_residual_km3: float = 0.0
 
 
 class WinterBalanceResult(BaseModel):
@@ -188,6 +191,7 @@ class WinterBalanceResult(BaseModel):
     kolyma_storage_min_km3: float = Field(ge=0)
     ust_storage_min_km3: float = Field(ge=0)
     feasible_no_deficit: bool
+    cascade_mass_residual_km3: float = 0.0
     production_ready: bool = False
 
 
@@ -213,8 +217,8 @@ def simulate_winter_balance(
     Доля боковой приточности выводится из двух опубликованных чисел
     (годовой объём боковой приточности / среднемноголетний сток) и
     применяется помесячно (ASSUMPTION — помесячное распределение не
-    опубликовано). ГЭС несут гарантированную мощность, пока хватает
-    запаса; нагрузка константна на пике; ТЭС покрывает остаток.
+    опубликовано). ТЭС покрывают нагрузку первыми в пределах сценарной доступности;
+    ГЭС закрывают остаток при достаточном запасе; нагрузка постоянна.
     """
     if not scenario:
         raise ArithmeticError("WEB_NO_SCENARIO")
@@ -240,6 +244,9 @@ def simulate_winter_balance(
     ust_storage = ust_srednekan.usable_volume_km3 * initial_storage_fraction
     kol_min, ust_min = kol_storage, ust_storage
     steps: List[MonthStepResult] = []
+    initial_water_km3 = kol_storage + ust_storage
+    external_water_km3 = 0.0
+    downstream_exit_km3 = 0.0
     totals = {"load": 0.0, "hydro": 0.0, "thermal": 0.0, "deficit": 0.0}
 
     for m in months:
@@ -255,7 +262,8 @@ def simulate_winter_balance(
         side_inflow = month_volume_km3 * side_share
 
         load_gwh = peak_load_mw * hours / 1000.0
-        thermal_gwh = thermal_available_mw * hours / 1000.0
+        # Never schedule thermal production above the system's demand.
+        thermal_gwh = min(load_gwh, thermal_available_mw * hours / 1000.0)
         hydro_need_gwh = max(0.0, load_gwh - thermal_gwh)
 
         # Колымская: целевая выработка = гарантированная мощность,
@@ -264,25 +272,42 @@ def simulate_winter_balance(
                              hydro_need_gwh)
         kol_release_need = power_to_release_km3(
             kol_target_gwh * 1000.0 / hours, hours, kolyma.head_m, eta)
-        kol_release = min(kol_release_need, kol_storage + kol_inflow)
+        kol_begin = kol_storage
+        ust_begin = ust_storage
+        kol_release = min(kol_release_need, kol_begin + kol_inflow)
         kol_energy = storage_energy_gwh(kol_release, kolyma.head_m, eta)
-        kol_storage = kol_storage + kol_inflow - kol_release
-        if kol_storage > kolyma.usable_volume_km3:
-            # холостой сброс сверх полезного объёма (зимой маловероятно)
-            kol_storage = kolyma.usable_volume_km3
+        # Explicit overflow: disappearing water would break mass conservation.
+        # Upper spill is non-generating but still enters the lower reservoir.
+        kol_spill = max(0.0, kol_begin + kol_inflow - kol_release
+                        - kolyma.usable_volume_km3)
+        kol_storage = kol_begin + kol_inflow - kol_release - kol_spill
 
-        # Усть-Среднеканская: приток = сброс Колымской + боковая приточность.
-        ust_inflow = kol_release + side_inflow
+        # Lower receives BOTH upper turbine discharge and non-generating spill.
+        # No travel-time/hydraulic constraints are inferred at monthly grain.
+        ust_inflow = kol_release + kol_spill + side_inflow
         ust_target_gwh = min(
             ust_srednekan.guaranteed_capacity_mw * hours / 1000.0,
             max(0.0, hydro_need_gwh - kol_energy))
         ust_release_need = power_to_release_km3(
             ust_target_gwh * 1000.0 / hours, hours, ust_srednekan.head_m, eta)
-        ust_release = min(ust_release_need, ust_storage + ust_inflow)
+        ust_release = min(ust_release_need, ust_begin + ust_inflow)
         ust_energy = storage_energy_gwh(ust_release, ust_srednekan.head_m, eta)
-        ust_storage = ust_storage + ust_inflow - ust_release
-        if ust_storage > ust_srednekan.usable_volume_km3:
-            ust_storage = ust_srednekan.usable_volume_km3
+        ust_spill = max(0.0, ust_begin + ust_inflow - ust_release
+                        - ust_srednekan.usable_volume_km3)
+        ust_storage = ust_begin + ust_inflow - ust_release - ust_spill
+
+        # Upper turbine release/spill is internal transfer and must not be
+        # deducted from the total two-reservoir system a second time.
+        external_water_km3 += kol_inflow + side_inflow
+        downstream_exit_km3 += ust_release + ust_spill
+        monthly_residual = (kol_begin + ust_begin + kol_inflow + side_inflow
+                            - ust_release - ust_spill - kol_storage - ust_storage)
+        if abs(monthly_residual) > 1e-9:
+            raise ArithmeticError("WEB_MONTHLY_CASCADE_MASS_CONSERVATION_FAILED")
+        if (kol_storage < -1e-9 or ust_storage < -1e-9
+                or kol_storage > kolyma.usable_volume_km3 + 1e-9
+                or ust_storage > ust_srednekan.usable_volume_km3 + 1e-9):
+            raise ArithmeticError("WEB_RESERVOIR_STORAGE_OUTSIDE_BOUNDS")
 
         hydro_gwh = kol_energy + ust_energy
         deficit = max(0.0, load_gwh - thermal_gwh - hydro_gwh)
@@ -300,7 +325,15 @@ def simulate_winter_balance(
             kolyma_inflow_km3=kol_inflow, kolyma_release_km3=kol_release,
             kolyma_storage_end_km3=kol_storage,
             ust_inflow_km3=ust_inflow, ust_release_km3=ust_release,
-            ust_storage_end_km3=ust_storage))
+            ust_storage_end_km3=ust_storage,
+            kolyma_spill_km3=kol_spill,
+            ust_spill_km3=ust_spill,
+            cascade_mass_residual_km3=monthly_residual))
+
+    season_mass_residual = (initial_water_km3 + external_water_km3
+                            - downstream_exit_km3 - kol_storage - ust_storage)
+    if abs(season_mass_residual) > 1e-9:
+        raise ArithmeticError("WEB_SEASON_CASCADE_MASS_CONSERVATION_FAILED")
 
     return WinterBalanceResult(
         scenario=scenario,
@@ -317,4 +350,5 @@ def simulate_winter_balance(
         kolyma_storage_min_km3=kol_min,
         ust_storage_min_km3=ust_min,
         feasible_no_deficit=totals["deficit"] < DEFICIT_EPS_GWH,
+        cascade_mass_residual_km3=season_mass_residual,
     )

@@ -1,0 +1,123 @@
+name: HydroKontur V9.8 Mass Balance & Data Boundary (RESEARCH ONLY)
+
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/v98-water-balance.yml'
+      - 'server/hydro_api/winter_energy_balance_v9.py'
+      - 'server/tests_v9/**'
+      - 'scripts/magadan_winter_energy_balance_v97.py'
+      - 'data/reference/kolyma_cascade_energy_v97.json'
+      - 'artifacts_v9/magadan_winter_energy_balance_v97.json'
+      - 'docs/V98_WATER_BALANCE_REMEDIATION_RU.md'
+      - 'server/requirements.txt'
+      - 'server/requirements-v71.txt'
+  push:
+    branches:
+      - 'research/v98-water-balance-evidence-20261117'
+    paths:
+      - '.github/workflows/v98-water-balance.yml'
+      - 'server/hydro_api/winter_energy_balance_v9.py'
+      - 'server/tests_v9/**'
+      - 'artifacts_v9/magadan_winter_energy_balance_v97.json'
+      - 'scripts/magadan_winter_energy_balance_v97.py'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v98-water-and-energy-accounting:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact source SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify exact immutable source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Install tests and cryptographic auditing dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Execute all V9 research tests, including six accounting/dispatch guards
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 600s \
+            python -m pytest server/tests_v9 -q -ra -o xfail_strict=true \
+            --maxfail=1 --junitxml=/tmp/v98-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v98-junit.xml \
+            --shard v98-cascade-mass-accounting \
+            --min-passed 218 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_upper_overflow_reaches_lower_without_vanishing \
+            --require-case test_lower_lateral_overflow_is_not_attributed_to_upper_turbine \
+            --require-case test_thermal_generation_cannot_exceed_demand \
+            --require-case test_full_season_closed_mass_accounting_with_spill \
+            --require-case test_spill_is_recorded_as_non_generating_outlet \
+            --require-case test_monthly_dispatch_is_thermal_first_and_lower_water_spills
+          sha256sum /tmp/v98-junit.xml
+      - name: Recompute winter scenario artifact deterministically
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_winter_energy_balance_v97.py
+          cp artifacts_v9/magadan_winter_energy_balance_v97.json /tmp/v98-artifact-first.json
+          python scripts/magadan_winter_energy_balance_v97.py
+          cmp /tmp/v98-artifact-first.json artifacts_v9/magadan_winter_energy_balance_v97.json
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          p=Path("artifacts_v9/magadan_winter_energy_balance_v97.json")
+          artifact=json.loads(p.read_text(encoding="utf-8"))
+          assert artifact["report"]["n_scenarios"]==216
+          assert artifact["report"]["feasible_no_deficit_count"]==216
+          assert all(
+            abs(m.get("cascade_mass_residual_km3", 1)) < 1e-9
+            and m.get("kolyma_spill_km3", -1) >= 0
+            and m.get("ust_spill_km3", -1) >= 0
+            for ref in artifact["report"]["reference_scenarios"].values()
+            for m in ref["months"]
+          )
+          print("V98_RECOMPUTED_ARTIFACT_SHA256="+hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
+      - name: Emit reproducible public research artifact for reviewed GitHub update
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- artifacts_v9/magadan_winter_energy_balance_v97.json; then
+            echo "V98_ARTIFACT_ALREADY_SYNCED"
+          else
+            python - <<'PY'
+          import base64
+          from pathlib import Path
+          p=Path("artifacts_v9/magadan_winter_energy_balance_v97.json")
+          text=base64.b64encode(p.read_bytes()).decode("ascii")
+          print("V98_ARTIFACT_BASE64_BEGIN")
+          for index in range(0, len(text), 2000):
+              print("V98_ARTIFACT_CHUNK="+text[index:index+2000])
+          print("V98_ARTIFACT_BASE64_END")
+          PY
+          fi
+      - name: Verify no unplanned source edits and preserve production HOLD
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          # A successful CI must not point at a stale numerical research artifact.
+          git diff --exit-code -- artifacts_v9/magadan_winter_energy_balance_v97.json
+          echo "V98_SYNTHETIC_RESEARCH_AND_PUBLISHED_INPUTS_ONLY; FIELD_APPROVAL_N1_MFA_PRODUCTION_HOLD"
