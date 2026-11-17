@@ -209,7 +209,7 @@ def test_artifact_receipt_and_key_findings():
     # на полных эталонных сценариях
     refs = rep["reference_scenarios"]
     assert all(s["engine"] == ENGINE_ID for s in refs.values())
-assert all(s["production_ready"] is False for s in refs.values())
+    assert all(s["production_ready"] is False for s in refs.values())
     assert all(set(s) == {"s", "d", "k", "u", "h", "f"}
                for s in rep["scenarios"])
     cc = rep["cross_checks"]

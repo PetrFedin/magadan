@@ -186,7 +186,7 @@ def main() -> int:
     n_ok = sum(1 for s in scenarios if s["f"])
 
     # --- Перекрёстные проверки (связи между данными линии V9) ---
-eta_mid = 0.90
+    eta_mid = 0.90
     q95_feb = inflow_q[2][0.05]  # самый низководный месяц, 5% квантиль
     kol_inflow_share = 1.0 - side_km3 / (mean_flow_pub * 31.536e6 / 1e9)
     inflow_only_power_mw = flow_to_power_mw(
