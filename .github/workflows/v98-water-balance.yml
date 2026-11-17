@@ -117,4 +117,6 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          # A successful CI must not point at a stale numerical research artifact.
+          git diff --exit-code -- artifacts_v9/magadan_winter_energy_balance_v97.json
           echo "V98_SYNTHETIC_RESEARCH_AND_PUBLISHED_INPUTS_ONLY; FIELD_APPROVAL_N1_MFA_PRODUCTION_HOLD"
