@@ -209,6 +209,7 @@ def simulate_winter_balance(
     mean_annual_flow_m3s: float,
     initial_storage_fraction: float = 1.0,
     months: Sequence[int] = WINTER_MONTHS,
+    dispatch_policy: str = "thermal_first",
 ) -> WinterBalanceResult:
     """Месячный каскадный баланс низководной зимы.
 
@@ -222,6 +223,8 @@ def simulate_winter_balance(
     """
     if not scenario:
         raise ArithmeticError("WEB_NO_SCENARIO")
+    if dispatch_policy not in ("thermal_first", "hydro_first"):
+        raise ArithmeticError("WEB_UNKNOWN_DISPATCH_POLICY")
     _check_finite_nonnegative(peak_load_mw, "peak_load_mw")
     if peak_load_mw <= 0:
         raise ArithmeticError("WEB_ZERO_LOAD")
@@ -262,8 +265,12 @@ def simulate_winter_balance(
         side_inflow = month_volume_km3 * side_share
 
         load_gwh = peak_load_mw * hours / 1000.0
-        # Never schedule thermal production above the system's demand.
-        thermal_gwh = min(load_gwh, thermal_available_mw * hours / 1000.0)
+        # Both policies use exactly the SAME data, mass conservation and
+        # per-generator limits; only the priority of scheduling changes.
+        # Neither heuristic is a physically validated operator dispatch.
+        thermal_cap_gwh = thermal_available_mw * hours / 1000.0
+        thermal_gwh = (min(load_gwh, thermal_cap_gwh)
+                       if dispatch_policy == "thermal_first" else 0.0)
         hydro_need_gwh = max(0.0, load_gwh - thermal_gwh)
 
         # Колымская: целевая выработка = гарантированная мощность,
@@ -310,7 +317,15 @@ def simulate_winter_balance(
             raise ArithmeticError("WEB_RESERVOIR_STORAGE_OUTSIDE_BOUNDS")
 
         hydro_gwh = kol_energy + ust_energy
+        if dispatch_policy == "hydro_first":
+            # Thermal is the *residual* source after feasible hydro generation.
+            thermal_gwh = min(thermal_cap_gwh, max(0.0, load_gwh - hydro_gwh))
         deficit = max(0.0, load_gwh - thermal_gwh - hydro_gwh)
+        # Strict budget: scenario generation cannot materially exceed demand.
+        if hydro_gwh + thermal_gwh > load_gwh + 1e-8:
+            raise ArithmeticError("WEB_ENERGY_GENERATED_ABOVE_DEMAND")
+        if abs(load_gwh - thermal_gwh - hydro_gwh - deficit) > 1e-8:
+            raise ArithmeticError("WEB_MONTH_ENERGY_RESIDUAL")
 
         kol_min = min(kol_min, kol_storage)
         ust_min = min(ust_min, ust_storage)
