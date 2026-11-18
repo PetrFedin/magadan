@@ -221,3 +221,29 @@ def test_no_real_data_attestation_from_comparison():
     assert out["real_operator_telemetry_used"] is False
     assert out["policy_comparison_not_a_dispatch_optimization"] is True
     assert out["same_assumed_input_series"] is True
+
+
+def test_persisted_v99_artifact_inputs_and_receipt():
+    """A regenerated scenario must be tied to the exact committed code/data."""
+    import hashlib
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2]
+    p = root / "artifacts_v9/magadan_dispatch_policy_v99.json"
+    assert p.is_file(), "V99_RESEARCH_ARTIFACT_MISSING"
+    artifact = json.loads(p.read_text(encoding="utf-8"))
+    assert artifact["artifact"] == "MAGADAN-V99-SYNTHETIC-POLICY-SENSITIVITY-1"
+    payload = {k: v for k, v in artifact.items() if k != "artifact_sha256"}
+    raw = json.dumps(payload, sort_keys=True, indent=2, ensure_ascii=False).encode()
+    assert hashlib.sha256(raw).hexdigest() == artifact["artifact_sha256"]
+    for filepath, expected_sha in artifact["source_hashes"].items():
+        source = root / filepath
+        assert source.is_file(), filepath
+        assert hashlib.sha256(source.read_bytes()).hexdigest() == expected_sha
+    assert artifact["comparison"]["scenario_count"] == 216
+    assert len(artifact["scenarios"]) == 216
+    assert artifact["thermal_first"]["count_deterministic_no_deficit"] == 216
+    assert artifact["hydro_first"]["count_deterministic_no_deficit"] == 216
+    assert artifact["comparison"]["different_spill_cases"] == 213
+    assert artifact["real_available_capacity_mw"] is None
+    assert artifact["production_ready"] is False
