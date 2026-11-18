@@ -29,6 +29,7 @@ INPUT_FILES = (
     V98_ARTIFACT,
     ROOT / "server/hydro_api/winter_energy_balance_v9.py",
     ROOT / "server/hydro_api/dispatch_policy_v99.py",
+    ROOT / "scripts/magadan_dispatch_policy_v99.py",
 )
 
 
