@@ -180,3 +180,30 @@ def test_demand_is_not_assigned_to_specific_incremental_consumer():
     x=study(extra_load_mw=250.0)
     assert "incremental_consumer_unserved_gwh" not in x
     assert x["model_deltas_are_not_consumer_shortfall_allocation"] is True
+
+
+def test_v910_persisted_research_artifact_and_source_bytes():
+    """Scientific receipt must match exact original model, scenario and data bytes."""
+    import hashlib
+    import json
+    from pathlib import Path
+    root=Path(__file__).resolve().parents[2]
+    path=root/"artifacts_v9/magadan_terminal_reserve_stress_v910.json"
+    assert path.is_file(),"V910_RESEARCH_RECEIPT_MISSING"
+    result=json.loads(path.read_text(encoding="utf-8"))
+    payload={k:v for k,v in result.items() if k!="payload_sha256"}
+    encoded=json.dumps(payload,indent=2,sort_keys=True,ensure_ascii=False).encode()
+    assert hashlib.sha256(encoded).hexdigest()==result["payload_sha256"]
+    for filename,expected in result["source_sha256"].items():
+        source=root/filename
+        assert source.is_file(),filename
+        assert hashlib.sha256(source.read_bytes()).hexdigest()==expected,filename
+    assert len(result["rows"])==result["summary"]["scenario_count"]==384
+    assert len(result["reference_trajectories"])==4
+    assert result["summary"]["stressed_deficit_cases"]==372
+    assert result["summary"]["baseline_deficit_cases"]==360
+    assert result["summary"]["positive_floor_deficit_delta_cases"]==240
+    assert result["normative_reservoir_floors_verified"] is False
+    assert result["grid_scenarios_are_not_probabilities"] is True
+    assert result["real_available_capacity_mw"] is None
+    assert result["production_ready"] is False
