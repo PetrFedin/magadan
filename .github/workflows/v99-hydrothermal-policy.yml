@@ -1,0 +1,129 @@
+name: HydroKontur V9.9 Hydrothermal Priority Sensitivity (RESEARCH ONLY)
+
+on:
+  push:
+    branches:
+      - 'research/v99-hydrothermal-policy-sensitivity-20261117'
+    paths:
+      - '.github/workflows/v99-hydrothermal-policy.yml'
+      - 'server/hydro_api/winter_energy_balance_v9.py'
+      - 'server/hydro_api/dispatch_policy_v99.py'
+      - 'server/tests_v9/**'
+      - 'scripts/magadan_dispatch_policy_v99.py'
+      - 'artifacts_v9/magadan_dispatch_policy_v99.json'
+  pull_request:
+    paths:
+      - '.github/workflows/v99-hydrothermal-policy.yml'
+      - 'server/hydro_api/winter_energy_balance_v9.py'
+      - 'server/hydro_api/dispatch_policy_v99.py'
+      - 'server/tests_v9/**'
+      - 'scripts/magadan_dispatch_policy_v99.py'
+      - 'artifacts_v9/magadan_dispatch_policy_v99.json'
+      - 'docs/V99_HYDROTHERMAL_POLICY_SENSITIVITY_RU.md'
+      - 'server/requirements-v71.txt'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  v99-exact-sha-scenario-pairs:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact source SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Check immutable source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Install scientific regression dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Test V9 including all paired-policy regressions
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 600s \
+            python -m pytest server/tests_v9 -q -ra -o xfail_strict=true \
+            --maxfail=1 --junitxml=/tmp/v99-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v99-junit.xml --shard v99-paired-policy-research \
+            --min-passed 247 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_default_preserves_exact_v98_thermal_first_receipt \
+            --require-case test_hydro_first_uses_both_capacity_limits_before_thermal \
+            --require-case test_thermal_first_retains_existing_140_mw_hydro \
+            --require-case test_no_thermal_means_policies_converge \
+            --require-case test_pair_reports_signed_mix_change_and_no_probabilities \
+            --require-case test_full_winter_both_policies_conserve_mass
+          sha256sum /tmp/v99-junit.xml
+      - name: Verify original V9.8 artifact stays byte-identical
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_winter_energy_balance_v97.py
+          git diff --exit-code -- artifacts_v9/magadan_winter_energy_balance_v97.json
+          echo "V99_BASELINE_REPRODUCED_ON_EXACT_SHA"
+      - name: Compute paired scenario grid and verify deterministic receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_dispatch_policy_v99.py
+          cp artifacts_v9/magadan_dispatch_policy_v99.json /tmp/v99-report-first.json
+          python scripts/magadan_dispatch_policy_v99.py
+          cmp /tmp/v99-report-first.json artifacts_v9/magadan_dispatch_policy_v99.json
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          p=Path("artifacts_v9/magadan_dispatch_policy_v99.json")
+          data=json.loads(p.read_text(encoding="utf-8"))
+          assert data["comparison"]["scenario_count"] == 216
+          assert data["synthetic_grid_frequencies_are_not_probabilities"] is True
+          assert data["production_ready"] is False
+          assert data["real_available_capacity_mw"] is None
+          assert data["physical_water_rule_constraints_validated"] is False
+          assert data["thermal_first"]["count_deterministic_no_deficit"] == 216
+          assert len(data["scenarios"]) == 216
+          for x in data["scenarios"]:
+              assert x["thermal_first"]["unserved_gwh"] >= 0
+              assert x["hydro_first"]["unserved_gwh"] >= 0
+          print("V99_ARTIFACT_FILE_SHA256="+hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
+      - name: Emit V9.9 research artifact for review without repository write permission
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- artifacts_v9/magadan_dispatch_policy_v99.json && \
+             git ls-files --error-unmatch artifacts_v9/magadan_dispatch_policy_v99.json >/dev/null 2>&1; then
+            echo "V99_ARTIFACT_ALREADY_SYNCED"
+          else
+            python - <<'PY'
+          import base64
+          from pathlib import Path
+          p=Path("artifacts_v9/magadan_dispatch_policy_v99.json")
+          b64=base64.b64encode(p.read_bytes()).decode("ascii")
+          print("V99_ARTIFACT_BASE64_BEGIN")
+          for i in range(0,len(b64),2000):
+              print("V99_ARTIFACT_CHUNK="+b64[i:i+2000])
+          print("V99_ARTIFACT_BASE64_END")
+          PY
+          fi
+      - name: Preserve synthetic-only study and clean source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          echo "V99_RESEARCH_ONLY; HYDRAULIC_CALIBRATION_N1_CORPORATE_STAGING_PRODUCTION_HOLD"
