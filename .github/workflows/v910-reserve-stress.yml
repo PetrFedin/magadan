@@ -59,14 +59,15 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v910-junit.xml \
             --shard v910-reserve-load-stress-research \
-            --min-passed 292 --max-skipped 0 \
+            --min-passed 293 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_same_input_deterministic_hash_and_outputs \
             --require-case test_low_initial_water_zero_thermal_produces_nonzero_shortage \
             --require-case test_floored_run_protects_more_terminal_water_than_unfloored_under_stress \
             --require-case test_floor_equal_initial_fails_without_epsilon_fake_state \
             --require-case test_research_contract_has_no_operational_or_regulatory_claims \
-            --require-case test_v910_persisted_research_artifact_and_source_bytes
+            --require-case test_v910_persisted_research_artifact_and_source_bytes \
+            --require-case test_v910_paired_policy_and_floor_boundary_counts
           sha256sum /tmp/v910-junit.xml
       - name: V9.8 and V9.9 historical artifacts unchanged
         shell: bash
