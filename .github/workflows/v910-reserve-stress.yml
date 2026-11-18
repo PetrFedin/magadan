@@ -1,0 +1,127 @@
+name: HydroKontur V9.10 Synthetic Terminal-Reserve and Incremental Load Stress
+
+on:
+  push:
+    branches:
+      - research/v910-terminal-reserve-stress-20261118
+    paths:
+      - .github/workflows/v910-reserve-stress.yml
+      - server/hydro_api/terminal_reserve_v910.py
+      - server/tests_v9/**
+      - scripts/magadan_terminal_reserve_stress_v910.py
+      - artifacts_v9/magadan_terminal_reserve_stress_v910.json
+      - docs/V910_TERMINAL_RESERVE_STRESS_RU.md
+  pull_request:
+    paths:
+      - .github/workflows/v910-reserve-stress.yml
+      - server/hydro_api/terminal_reserve_v910.py
+      - server/tests_v9/**
+      - scripts/magadan_terminal_reserve_stress_v910.py
+      - artifacts_v9/magadan_terminal_reserve_stress_v910.json
+      - docs/V910_TERMINAL_RESERVE_STRESS_RU.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  exact-sha-reserve-and-stress-research:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact research SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Verify clean exact source before tests
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Install scientific QA dependencies
+        run: python -m pip install -r server/requirements-v71.txt
+      - name: Full V9 scientific regression including V9.10 stress
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 600s \
+            python -m pytest server/tests_v9 -q -ra -o xfail_strict=true \
+            --maxfail=1 --junitxml=/tmp/v910-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v910-junit.xml \
+            --shard v910-reserve-load-stress-research \
+            --min-passed 290 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_same_input_deterministic_hash_and_outputs \
+            --require-case test_low_initial_water_zero_thermal_produces_nonzero_shortage \
+            --require-case test_floored_run_protects_more_terminal_water_than_unfloored_under_stress \
+            --require-case test_floor_equal_initial_fails_without_epsilon_fake_state \
+            --require-case test_research_contract_has_no_operational_or_regulatory_claims
+          sha256sum /tmp/v910-junit.xml
+      - name: V9.8 and V9.9 historical artifacts unchanged
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_winter_energy_balance_v97.py
+          python scripts/magadan_dispatch_policy_v99.py
+          git diff --exit-code -- artifacts_v9/magadan_winter_energy_balance_v97.json
+          git diff --exit-code -- artifacts_v9/magadan_dispatch_policy_v99.json
+          echo "V910_PARENT_V98_V99_ARTIFACTS_REPRODUCED"
+      - name: Calculate stress matrix twice with deterministic equality
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_terminal_reserve_stress_v910.py
+          cp artifacts_v9/magadan_terminal_reserve_stress_v910.json /tmp/v910-first.json
+          python scripts/magadan_terminal_reserve_stress_v910.py
+          cmp /tmp/v910-first.json artifacts_v9/magadan_terminal_reserve_stress_v910.json
+          python - <<'PY'
+          from pathlib import Path
+          import json, hashlib
+          p=Path("artifacts_v9/magadan_terminal_reserve_stress_v910.json")
+          a=json.loads(p.read_text(encoding="utf-8"))
+          assert a["summary"]["scenario_count"]==384
+          assert len(a["rows"])==384
+          assert len(a["reference_trajectories"])==4
+          assert a["study_not_approved_operating_rules"] is True
+          assert a["grid_scenarios_are_not_probabilities"] is True
+          assert a["real_available_capacity_mw"] is None
+          assert a["production_ready"] is False
+          assert a["normative_reservoir_floors_verified"] is False if "normative_reservoir_floors_verified" in a else True
+          print("V910_REGENERATED_FILE_SHA256="+hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
+      - name: Expose detached evidence for review and manual commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files --error-unmatch artifacts_v9/magadan_terminal_reserve_stress_v910.json >/dev/null 2>&1 && \
+            git diff --quiet -- artifacts_v9/magadan_terminal_reserve_stress_v910.json; then
+            echo "V910_ARTIFACT_ALREADY_SYNCED"
+          else
+            python - <<'PY'
+          from pathlib import Path
+          import base64
+          p=Path("artifacts_v9/magadan_terminal_reserve_stress_v910.json")
+          s=base64.b64encode(p.read_bytes()).decode("ascii")
+          print("V910_ARTIFACT_BASE64_BEGIN")
+          for i in range(0,len(s),2000):
+              print("V910_ARTIFACT_CHUNK="+s[i:i+2000])
+          print("V910_ARTIFACT_BASE64_END")
+          PY
+          fi
+      - name: Enforce source isolation and no production claims
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          echo "V910_SYNTHETIC_RESEARCH_ONLY; ACTUAL_HYDRAULIC_HEAD_GRID_N1_OPERATIONS_INVESTMENT_HOLD"
