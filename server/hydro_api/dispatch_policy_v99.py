@@ -64,6 +64,8 @@ def _brief(result: Any, policy: str) -> dict:
         ),
         "upper_storage_end_km3": _round(result.months[-1].kolyma_storage_end_km3),
         "lower_storage_end_km3": _round(result.months[-1].ust_storage_end_km3),
+        "upper_storage_min_km3": _round(result.kolyma_storage_min_km3),
+        "lower_storage_min_km3": _round(result.ust_storage_min_km3),
         "max_abs_mass_residual_km3": max(
             abs(result.cascade_mass_residual_km3),
             *(abs(x.cascade_mass_residual_km3) for x in result.months),
