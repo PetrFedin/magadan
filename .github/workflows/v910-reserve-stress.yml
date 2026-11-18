@@ -96,7 +96,7 @@ jobs:
           assert a["grid_scenarios_are_not_probabilities"] is True
           assert a["real_available_capacity_mw"] is None
           assert a["production_ready"] is False
-          assert a["normative_reservoir_floors_verified"] is False if "normative_reservoir_floors_verified" in a else True
+          assert a["normative_reservoir_floors_verified"] is False
           print("V910_REGENERATED_FILE_SHA256="+hashlib.sha256(p.read_bytes()).hexdigest())
           PY
       - name: Expose detached evidence for review and manual commit
