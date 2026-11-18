@@ -59,13 +59,14 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v910-junit.xml \
             --shard v910-reserve-load-stress-research \
-            --min-passed 290 --max-skipped 0 \
+            --min-passed 292 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_same_input_deterministic_hash_and_outputs \
             --require-case test_low_initial_water_zero_thermal_produces_nonzero_shortage \
             --require-case test_floored_run_protects_more_terminal_water_than_unfloored_under_stress \
             --require-case test_floor_equal_initial_fails_without_epsilon_fake_state \
-            --require-case test_research_contract_has_no_operational_or_regulatory_claims
+            --require-case test_research_contract_has_no_operational_or_regulatory_claims \
+            --require-case test_v910_persisted_research_artifact_and_source_bytes
           sha256sum /tmp/v910-junit.xml
       - name: V9.8 and V9.9 historical artifacts unchanged
         shell: bash
@@ -124,4 +125,6 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          git ls-files --error-unmatch artifacts_v9/magadan_terminal_reserve_stress_v910.json
+          git diff --exit-code -- artifacts_v9/magadan_terminal_reserve_stress_v910.json
           echo "V910_SYNTHETIC_RESEARCH_ONLY; ACTUAL_HYDRAULIC_HEAD_GRID_N1_OPERATIONS_INVESTMENT_HOLD"
