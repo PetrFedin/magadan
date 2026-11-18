@@ -136,6 +136,7 @@ def report() -> dict:
     result = {
         "artifact": "MAGADAN-V910-ASSUMED-MINIMUM-USABLE-STOCK-STRESS-1",
         "study_not_approved_operating_rules": True,
+        "normative_reservoir_floors_verified": False,
         "grid_scenarios_are_not_probabilities": True,
         "operating_floor_enforced_each_month_not_terminal_only": True,
         "reservoir_floor_is_fraction_of_usable_volume_not_absolute_level": True,
