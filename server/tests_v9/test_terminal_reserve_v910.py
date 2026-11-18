@@ -207,3 +207,47 @@ def test_v910_persisted_research_artifact_and_source_bytes():
     assert result["grid_scenarios_are_not_probabilities"] is True
     assert result["real_available_capacity_mw"] is None
     assert result["production_ready"] is False
+
+
+def test_v910_paired_policy_and_floor_boundary_counts():
+    """Post-processing of saved evidence cannot mistake a grid for probability."""
+    import json
+    from pathlib import Path
+    root=Path(__file__).resolve().parents[2]
+    data=json.loads(
+        (root/"artifacts_v9/magadan_terminal_reserve_stress_v910.json").read_text(
+            encoding="utf-8"
+        )
+    )
+    rows=data["rows"]
+    keys=("initial_fraction_assumption","minimum_stock_fraction_assumption",
+          "thermal_available_mw_assumption","incremental_load_mw_assumption",
+          "historical_monthly_quantile_assumption")
+    pairs={}
+    for row in rows:
+        key=tuple(row[k] for k in keys)
+        pair=pairs.setdefault(key,{})
+        assert row["dispatch_policy_assumption"] not in pair
+        pair[row["dispatch_policy_assumption"]]=row
+    assert len(pairs)==192
+    hydro_higher=hydro_lower=same=0
+    for pair in pairs.values():
+        assert set(pair)=={"thermal_first","hydro_first"}
+        diff=(pair["hydro_first"]["stress_total_unserved_gwh"]
+             -pair["thermal_first"]["stress_total_unserved_gwh"])
+        hydro_higher+=diff>1e-8
+        hydro_lower+=diff< -1e-8
+        same+=abs(diff)<=1e-8
+    assert (hydro_higher,hydro_lower,same)==(30,0,162)
+    newly_deficit_due_to_floor=sum(
+        r["stress_total_unserved_gwh"]>1e-9
+        and r["stress_no_floor_unserved_gwh"]<=1e-9
+        for r in rows
+    )
+    assert newly_deficit_due_to_floor==24
+    assert sum(
+        r["stress_total_unserved_gwh"]<=1e-9
+        and r["stress_no_floor_unserved_gwh"]>1e-9
+        for r in rows
+    )==0
+    assert data["grid_scenarios_are_not_probabilities"] is True
