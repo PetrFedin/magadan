@@ -67,7 +67,7 @@ jobs:
             --require-case test_thermal_first_retains_existing_140_mw_hydro \
             --require-case test_no_thermal_means_policies_converge \
             --require-case test_pair_reports_signed_mix_change_and_no_probabilities \
-            --require-case test_full_winter_both_policies_conserve_mass
+            --require-case test_pair_enforces_same_monthly_demand_and_input_flow
           sha256sum /tmp/v99-junit.xml
       - name: Verify original V9.8 artifact stays byte-identical
         shell: bash
