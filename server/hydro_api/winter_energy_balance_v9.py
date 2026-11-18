@@ -210,8 +210,6 @@ def simulate_winter_balance(
     initial_storage_fraction: float = 1.0,
     months: Sequence[int] = WINTER_MONTHS,
     dispatch_policy: str = "thermal_first",
-    minimum_upper_storage_fraction: float = 0.0,
-    minimum_lower_storage_fraction: float = 0.0,
 ) -> WinterBalanceResult:
     """Месячный каскадный баланс низководной зимы.
 
@@ -237,17 +235,6 @@ def simulate_winter_balance(
         raise ArithmeticError(f"WEB_QUANTILE_RANGE: {inflow_quantile!r}")
     if not (0.0 < initial_storage_fraction <= 1.0):
         raise ArithmeticError(f"WEB_STORAGE_FRACTION: {initial_storage_fraction!r}")
-    # Synthetic V9.10 continuous operating floors, NOT legal minimum levels.
-    # A monthly floor is stricter than a terminal-only April constraint.
-    for name, floor in (
-        ("upper", minimum_upper_storage_fraction),
-        ("lower", minimum_lower_storage_fraction),
-    ):
-        if (isinstance(floor, bool) or not isinstance(floor, (float, int))
-                or not math.isfinite(floor) or not 0.0 <= floor <= 1.0):
-            raise ArithmeticError(f"WEB_INVALID_SYNTHETIC_FLOOR_{name.upper()}")
-        if floor > initial_storage_fraction:
-            raise ArithmeticError(f"WEB_FLOOR_EXCEEDS_INITIAL_{name.upper()}")
     _check_finite_nonnegative(side_inflow_annual_km3, "side_inflow_annual_km3")
     _check_finite_nonnegative(mean_annual_flow_m3s, "mean_annual_flow_m3s")
     if mean_annual_flow_m3s <= 0:
@@ -258,8 +245,6 @@ def simulate_winter_balance(
 
     kol_storage = kolyma.usable_volume_km3 * initial_storage_fraction
     ust_storage = ust_srednekan.usable_volume_km3 * initial_storage_fraction
-    kol_floor = kolyma.usable_volume_km3 * minimum_upper_storage_fraction
-    ust_floor = ust_srednekan.usable_volume_km3 * minimum_lower_storage_fraction
     kol_min, ust_min = kol_storage, ust_storage
     steps: List[MonthStepResult] = []
     initial_water_km3 = kol_storage + ust_storage
@@ -296,8 +281,7 @@ def simulate_winter_balance(
             kol_target_gwh * 1000.0 / hours, hours, kolyma.head_m, eta)
         kol_begin = kol_storage
         ust_begin = ust_storage
-        kol_release = min(kol_release_need, max(
-            0.0, kol_begin + kol_inflow - kol_floor))
+        kol_release = min(kol_release_need, kol_begin + kol_inflow)
         kol_energy = storage_energy_gwh(kol_release, kolyma.head_m, eta)
         # Explicit overflow: disappearing water would break mass conservation.
         # Upper spill is non-generating but still enters the lower reservoir.
@@ -313,8 +297,7 @@ def simulate_winter_balance(
             max(0.0, hydro_need_gwh - kol_energy))
         ust_release_need = power_to_release_km3(
             ust_target_gwh * 1000.0 / hours, hours, ust_srednekan.head_m, eta)
-        ust_release = min(ust_release_need, max(
-            0.0, ust_begin + ust_inflow - ust_floor))
+        ust_release = min(ust_release_need, ust_begin + ust_inflow)
         ust_energy = storage_energy_gwh(ust_release, ust_srednekan.head_m, eta)
         ust_spill = max(0.0, ust_begin + ust_inflow - ust_release
                         - ust_srednekan.usable_volume_km3)
@@ -328,8 +311,7 @@ def simulate_winter_balance(
                             - ust_release - ust_spill - kol_storage - ust_storage)
         if abs(monthly_residual) > 1e-9:
             raise ArithmeticError("WEB_MONTHLY_CASCADE_MASS_CONSERVATION_FAILED")
-        if (kol_storage < kol_floor - 1e-9
-                or ust_storage < ust_floor - 1e-9
+        if (kol_storage < -1e-9 or ust_storage < -1e-9
                 or kol_storage > kolyma.usable_volume_km3 + 1e-9
                 or ust_storage > ust_srednekan.usable_volume_km3 + 1e-9):
             raise ArithmeticError("WEB_RESERVOIR_STORAGE_OUTSIDE_BOUNDS")
