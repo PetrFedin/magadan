@@ -60,14 +60,15 @@ jobs:
             --maxfail=1 --junitxml=/tmp/v99-junit.xml
           python scripts/v84_junit_gate.py \
             --junit /tmp/v99-junit.xml --shard v99-paired-policy-research \
-            --min-passed 247 --max-skipped 0 \
+            --min-passed 248 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_default_preserves_exact_v98_thermal_first_receipt \
             --require-case test_hydro_first_uses_both_capacity_limits_before_thermal \
             --require-case test_thermal_first_retains_existing_140_mw_hydro \
             --require-case test_no_thermal_means_policies_converge \
             --require-case test_pair_reports_signed_mix_change_and_no_probabilities \
-            --require-case test_pair_enforces_same_monthly_demand_and_input_flow
+            --require-case test_pair_enforces_same_monthly_demand_and_input_flow \
+            --require-case test_persisted_v99_artifact_inputs_and_receipt
           sha256sum /tmp/v99-junit.xml
       - name: Verify original V9.8 artifact stays byte-identical
         shell: bash
@@ -126,4 +127,6 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          git ls-files --error-unmatch artifacts_v9/magadan_dispatch_policy_v99.json
+          git diff --exit-code -- artifacts_v9/magadan_dispatch_policy_v99.json
           echo "V99_RESEARCH_ONLY; HYDRAULIC_CALIBRATION_N1_CORPORATE_STAGING_PRODUCTION_HOLD"
