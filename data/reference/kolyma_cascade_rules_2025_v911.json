@@ -11,17 +11,19 @@
     "original_document_independently_checked": false,
     "source_section_V_url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/v/",
     "source_section_VI_url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/vi/",
-    "reference_excerpt_date": "2026-11-21"
+    "reference_excerpt_date": "2026-11-21",
+    "source_section_VIII_url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/viii/"
   },
   "unit_contract": {
-    "stage": "m BS",
+    "stage": "m BS (with explicitly published Kolyma OS offset; do not combine datums)",
     "full_water_volume": "km3",
     "head_net": "m",
     "turbine_discharge_at_npu": "m3/s",
     "minimum_release_daily_mean": "m3/s",
     "installed_capacity": "MW",
     "level_change": "m/day",
-    "long_run_water_volume": "km3/year"
+    "long_run_water_volume": "km3/year",
+    "maximum_level_change_per_day": "m/day"
   },
   "reservoirs": {
     "kolyma": {
@@ -46,10 +48,10 @@
       },
       "installed_capacity_mw": "900",
       "maximum_turbine_discharge_at_npu_m3s": "906",
-      "minimum_daily_mean_release_m3s": "100",
       "maximum_daily_drawdown_m": "1.00",
       "maximum_daily_rise_m": null,
-      "notes_ru": "ОС на 0,94 м выше БС по трём опубликованным отметкам. Для Колымского водохранилища верхняя скорость подъёма не установлена в п.28, однако это НЕ означает автоматического допуска любого режима."
+      "notes_ru": "ОС на 0,94 м выше БС по трём опубликованным отметкам. Для Колымского водохранилища верхняя скорость подъёма не установлена в п.28, однако это НЕ означает автоматического допуска любого режима. Санитарный расход 100 м3/с указан для диспетчерской зоны I (п.45.1), не универсален для всех зон.",
+      "zone_I_sanitary_release_m3s": "100"
     },
     "ust_srednekan": {
       "name_ru": "Усть-Среднеканское водохранилище",
@@ -73,10 +75,10 @@
       },
       "installed_capacity_mw": "570",
       "maximum_turbine_discharge_at_npu_m3s": "1064",
-      "minimum_daily_mean_release_m3s": "70",
       "maximum_daily_drawdown_m": "1.00",
       "maximum_daily_rise_m": "1.00",
-      "notes_ru": "Для Усть-Среднеканского водохранилища базовый реестр использует только БС; ОС для этого гидроузла не подставлять."
+      "notes_ru": "Для Усть-Среднеканского водохранилища базовый реестр использует только БС; ОС для этого гидроузла не подставлять. Санитарный расход 70 м3/с указан для диспетчерской зоны I (п.46.1), не универсален для всех зон.",
+      "zone_I_sanitary_release_m3s": "70"
     }
   },
   "calendar": {
@@ -112,10 +114,39 @@
     "equipment_specific_efficiency_and_power_limits",
     "downstream_ice_and_navigation_constraints",
     "calibrated_hydraulic_travel_time",
-    "independent_legal_engineering_review"
+    "independent_legal_engineering_review",
+    "meteorological_confirmation_of_stable_negative_winter_period_and_any_statutory_exceptions",
+    "dispatch_zone_graphs_12_13_digitized_and_verifiably_checked"
   ],
   "real_operator_data_present": false,
   "full_stage_volume_curves_ingested": false,
   "network_n_minus_one_signed": false,
-  "production_ready": false
+  "production_ready": false,
+  "seasonal_regime_guardrails": {
+    "regulation_intervals": "Oct-Apr monthly, May-Sep 10-day intervals",
+    "normative_section": "VIII, paragraphs 44-52",
+    "winter_cold_period_months": [
+      10,
+      11,
+      12,
+      1,
+      2,
+      3,
+      4
+    ],
+    "winter_bypass_prohibition_conditional_on_stable_negative_temperatures": true,
+    "in_stable_cold_season_discharge_via_hydropower_units_only": true,
+    "winter_bypass_status_if_actual_meteorology_unknown": "CONDITIONAL_CONFLICT_REQUIRING_EVIDENCE",
+    "mandatory_dispatch_graphs_not_digitized": [
+      "appendix_12_Kolyma",
+      "appendix_13_Ust_Srednekan"
+    ],
+    "published_hydraulic_curves_not_digitized": [
+      "appendix_8_stage_volume",
+      "appendix_9_stage_volume",
+      "appendix_10_tailwater",
+      "appendix_11_tailwater"
+    ],
+    "zone_I_sanitary_release_only_not_universal_minimum": true
+  }
 }
