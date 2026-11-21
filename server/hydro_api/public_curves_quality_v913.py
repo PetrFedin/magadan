@@ -233,3 +233,67 @@ def review_quarantined_public_tables():
                        "active_tailwater_function":False,
                        "active_zone_dispatch":False}
     return info
+
+
+def validate_second_publisher_partial_crosscheck():
+    """Verify every accessible ConsultantPlus cell against the SudAct copy.
+
+    Both are secondary publishers. No claim of primary official attestation
+    or verification of inaccessible free-version Kolyma tail cells.
+    """
+    file=DIR/"order174_v913_two_publisher_partial_crosscheck.json"
+    d=json.loads(file.read_text(encoding="utf-8"))
+    if (d.get("artifact")!="MAGADAN-V913-SECONDARY-PUBLISHER-CELL-COMPARISON-1"
+        or d.get("primary_official_original_verified") is not False
+        or d.get("secondary_publisher_comparison_is_not_primary_source_authentication") is not True
+        or d.get("permitted_for_real_hydraulic_engine") is not False
+        or d.get("production_ready") is not False):
+        raise ValueError("V913_SECOND_PUBLISHER_FORGED_ADMISSION")
+    expected={"kolyma":(82,820,281),"ust_srednekan":(71,701,0)}
+    count=0
+    for site,(expected_rows,expected_points,missing) in expected.items():
+        original=load_candidate(site)
+        rows=d["consultant_accessible_rows"][site]
+        item=d["per_reservoir"][site]
+        if len(rows)!=expected_rows or len(original["rows"])!=SOURCE_EXPECTED[site]["rows"]:
+            raise ValueError("V913_SECOND_PUBLISHER_ROW_COVERAGE_CHANGED")
+        if (item.get("publisher_rows")!=expected_rows
+            or item.get("publisher_visible_coordinates")!=expected_points
+            or item.get("unavailable_sudact_coordinates")!=missing
+            or item.get("exact_numeric_cell_matches")!=expected_points
+            or item.get("mismatched_cells")!=0
+            or item.get("table_truncated_in_free_consultant_version") is not (missing>0)):
+            raise ValueError("V913_SECOND_PUBLISHER_COVERAGE_LEDGER_DRIFT")
+        if "consultant.ru/document/cons_doc_LAW_511518/" not in d["comparison_publication_urls"][site]:
+            raise ValueError("V913_SECOND_PUBLISHER_SOURCE_URL_MISMATCH")
+        for i,row in enumerate(rows):
+            src=original["rows"][i]
+            if (row.get("publisher_row_index")!=i+1
+                or row.get("stage_bs_base_m")!=src["stage_bs_base_m"]
+                or (site=="kolyma" and row.get("stage_os_base_m")!=src["stage_os_base_m"])
+                or len(row.get("volume_km3_by_0p1m_offset",[]))!=
+                    len(src["volume_km3_by_0p1m_offset"])):
+                raise ValueError("V913_SECOND_PUBLISHER_STAGE_OR_COLUMN_GRAIN_DRIFT")
+            for public,reference in zip(row["volume_km3_by_0p1m_offset"],
+                                         src["volume_km3_by_0p1m_offset"]):
+                if public!=reference:
+                    raise ValueError("V913_TWO_PUBLIC_PUBLISHERS_NUMERIC_CELL_MISMATCH")
+                count+=1
+    s=d.get("summary",{})
+    if (count!=1521 or s.get("total_coordinates_sudact")!=1802
+        or s.get("independent_secondary_publisher_cells_compared")!=1521
+        or s.get("exact_cell_matches")!=count
+        or s.get("mismatched_cells")!=0
+        or s.get("remaining_uncompared_coordinates")!=281
+        or s.get("complete_independent_second_publisher_cell_comparison") is not False):
+        raise ValueError("V913_FALSE_COMPLETE_CROSS_PUBLISHER_VALIDATION")
+    return {
+        "publisher_pair":"SudAct.ru vs ConsultantPlus",
+        "independent_secondary_publisher_cells_compared":count,
+        "matching_secondary_publisher_cells":count,
+        "uncompared_kolyma_tail_cells":281,
+        "lower_curve_complete_second_publisher_match":True,
+        "upper_curve_complete_second_publisher_match":False,
+        "original_official_document_authenticated":False,
+        "full_geometry_operator_admitted":False,
+    }
