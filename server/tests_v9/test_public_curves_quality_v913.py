@@ -13,6 +13,7 @@ from hydro_api.public_curves_quality_v913 import (
     validate_volume_candidate, candidate_volume_at_stage,
     candidate_exact_inverse, review_quarantined_public_tables,
     validate_second_publisher_partial_crosscheck,
+    validate_third_publisher_kolyma,
 )
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -197,7 +198,7 @@ def test_committed_v913_data_quality_receipt_matches_input_bytes():
     data={k:v for k,v in a.items() if k!="payload_sha256"}
     payload=json.dumps(data,sort_keys=True,indent=2,ensure_ascii=False).encode()
     assert hashlib.sha256(payload).hexdigest()==a["payload_sha256"]
-    assert len(a["source_sha256"])==9
+    assert len(a["source_sha256"])==10
     for filename,expected in a["source_sha256"].items():
         path=ROOT/filename
         assert path.is_file(),filename
@@ -207,6 +208,10 @@ def test_committed_v913_data_quality_receipt_matches_input_bytes():
     assert a["summary"]["registered_tailwater_declines"]==1
     assert a["summary"]["second_publisher_matching_coordinates"]==1521
     assert a["summary"]["second_publisher_unchecked_coordinates"]==281
+    assert a["summary"]["third_publisher_upper_matching_coordinates"]==1100
+    assert a["summary"]["third_publisher_upper_conflicting_coordinates"]==1
+    assert a["summary"]["previous_unchecked_high_stage_supported_by_third"]==281
+    assert a["summary"]["original_candidate_coordinates_with_at_least_two_secondary_sources"]==1802
     assert a["source_primary_authenticity_verified"] is False
     assert a["operator_hydraulic_admissibility_signed"] is False
     assert a["production_ready"] is False
@@ -241,3 +246,44 @@ def test_cross_publisher_row_gaps_are_explicit_and_not_silently_filled():
     assert d["per_reservoir"]["kolyma"]["table_truncated_in_free_consultant_version"] is True
     assert d["per_reservoir"]["ust_srednekan"]["table_truncated_in_free_consultant_version"] is False
     assert d["per_reservoir"]["kolyma"]["unavailable_sudact_coordinates"]==281
+
+
+def test_third_secondary_publisher_matches_all_uncovered_281_and_preserves_one_difference():
+    result=validate_third_publisher_kolyma()
+    assert result["upper_full_candidate_cells"]==1101
+    assert result["third_secondary_upper_matches"]==1100
+    assert result["third_secondary_upper_mismatches"]==1
+    assert result["previously_uncompared_consultant_upper_high_stage_cells_supported_by_third"]==281
+    assert result["every_sudact_coordinate_has_an_additional_secondary_match"] is True
+    assert result["source_discrepancy_auto_corrected"] is False
+    assert result["signed_official_original_authenticated"] is False
+    assert result["physical_operation_admitted"] is False
+
+
+def test_third_secondary_mismatch_is_unmodified_original_not_canonical_fix():
+    doc=json.loads(
+        (DIR/"order174_v913_third_publisher_kolyma_crosscheck.json").read_text(encoding="utf-8")
+    )
+    issue=doc["discrepancies_preserved_verbatim"]
+    assert len(issue)==1
+    assert issue[0]["source_row_index"]==72
+    assert issue[0]["stage_os_m"]=="441.90"
+    assert issue[0]["stage_bs_m"]=="440.96"
+    assert issue[0]["third_publisher_raw_value_km3"]=="111.078"
+    assert issue[0]["sudact_value_km3"]=="11.078"
+    assert issue[0]["consultant_visible_comparator_value_km3"]=="11.078"
+    assert doc["operator_admissibility"] is False
+
+
+def test_third_publisher_tampering_and_fake_full_concordance_fails_closed():
+    doc=json.loads(
+        (DIR/"order174_v913_third_publisher_kolyma_crosscheck.json").read_text(encoding="utf-8")
+    )
+    copy=deepcopy(doc)
+    copy["source_rows"][71]["volume_km3_by_0p1m_offset"][9]="11.078"
+    with pytest.raises(ValueError,match="THIRD_SOURCE_UNEXPECTED_DIFFERENCE"):
+        validate_third_publisher_kolyma(copy)
+    copy=deepcopy(doc)
+    copy["operator_admissibility"]=True
+    with pytest.raises(ValueError,match="THIRD_SOURCE_INVALID_OR_FALSE_APPROVAL"):
+        validate_third_publisher_kolyma(copy)
