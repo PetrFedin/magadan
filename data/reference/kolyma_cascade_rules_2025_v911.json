@@ -1,0 +1,121 @@
+{
+  "dataset_id": "HYDROKONTUR-V911-ROSVODRESURSY-174-2025-SECONDARY-PUBLIC-EXCERPT",
+  "source_status": "SECONDARY_PUBLIC_TEXT_MANUAL_TRANSCRIPTION_ORIGINAL_SHA_NOT_VERIFIED",
+  "source_document": {
+    "issuer": "Федеральное агентство водных ресурсов",
+    "order_number": "174",
+    "order_date": "2025-07-07",
+    "registration_number": "83126",
+    "registration_date": "2025-08-01",
+    "primary_official_document_sha256": null,
+    "original_document_independently_checked": false,
+    "source_section_V_url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/v/",
+    "source_section_VI_url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/vi/",
+    "reference_excerpt_date": "2026-11-21"
+  },
+  "unit_contract": {
+    "stage": "m BS",
+    "full_water_volume": "km3",
+    "head_net": "m",
+    "turbine_discharge_at_npu": "m3/s",
+    "minimum_release_daily_mean": "m3/s",
+    "installed_capacity": "MW",
+    "level_change": "m/day",
+    "long_run_water_volume": "km3/year"
+  },
+  "reservoirs": {
+    "kolyma": {
+      "name_ru": "Колымское водохранилище",
+      "stage_datum": "BS",
+      "os_above_bs_m": "0.94",
+      "stage_m_bs": {
+        "umo": "431.06",
+        "npu": "450.56",
+        "fpu": "456.66"
+      },
+      "total_volume_km3": {
+        "umo": "7.838",
+        "npu": "15.077",
+        "fpu": "17.961"
+      },
+      "usable_volume_km3": "7.239",
+      "forced_volume_km3": "2.884",
+      "net_head_operating_interval_m": {
+        "minimum": "90",
+        "maximum": "119"
+      },
+      "installed_capacity_mw": "900",
+      "maximum_turbine_discharge_at_npu_m3s": "906",
+      "minimum_daily_mean_release_m3s": "100",
+      "maximum_daily_drawdown_m": "1.00",
+      "maximum_daily_rise_m": null,
+      "notes_ru": "ОС на 0,94 м выше БС по трём опубликованным отметкам. Для Колымского водохранилища верхняя скорость подъёма не установлена в п.28, однако это НЕ означает автоматического допуска любого режима."
+    },
+    "ust_srednekan": {
+      "name_ru": "Усть-Среднеканское водохранилище",
+      "stage_datum": "BS",
+      "os_above_bs_m": null,
+      "stage_m_bs": {
+        "umo": "278.00",
+        "npu": "290.00",
+        "fpu": "292.30"
+      },
+      "total_volume_km3": {
+        "umo": "2.863",
+        "npu": "5.436",
+        "fpu": "6.085"
+      },
+      "usable_volume_km3": "2.573",
+      "forced_volume_km3": "0.649",
+      "net_head_operating_interval_m": {
+        "minimum": "38",
+        "maximum": "61"
+      },
+      "installed_capacity_mw": "570",
+      "maximum_turbine_discharge_at_npu_m3s": "1064",
+      "minimum_daily_mean_release_m3s": "70",
+      "maximum_daily_drawdown_m": "1.00",
+      "maximum_daily_rise_m": "1.00",
+      "notes_ru": "Для Усть-Среднеканского водохранилища базовый реестр использует только БС; ОС для этого гидроузла не подставлять."
+    }
+  },
+  "calendar": {
+    "usual_maximum_stage_umo_or_higher_all_year": true,
+    "maximum_full_level_period": "01 Oct through 20 May: NPU",
+    "flood_max_level_period": "21 May through 30 Sep: FPU",
+    "full_month_day_boundaries": {
+      "flood_start": "05-21",
+      "flood_end": "09-30"
+    },
+    "is_full_verified_dispatch_rulebook": false
+  },
+  "historical_long_run_water_balance": {
+    "period": "1934/35–2020/21 water years",
+    "upper_outflow_to_lower_km3_per_year": "15.193",
+    "lateral_lower_inflow_km3_per_year": "9.820",
+    "lower_total_inflow_km3_per_year": "25.013",
+    "basis": "section V paragraph 24; all values are long-run annual aggregates, not synchronous daily/hourly observations"
+  },
+  "legacy_parameter_review": {
+    "legacy_side_inflow_km3_per_year": "4.5",
+    "legacy_reference": "data/reference/kolyma_cascade_energy_v97.json",
+    "comparison_status": "INCOMPARABLE_UNTIL_GAUGE_BASIN_PERIOD_RECONCILIATION",
+    "legacy_kolyma_usable_km3": "7.24",
+    "legacy_ust_usable_km3": "2.57"
+  },
+  "missing_for_real_hydro_calibration": [
+    "original_official_act_byte_sha256_and_version_signoff",
+    "full_numerical_stage_volume_curves_appendix_8_and_9_with_vertical_datum",
+    "full_numerical_tailwater_vs_release_curves_appendix_10_and_11",
+    "dated_discharge_and_water_level_telemetry_with_owner_rights",
+    "approved_dispatch_zones_and_mandatory_releases",
+    "equipment_specific_efficiency_and_power_limits",
+    "downstream_ice_and_navigation_constraints",
+    "calibrated_hydraulic_travel_time",
+    "independent_legal_engineering_review"
+  ],
+  "real_operator_data_present": false,
+  "full_stage_volume_curves_ingested": false,
+  "network_n_minus_one_signed": false,
+  "production_ready": false
+}
