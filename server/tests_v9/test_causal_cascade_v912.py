@@ -229,3 +229,34 @@ def test_no_real_dispatch_claim_even_if_synthetic_no_shortfall():
         assert r[flag] is False
     assert r["investment_decision"] == "HOLD"
     assert r["real_available_capacity_mw"] is None
+
+
+def test_committed_v912_receipt_matches_exact_input_files():
+    """Persisted study must be reproducible from current input source bytes."""
+    import hashlib
+    import json
+    from pathlib import Path
+    root = Path(__file__).resolve().parents[2]
+    report = root / "artifacts_v9/magadan_causal_cascade_v912.json"
+    assert report.is_file(), "V912_REPORT_NOT_COMMITTED"
+    a = json.loads(report.read_text(encoding="utf-8"))
+    raw = json.dumps({k:v for k,v in a.items() if k!="payload_sha256"},
+                     sort_keys=True, indent=2, ensure_ascii=False).encode("utf-8")
+    assert hashlib.sha256(raw).hexdigest() == a["payload_sha256"]
+    assert len(a["source_sha256"]) == 4
+    for source, receipt in a["source_sha256"].items():
+        path = root / source
+        assert path.is_file(), source
+        assert hashlib.sha256(path.read_bytes()).hexdigest() == receipt, source
+    assert a["experiment_count"] == len(a["results"]) == 8
+    assert a["summary"] == {
+        "synthetic_consistent_cases": 3,
+        "infeasible_cases": 3,
+        "insufficient_evidence_cases": 2,
+        "calculated_shortfall_cases": 1,
+        "zero_shortfall_overrides_a_hard_rule": False,
+    }
+    assert a["results"]["zero_shortfall_cannot_approve_cold_bypass"]["status"] == "INFEASIBLE_DISPATCH"
+    assert a["results"]["real_world_sources_missing"]["total_unserved_gwh"] is None
+    assert a["firm_capacity_mw"] is None
+    assert a["production_ready"] is False
