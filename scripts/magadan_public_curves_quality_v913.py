@@ -12,7 +12,7 @@ sys.path.insert(0,str(ROOT/"server"))
 
 from hydro_api.public_curves_quality_v913 import ( # noqa: E402
     DIR, SOURCE_EXPECTED, load_candidate, validate_volume_candidate,
-    review_quarantined_public_tables,
+    review_quarantined_public_tables, validate_second_publisher_partial_crosscheck,
 )
 
 OUTPUT=ROOT/"artifacts_v9/magadan_public_curves_quality_v913.json"
@@ -23,6 +23,7 @@ FILES=tuple(
     DIR/f"order174_v913_{name}_candidate.json"
     for name in ("kolyma_tailwater","ust_tailwater","kolyma_dispatch","ust_dispatch")
 )+(
+    DIR/"order174_v913_two_publisher_partial_crosscheck.json",
     ROOT/"server/hydro_api/public_curves_quality_v913.py",
     ROOT/"scripts/magadan_public_curves_quality_v913.py",
 )
@@ -35,6 +36,7 @@ def report():
         for key in SOURCE_EXPECTED
     }
     quarantined=review_quarantined_public_tables()
+    independently_compared=validate_second_publisher_partial_crosscheck()
     for key,value in curves.items():
         if value["physical_operation_admitted"] is not False:
             raise AssertionError("V913_REAL_CURVE_FALSE_ADMISSION")
@@ -55,6 +57,7 @@ def report():
         "original_source_document_sha256_verified":False,
         "candidate_curves":curves,
         "additional_tables_in_quarantine":quarantined,
+        "independent_secondary_publisher_comparison":independently_compared,
         "source_sha256":{
             str(p.relative_to(ROOT)):sha256(p.read_bytes()).hexdigest()
             for p in FILES
@@ -66,6 +69,8 @@ def report():
             "candidate_ust_coordinates":curves["ust_srednekan"]["numeric_coordinates"],
             "lower_equal_adjacent_rounded_volumes":curves["ust_srednekan"]["adjacent_equal_rounded_volumes"],
             "statutory_anchor_points_agree":6,
+            "second_publisher_matching_coordinates":independently_compared["matching_secondary_publisher_cells"],
+            "second_publisher_unchecked_coordinates":independently_compared["uncompared_kolyma_tail_cells"],
             "quarantined_secondary_tables":len(quarantined),
             "registered_tailwater_declines":1,
             "physical_curves_admitted_for_real_simulation":0,
