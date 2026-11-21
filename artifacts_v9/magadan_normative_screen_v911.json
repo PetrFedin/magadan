@@ -1,0 +1,73 @@
+{
+  "conditional_stable_cold_requirement_acknowledged": true,
+  "field_data_or_operator_approval": false,
+  "firm_capacity_mw": null,
+  "full_dispacher_zone_graphs_and_operational_data_missing": true,
+  "investment_decision": "HOLD",
+  "necessary_screen_not_comprehensive_rule_compliance": true,
+  "normative_anchors": {
+    "absolute_lateral_reference_difference_km3_per_year": "5.320",
+    "anchor_consistency_checked": true,
+    "annual_upper_outflow_plus_lateral_equals_lower_km3": "25.013",
+    "data_periods_and_observation_methods_comparable": false,
+    "legacy_lateral_km3_per_year": "4.5",
+    "modeled_volume_curves_calibrated": false,
+    "official_source_bytes_independently_verified": false,
+    "published_long_run_lateral_km3_per_year": "9.820",
+    "real_operator_approval": false,
+    "usable_identity_by_reservoir": {
+      "kolyma": {
+        "forced_km3": "2.884",
+        "stage_datum": "BS",
+        "usable_km3": "7.239"
+      },
+      "ust_srednekan": {
+        "forced_km3": "0.649",
+        "stage_datum": "BS",
+        "usable_km3": "2.573"
+      }
+    }
+  },
+  "official_document_original_bytes_verified": false,
+  "payload_sha256": "3ac43663ba1910b7dfb63746e445f3f6605b344a9ec43b2b92d326e22fd2ec23",
+  "probabilistic_lole_eens_computed": false,
+  "production_ready": false,
+  "published_full_stage_volume_tailwater_curves_ingested": false,
+  "research_engine": "V911-STATUTORY-ANCHOR-NECESSARY-REVIEW-NO-APPROVAL-1",
+  "source_sha256": {
+    "artifacts_v9/magadan_dispatch_policy_v99.json": "f503b2721b9acff331b5de650e9db769cac104c18b22a819b65d435850291b8c",
+    "artifacts_v9/magadan_terminal_reserve_stress_v910.json": "dc483ddb4934e49c22fc14c3dae5b602a28ffbea4c73a2c739f19625471f4b0b",
+    "data/reference/kolyma_cascade_rules_2025_v911.json": "2e6bf9f1bae271b39d310afa0bb1ac692b25a00145a78a1af76589137dae4f5b",
+    "scripts/magadan_normative_screen_v911.py": "07fb44bc167090e64a6002d557ec6853aaccefb7600277806b6ce6f4880bbaf7",
+    "server/hydro_api/normative_stage_v911.py": "907f0ac306fe518ae510cac6f99c2883fb10f8164da59018c571bc83b942fd33"
+  },
+  "v910_reference_screen": {
+    "fully_detailed_reference_scenarios_only": 4,
+    "reference_months_checked": 72,
+    "reference_months_with_potential_conditional_viii_52_conflicts": 0,
+    "reference_trajectory_variants_checked": 12,
+    "regulatory_admission": "HOLD",
+    "remaining_undetailed_scenarios_not_certified": 380,
+    "v910_selected_scenario_rows": 384
+  },
+  "v99_winter_screen": {
+    "observed_real_operating_regime_assessed": false,
+    "policy_winter_non_turbine_screening": {
+      "hydro_first": {
+        "cases_certified_compliant": 0,
+        "selected_cases_with_positive_lower_non_turbine_winter_release": 0,
+        "selected_cases_without_reported_lower_non_turbine_release": 216
+      },
+      "thermal_first": {
+        "cases_certified_compliant": 0,
+        "selected_cases_with_positive_lower_non_turbine_winter_release": 213,
+        "selected_cases_without_reported_lower_non_turbine_release": 3
+      }
+    },
+    "probabilistic_reliability_estimate": false,
+    "regulatory_admission": "HOLD",
+    "upper_spill_series_in_complete_v99_grid_available": false,
+    "v99_total_selected_scenarios": 216,
+    "weather_condition_of_viii_52_documented_for_each_scenario": false
+  }
+}
