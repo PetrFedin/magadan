@@ -280,7 +280,7 @@ def test_v99_spill_screen_is_independent_of_hydro_output(catalog,older_artifacts
     assert row["thermal_first"]["selected_cases_with_positive_lower_non_turbine_winter_release"]>0
     assert (row["thermal_first"]["selected_cases_with_positive_lower_non_turbine_winter_release"]
             +row["thermal_first"]["selected_cases_without_reported_lower_non_turbine_release"])==216
-    assert row["upper_spill_series_in_complete_v99_grid_available"] is False
+    assert result["upper_spill_series_in_complete_v99_grid_available"] is False
 
 
 def test_v910_only_detailed_references_can_be_screened(catalog,older_artifacts):
