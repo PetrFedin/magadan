@@ -1,0 +1,38 @@
+{
+  "artifact": "MAGADAN-V913-ORDER174-SECONDARY-PUBLIC-TABLE-CANDIDATE-1",
+  "appendix": 10,
+  "table_key": "kolyma_tailwater",
+  "source": {
+    "url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/prilozhenie-n-10/",
+    "document": "Order Rosvodresursy 174 2025-07-07, registered 2025-08-01 no 83126",
+    "publication": "SudAct.ru secondary reproduced legal text",
+    "retrieved_utc_date": "2026-11-22",
+    "primary_original_bytes_verified": false,
+    "independent_legal_revision_signoff": false
+  },
+  "raw_table_lines": [
+    {
+      "source_markdown_line": 179,
+      "raw": "| Уровень воды, м БС | 336,00 | 337,00 | 337,50 | 338,00 | 338,50 | 339,00 | 339,50 | 340,00 | 340,50 | 341,00 | 341,50 | 341,81 | 342,00 | 343,00 | 344,00 | 345,00 | 345,80 |"
+    },
+    {
+      "source_markdown_line": 180,
+      "raw": "| Расход воды, м3/с |  | 0 | 110 | 173 | 239 | 307 | 380 | 461 | 550 | 643 | 740 | 838 | 900 | - | - | - | - | - |"
+    },
+    {
+      "source_markdown_line": 181,
+      "raw": "| ```<br>``` |  | - | - | 244 | 335 | 472 | 667 | 925 | 1250 | 1640 | 2100 | 2650 | - | 3300 | 5050 | 7250 | 9800 | 12000 |"
+    }
+  ],
+  "source_table_shape": "multi_series_ambiguous",
+  "units": {
+    "discharge": "m3/s",
+    "stage": "m BS"
+  },
+  "numeric_geometry_ready": false,
+  "operator_admitted": false,
+  "production_ready": false,
+  "flags": [
+    "TWO_DISCHARGE_LINES_WITH_HYPHEN_GAPS_CANNOT_MAP_UNAMBIGUOUSLY_TO_SINGLE_CURVE"
+  ]
+}
