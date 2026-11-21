@@ -59,7 +59,7 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v912-junit.xml \
             --shard v912-causal-multiperiod-synthetic \
-            --min-passed 390 --max-skipped 0 \
+            --min-passed 395 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_baseline_is_algebraically_consistent_synthetic_only \
             --require-case test_delayed_arrival_has_no_same_step_future_water \
@@ -68,7 +68,8 @@ jobs:
             --require-case test_unknown_real_curve_and_unverified_dispatch_fail_closed \
             --require-case test_explicit_hydro_energy_sinking_missing_is_infeasible \
             --require-case test_energy_accounting_closes_each_period \
-            --require-case test_no_real_dispatch_claim_even_if_synthetic_no_shortfall
+            --require-case test_no_real_dispatch_claim_even_if_synthetic_no_shortfall \
+            --require-case test_committed_v912_receipt_matches_exact_input_files
           sha256sum /tmp/v912-junit.xml
       - name: Historical V9.8 to V9.11 numerical receipts unchanged
         shell: bash
@@ -129,4 +130,6 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          git ls-files --error-unmatch artifacts_v9/magadan_causal_cascade_v912.json
+          git diff --exit-code -- artifacts_v9/magadan_causal_cascade_v912.json
           echo "V912_SYNTHETIC_CAUSAL_MASS_ENERGY_ONLY; PHYSICAL_FIELD_STAGING_N1_WATER_RULES_PRODUCTION_HOLD"
