@@ -302,7 +302,8 @@ def review_winter_spill(
     """
     if isinstance(month, bool) or not isinstance(month, int) or not 1 <= month <= 12:
         raise ValueError("V911_INVALID_MONTH")
-    if stable_negative_temperatures_confirmed not in (True, False, None):
+    if (stable_negative_temperatures_confirmed is not None
+            and type(stable_negative_temperatures_confirmed) is not bool):
         raise ValueError("V911_INVALID_COLDNESS_EVIDENCE")
     upper = decimal_value(upper_non_turbine_km3, "upper_non_turbine")
     lower = decimal_value(lower_non_turbine_km3, "lower_non_turbine")
