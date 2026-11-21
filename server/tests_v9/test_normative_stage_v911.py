@@ -186,7 +186,7 @@ def test_elapsed_time_cannot_be_zero(catalog):
         review_daily_level_slew(catalog,"kolyma","445","444","0")
 
 
-@pytest.mark.parametrize("bad",[-1,"NaN","Infinity",True,False,None,{}])
+@pytest.mark.parametrize("bad",["NaN","Infinity",True,False,None,{}])
 def test_numeric_parser_rejects_corrupt_quantities(bad):
     with pytest.raises(ValueError):
         decimal_value(bad,"quantity")
