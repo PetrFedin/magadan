@@ -297,3 +297,89 @@ def validate_second_publisher_partial_crosscheck():
         "original_official_document_authenticated":False,
         "full_geometry_operator_admitted":False,
     }
+
+
+def validate_third_publisher_kolyma(candidate=None):
+    """Check every third-source cell without repairing its printed anomaly.
+
+    A secondary reproduction is NOT an authenticated primary publication.
+    This test verifies row mapping and exact inter-site disagreement; it does
+    not certify physical accuracy, independence of providers or source rights.
+    """
+    filename=DIR/"order174_v913_third_publisher_kolyma_crosscheck.json"
+    d=(json.loads(filename.read_text(encoding="utf-8"))
+       if candidate is None else candidate)
+    source=d.get("source",{})
+    if (d.get("artifact")!="MAGADAN-V913-THIRD-SECONDARY-PUBLISHER-KOLYMA-1101-CELL-CROSSCHECK-1"
+        or source.get("site")!="Zakonbaza.com"
+        or source.get("document")!="Rosvodresursy Order 174, 2025-07-07"
+        or source.get("retrieved_day")!="2026-11-22"
+        or source.get("original_official_publication_authenticated") is not False
+        or source.get("rights_review_completed") is not False
+        or d.get("secondary_publications_may_share_underlying_transcription") is not True
+        or d.get("operator_admissibility") is not False
+        or d.get("no_comprehensive_primary_original_verification") is not True
+        or d.get("no_automatic_data_correction") is not True
+        or d.get("production_ready") is not False
+        or d.get("compared_against")!="data/reference/order174_v913_kolyma_volume_grid_candidate.json"
+        or "zakonbaza.com/prikaz-rosvodresursy-2025-07-07-174/" not in source.get("url","")):
+        raise ValueError("V913_THIRD_SOURCE_INVALID_OR_FALSE_APPROVAL")
+    rows=d.get("source_rows")
+    if not isinstance(rows,list) or len(rows)!=111:
+        raise ValueError("V913_THIRD_SOURCE_INCOMPLETE")
+    baseline=load_candidate("kolyma")["rows"]
+    matched=0; mismatches=[]; high_match=0
+    for i,row in enumerate(rows):
+        expected=baseline[i]
+        if (row.get("source_row_index")!=i+1
+            or row.get("stage_os_base_m")!=expected["stage_os_base_m"]
+            or row.get("stage_bs_base_m")!=expected["stage_bs_base_m"]):
+            raise ValueError("V913_THIRD_SOURCE_STAGE_ROW_DRIFT")
+        values=row.get("volume_km3_by_0p1m_offset")
+        canon=expected["volume_km3_by_0p1m_offset"]
+        if not isinstance(values,list) or len(values)!=len(canon):
+            raise ValueError("V913_THIRD_SOURCE_NUMERIC_CELLS_INCOMPLETE")
+        for j,(value,reference) in enumerate(zip(values,canon)):
+            if not isinstance(value,str) or not re.fullmatch(r"\d+\.\d{3}",value):
+                raise ValueError("V913_THIRD_SOURCE_BAD_NUMERIC_CELL")
+            if value==reference:
+                matched+=1
+                if i>=82:high_match+=1
+            else:
+                mismatches.append({
+                    "source_row_index":i+1,
+                    "stage_os_m":str(_dec(row["stage_os_base_m"],"OS")+STEP*j),
+                    "stage_bs_m":str(_dec(row["stage_bs_base_m"],"BS")+STEP*j),
+                    "offset_index":j,
+                    "third_publisher_raw_value_km3":value,
+                    "sudact_value_km3":reference,
+                    "consultant_visible_comparator_value_km3":reference if i<82 else None,
+                    "third_source_has_numeric_inconsistency":True,
+                })
+    published=d.get("discrepancies_preserved_verbatim")
+    if (len(mismatches)!=1 or not isinstance(published,list)
+        or mismatches!=published
+        or mismatches[0]["source_row_index"]!=72
+        or mismatches[0]["offset_index"]!=9
+        or mismatches[0]["third_publisher_raw_value_km3"]!="111.078"
+        or mismatches[0]["sudact_value_km3"]!="11.078"
+        or high_match!=281 or matched!=1100
+        or d.get("compared_numeric_cells")!=1101
+        or d.get("exact_matching_cells")!=1100
+        or d.get("differing_cells")!=1
+        or d.get("high_stage_cells_matching_another_secondary_source")!=281
+        or d.get("previously_unavailable_in_consultant_cells")!=281):
+        raise ValueError("V913_THIRD_SOURCE_UNEXPECTED_DIFFERENCE_OR_INVENTED_MATCH")
+    return {
+        "upper_full_candidate_cells":1101,
+        "third_secondary_upper_matches":matched,
+        "third_secondary_upper_mismatches":len(mismatches),
+        "previously_uncompared_consultant_upper_high_stage_cells_supported_by_third":high_match,
+        "third_source_discrepancy_OS_m":"441.90",
+        "third_source_printed_km3":"111.078",
+        "sudact_and_consultant_km3":"11.078",
+        "every_sudact_coordinate_has_an_additional_secondary_match":True,
+        "signed_official_original_authenticated":False,
+        "physical_operation_admitted":False,
+        "source_discrepancy_auto_corrected":False,
+    }
