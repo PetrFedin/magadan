@@ -66,7 +66,7 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v913-junit.xml \
             --shard v913-full-statutory-secondary-curve-QA \
-            --min-passed 431 --max-skipped 0 \
+            --min-passed 434 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_full_kolyma_vertical_datum_offset_is_0p94m \
             --require-case test_lower_stage_rounded_flat_volume_does_not_allow_unique_inverse \
@@ -75,7 +75,10 @@ jobs:
             --require-case test_real_physics_engine_is_not_modified_to_use_public_candidates \
             --require-case test_committed_v913_data_quality_receipt_matches_input_bytes \
             --require-case test_second_public_publisher_matches_1521_cells_with_explicit_281_gap \
-            --require-case test_publication_cannot_launder_partial_review_into_complete_validation
+            --require-case test_publication_cannot_launder_partial_review_into_complete_validation \
+            --require-case test_third_secondary_publisher_matches_all_uncovered_281_and_preserves_one_difference \
+            --require-case test_third_secondary_mismatch_is_unmodified_original_not_canonical_fix \
+            --require-case test_third_publisher_tampering_and_fake_full_concordance_fails_closed
           sha256sum /tmp/v913-junit.xml
       - name: Reproduce five older independent scientific artifacts bitwise
         shell: bash
@@ -113,6 +116,11 @@ jobs:
           assert a["summary"]["registered_tailwater_declines"]==1
           assert a["summary"]["second_publisher_matching_coordinates"]==1521
           assert a["summary"]["second_publisher_unchecked_coordinates"]==281
+          assert a["summary"]["third_publisher_upper_matching_coordinates"]==1100
+          assert a["summary"]["third_publisher_upper_conflicting_coordinates"]==1
+          assert a["summary"]["previous_unchecked_high_stage_supported_by_third"]==281
+          assert a["summary"]["original_candidate_coordinates_with_at_least_two_secondary_sources"]==1802
+          assert len(a["source_sha256"])==10
           assert a["independent_secondary_publisher_comparison"]["original_official_document_authenticated"] is False
           assert a["firm_available_capacity_mw"] is None
           assert a["complete_independent_second_publisher_cell_comparison"] is False
