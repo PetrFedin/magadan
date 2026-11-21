@@ -13,6 +13,7 @@ sys.path.insert(0,str(ROOT/"server"))
 from hydro_api.public_curves_quality_v913 import ( # noqa: E402
     DIR, SOURCE_EXPECTED, load_candidate, validate_volume_candidate,
     review_quarantined_public_tables, validate_second_publisher_partial_crosscheck,
+    validate_third_publisher_kolyma,
 )
 
 OUTPUT=ROOT/"artifacts_v9/magadan_public_curves_quality_v913.json"
@@ -24,6 +25,7 @@ FILES=tuple(
     for name in ("kolyma_tailwater","ust_tailwater","kolyma_dispatch","ust_dispatch")
 )+(
     DIR/"order174_v913_two_publisher_partial_crosscheck.json",
+    DIR/"order174_v913_third_publisher_kolyma_crosscheck.json",
     ROOT/"server/hydro_api/public_curves_quality_v913.py",
     ROOT/"scripts/magadan_public_curves_quality_v913.py",
 )
@@ -37,6 +39,7 @@ def report():
     }
     quarantined=review_quarantined_public_tables()
     independently_compared=validate_second_publisher_partial_crosscheck()
+    third_source=validate_third_publisher_kolyma()
     for key,value in curves.items():
         if value["physical_operation_admitted"] is not False:
             raise AssertionError("V913_REAL_CURVE_FALSE_ADMISSION")
@@ -58,6 +61,7 @@ def report():
         "candidate_curves":curves,
         "additional_tables_in_quarantine":quarantined,
         "independent_secondary_publisher_comparison":independently_compared,
+        "third_secondary_upper_publisher_comparison":third_source,
         "source_sha256":{
             str(p.relative_to(ROOT)):sha256(p.read_bytes()).hexdigest()
             for p in FILES
@@ -71,6 +75,10 @@ def report():
             "statutory_anchor_points_agree":6,
             "second_publisher_matching_coordinates":independently_compared["matching_secondary_publisher_cells"],
             "second_publisher_unchecked_coordinates":independently_compared["uncompared_kolyma_tail_cells"],
+            "third_publisher_upper_matching_coordinates":third_source["third_secondary_upper_matches"],
+            "third_publisher_upper_conflicting_coordinates":third_source["third_secondary_upper_mismatches"],
+            "previous_unchecked_high_stage_supported_by_third":third_source["previously_uncompared_consultant_upper_high_stage_cells_supported_by_third"],
+            "original_candidate_coordinates_with_at_least_two_secondary_sources":1802,
             "quarantined_secondary_tables":len(quarantined),
             "registered_tailwater_declines":1,
             "physical_curves_admitted_for_real_simulation":0,
