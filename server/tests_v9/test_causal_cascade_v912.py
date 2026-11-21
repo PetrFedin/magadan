@@ -260,3 +260,41 @@ def test_committed_v912_receipt_matches_exact_input_files():
     assert a["results"]["real_world_sources_missing"]["total_unserved_gwh"] is None
     assert a["firm_capacity_mw"] is None
     assert a["production_ready"] is False
+
+
+def test_independent_first_step_head_oracle():
+    """Hand-calculated independently from the published SYNTHETIC knot values."""
+    first = synthetic_demo()["steps"][0]
+    # U_start=2.3; (100-80)*86400/1e9 = +0.001728 km3.
+    # Mid U=2.300864; z=120+15*(2.300864-2)=124.51296.
+    # Tailwater(80)=20+0.5*(80/100)=20.4; loss=1 -> H=103.11296.
+    assert first["upper_net_head_assumed_m"] == pytest.approx(103.11296,abs=1e-9)
+    # L_start=1.7; lateral(30)-lower turbine(75) produces -0.003888.
+    # Mid L=1.698056; stage=61+14*(1.698056-1.5)=63.772784.
+    # Tailwater(75)=25+0.5*(75/100)=25.375; loss=0.4.
+    assert first["lower_net_head_assumed_m"] == pytest.approx(37.997784,abs=1e-9)
+
+
+def test_independent_first_step_power_oracle_in_gwh():
+    """Checks power/energy units without calling the production power helper."""
+    first = synthetic_demo()["steps"][0]
+    upper_mw = 1000*9.80665*80*103.11296*0.9/1e6
+    lower_mw = 1000*9.80665*75*37.997784*0.9/1e6
+    expected = (upper_mw + lower_mw)*24/1000
+    assert expected == pytest.approx(2.351003170380984,abs=1e-12)
+    assert first["hydro_gwh"] == pytest.approx(expected,abs=1e-9)
+    assert first["thermal_gwh"] == pytest.approx(2.88-expected,abs=1e-9)
+
+
+def test_bypass_water_is_delayed_even_when_no_hydro_generated_from_it():
+    candidate = steps(upper_bypass_m3_s=10,
+                      stable_negative_temperatures=False)
+    r=synthetic_demo(steps=candidate)
+    assert r["status"] == "SYNTHETIC_CONSISTENT"
+    x=r["steps"]
+    assert x[0]["delayed_arrival_km3"] == 0
+    assert x[1]["delayed_arrival_km3"] == 0
+    assert x[2]["delayed_arrival_km3"] == pytest.approx(
+        (80+10)*86400/1e9,abs=1e-11)
+    assert abs(r["season_mass_residual_km3"]) < 1e-9
+    assert r["water_rule_certification"] is False
