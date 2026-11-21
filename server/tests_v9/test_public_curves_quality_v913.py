@@ -12,6 +12,7 @@ from hydro_api.public_curves_quality_v913 import (
     DIR, SOURCE_EXPECTED, MISSING, RESEARCH, load_candidate,
     validate_volume_candidate, candidate_volume_at_stage,
     candidate_exact_inverse, review_quarantined_public_tables,
+    validate_second_publisher_partial_crosscheck,
 )
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -196,7 +197,7 @@ def test_committed_v913_data_quality_receipt_matches_input_bytes():
     data={k:v for k,v in a.items() if k!="payload_sha256"}
     payload=json.dumps(data,sort_keys=True,indent=2,ensure_ascii=False).encode()
     assert hashlib.sha256(payload).hexdigest()==a["payload_sha256"]
-    assert len(a["source_sha256"])==8
+    assert len(a["source_sha256"])==9
     for filename,expected in a["source_sha256"].items():
         path=ROOT/filename
         assert path.is_file(),filename
@@ -204,7 +205,39 @@ def test_committed_v913_data_quality_receipt_matches_input_bytes():
     assert a["summary"]["total_volume_coordinates"]==1802
     assert a["summary"]["quarantined_secondary_tables"]==4
     assert a["summary"]["registered_tailwater_declines"]==1
+    assert a["summary"]["second_publisher_matching_coordinates"]==1521
+    assert a["summary"]["second_publisher_unchecked_coordinates"]==281
     assert a["source_primary_authenticity_verified"] is False
     assert a["operator_hydraulic_admissibility_signed"] is False
     assert a["production_ready"] is False
     assert a["firm_available_capacity_mw"] is None
+
+
+def test_second_public_publisher_matches_1521_cells_with_explicit_281_gap():
+    r=validate_second_publisher_partial_crosscheck()
+    assert r["independent_secondary_publisher_cells_compared"]==1521
+    assert r["matching_secondary_publisher_cells"]==1521
+    assert r["uncompared_kolyma_tail_cells"]==281
+    assert r["lower_curve_complete_second_publisher_match"] is True
+    assert r["upper_curve_complete_second_publisher_match"] is False
+    assert r["original_official_document_authenticated"] is False
+    assert r["full_geometry_operator_admitted"] is False
+
+
+def test_publication_cannot_launder_partial_review_into_complete_validation():
+    p=DIR/"order174_v913_two_publisher_partial_crosscheck.json"
+    d=json.loads(p.read_text(encoding="utf-8"))
+    assert d["summary"]["complete_independent_second_publisher_cell_comparison"] is False
+    assert d["summary"]["remaining_uncompared_coordinates"]==281
+    assert d["primary_official_original_verified"] is False
+    assert d["permitted_for_real_hydraulic_engine"] is False
+
+
+def test_cross_publisher_row_gaps_are_explicit_and_not_silently_filled():
+    p=DIR/"order174_v913_two_publisher_partial_crosscheck.json"
+    d=json.loads(p.read_text(encoding="utf-8"))
+    assert len(d["consultant_accessible_rows"]["kolyma"])==82
+    assert len(d["consultant_accessible_rows"]["ust_srednekan"])==71
+    assert d["per_reservoir"]["kolyma"]["table_truncated_in_free_consultant_version"] is True
+    assert d["per_reservoir"]["ust_srednekan"]["table_truncated_in_free_consultant_version"] is False
+    assert d["per_reservoir"]["kolyma"]["unavailable_sudact_coordinates"]==281
