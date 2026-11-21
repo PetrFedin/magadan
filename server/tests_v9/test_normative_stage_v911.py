@@ -312,3 +312,33 @@ def test_compiled_receipt_refuses_unsupported_claims(catalog,older_artifacts):
     assert report["investment_decision"]=="HOLD"
     assert report["production_ready"] is False
     assert len(report["payload_sha256"])==64
+
+
+@pytest.mark.parametrize("imposter",[0,1])
+def test_coldness_evidence_rejects_numeric_imposters(imposter):
+    with pytest.raises(ValueError,match="INVALID_COLDNESS_EVIDENCE"):
+        review_winter_spill(1,0,"0.2",imposter)
+
+
+def test_v911_saved_attestation_matches_current_source_files():
+    """Persisted report cannot be stale or silently upgrade a legal claim."""
+    p=ROOT/"artifacts_v9/magadan_normative_screen_v911.json"
+    assert p.is_file(),"V911_REPORT_MUST_BE_COMMITTED"
+    payload=json.loads(p.read_text(encoding="utf-8"))
+    contents={k:v for k,v in payload.items() if k!="payload_sha256"}
+    checksum=hashlib.sha256(json.dumps(
+        contents,sort_keys=True,ensure_ascii=False,
+        separators=(",",":")).encode("utf-8")).hexdigest()
+    assert checksum==payload["payload_sha256"]
+    for filename,expected in payload["source_sha256"].items():
+        path=ROOT/filename
+        assert path.is_file(),filename
+        assert hashlib.sha256(path.read_bytes()).hexdigest()==expected,filename
+    assert payload["v99_winter_screen"]["policy_winter_non_turbine_screening"][
+        "thermal_first"]["selected_cases_with_positive_lower_non_turbine_winter_release"]==213
+    assert payload["v99_winter_screen"]["policy_winter_non_turbine_screening"][
+        "hydro_first"]["selected_cases_with_positive_lower_non_turbine_winter_release"]==0
+    assert payload["v910_reference_screen"]["reference_months_checked"]==72
+    assert payload["official_document_original_bytes_verified"] is False
+    assert payload["firm_capacity_mw"] is None
+    assert payload["production_ready"] is False
