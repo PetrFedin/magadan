@@ -64,7 +64,7 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v911-junit.xml \
             --shard v911-public-statutory-necessary-gate-only \
-            --min-passed 359 --max-skipped 0 \
+            --min-passed 362 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_reference_catalog_exists_and_has_no_authenticity_overclaim \
             --require-case test_statutory_usable_and_forced_volumes_balance_exactly \
@@ -73,7 +73,8 @@ jobs:
             --require-case test_viii52_winter_spill_with_unknown_weather_is_conditional \
             --require-case test_v99_full_grid_review_has_no_certified_cases \
             --require-case test_v910_only_detailed_references_can_be_screened \
-            --require-case test_compiled_receipt_refuses_unsupported_claims
+            --require-case test_compiled_receipt_refuses_unsupported_claims \
+            --require-case test_v911_saved_attestation_matches_current_source_files
           sha256sum /tmp/v911-junit.xml
       - name: Reproduce V9.8 V9.9 V9.10 inputs, with no numerical drift
         shell: bash
@@ -133,4 +134,6 @@ jobs:
           set -euo pipefail
           test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
           test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          git ls-files --error-unmatch artifacts_v9/magadan_normative_screen_v911.json
+          git diff --exit-code -- artifacts_v9/magadan_normative_screen_v911.json
           echo "V911_NECESSARY_REGULATORY_SCREEN_ONLY; NO LEGAL CERTIFICATION, DISPATCH, OPERATOR RIGHTS, N-1 OR FIRM MW"
