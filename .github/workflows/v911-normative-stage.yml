@@ -64,12 +64,12 @@ jobs:
           python scripts/v84_junit_gate.py \
             --junit /tmp/v911-junit.xml \
             --shard v911-public-statutory-necessary-gate-only \
-            --min-passed 340 --max-skipped 0 \
+            --min-passed 359 --max-skipped 0 \
             --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
             --require-case test_reference_catalog_exists_and_has_no_authenticity_overclaim \
             --require-case test_statutory_usable_and_forced_volumes_balance_exactly \
             --require-case test_source_annual_cascade_15_193_plus_9_820_exact \
-            --require-case test_intermediate_real_volume_cannot_be_invented \
+            --require-case test_kolyma_bs_os_offset_is_explicit_and_no_ust_os_conversion \
             --require-case test_viii52_winter_spill_with_unknown_weather_is_conditional \
             --require-case test_v99_full_grid_review_has_no_certified_cases \
             --require-case test_v910_only_detailed_references_can_be_screened \
