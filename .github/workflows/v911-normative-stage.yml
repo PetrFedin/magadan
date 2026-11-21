@@ -1,0 +1,136 @@
+name: HydroKontur V9.11 Public-Source Normative Necessary Gates (NOT compliance)
+
+on:
+  push:
+    branches:
+      - research/v911-normative-stage-20261121
+    paths:
+      - .github/workflows/v911-normative-stage.yml
+      - server/hydro_api/normative_stage_v911.py
+      - server/tests_v9/**
+      - data/reference/kolyma_cascade_rules_2025_v911.json
+      - scripts/magadan_normative_screen_v911.py
+      - artifacts_v9/magadan_normative_screen_v911.json
+      - docs/V911_STATUTORY_ANCHORS_AND_WINTER_SCREEN_RU.md
+  pull_request:
+    paths:
+      - .github/workflows/v911-normative-stage.yml
+      - server/hydro_api/normative_stage_v911.py
+      - server/tests_v9/**
+      - data/reference/kolyma_cascade_rules_2025_v911.json
+      - scripts/magadan_normative_screen_v911.py
+      - artifacts_v9/magadan_normative_screen_v911.json
+      - docs/V911_STATUTORY_ANCHORS_AND_WINTER_SCREEN_RU.md
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-pinned-necessary-normative-review:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      PYTHONPATH: server
+      SOURCE_SHA: ${{ github.event.pull_request.head.sha || github.sha }}
+    steps:
+      - name: Checkout exact research SHA
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          fetch-depth: 0
+      - name: Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Verify immutable checkout SHA
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git status --porcelain)"
+      - name: Install scientific regression dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install -r server/requirements-v71.txt
+      - name: Execute complete V9 science suite including statutory negative checks
+        shell: bash
+        run: |
+          set -euo pipefail
+          timeout --signal=TERM --kill-after=10s 600s \
+            python -m pytest -q -ra -o xfail_strict=true --maxfail=1 \
+            server/tests_v9 --junitxml=/tmp/v911-junit.xml
+          python scripts/v84_junit_gate.py \
+            --junit /tmp/v911-junit.xml \
+            --shard v911-public-statutory-necessary-gate-only \
+            --min-passed 340 --max-skipped 0 \
+            --actual-sha "$SOURCE_SHA" --expected-sha "$SOURCE_SHA" \
+            --require-case test_reference_catalog_exists_and_has_no_authenticity_overclaim \
+            --require-case test_statutory_usable_and_forced_volumes_balance_exactly \
+            --require-case test_source_annual_cascade_15_193_plus_9_820_exact \
+            --require-case test_intermediate_real_volume_cannot_be_invented \
+            --require-case test_viii52_winter_spill_with_unknown_weather_is_conditional \
+            --require-case test_v99_full_grid_review_has_no_certified_cases \
+            --require-case test_v910_only_detailed_references_can_be_screened \
+            --require-case test_compiled_receipt_refuses_unsupported_claims
+          sha256sum /tmp/v911-junit.xml
+      - name: Reproduce V9.8 V9.9 V9.10 inputs, with no numerical drift
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_winter_energy_balance_v97.py
+          python scripts/magadan_dispatch_policy_v99.py
+          python scripts/magadan_terminal_reserve_stress_v910.py
+          git diff --exit-code -- artifacts_v9/magadan_winter_energy_balance_v97.json
+          git diff --exit-code -- artifacts_v9/magadan_dispatch_policy_v99.json
+          git diff --exit-code -- artifacts_v9/magadan_terminal_reserve_stress_v910.json
+          echo "V911_PREVIOUS_THREE_REPORTS_BITWISE_UNCHANGED"
+      - name: Regenerate normative screen and verify deterministic receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          python scripts/magadan_normative_screen_v911.py
+          cp artifacts_v9/magadan_normative_screen_v911.json /tmp/v911-screen-first.json
+          python scripts/magadan_normative_screen_v911.py
+          cmp /tmp/v911-screen-first.json artifacts_v9/magadan_normative_screen_v911.json
+          python - <<'PY'
+          from pathlib import Path
+          import hashlib,json
+          p=Path("artifacts_v9/magadan_normative_screen_v911.json")
+          d=json.loads(p.read_text(encoding="utf-8"))
+          assert d["official_document_original_bytes_verified"] is False
+          assert d["necessary_screen_not_comprehensive_rule_compliance"] is True
+          assert d["v99_winter_screen"]["regulatory_admission"] == "HOLD"
+          assert d["v910_reference_screen"]["regulatory_admission"] == "HOLD"
+          assert d["v99_winter_screen"]["v99_total_selected_scenarios"] == 216
+          assert d["v910_reference_screen"]["v910_selected_scenario_rows"] == 384
+          assert d["firm_capacity_mw"] is None
+          assert d["production_ready"] is False
+          print("V911_REGENERATED_JSON_FILE_SHA256="+hashlib.sha256(p.read_bytes()).hexdigest())
+          PY
+      - name: Publish detached evidence into job log for reviewed commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          if git ls-files --error-unmatch artifacts_v9/magadan_normative_screen_v911.json >/dev/null 2>&1 && \
+             git diff --quiet -- artifacts_v9/magadan_normative_screen_v911.json; then
+            echo "V911_REPORT_ALREADY_SYNCED"
+          else
+            python - <<'PY'
+          from pathlib import Path
+          from base64 import b64encode
+          data=b64encode(Path("artifacts_v9/magadan_normative_screen_v911.json").read_bytes()).decode("ascii")
+          print("V911_REPORT_BASE64_BEGIN")
+          for n in range(0,len(data),2000):
+              print("V911_REPORT_CHUNK="+data[n:n+2000])
+          print("V911_REPORT_BASE64_END")
+          PY
+          fi
+      - name: Bound status as research and preserve original source
+        shell: bash
+        run: |
+          set -euo pipefail
+          test "$(git rev-parse HEAD)" = "$SOURCE_SHA"
+          test -z "$(git diff --name-only -- server/ scripts/ data/ docs/)"
+          echo "V911_NECESSARY_REGULATORY_SCREEN_ONLY; NO LEGAL CERTIFICATION, DISPATCH, OPERATOR RIGHTS, N-1 OR FIRM MW"
