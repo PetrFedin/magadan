@@ -58,13 +58,23 @@
   "firm_available_capacity_mw": null,
   "full_turbine_efficiency_curves_verified": false,
   "hydraulic_transit_calibrated": false,
+  "independent_secondary_publisher_comparison": {
+    "full_geometry_operator_admitted": false,
+    "independent_secondary_publisher_cells_compared": 1521,
+    "lower_curve_complete_second_publisher_match": true,
+    "matching_secondary_publisher_cells": 1521,
+    "original_official_document_authenticated": false,
+    "publisher_pair": "SudAct.ru vs ConsultantPlus",
+    "uncompared_kolyma_tail_cells": 281,
+    "upper_curve_complete_second_publisher_match": false
+  },
   "industrial_power_firm_MW": null,
   "investment_decision": "HOLD",
   "licensing_and_redistribution_review_completed": false,
   "network_n_minus_one_verified": false,
   "operator_hydraulic_admissibility_signed": false,
   "original_source_document_sha256_verified": false,
-  "payload_sha256": "b535fa34f73b0b3b910e76272543e6489acf93be213a3e1dcaf2616100e0f1aa",
+  "payload_sha256": "8387c8f09d0b2cbdc6a5821d94b51682fb5a4149311f7c27c0089dd7c170bb37",
   "production_ready": false,
   "source_primary_authenticity_verified": false,
   "source_publication_secondary_transcription": true,
@@ -72,11 +82,12 @@
     "data/reference/order174_v913_kolyma_dispatch_candidate.json": "d32a7a3a49ac48c4a8842d7848a6e3eb9854e2d5139002d33ce3cfcbc42b644f",
     "data/reference/order174_v913_kolyma_tailwater_candidate.json": "dfd97a8cbdf78304268918f20e3718e30a669326e791647fa8589353f990b90c",
     "data/reference/order174_v913_kolyma_volume_grid_candidate.json": "f0068490fc8c91e838948b5c645a9641bed258cea3f1c589b5088a700845384c",
+    "data/reference/order174_v913_two_publisher_partial_crosscheck.json": "3a18b119f9a0a5557de7130b160c37d1401e9a32e21005ac43372aead2bb9f27",
     "data/reference/order174_v913_ust_dispatch_candidate.json": "e56770e62451710b1259a14de62ffd1833633d33205079c898f2f4b5f3aae4d8",
     "data/reference/order174_v913_ust_srednekan_volume_grid_candidate.json": "cdd2af642dec1c051e2334b531a028cb9fbf50f0a319727b7b252e1b5f320124",
     "data/reference/order174_v913_ust_tailwater_candidate.json": "44cb298ffe9eed3df14fe6398ee2ee90763c929f1f0d7e6aa7479ba459c8e43b",
-    "scripts/magadan_public_curves_quality_v913.py": "7f93b8972f2cf77b25b90662ceeaefba09e08f2d4b8aede0cf1fee30c6c102ef",
-    "server/hydro_api/public_curves_quality_v913.py": "6b6ad40976f51b7f0582d3c1063cdf5bd3242cec85f0e4b4fb494a218b2e1a76"
+    "scripts/magadan_public_curves_quality_v913.py": "6f7c1e1674e0c912dce5e6b513d5bd6ff363de3fc183dbc00570cfb856ceea50",
+    "server/hydro_api/public_curves_quality_v913.py": "f31a2abe62247de0219dcb0b89655d8f70054ae325932cf03ef5a7f29e768556"
   },
   "summary": {
     "candidate_kolyma_coordinates": 1101,
@@ -87,6 +98,8 @@
     "quarantined_secondary_tables": 4,
     "registered_tailwater_declines": 1,
     "reservoirs": 2,
+    "second_publisher_matching_coordinates": 1521,
+    "second_publisher_unchecked_coordinates": 281,
     "statutory_anchor_points_agree": 6,
     "total_volume_coordinates": 1802
   }
