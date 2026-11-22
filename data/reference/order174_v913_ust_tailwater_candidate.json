@@ -1,0 +1,156 @@
+{
+  "artifact": "MAGADAN-V913-ORDER174-SECONDARY-PUBLIC-TABLE-CANDIDATE-1",
+  "appendix": 11,
+  "table_key": "ust_tailwater",
+  "source": {
+    "url": "https://sudact.ru/law/prikaz-rosvodresursov-ot-07072025-n-174-ob/pravila-ispolzovaniia-vodnykh-resursov-kolymskogo/prilozhenie-n-11/",
+    "document": "Order Rosvodresursy 174 2025-07-07, registered 2025-08-01 no 83126",
+    "publication": "SudAct.ru secondary reproduced legal text",
+    "retrieved_utc_date": "2026-11-22",
+    "primary_original_bytes_verified": false,
+    "independent_legal_revision_signoff": false
+  },
+  "raw_table_lines": [
+    {
+      "source_markdown_line": 175,
+      "raw": "|  | ```<br>``` | Расход воды. м3/с | Уровень воды, м БС |"
+    },
+    {
+      "source_markdown_line": 176,
+      "raw": "| ```<br>``` | ```<br>``` | ```<br>``` | 1 | 2 |"
+    },
+    {
+      "source_markdown_line": 177,
+      "raw": "| ```<br>``` | ```<br>``` | 363 | 229,79 | - |"
+    },
+    {
+      "source_markdown_line": 178,
+      "raw": "| ```<br>``` | ```<br>``` | 500 | 229,79 | 223,91 |"
+    },
+    {
+      "source_markdown_line": 179,
+      "raw": "| ```<br>``` | ```<br>``` | 1000 | 230,82 | 225,23 |"
+    },
+    {
+      "source_markdown_line": 180,
+      "raw": "| ```<br>``` | ```<br>``` | 2000 | 231,95 | 226,32 |"
+    },
+    {
+      "source_markdown_line": 181,
+      "raw": "| ```<br>``` | ```<br>``` | 4000 | 233,56 | 229,33 |"
+    },
+    {
+      "source_markdown_line": 182,
+      "raw": "| ```<br>``` | ```<br>``` | 6000 | 234,90 | 231,78 |"
+    },
+    {
+      "source_markdown_line": 183,
+      "raw": "| ```<br>``` | ```<br>``` | 8000 | 236,06 | 229,33 |"
+    },
+    {
+      "source_markdown_line": 184,
+      "raw": "| ```<br>``` | ```<br>``` | 10000 | 236,93 | 231,78 |"
+    },
+    {
+      "source_markdown_line": 185,
+      "raw": "| ```<br>``` | ```<br>``` | 15000 | 238,42 | 234,34 |"
+    },
+    {
+      "source_markdown_line": 186,
+      "raw": "| ```<br>``` | ```<br>``` | 20000 | - | 236,49 |"
+    },
+    {
+      "source_markdown_line": 187,
+      "raw": "| ```<br>``` | ```<br>``` | 25000 | - | 238,2 |"
+    }
+  ],
+  "source_table_shape": "two_labeled_series",
+  "units": {
+    "discharge": "m3/s",
+    "stage": "m BS"
+  },
+  "numeric_geometry_ready": false,
+  "operator_admitted": false,
+  "production_ready": false,
+  "flags": [
+    "PUBLISHED_TAILWATER_CURVE_2_NONMONOTONIC_DO_NOT_SMOOTH_OR_ADMIT"
+  ],
+  "readings": [
+    {
+      "source_markdown_line": 177,
+      "discharge_m3_s": 363,
+      "stage_series_1_m_bs": 229.79,
+      "stage_series_2_m_bs": null
+    },
+    {
+      "source_markdown_line": 178,
+      "discharge_m3_s": 500,
+      "stage_series_1_m_bs": 229.79,
+      "stage_series_2_m_bs": 223.91
+    },
+    {
+      "source_markdown_line": 179,
+      "discharge_m3_s": 1000,
+      "stage_series_1_m_bs": 230.82,
+      "stage_series_2_m_bs": 225.23
+    },
+    {
+      "source_markdown_line": 180,
+      "discharge_m3_s": 2000,
+      "stage_series_1_m_bs": 231.95,
+      "stage_series_2_m_bs": 226.32
+    },
+    {
+      "source_markdown_line": 181,
+      "discharge_m3_s": 4000,
+      "stage_series_1_m_bs": 233.56,
+      "stage_series_2_m_bs": 229.33
+    },
+    {
+      "source_markdown_line": 182,
+      "discharge_m3_s": 6000,
+      "stage_series_1_m_bs": 234.9,
+      "stage_series_2_m_bs": 231.78
+    },
+    {
+      "source_markdown_line": 183,
+      "discharge_m3_s": 8000,
+      "stage_series_1_m_bs": 236.06,
+      "stage_series_2_m_bs": 229.33
+    },
+    {
+      "source_markdown_line": 184,
+      "discharge_m3_s": 10000,
+      "stage_series_1_m_bs": 236.93,
+      "stage_series_2_m_bs": 231.78
+    },
+    {
+      "source_markdown_line": 185,
+      "discharge_m3_s": 15000,
+      "stage_series_1_m_bs": 238.42,
+      "stage_series_2_m_bs": 234.34
+    },
+    {
+      "source_markdown_line": 186,
+      "discharge_m3_s": 20000,
+      "stage_series_1_m_bs": null,
+      "stage_series_2_m_bs": 236.49
+    },
+    {
+      "source_markdown_line": 187,
+      "discharge_m3_s": 25000,
+      "stage_series_1_m_bs": null,
+      "stage_series_2_m_bs": 238.2
+    }
+  ],
+  "quarantined_declines": [
+    {
+      "series": "stage_series_2_m_bs",
+      "previous_discharge_m3_s": 6000,
+      "current_discharge_m3_s": 8000,
+      "previous_stage_m_bs": 231.78,
+      "current_stage_m_bs": 229.33,
+      "drop_m": 2.4499999999999886
+    }
+  ]
+}

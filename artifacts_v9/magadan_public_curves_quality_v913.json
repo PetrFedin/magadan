@@ -1,0 +1,124 @@
+{
+  "additional_tables_in_quarantine": {
+    "kolyma_dispatch": {
+      "active_tailwater_function": false,
+      "active_zone_dispatch": false,
+      "raw_table_lines": 50
+    },
+    "kolyma_tailwater": {
+      "active_tailwater_function": false,
+      "active_zone_dispatch": false,
+      "raw_table_lines": 3
+    },
+    "ust_dispatch": {
+      "active_tailwater_function": false,
+      "active_zone_dispatch": false,
+      "raw_table_lines": 25
+    },
+    "ust_tailwater": {
+      "active_tailwater_function": false,
+      "nonmonotonic_series_2_drop_m": 2.45,
+      "published_series_count": 2,
+      "raw_readings": 11
+    }
+  },
+  "artifact": "MAGADAN-V913-ORDER174-PUBLIC-CANDIDATE-QUALITY-1",
+  "candidate_curves": {
+    "kolyma": {
+      "adjacent_equal_rounded_volumes": 0,
+      "numeric_coordinates": 1101,
+      "observed_anchors_km3": {
+        "fpu": "17.961",
+        "npu": "15.077",
+        "umo": "7.838"
+      },
+      "physical_operation_admitted": false,
+      "reservoir": "kolyma",
+      "source_is_secondary": true,
+      "source_rows": 111,
+      "strict_inverse_unique_for_all_values": true
+    },
+    "ust_srednekan": {
+      "adjacent_equal_rounded_volumes": 73,
+      "numeric_coordinates": 701,
+      "observed_anchors_km3": {
+        "fpu": "6.085",
+        "npu": "5.436",
+        "umo": "2.863"
+      },
+      "physical_operation_admitted": false,
+      "reservoir": "ust_srednekan",
+      "source_is_secondary": true,
+      "source_rows": 71,
+      "strict_inverse_unique_for_all_values": false
+    }
+  },
+  "complete_independent_second_publisher_cell_comparison": false,
+  "document": "Order Rosvodresursy 174 (2025-07-07), registered 83126",
+  "firm_available_capacity_mw": null,
+  "full_turbine_efficiency_curves_verified": false,
+  "hydraulic_transit_calibrated": false,
+  "independent_secondary_publisher_comparison": {
+    "full_geometry_operator_admitted": false,
+    "independent_secondary_publisher_cells_compared": 1521,
+    "lower_curve_complete_second_publisher_match": true,
+    "matching_secondary_publisher_cells": 1521,
+    "original_official_document_authenticated": false,
+    "publisher_pair": "SudAct.ru vs ConsultantPlus",
+    "uncompared_kolyma_tail_cells": 281,
+    "upper_curve_complete_second_publisher_match": false
+  },
+  "industrial_power_firm_MW": null,
+  "investment_decision": "HOLD",
+  "licensing_and_redistribution_review_completed": false,
+  "network_n_minus_one_verified": false,
+  "operator_hydraulic_admissibility_signed": false,
+  "original_source_document_sha256_verified": false,
+  "payload_sha256": "059311984436de3a9bc52b7d2721ee5c18a9f1909da0ad28522c64c785ad3df9",
+  "production_ready": false,
+  "source_primary_authenticity_verified": false,
+  "source_publication_secondary_transcription": true,
+  "source_sha256": {
+    "data/reference/order174_v913_kolyma_dispatch_candidate.json": "d32a7a3a49ac48c4a8842d7848a6e3eb9854e2d5139002d33ce3cfcbc42b644f",
+    "data/reference/order174_v913_kolyma_tailwater_candidate.json": "dfd97a8cbdf78304268918f20e3718e30a669326e791647fa8589353f990b90c",
+    "data/reference/order174_v913_kolyma_volume_grid_candidate.json": "f0068490fc8c91e838948b5c645a9641bed258cea3f1c589b5088a700845384c",
+    "data/reference/order174_v913_third_publisher_kolyma_crosscheck.json": "7326112af4851a0f32cd80f6dabf0b3addd594a4cdf318fb4b2cec440cbca561",
+    "data/reference/order174_v913_two_publisher_partial_crosscheck.json": "3a18b119f9a0a5557de7130b160c37d1401e9a32e21005ac43372aead2bb9f27",
+    "data/reference/order174_v913_ust_dispatch_candidate.json": "e56770e62451710b1259a14de62ffd1833633d33205079c898f2f4b5f3aae4d8",
+    "data/reference/order174_v913_ust_srednekan_volume_grid_candidate.json": "cdd2af642dec1c051e2334b531a028cb9fbf50f0a319727b7b252e1b5f320124",
+    "data/reference/order174_v913_ust_tailwater_candidate.json": "44cb298ffe9eed3df14fe6398ee2ee90763c929f1f0d7e6aa7479ba459c8e43b",
+    "scripts/magadan_public_curves_quality_v913.py": "f0834553222ef0ad3ec0a6a7fe9f7abf5f07638899b3816a8892f7edfe698bea",
+    "server/hydro_api/public_curves_quality_v913.py": "b1850cac1535172bd6df5ad410fd29592c0fd21c7fc8ef319824cf30e5ee790b"
+  },
+  "summary": {
+    "candidate_kolyma_coordinates": 1101,
+    "candidate_ust_coordinates": 701,
+    "dispatch_zone_curves_admitted_for_real_simulation": 0,
+    "lower_equal_adjacent_rounded_volumes": 73,
+    "original_candidate_coordinates_with_at_least_two_secondary_sources": 1802,
+    "physical_curves_admitted_for_real_simulation": 0,
+    "previous_unchecked_high_stage_supported_by_third": 281,
+    "quarantined_secondary_tables": 4,
+    "registered_tailwater_declines": 1,
+    "reservoirs": 2,
+    "second_publisher_matching_coordinates": 1521,
+    "second_publisher_unchecked_coordinates": 281,
+    "statutory_anchor_points_agree": 6,
+    "third_publisher_upper_conflicting_coordinates": 1,
+    "third_publisher_upper_matching_coordinates": 1100,
+    "total_volume_coordinates": 1802
+  },
+  "third_secondary_upper_publisher_comparison": {
+    "every_sudact_coordinate_has_an_additional_secondary_match": true,
+    "physical_operation_admitted": false,
+    "previously_uncompared_consultant_upper_high_stage_cells_supported_by_third": 281,
+    "signed_official_original_authenticated": false,
+    "source_discrepancy_auto_corrected": false,
+    "sudact_and_consultant_km3": "11.078",
+    "third_secondary_upper_matches": 1100,
+    "third_secondary_upper_mismatches": 1,
+    "third_source_discrepancy_OS_m": "441.90",
+    "third_source_printed_km3": "111.078",
+    "upper_full_candidate_cells": 1101
+  }
+}

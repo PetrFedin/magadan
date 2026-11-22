@@ -1,0 +1,385 @@
+"""V9.13 public *candidate* curve import: reproducibility and data-quality guard.
+
+The published table is from a secondary legal-article transcription, not a
+signed operator/official-original calibration. No part of this module can
+return approved real hydraulic power, operation, law compliance or firm MW.
+Flat rounded lower-reservoir volumes prevent unique global inversion.
+Tailwater curves and dispatch-zone graphics are quarantined (missing or
+ambiguous mapping and explicit Appendix 11 non-monotonicity).
+"""
+from __future__ import annotations
+
+from decimal import Decimal, InvalidOperation
+from pathlib import Path
+import json
+import re
+
+ROOT=Path(__file__).resolve().parents[2]
+DIR=ROOT/"data/reference"
+STEP=Decimal("0.10")
+TEN=Decimal("10")
+SOURCE_EXPECTED={
+    "kolyma":{
+        "appendix":8,"rows":111,"points":1101,
+        "first_bs":"369.06","last_bs":"479.06","first_volume":"0.168",
+        "last_volume":"32.400","start_os":"370.00","datum":"BS_AND_OS",
+        "ties":0,"anchors":("7.838","15.077","17.961"),
+        "anchor_levels":("431.06","450.56","456.66")
+    },
+    "ust_srednekan":{
+        "appendix":9,"rows":71,"points":701,
+        "first_bs":"230.00","last_bs":"300.00","first_volume":"0.000",
+        "last_volume":"8.746","datum":"BS","ties":73,
+        "anchors":("2.863","5.436","6.085"),
+        "anchor_levels":("278.00","290.00","292.30")
+    },
+}
+OTHER={
+  "kolyma_tailwater":(10,3),
+  "ust_tailwater":(11,13),
+  "kolyma_dispatch":(12,50),
+  "ust_dispatch":(13,25),
+}
+MISSING="DATA_INSUFFICIENT"
+RESEARCH="SECONDARY_CANDIDATE_NOT_OPERATIONALLY_APPROVED"
+
+def path_for(reservoir:str)->Path:
+    if reservoir not in SOURCE_EXPECTED: raise ValueError("V913_UNKNOWN_RESERVOIR")
+    return DIR/f"order174_v913_{reservoir}_volume_grid_candidate.json"
+
+def _dec(value,field):
+    if isinstance(value,bool) or not isinstance(value,(str,int,float,Decimal)):
+        raise ValueError("V913_INVALID_NUMERIC_"+field)
+    try:x=Decimal(str(value))
+    except InvalidOperation as exc:raise ValueError("V913_INVALID_NUMERIC_"+field) from exc
+    if not x.is_finite():raise ValueError("V913_NONFINITE_"+field)
+    return x
+
+def load_candidate(reservoir):
+    p=path_for(reservoir)
+    d=json.loads(p.read_text(encoding="utf-8"))
+    validate_volume_candidate(d,reservoir)
+    return d
+
+def validate_volume_candidate(d,reservoir):
+    if not isinstance(d,dict) or reservoir not in SOURCE_EXPECTED:
+        raise ValueError("V913_UNRECOGNIZED_TABLE")
+    e=SOURCE_EXPECTED[reservoir]
+    source=d.get("source")
+    if (not isinstance(source,dict) or source.get("primary_official_original_authenticity_verified") is not False
+        or source.get("licensing_review_completed") is not False
+        or source.get("publisher")!="SudAct.ru secondary legal-publication reproduction"
+        or source.get("retrieved_day")!="2026-11-22"
+        or f"/prilozhenie-n-{e['appendix']}/" not in source.get("url","")):
+        raise ValueError("V913_UNKNOWN_SOURCE_OR_FORGED_APPROVAL")
+    if (d.get("artifact")!="MAGADAN-V913-PUBLIC-ORDER174-CURVE-CANDIDATE-1"
+        or d.get("reservoir")!=reservoir or d.get("appendix")!=e["appendix"]
+        or d.get("candidate_only_not_an_approved_interpolation_curve") is not True
+        or d.get("operational_use_allowed") is not False or d.get("production_ready") is not False):
+        raise ValueError("V913_CANDIDATE_NOT_QUARANTINED")
+    unit=d.get("units",{})
+    if (unit.get("stage")!="m" or unit.get("stage_datum")!=e["datum"]
+        or unit.get("volume")!="km3"
+        or unit.get("grid_resolution_m")!="0.10"
+        or unit.get("volume_precision_km3")!="0.001"
+        or d.get("column_offsets_m")!=[f"{i/10:.2f}" for i in range(10)]):
+        raise ValueError("V913_UNIT_OR_GRID_CONTRACT")
+    rows=d.get("rows")
+    if not isinstance(rows,list) or len(rows)!=e["rows"]:
+        raise ValueError("V913_TABLE_ROW_COUNT_MISMATCH")
+    if (d.get("expected_sources_row_count")!=e["rows"] or
+        d.get("expected_coordinate_count")!=e["points"]):
+        raise ValueError("V913_TABLE_COMPLETENESS_DRIFT")
+    data=[];last=None;ties=0
+    for i,row in enumerate(rows):
+        if row.get("source_row_index")!=i+1:
+            raise ValueError("V913_SOURCE_ROW_INDEX_DRIFT")
+        stage=_dec(row.get("stage_bs_base_m"),"STAGE")
+        if stage!=_dec(e["first_bs"],"EXPECTED_STAGE")+i:
+            raise ValueError("V913_STAGE_ROW_GAP")
+        if reservoir=="kolyma":
+            os=_dec(row.get("stage_os_base_m"),"OS")
+            if os!=_dec(e["start_os"],"EXPECTED_OS")+i or os-stage!=Decimal("0.94"):
+                raise ValueError("V913_OS_BS_DATUM_MISMATCH")
+        elif row.get("stage_os_base_m") is not None:
+            raise ValueError("V913_FAKE_UST_OS_DATUM")
+        vs=row.get("volume_km3_by_0p1m_offset")
+        expected_len=1 if i==e["rows"]-1 else 10
+        if not isinstance(vs,list) or len(vs)!=expected_len:
+            raise ValueError("V913_POINT_GAP_OR_SURPLUS")
+        for j,s in enumerate(vs):
+            if not isinstance(s,str) or not re.fullmatch(r"\d+\.\d{3}",s):
+                raise ValueError("V913_ROUNDED_VOLUME_FORMAT")
+            v=_dec(s,"VOLUME")
+            z=stage+STEP*j
+            if last is not None:
+                lastz,lastv=last
+                if z-lastz!=STEP or v<lastv:
+                    raise ValueError("V913_STAGE_GAP_OR_VOLUME_DECREASE")
+                ties+=int(v==lastv)
+            data.append((z,v))
+            last=(z,v)
+    if len(data)!=e["points"] or ties!=e["ties"]:
+        raise ValueError("V913_INCOMPLETE_TABLE_OR_PLATEAU_DRIFT")
+    if (data[0][0]!=_dec(e["first_bs"],"MIN") or
+        data[-1][0]!=_dec(e["last_bs"],"MAX") or
+        data[0][1]!=_dec(e["first_volume"],"MINV") or
+        data[-1][1]!=_dec(e["last_volume"],"MAXV")):
+        raise ValueError("V913_END_POINT_DRIFT")
+    observations=[]
+    by_stage=dict(data)
+    for z,target in zip(e["anchor_levels"],e["anchors"]):
+        observed=by_stage.get(_dec(z,"ANCHOR_LEVEL"))
+        if observed!=_dec(target,"ANCHOR_VOLUME"):
+            raise ValueError("V913_STATUTORY_ANCHOR_DRIFT")
+        observations.append(str(observed))
+    anchors=d.get("observed_anchors_from_independent_section_V")
+    if anchors!={"umo_km3":observations[0],"npu_km3":observations[1],"fpu_km3":observations[2]}:
+        raise ValueError("V913_CANDIDATE_ANCHOR_LEDGER_DRIFT")
+    if d.get("adjacent_equal_rounded_volumes")!=ties:
+        raise ValueError("V913_TIE_COUNT_DRIFT")
+    return {
+        "reservoir":reservoir,
+        "source_rows":len(rows),"numeric_coordinates":len(data),
+        "adjacent_equal_rounded_volumes":ties,
+        "strict_inverse_unique_for_all_values":ties==0,
+        "observed_anchors_km3":dict(zip(("umo","npu","fpu"),observations)),
+        "source_is_secondary":True,
+        "physical_operation_admitted":False,
+    }
+
+def candidate_volume_at_stage(reservoir,stage_bs_m,*,mode="research"):
+    """Only a visibly marked rounded-table research lookup, never actual MW."""
+    if mode!="research":
+        return {"status":MISSING,"reason":"V913_PRIMARY_CURVES_AND_ENGINEERING_SIGNOFF_ABSENT",
+                "volume_km3":None,"approved_real_curve":False}
+    d=load_candidate(reservoir)
+    z=_dec(stage_bs_m,"STAGE")
+    points=[]
+    for row in d["rows"]:
+        z0=_dec(row["stage_bs_base_m"],"BS")
+        for j,v in enumerate(row["volume_km3_by_0p1m_offset"]):
+            points.append((z0+STEP*j,_dec(v,"V")))
+    if z<points[0][0] or z>points[-1][0]:
+        raise ValueError("V913_EXTRAPOLATION_NOT_PERMITTED")
+    for left,right in zip(points,points[1:]):
+        z0,v0=left;z1,v1=right
+        if z==z0:result=v0;interpolated=False;break
+        if z0<z<z1:
+            result=v0+(v1-v0)*(z-z0)/(z1-z0)
+            interpolated=True;break
+    else:
+        result=points[-1][1]
+        interpolated=False
+    return {"status":RESEARCH,"reservoir":reservoir,
+            "stage_m_bs":str(z),"rounded_table_volume_km3":str(result),
+            "interpolated_within_0p1m_published_grid":interpolated,
+            "approved_real_curve":False,"firm_capacity_mw":None}
+
+def candidate_exact_inverse(reservoir,volume_km3):
+    """No fake unique inverse when published rounding produces plateaus."""
+    d=load_candidate(reservoir)
+    target=_dec(volume_km3,"VOLUME")
+    matches=[]
+    for row in d["rows"]:
+        z0=_dec(row["stage_bs_base_m"],"BS")
+        for j,v in enumerate(row["volume_km3_by_0p1m_offset"]):
+            if _dec(v,"V")==target: matches.append(z0+STEP*j)
+    if len(matches)>1:
+        return {"status":"AMBIGUOUS_INVERSE_DUE_TO_ROUNDED_PLATEAU",
+                "candidate_stage_interval_m_bs":[str(min(matches)),str(max(matches))],
+                "unique_stage_m_bs":None,"approved_real_curve":False}
+    if not matches: raise ValueError("V913_INVERSE_ONLY_EXACT_PUBLISHED_VOLUME_ALLOWED")
+    return {"status":RESEARCH,"unique_stage_m_bs":str(matches[0]),
+            "approved_real_curve":False}
+
+def review_quarantined_public_tables():
+    info={}
+    for key,(app,expected_rows) in OTHER.items():
+        p=DIR/f"order174_v913_{key}_candidate.json"
+        d=json.loads(p.read_text(encoding="utf-8"))
+        source=d.get("source",{})
+        if (d.get("appendix")!=app or d.get("table_key")!=key
+                or d.get("operator_admitted") is not False
+                or d.get("numeric_geometry_ready") is not False
+                or d.get("production_ready") is not False
+                or source.get("primary_original_bytes_verified") is not False
+                or f"/prilozhenie-n-{app}/" not in source.get("url","")
+                or len(d.get("raw_table_lines",[]))!=expected_rows):
+            raise ValueError("V913_QUARANTINE_TABLE_CONTRACT_FAILED:"+key)
+        if any(not isinstance(x.get("raw"),str) or not x["raw"].startswith("|")
+               for x in d["raw_table_lines"]):
+            raise ValueError("V913_SOURCE_ROW_LOST")
+        if key=="ust_tailwater":
+            readings=d.get("readings",[])
+            if len(readings)!=11:
+                raise ValueError("V913_TAILWATER_INCOMPLETE")
+            if any(readings[i]["discharge_m3_s"]>=readings[i+1]["discharge_m3_s"]
+                   for i in range(10)):
+                raise ValueError("V913_TAILWATER_Q_NONINCREASING")
+            q={row["discharge_m3_s"]:row for row in readings}
+            if not (q[6000]["stage_series_2_m_bs"]==231.78
+                    and q[8000]["stage_series_2_m_bs"]==229.33
+                    and q[10000]["stage_series_2_m_bs"]==231.78):
+                raise ValueError("V913_TAILWATER_FLAGGED_ANOMALY_CHANGED")
+            decline=q[6000]["stage_series_2_m_bs"]-q[8000]["stage_series_2_m_bs"]
+            if abs(decline-2.45)>1e-9 or len(d.get("quarantined_declines",[]))!=1:
+                raise ValueError("V913_TAILWATER_NEGATIVE_SLOPE_NOT_FLAGGED")
+            info[key]={"published_series_count":2,"raw_readings":len(readings),
+                       "nonmonotonic_series_2_drop_m":2.45,
+                       "active_tailwater_function":False}
+        else:
+            info[key]={"raw_table_lines":len(d["raw_table_lines"]),
+                       "active_tailwater_function":False,
+                       "active_zone_dispatch":False}
+    return info
+
+
+def validate_second_publisher_partial_crosscheck():
+    """Verify every accessible ConsultantPlus cell against the SudAct copy.
+
+    Both are secondary publishers. No claim of primary official attestation
+    or verification of inaccessible free-version Kolyma tail cells.
+    """
+    file=DIR/"order174_v913_two_publisher_partial_crosscheck.json"
+    d=json.loads(file.read_text(encoding="utf-8"))
+    if (d.get("artifact")!="MAGADAN-V913-SECONDARY-PUBLISHER-CELL-COMPARISON-1"
+        or d.get("primary_official_original_verified") is not False
+        or d.get("secondary_publisher_comparison_is_not_primary_source_authentication") is not True
+        or d.get("permitted_for_real_hydraulic_engine") is not False
+        or d.get("production_ready") is not False):
+        raise ValueError("V913_SECOND_PUBLISHER_FORGED_ADMISSION")
+    expected={"kolyma":(82,820,281),"ust_srednekan":(71,701,0)}
+    count=0
+    for site,(expected_rows,expected_points,missing) in expected.items():
+        original=load_candidate(site)
+        rows=d["consultant_accessible_rows"][site]
+        item=d["per_reservoir"][site]
+        if len(rows)!=expected_rows or len(original["rows"])!=SOURCE_EXPECTED[site]["rows"]:
+            raise ValueError("V913_SECOND_PUBLISHER_ROW_COVERAGE_CHANGED")
+        if (item.get("publisher_rows")!=expected_rows
+            or item.get("publisher_visible_coordinates")!=expected_points
+            or item.get("unavailable_sudact_coordinates")!=missing
+            or item.get("exact_numeric_cell_matches")!=expected_points
+            or item.get("mismatched_cells")!=0
+            or item.get("table_truncated_in_free_consultant_version") is not (missing>0)):
+            raise ValueError("V913_SECOND_PUBLISHER_COVERAGE_LEDGER_DRIFT")
+        if "consultant.ru/document/cons_doc_LAW_511518/" not in d["comparison_publication_urls"][site]:
+            raise ValueError("V913_SECOND_PUBLISHER_SOURCE_URL_MISMATCH")
+        for i,row in enumerate(rows):
+            src=original["rows"][i]
+            if (row.get("publisher_row_index")!=i+1
+                or row.get("stage_bs_base_m")!=src["stage_bs_base_m"]
+                or (site=="kolyma" and row.get("stage_os_base_m")!=src["stage_os_base_m"])
+                or len(row.get("volume_km3_by_0p1m_offset",[]))!=
+                    len(src["volume_km3_by_0p1m_offset"])):
+                raise ValueError("V913_SECOND_PUBLISHER_STAGE_OR_COLUMN_GRAIN_DRIFT")
+            for public,reference in zip(row["volume_km3_by_0p1m_offset"],
+                                         src["volume_km3_by_0p1m_offset"]):
+                if public!=reference:
+                    raise ValueError("V913_TWO_PUBLIC_PUBLISHERS_NUMERIC_CELL_MISMATCH")
+                count+=1
+    s=d.get("summary",{})
+    if (count!=1521 or s.get("total_coordinates_sudact")!=1802
+        or s.get("independent_secondary_publisher_cells_compared")!=1521
+        or s.get("exact_cell_matches")!=count
+        or s.get("mismatched_cells")!=0
+        or s.get("remaining_uncompared_coordinates")!=281
+        or s.get("complete_independent_second_publisher_cell_comparison") is not False):
+        raise ValueError("V913_FALSE_COMPLETE_CROSS_PUBLISHER_VALIDATION")
+    return {
+        "publisher_pair":"SudAct.ru vs ConsultantPlus",
+        "independent_secondary_publisher_cells_compared":count,
+        "matching_secondary_publisher_cells":count,
+        "uncompared_kolyma_tail_cells":281,
+        "lower_curve_complete_second_publisher_match":True,
+        "upper_curve_complete_second_publisher_match":False,
+        "original_official_document_authenticated":False,
+        "full_geometry_operator_admitted":False,
+    }
+
+
+def validate_third_publisher_kolyma(candidate=None):
+    """Check every third-source cell without repairing its printed anomaly.
+
+    A secondary reproduction is NOT an authenticated primary publication.
+    This test verifies row mapping and exact inter-site disagreement; it does
+    not certify physical accuracy, independence of providers or source rights.
+    """
+    filename=DIR/"order174_v913_third_publisher_kolyma_crosscheck.json"
+    d=(json.loads(filename.read_text(encoding="utf-8"))
+       if candidate is None else candidate)
+    source=d.get("source",{})
+    if (d.get("artifact")!="MAGADAN-V913-THIRD-SECONDARY-PUBLISHER-KOLYMA-1101-CELL-CROSSCHECK-1"
+        or source.get("site")!="Zakonbaza.com"
+        or source.get("document")!="Rosvodresursy Order 174, 2025-07-07"
+        or source.get("retrieved_day")!="2026-11-22"
+        or source.get("original_official_publication_authenticated") is not False
+        or source.get("rights_review_completed") is not False
+        or d.get("secondary_publications_may_share_underlying_transcription") is not True
+        or d.get("operator_admissibility") is not False
+        or d.get("no_comprehensive_primary_original_verification") is not True
+        or d.get("no_automatic_data_correction") is not True
+        or d.get("production_ready") is not False
+        or d.get("compared_against")!="data/reference/order174_v913_kolyma_volume_grid_candidate.json"
+        or "zakonbaza.com/prikaz-rosvodresursy-2025-07-07-174/" not in source.get("url","")):
+        raise ValueError("V913_THIRD_SOURCE_INVALID_OR_FALSE_APPROVAL")
+    rows=d.get("source_rows")
+    if not isinstance(rows,list) or len(rows)!=111:
+        raise ValueError("V913_THIRD_SOURCE_INCOMPLETE")
+    baseline=load_candidate("kolyma")["rows"]
+    matched=0; mismatches=[]; high_match=0
+    for i,row in enumerate(rows):
+        expected=baseline[i]
+        if (row.get("source_row_index")!=i+1
+            or row.get("stage_os_base_m")!=expected["stage_os_base_m"]
+            or row.get("stage_bs_base_m")!=expected["stage_bs_base_m"]):
+            raise ValueError("V913_THIRD_SOURCE_STAGE_ROW_DRIFT")
+        values=row.get("volume_km3_by_0p1m_offset")
+        canon=expected["volume_km3_by_0p1m_offset"]
+        if not isinstance(values,list) or len(values)!=len(canon):
+            raise ValueError("V913_THIRD_SOURCE_NUMERIC_CELLS_INCOMPLETE")
+        for j,(value,reference) in enumerate(zip(values,canon)):
+            if not isinstance(value,str) or not re.fullmatch(r"\d+\.\d{3}",value):
+                raise ValueError("V913_THIRD_SOURCE_BAD_NUMERIC_CELL")
+            if value==reference:
+                matched+=1
+                if i>=82:high_match+=1
+            else:
+                mismatches.append({
+                    "source_row_index":i+1,
+                    "stage_os_m":str(_dec(row["stage_os_base_m"],"OS")+STEP*j),
+                    "stage_bs_m":str(_dec(row["stage_bs_base_m"],"BS")+STEP*j),
+                    "offset_index":j,
+                    "third_publisher_raw_value_km3":value,
+                    "sudact_value_km3":reference,
+                    "consultant_visible_comparator_value_km3":reference if i<82 else None,
+                    "third_source_has_numeric_inconsistency":True,
+                })
+    published=d.get("discrepancies_preserved_verbatim")
+    if (len(mismatches)!=1 or not isinstance(published,list)
+        or mismatches!=published
+        or mismatches[0]["source_row_index"]!=72
+        or mismatches[0]["offset_index"]!=9
+        or mismatches[0]["third_publisher_raw_value_km3"]!="111.078"
+        or mismatches[0]["sudact_value_km3"]!="11.078"
+        or high_match!=281 or matched!=1100
+        or d.get("compared_numeric_cells")!=1101
+        or d.get("exact_matching_cells")!=1100
+        or d.get("differing_cells")!=1
+        or d.get("high_stage_cells_matching_another_secondary_source")!=281
+        or d.get("previously_unavailable_in_consultant_cells")!=281):
+        raise ValueError("V913_THIRD_SOURCE_UNEXPECTED_DIFFERENCE_OR_INVENTED_MATCH")
+    return {
+        "upper_full_candidate_cells":1101,
+        "third_secondary_upper_matches":matched,
+        "third_secondary_upper_mismatches":len(mismatches),
+        "previously_uncompared_consultant_upper_high_stage_cells_supported_by_third":high_match,
+        "third_source_discrepancy_OS_m":"441.90",
+        "third_source_printed_km3":"111.078",
+        "sudact_and_consultant_km3":"11.078",
+        "every_sudact_coordinate_has_an_additional_secondary_match":True,
+        "signed_official_original_authenticated":False,
+        "physical_operation_admitted":False,
+        "source_discrepancy_auto_corrected":False,
+    }
